@@ -11,8 +11,8 @@
     <name>Main POM</name>
 
     <modules>
-        <module>smartparking-client</module>
-        <module>smartparking-server</module>
+        <module>client</module>
+        <module>server</module>
     </modules>
 
 </project>
