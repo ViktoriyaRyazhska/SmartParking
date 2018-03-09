@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lv297</groupId>
-    <artifactId>smartparking-parent</artifactId>
+    <artifactId>smartparking</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <name>Main POM</name>
