@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('smartparking-client App', () => {
+describe('smartparking App', () => {
   let page: AppPage;
 
   beforeEach(() => {

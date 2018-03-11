@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"><h3>{{navTitle}}</h3></a>
+  <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" aria-controls="navbarsExampleDefault">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse text-right" id="navbarsExampleDefault" [ngbCollapse]="!isCollapsed">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" ngbDropdownToggle>Change view</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01" ngbDropdownMenu>
+          <a class="dropdown-item" href="#">Table view</a>
+          <a class="dropdown-item" href="#">Map view</a>
+        </div>
+      </li>
+      <li class="nav-item">
+          <a href="#" class="btn btn-success ml-3">SignIn/SignUp</a>
+      </li>
+    </ul>
+  </div>
+</nav>
