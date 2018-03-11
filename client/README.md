@@ -6,6 +6,8 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 3)npm install --save @ng-bootstrap/ng-bootstrap //for bootsrap js modules
 4)in app.module.ts check imports:*import { NgbModule } from '@ng-bootstrap/ng-bootstrap'(on top); *NgbModule.forRoot() -(in imports[])
 
+If u don`t anderstand please follow this guide https://medium.com/codingthesmartway-com-blog/building-an-angular-5-project-with-bootstrap-4-and-firebase-4504ff7717c1(without installing the firebase)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.2.
 
 ## Development server
