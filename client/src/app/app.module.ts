@@ -1,6 +1,6 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
@@ -8,6 +8,7 @@ import { AppNavbarHeaderComponent } from './app-navbar-header/app-navbar-header.
 import { ParkingsComponent } from './parkings/parkings.component';
 import { ParkingService } from './parking.service';
 import { AppNavbarFooterComponent } from './app-navbar-footer/app-navbar-footer.component';
+import { GeoLocationService } from './geo-location.service';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AppNavbarFooterComponent } from './app-navbar-footer/app-navbar-footer.
   ],
   providers: [
     ParkingService,
+    GeoLocationService,
   ],
   bootstrap: [AppComponent]
 })
