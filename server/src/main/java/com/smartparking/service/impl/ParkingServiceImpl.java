@@ -15,9 +15,9 @@ import java.util.List;
 
 @Service
 public class ParkingServiceImpl implements ParkingService{
+
     @Autowired
     ParkingRepository parkingRepository;
-
 
     @Override
     @Transactional
