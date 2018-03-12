@@ -17,12 +17,14 @@ export class ParkingsComponent implements OnInit {
   constructor(private parkingService: ParkingService) { }
 
   ngOnInit() {
+    console.log("qaz");
     this.getParkings();
   }
 
   getParkings(): void {
     this.parkingService.getParkings()
-      .subscribe(parkings => this.parkings = parkings);
+    .subscribe(parkings => this.parkings = parkings);
+      // .subscribe(parkings => {console.log(parkings[1].latitude)});
   }
 
 }
