@@ -43,7 +43,8 @@ log/
 /out-tsc
 
 # dependencies
-/node_modules
+*node_modules
+#client/node_modules
 
 # IDEs and editors
 .c9/

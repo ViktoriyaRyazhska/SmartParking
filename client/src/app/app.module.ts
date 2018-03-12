@@ -1,6 +1,7 @@
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
@@ -9,7 +10,7 @@ import { ParkingsComponent } from './parkings/parkings.component';
 import { ParkingService } from './parking.service';
 import { AppNavbarFooterComponent } from './app-navbar-footer/app-navbar-footer.component';
 import { GeoLocationService } from './geo-location.service';
-
+import { AppRoutingModule } from './/app-routing.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { GeoLocationService } from './geo-location.service';
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot()
+    RouterModule,
+    NgbModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [
     ParkingService,
