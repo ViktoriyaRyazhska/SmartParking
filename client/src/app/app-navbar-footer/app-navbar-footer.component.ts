@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app-navbar-footer.component.css']
 })
 export class AppNavbarFooterComponent implements OnInit {
-  
   navTitle = 'Filtering';
 
   constructor() { }
