@@ -4,9 +4,12 @@ import com.smartparking.entity.Provider;
 import com.smartparking.repository.ProviderRepository;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
+@Service
 public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
@@ -28,5 +31,10 @@ public class ProviderServiceImpl implements ProviderService {
     @Transactional
     public void saveProvider(Provider provider) {
         providerRepository.save(provider);
+    }
+
+    @Override
+    public List<Provider> findAllProviders() {
+        return providerRepository.findAll();
     }
 }
