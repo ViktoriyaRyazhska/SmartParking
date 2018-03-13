@@ -14,6 +14,7 @@
         <module>client</module>
         <module>server</module>
         <module>realtime-server</module>
+        <module>persistence</module>
     </modules>
 
 </project>
