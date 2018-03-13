@@ -13,6 +13,7 @@
     <modules>
         <module>client</module>
         <module>server</module>
+        <module>realtime-server</module>
     </modules>
 
 </project>
