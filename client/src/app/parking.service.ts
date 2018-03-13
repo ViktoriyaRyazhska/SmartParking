@@ -16,7 +16,6 @@ export class ParkingService {
 
   /** Log a HeroService message with the MessageService */
 
-
   getParkings(): Observable<Parking[]>{
     return this.http.get<Parking[]>(this.parkingUrl);
   }

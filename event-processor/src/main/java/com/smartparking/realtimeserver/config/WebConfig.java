@@ -1,4 +1,4 @@
-package com.smartparking.config;
+package com.smartparking.realtimeserver.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.smartparking.controller")
+@ComponentScan("com.smartparking.realtimeserver.controller")
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
