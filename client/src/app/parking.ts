@@ -1,5 +1,5 @@
 import { Address } from './address';
-import { Provider } from './provider';
+import { Provider } from './providers/provider';
 import { Favorite } from './favorite';
 import { Spot } from './spot';
 

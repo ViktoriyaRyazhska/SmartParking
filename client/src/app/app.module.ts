@@ -15,12 +15,13 @@ import {GeoLocationService} from './geo-location.service';
 
 import {AppRoutingModule} from './/app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
-import {ProviderService} from "./provider.service";
+import {ProviderService} from "./providers/provider.service";
 import { ClientsComponent } from './clients/clients.component';
 import { ClientListComponent } from './clients/client-list/client-list.component';
 import { ClientEditComponent } from './clients/client-edit/client-edit.component';
 import { ClientService } from './clients/client.service';
 import { ClientItemComponent } from './clients/client-list/client-item/client-item.component';
+import { ProviderListComponent } from './providers/provider-list/provider-list.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ClientItemComponent } from './clients/client-list/client-item/client-it
         ClientsComponent,
         ClientListComponent,
         ClientEditComponent,
-        ClientItemComponent
+        ClientItemComponent,
+        ProviderListComponent
     ],
     imports: [
         HttpClientModule,
