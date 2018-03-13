@@ -1,7 +1,7 @@
-import { Address } from './address';
-import { Provider } from './provider';
-import { Favorite } from './favorite';
-import { Spot } from './spot';
+import {Address} from './address';
+import {Provider} from './provider';
+import {Favorite} from './favorite';
+import {Spot} from './spot';
 
 export class Parking {
     id: number;
@@ -14,4 +14,6 @@ export class Parking {
     spotsDto: Spot[];
     numberSpots: number;
     numberAvailableSpots: number;
-  }
+
+
+}
