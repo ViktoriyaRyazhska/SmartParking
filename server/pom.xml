@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>smartparking</artifactId>
-        <groupId>com.lv297</groupId>
+        <groupId>com.smartparking</groupId>
         <version>1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

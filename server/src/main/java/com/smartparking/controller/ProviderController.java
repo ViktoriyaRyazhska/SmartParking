@@ -18,7 +18,7 @@ public class ProviderController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers")
     List<Provider> findAll() {
-        return providerService.findAllProviders();
+        return providerService.findAll();
     }
 
 }
