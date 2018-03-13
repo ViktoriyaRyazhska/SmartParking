@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Client} from "./clients";
+import {ClientService} from "./client.service";
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css']
+    selector: 'app-clients',
+    templateUrl: './clients.component.html',
+    styleUrls: ['./clients.component.css']
 })
 export class ClientsComponent implements OnInit {
 
-  constructor() { }
+    clients: Client[];
 
-  ngOnInit() {
-  }
+    constructor(private clientService: ClientService) {
+    }
+
+    ngOnInit() {
+        this.getParkings();
+    }
+
+    getParkings(): void {
+        this.clientService.getClients()
+            .subscribe(clients => this.clients = clients);
+    }
 
 }
