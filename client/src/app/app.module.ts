@@ -16,6 +16,11 @@ import {GeoLocationService} from './geo-location.service';
 import {AppRoutingModule} from './/app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
 import {ProviderService} from "./provider.service";
+import { ClientsComponent } from './clients/clients.component';
+import { ClientListComponent } from './clients/client-list/client-list.component';
+import { ClientEditComponent } from './clients/client-edit/client-edit.component';
+import { ClientService } from './clients/client.service';
+import { ClientItemComponent } from './clients/client-list/client-item/client-item.component';
 
 
 @NgModule({
@@ -24,7 +29,11 @@ import {ProviderService} from "./provider.service";
         AppNavbarHeaderComponent,
         ParkingsComponent,
         AppNavbarFooterComponent,
-        SuperuserConfigurationComponent
+        SuperuserConfigurationComponent,
+        ClientsComponent,
+        ClientListComponent,
+        ClientEditComponent,
+        ClientItemComponent
     ],
     imports: [
         HttpClientModule,
@@ -36,7 +45,8 @@ import {ProviderService} from "./provider.service";
     providers: [
         ParkingService,
         GeoLocationService,
-        ProviderService
+        ProviderService,
+        ClientService
     ],
     bootstrap: [AppComponent]
 })
