@@ -1,0 +1,13 @@
+<div class="row">
+    dedfdf
+    <div class="col-md-5">
+        <app-client-list></app-client-list>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="col-xs-12" *ngFor="let client of clients; let i = index">
+        <p>{{client.firstName}}</p>
+        <p>{{client.lastName}}</p>
+    </div>
+</div>

@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>smartparking</artifactId>
-        <groupId>com.lv297</groupId>
+        <groupId>com.smartparking</groupId>
         <version>1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -42,7 +42,7 @@
                 <version>2.4</version>
                 <configuration>
                     <warSourceDirectory>src/main/webapp</warSourceDirectory>
-                    <warName>SmartParkingServer</warName>
+                    <warName>smartparking-server</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
@@ -136,6 +136,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smartparking</groupId>
+            <artifactId>persistence</artifactId>
+            <version>1.0</version>
         </dependency>
 
     </dependencies>
