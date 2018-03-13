@@ -21,8 +21,8 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-@ComponentScan("com.smartparking.realtimeserver.service")
-@EnableJpaRepositories(basePackages = "com.smartparking.realtimeserver.repository")
+@ComponentScan("com.smartparking.service")
+@EnableJpaRepositories(basePackages = "com.smartparking.repository")
 public class PersistenceContext {
 
     @Bean
