@@ -4,14 +4,12 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 
-
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
 import {ParkingsComponent} from './parkings/parkings.component';
 import {ParkingService} from './parking.service';
 import {AppNavbarFooterComponent} from './app-navbar-footer/app-navbar-footer.component';
 import {GeoLocationService} from './geo-location.service';
-
 
 import {AppRoutingModule} from './/app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
@@ -23,7 +21,6 @@ import { ClientEditComponent } from './clients/client-edit/client-edit.component
 import { ClientService } from './clients/client.service';
 import { ClientItemComponent } from './clients/client-list/client-item/client-item.component';
 import { ProviderListComponent } from './providers/provider-list/provider-list.component';
-
 
 @NgModule({
     declarations: [
@@ -39,6 +36,7 @@ import { ProviderListComponent } from './providers/provider-list/provider-list.c
         ClientEditComponent,
         ClientItemComponent,
         ProviderListComponent,
+        ProviderListComponent,
     ],
     imports: [
         HttpClientModule,
@@ -50,7 +48,8 @@ import { ProviderListComponent } from './providers/provider-list/provider-list.c
     providers: [
         ParkingService,
         GeoLocationService,
-        ProviderService
+        ProviderService,
+        ClientService
     ],
     bootstrap: [AppComponent]
 })

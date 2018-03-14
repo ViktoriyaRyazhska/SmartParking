@@ -9,8 +9,8 @@ import {ProviderListComponent} from "./providers/provider-list/provider-list.com
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
     {path: 'index', component: ParkingsComponent},
-    {path: 'configuration', component: SuperuserConfigurationComponent },
-    {path: 'parkingdetail/:id', component: ParkingDetailComponent },
+    {path: 'configuration', component: SuperuserConfigurationComponent},
+    {path: 'parkingdetail/:id', component: ParkingDetailComponent},
     {path: 'configuration', component: SuperuserConfigurationComponent,},
     {path: 'configuration/clientlist', component: ClientsComponent},
     {path: 'configuration/providers', component: ProviderListComponent}
