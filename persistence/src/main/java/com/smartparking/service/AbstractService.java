@@ -4,7 +4,6 @@ import com.smartparking.repository.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class AbstractService<T, ID, R extends Repository<T, ID>> implements Service<T, ID, R> {
 
@@ -32,8 +31,8 @@ public abstract class AbstractService<T, ID, R extends Repository<T, ID>> implem
     }
 
     @Override
-    public Optional<T> findById(ID id) {
-        return repository.findById(id);
+    public T findById(ID id) {
+        return repository.findById(id).orElse(null);
     }
 
     @Override
