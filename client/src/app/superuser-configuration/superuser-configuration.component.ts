@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ProviderService} from "../provider.service";
-import {Provider} from "../provider";
+import {ProviderService} from "../providers/provider.service";
 
 @Component({
   selector: 'app-superuser-configuration',
@@ -9,16 +8,10 @@ import {Provider} from "../provider";
 })
 export class SuperuserConfigurationComponent implements OnInit {
 
-  providers: Provider[];
-
   constructor(private providerService: ProviderService) { }
 
   ngOnInit() {
   }
 
-  getProviders(): void {
-    this.providerService.getAll()
-        .subscribe(providers => this.providers = providers);
-  }
 
 }

@@ -1,0 +1,16 @@
+<h3 class="text-center">Providers list:</h3>
+<nav class="sidebar"><div class="" </nav>
+<ul>
+    <div *ngFor="let provider of providers">
+        <ngb-alert type="dark" [dismissible]="false">
+            <h3><b><i>Name: </i></b>{{provider.name}}</h3>
+            <p><b><i>ID:</i></b> {{provider.id}}</p>
+            <b><i>Address: </i></b>{{provider.legalAddressDto.city}},
+            {{provider.legalAddressDto.street}},
+            {{provider.legalAddressDto.buildingNumber}}
+            <div>
+                <a href="#" target="_blank" class="btn btn-success">More Info</a>
+            </div>
+        </ngb-alert>
+    </div>
+</ul>

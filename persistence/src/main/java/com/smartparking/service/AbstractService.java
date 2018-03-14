@@ -1,12 +1,11 @@
 package com.smartparking.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.smartparking.repository.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
-public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> implements Service<T, ID, R> {
+public abstract class AbstractService<T, ID, R extends Repository<T, ID>> implements Service<T, ID, R> {
 
     private final R repository;
 
@@ -27,8 +26,13 @@ public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> imp
     }
 
     @Override
-    public Optional<T> findById(ID id) {
-        return repository.findById(id);
+    public void refresh(T entity) {
+        repository.refresh(entity);
+    }
+
+    @Override
+    public T findById(ID id) {
+        return repository.findById(id).orElse(null);
     }
 
     @Override
