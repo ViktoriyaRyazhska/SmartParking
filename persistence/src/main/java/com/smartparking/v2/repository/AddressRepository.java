@@ -1,4 +1,4 @@
-package com.smartparking.repository;
+package com.smartparking.v2.repository;
 
 import com.smartparking.entity.Address;
 

@@ -22,6 +22,7 @@ import { ClientEditComponent } from './clients/client-edit/client-edit.component
 import { ClientService } from './clients/client.service';
 import { ClientItemComponent } from './clients/client-list/client-item/client-item.component';
 import { ProviderListComponent } from './providers/provider-list/provider-list.component';
+import { AddProviderComponent } from './providers/add-provider/add-provider.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ProviderListComponent } from './providers/provider-list/provider-list.c
         ClientListComponent,
         ClientEditComponent,
         ClientItemComponent,
-        ProviderListComponent
+        ProviderListComponent,
+        AddProviderComponent
     ],
     imports: [
         HttpClientModule,

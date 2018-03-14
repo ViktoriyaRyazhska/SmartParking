@@ -10,6 +10,8 @@ public interface Service<T, ID, R extends JpaRepository<T, ID>> {
 
     void save(T entity);
 
+    void refresh(T entity);
+
     Optional<T> findById(ID id);
 
     List<T> findAll();
