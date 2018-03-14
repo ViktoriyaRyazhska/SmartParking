@@ -1,3 +1,20 @@
-<p>
-  client-item works!
-</p>
+<tr data-status="pagado">
+  <td>
+    <div class="media">
+      <a href="#" class="pull-left">
+        <img id="clientImage" src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg"
+             class="media-photo">
+      </a>
+      <div class="media-body">
+        <h6>id:{{client.id}}</h6>
+        <span class="media-meta pull-right">{{client.email}}</span>
+        <h4 class="title">
+          {{client.firstName}} {{client.lastName}}
+        </h4>
+      </div>
+      </div>
+  </td>
+  <td>
+    <button type="button" class="btn btn-success btn-filter" data-target="pagado">Edit Client</button>
+  </td>
+</tr>
