@@ -9,18 +9,11 @@ import {ClientService} from "./client.service";
 })
 export class ClientsComponent implements OnInit {
 
-    clients: Client[];
-
-    constructor(private clientService: ClientService) {
+    constructor() {
     }
 
     ngOnInit() {
-        this.getParkings();
     }
 
-    getParkings(): void {
-        this.clientService.getClients()
-            .subscribe(clients => this.clients = clients);
-    }
 
 }
