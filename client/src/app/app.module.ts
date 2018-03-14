@@ -13,9 +13,9 @@ import {AppNavbarFooterComponent} from './app-navbar-footer/app-navbar-footer.co
 import {GeoLocationService} from './geo-location.service';
 
 
-import {AppRoutingModule} from './/app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
-import {ProviderService} from "./providers/provider.service";
+import {ProviderService} from './providers/provider.service';
 import { ClientsComponent } from './clients/clients.component';
 import { ClientListComponent } from './clients/client-list/client-list.component';
 import { ClientEditComponent } from './clients/client-edit/client-edit.component';
@@ -23,6 +23,8 @@ import { ClientService } from './clients/client.service';
 import { ClientItemComponent } from './clients/client-list/client-item/client-item.component';
 import { ProviderListComponent } from './providers/provider-list/provider-list.component';
 import { AddProviderComponent } from './providers/add-provider/add-provider.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { AddProviderComponent } from './providers/add-provider/add-provider.comp
         ClientEditComponent,
         ClientItemComponent,
         ProviderListComponent,
-        AddProviderComponent
+        AddProviderComponent,
+        LoginComponent,
+        RegistrationComponent
     ],
     imports: [
         HttpClientModule,
