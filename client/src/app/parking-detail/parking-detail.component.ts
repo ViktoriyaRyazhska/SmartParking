@@ -24,16 +24,10 @@ export class ParkingDetailComponent implements OnInit {
     this.getParking();
   }
 
-  // getParking(): void {
-  //   const id = parseInt(this.route.snapshot.paramMap.get('id'));
-  //   this.parkingService.getParking(id)
-  //     .subscribe(parking => this.parking = parking);
-  // }
   getParking(): void {
      const id = parseInt(this.route.snapshot.paramMap.get('id'));
-     this.parkingService.getParkings()
-     .subscribe(parkings => this.parking = parkings.find(parking => parking.id === id));
-    //   // .subscribe(parkings => {console.log(parkings[1].latitude)});
+     this.parkingService.getParking(id)
+        .subscribe(parking => this.parking = parking);
   }
 
 }
