@@ -5,6 +5,7 @@ import {SuperuserConfigurationComponent} from "./superuser-configuration/superus
 import {ParkingDetailComponent} from './parking-detail/parking-detail.component';
 import {ClientsComponent} from "./clients/clients.component";
 import {ProviderListComponent} from "./providers/provider-list/provider-list.component";
+import {ProviderDetailComponent} from "./providers/provider-detail/provider-detail.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -13,7 +14,8 @@ const routes: Routes = [
     {path: 'parkingdetail/:id', component: ParkingDetailComponent},
     {path: 'configuration', component: SuperuserConfigurationComponent,},
     {path: 'configuration/clientlist', component: ClientsComponent},
-    {path: 'configuration/providers', component: ProviderListComponent}
+    {path: 'configuration/providers', component: ProviderListComponent},
+    {path: 'configuration/providers/:id', component: ProviderDetailComponent}
 ];
 
 @NgModule({
