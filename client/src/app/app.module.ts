@@ -2,7 +2,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {RouterModule, Routes} from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
@@ -11,7 +11,7 @@ import {ParkingService} from './parking.service';
 import {AppNavbarFooterComponent} from './app-navbar-footer/app-navbar-footer.component';
 import {GeoLocationService} from './geo-location.service';
 
-import {AppRoutingModule} from './/app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
 import { ParkingDetailComponent } from './parking-detail/parking-detail.component';
 import {ProviderService} from "./providers/provider.service";
@@ -22,6 +22,9 @@ import { ClientService } from './clients/client.service';
 import { ClientItemComponent } from './clients/client-list/client-item/client-item.component';
 import { ProviderListComponent } from './providers/provider-list/provider-list.component';
 import {ProviderDetailComponent} from "./providers/provider-detail/provider-detail.component";
+import {LoginComponent} from "./auth/login/login.component";
+import {RegistrationComponent} from "./auth/registration/registration.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -37,6 +40,8 @@ import {ProviderDetailComponent} from "./providers/provider-detail/provider-deta
         ClientEditComponent,
         ClientItemComponent,
         ProviderListComponent,
+        LoginComponent,
+        RegistrationComponent,
         ProviderDetailComponent
     ],
     imports: [
@@ -44,7 +49,8 @@ import {ProviderDetailComponent} from "./providers/provider-detail/provider-deta
         BrowserModule,
         RouterModule,
         NgbModule.forRoot(),
-        AppRoutingModule
+        AppRoutingModule,
+        ReactiveFormsModule
     ],
     providers: [
         ParkingService,
