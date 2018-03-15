@@ -1,0 +1,53 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_provider" author="Oleksiy">
+        <createTable tableName="provider">
+            <column name="id" type="bigint(20)">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="active" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="legalAddress_id" type="bigint(20)">
+                <constraints nullable="false" />
+            </column>
+
+        </createTable>
+    </changeSet>
+
+
+
+
+    <changeSet id="add-fk-between-provider_and_address" author="Oleksiy">
+        <addForeignKeyConstraint constraintName="fk_prov_adrr"
+         baseTableName="provider" baseColumnNames="legalAddress_id" referencedTableName="address"
+         referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    </changeSet>
+
+
+    <changeSet id="update_provider1" author="Oleksiy">
+        <insert tableName="provider">
+            <column name="id"  value="1" />
+            <column name="active" value="1" />
+            <column name="name" value="ParkingCom" />
+            <column name="legalAddress_id" value="2" />
+        </insert>
+    </changeSet>
+
+
+    <changeSet id="update_provider2" author="Oleksiy">
+        <insert tableName="provider">
+            <column name="id"  value="2" />
+            <column name="active" value="1" />
+            <column name="name" value="ParkingCom" />
+            <column name="legalAddress_id" value="1" />
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

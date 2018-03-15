@@ -15,6 +15,8 @@
         <module>server</module>
         <module>event-processor</module>
         <module>persistence</module>
+        <module>liquibase</module>
+
     </modules>
 
 </project>
