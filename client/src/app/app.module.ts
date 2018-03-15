@@ -23,7 +23,8 @@ import { ClientItemComponent } from './clients/client-list/client-item/client-it
 import { ProviderListComponent } from './providers/provider-list/provider-list.component';
 import {LoginComponent} from "./auth/login/login.component";
 import {RegistrationComponent} from "./auth/registration/registration.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AngularMaterialsModule} from "./angular-materials.module";
 
 @NgModule({
     declarations: [
@@ -49,7 +50,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         RouterModule,
         NgbModule.forRoot(),
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule,
+        AngularMaterialsModule
     ],
     providers: [
         ParkingService,
