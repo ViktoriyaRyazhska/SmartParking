@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderService} from "../provider.service";
-import {Parking} from "../../parking";
 import {Provider} from "../provider";
 import {ActivatedRoute} from "@angular/router";
 

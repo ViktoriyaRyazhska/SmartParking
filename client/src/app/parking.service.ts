@@ -1,11 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {HttpClient} from '@angular/common/http';
 
-import { Parking } from './parking';
-import { PARKINGS } from './mock-parkings';
+import {Parking} from './model/view/parking';
 
 @Injectable()
 export class ParkingService {

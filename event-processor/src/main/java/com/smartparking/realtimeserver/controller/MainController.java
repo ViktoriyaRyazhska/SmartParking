@@ -1,11 +1,14 @@
 package com.smartparking.realtimeserver.controller;
 
-import com.smartparking.entity.Provider;
-import com.smartparking.service.ProviderService;
+import com.smartparking.entity.Event;
+import com.smartparking.entity.Spot;
+import com.smartparking.service.EventService;
+import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,38 +19,77 @@ import java.util.stream.Collectors;
 @RestController
 public class MainController {
 
-    private Map<Long, Provider> providers;
+    //    private Map<Long, Parking> parkings;
+    private Map<Long, Spot> spots;
+
+//    @Autowired
+//    private ParkingService parkingService;
 
     @Autowired
-    private ProviderService providerService;
+    private SpotService spotService;
+
+    @Autowired
+    private EventService eventService;
 
     @PostConstruct
     public void init() {
-        providers = providerService.findAll().stream()
-                .collect(Collectors.toMap(Provider::getId, p -> p));
+//        parkings = parkingService.findAll().stream()
+//                .collect(Collectors.toMap(Parking::getId, p -> p));
+        spots = spotService.findAll().stream()
+                .collect(Collectors.toMap(Spot::getId, s -> s));
     }
 
-    @RequestMapping("provider/update")
-    public ResponseEntity providerUpdated(@RequestParam String id) {
-        final Long providerId;
-        try {
-            providerId = Long.valueOf(id);
-        } catch (NumberFormatException ex) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+//    @RequestMapping("provider/update")
+//    public ResponseEntity providerUpdated(@RequestParam String id) {
+//        final Long parkingId;
+//        try {
+//            parkingId = Long.valueOf(id);
+//        } catch (NumberFormatException ex) {
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        Parking parking = parkings.get(parkingId);
+//        if (parking == null) {
+//            parking = parkingService.findById(parkingId);
+//            if (parking == null) {
+//                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//            } else {
+//                parkings.put(parkingId, parking);
+//                return new ResponseEntity(HttpStatus.OK);
+//            }
+//        } else {
+//            parkingService.refresh(parking);
+//            return new ResponseEntity(HttpStatus.OK);
+//        }
+//    }
 
-        Provider provider = providers.get(providerId);
-        if (provider == null) {
-            provider = providerService.findById(providerId);
-            if (provider == null) {
+    @RequestMapping(value = "spot/update", method = RequestMethod.POST)
+    public ResponseEntity spotUpdate(@RequestParam Long spotId,
+                                     @RequestParam String parkingToken) {
+
+        Spot spot = spots.get(spotId);
+        if (spot == null) {
+            spot = spotService.findById(spotId);
+            if (spot == null) {
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
             } else {
-                providers.put(providerId, provider);
-                return new ResponseEntity(HttpStatus.OK);
+                spots.put(spotId, spot);
             }
-        } else {
-            providerService.refresh(provider);
+        }
+
+        if (spot.getParking().getToken().equals(parkingToken)) {
+            Event event = eventService.findBySpotId(spotId);
+            if (event == null) {
+                event = new Event();
+                event.setSpot(spot);
+                event.setCurrentArrivalTime();
+                eventService.save(event);
+            } else {
+                event.setCurrentDepartureTime();
+            }
             return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -1,12 +1,13 @@
 <h1>Clients List</h1>
 
 <div class="table-container">
-  <table class="table table-filter">
-    <tbody>
-    <app-client-item
-            *ngFor="let client of clients; let i = index"
-            [client]="client"
-            [index]="i"></app-client-item>
-    </tbody>
-  </table>
-</div>
+    <input [(ngModel)]="searchText" placeholder="search">
+    <table class="table table-filter">
+        <tbody>
+        <app-client-item
+                *ngFor="let client of clients | filter : searchText; let i = index"
+                [client]="client"
+                [index]="i"></app-client-item>
+        </tbody>
+    </table>
+</div>`
