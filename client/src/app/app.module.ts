@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
@@ -25,6 +26,8 @@ import {ProviderDetailComponent} from "./providers/provider-detail/provider-deta
 import {LoginComponent} from "./auth/login/login.component";
 import {RegistrationComponent} from "./auth/registration/registration.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {FilterPipe} from "./clients/client-list/filter.pipe";
+import { ClientDetailComponent } from './clients/client-detail/client-detail.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +45,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         ProviderListComponent,
         LoginComponent,
         RegistrationComponent,
-        ProviderDetailComponent
+        ProviderDetailComponent,
+        FilterPipe,
+        ClientDetailComponent
     ],
     imports: [
         HttpClientModule,
@@ -50,7 +55,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         RouterModule,
         NgbModule.forRoot(),
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [
         ParkingService,

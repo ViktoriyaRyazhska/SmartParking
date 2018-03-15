@@ -1,6 +1,6 @@
 import { Parking } from '../parking';
-import { Client} from '../client';
 import { Address } from '../address';
+import {Client} from "../clients/client";
 
 export class Provider{
     id: number;
