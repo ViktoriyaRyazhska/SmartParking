@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventServiceImpl extends AbstractService<Event, Long, EventRepository> implements EventService {
 
-    protected EventServiceImpl(@Autowired EventRepository repository) {
-        super(repository);
+    protected EventServiceImpl(@Autowired EventRepository eventRepository) {
+        super(eventRepository);
+    }
+
+    @Override
+    public Event findBySpotId(Long spotId) {
+        return repository.findBySpotId(spotId);
     }
 }

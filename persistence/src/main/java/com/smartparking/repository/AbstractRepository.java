@@ -15,6 +15,10 @@ public abstract class AbstractRepository<T, ID> extends SimpleJpaRepository<T, I
         this.entityManager = entityManager;
     }
 
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
     @Override
     public void refresh(T entity) {
         entityManager.refresh(entity);
