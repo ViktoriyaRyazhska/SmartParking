@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
-import { Parking } from '../parking';
-import { ParkingService } from "../parking.service";
+import {Parking} from '../model/view/parking';
+import {ParkingService} from "../parking.service";
 
 @Component({
   selector: 'app-parking-detail',

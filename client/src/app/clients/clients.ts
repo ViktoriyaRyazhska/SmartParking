@@ -1,4 +1,4 @@
-import {Favorite} from "../favorite";
+import {Favorite} from "../model/view/favorite";
 import {Provider} from "../providers/provider";
 
 export class Client {

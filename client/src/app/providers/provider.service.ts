@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 
 import {Provider} from "./provider";
 import {Observable} from "rxjs/Observable";
-import {Parking} from "../parking";
 
 @Injectable()
 export class ProviderService {

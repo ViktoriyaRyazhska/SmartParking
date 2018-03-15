@@ -1,6 +1,5 @@
-import { Parking } from '../parking';
-import { Client} from '../client';
-import { Address } from '../address';
+import {Client} from '../model/view/client';
+import {Address} from '../model/view/address';
 
 export class Provider{
     id: number;
