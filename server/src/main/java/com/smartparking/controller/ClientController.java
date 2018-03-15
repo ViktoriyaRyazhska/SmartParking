@@ -4,10 +4,13 @@ import com.smartparking.dto.AddressDto;
 import com.smartparking.dto.ClientDto;
 import com.smartparking.dto.ProviderDto;
 import com.smartparking.entity.Client;
+import com.smartparking.model.response.ClientDetailResponse;
+import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -39,6 +42,13 @@ public class ClientController {
             clientsDto.add(clientDto);
         }
         return clientsDto;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("clients/{id}")
+    ClientDetailResponse find(@PathVariable Long id){
+        Client provider = clientService.findById(id);
+        return ClientDetailResponse.of(provider);
     }
 
 }

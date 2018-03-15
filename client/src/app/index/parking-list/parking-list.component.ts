@@ -1,19 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 
-import {Parking} from '../parking';
-import {ParkingService} from '../parking.service';
-import {GeoLocationService} from '../geo-location.service';
-
+import {Parking} from '../../model/view/parking';
+import {ParkingService} from '../../parking.service';
+import {GeoLocationService} from '../../geo-location.service';
 
 @Component({
-  selector: 'app-parkings',
-  templateUrl: './parkings.component.html',
-  styleUrls: ['./parkings.component.css']
+    selector: 'app-parking-list',
+    templateUrl: './parking-list.component.html',
+    styleUrls: ['./parking-list.component.css']
 })
-export class ParkingsComponent implements OnInit {
+export class ParkingListComponent implements OnInit {
 
-  parkings: Parking[];
-    filteredParkings: Parking[] = [];
+    parkings: Parking[] = Array(0);
+    filteredParkings: Parking[] = Array(0);
 
     latitude: number = 0;
     longitude: number = 0;
@@ -22,31 +21,33 @@ export class ParkingsComponent implements OnInit {
                 private geoLocation: GeoLocationService) {
     }
 
-  ngOnInit() {
-    console.log("qaz");
-    this.getParkings();
-  }
+    ngOnInit() {
+        this.getParkings();
+    }
 
-  getParkingsArray(): Parking[]{
-      return this.parkings;
-  }
+    getParkingsArray(): Parking[] {
+        return this.parkings;
+    }
 
-  getParkings(): void {
-    this.parkingService.getParkings()
-        .subscribe(parkings => {
-            this.parkings = parkings;
-            this.filterByGeoLocation();
-        });
-      // .subscribe(parkings => {console.log(parkings[1].latitude)});
-      this.geoLocation.getLocation()
-          .subscribe((position: Position) => {
-              this.latitude = position.coords.latitude;
-              this.longitude = position.coords.longitude;
-              this.filterByGeoLocation();
-          });
-  }
+    getParkings(): void {
+        this.parkingService.getParkings()
+            .subscribe(parkings => {
+                this.parkings = parkings;
+                this.filteredParkings = parkings;
+            });
+        this.geoLocation.getLocation()
+            .subscribe((position: Position) => {
+                this.latitude = position.coords.latitude;
+                this.longitude = position.coords.longitude;
+                this.filteredParkings = [];
+                this.filterByGeoLocation();
+            });
+    }
 
     getDistanceFromLatLonInKm(currentLatitude: number, currentLongitude: number): boolean {
+        if (this.latitude === 0 || this.longitude === 0) {
+            return true;
+        }
         let R = 6371; // Radius of the earth in km
         let dLat = this.deg2rad(currentLatitude - this.latitude);  // deg2rad below
         let dLon = this.deg2rad(currentLongitude - this.longitude);

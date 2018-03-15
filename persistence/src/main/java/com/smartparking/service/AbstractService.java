@@ -1,13 +1,13 @@
 package com.smartparking.service;
 
-import com.smartparking.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-public abstract class AbstractService<T, ID, R extends Repository<T, ID>> implements Service<T, ID, R> {
+public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> implements Service<T, ID, R> {
 
-    private final R repository;
+    protected final R repository;
 
     protected AbstractService(R repository) {
         this.repository = repository;
@@ -23,11 +23,6 @@ public abstract class AbstractService<T, ID, R extends Repository<T, ID>> implem
     @Transactional
     public void save(T entity) {
         repository.save(entity);
-    }
-
-    @Override
-    public void refresh(T entity) {
-        repository.refresh(entity);
     }
 
     @Override
