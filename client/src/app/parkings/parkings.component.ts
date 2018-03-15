@@ -27,6 +27,10 @@ export class ParkingsComponent implements OnInit {
     this.getParkings();
   }
 
+  getParkingsArray(): Parking[]{
+      return this.parkings;
+  }
+
   getParkings(): void {
     this.parkingService.getParkings()
         .subscribe(parkings => {

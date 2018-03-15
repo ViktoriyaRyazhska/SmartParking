@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 
 import {Provider} from "./provider";
 import {Observable} from "rxjs/Observable";
+import {Parking} from "../parking";
 
 @Injectable()
 export class ProviderService {
@@ -16,4 +17,7 @@ export class ProviderService {
         return this.http.get<Provider[]>(this.providerUrl);
     }
 
+    getProviderDetail(id: number): Observable<Provider> {
+        return this.http.get<Provider>(this.providerUrl + "/" + id);
+    }
 }
