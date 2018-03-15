@@ -21,6 +21,7 @@ import { ClientEditComponent } from './clients/client-edit/client-edit.component
 import { ClientService } from './clients/client.service';
 import { ClientItemComponent } from './clients/client-list/client-item/client-item.component';
 import { ProviderListComponent } from './providers/provider-list/provider-list.component';
+import {ProviderDetailComponent} from "./providers/provider-detail/provider-detail.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {RegistrationComponent} from "./auth/registration/registration.component";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -40,9 +41,9 @@ import {AngularMaterialsModule} from "./angular-materials.module";
         ClientEditComponent,
         ClientItemComponent,
         ProviderListComponent,
-        ProviderListComponent,
         LoginComponent,
-        RegistrationComponent
+        RegistrationComponent,
+        ProviderDetailComponent
     ],
     imports: [
         HttpClientModule,
