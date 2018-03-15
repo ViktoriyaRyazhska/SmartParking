@@ -23,6 +23,9 @@ import {ProviderListComponent} from './providers/provider-list/provider-list.com
 import {ProviderDetailComponent} from "./providers/provider-detail/provider-detail.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {RegistrationComponent} from "./auth/registration/registration.component";
+import {FilterPipe} from "./clients/client-list/filter.pipe";
+import {ClientDetailComponent} from './clients/client-detail/client-detail.component';
+
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularMaterialsModule} from "./angular-materials.module";
 import {IndexComponent} from "./index/index.component";
@@ -46,6 +49,8 @@ import {ParkingListFilter} from "./index/parking-list-filter/parking-list-filter
         LoginComponent,
         RegistrationComponent,
         ProviderDetailComponent,
+        FilterPipe,
+        ClientDetailComponent,
         ParkingListFilter
     ],
     imports: [
