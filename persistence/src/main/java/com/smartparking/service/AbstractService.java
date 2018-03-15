@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class AbstractService<T, ID, R extends Repository<T, ID>> implements Service<T, ID, R> {
 
-    private final R repository;
+    protected final R repository;
 
     protected AbstractService(R repository) {
         this.repository = repository;

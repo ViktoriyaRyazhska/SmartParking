@@ -35,18 +35,22 @@ export class ParkingsComponent implements OnInit {
     this.parkingService.getParkings()
         .subscribe(parkings => {
             this.parkings = parkings;
-            this.filterByGeoLocation();
+            this.filteredParkings = parkings;
         });
       // .subscribe(parkings => {console.log(parkings[1].latitude)});
       this.geoLocation.getLocation()
           .subscribe((position: Position) => {
               this.latitude = position.coords.latitude;
               this.longitude = position.coords.longitude;
+              this.filteredParkings = [];
               this.filterByGeoLocation();
           });
   }
 
     getDistanceFromLatLonInKm(currentLatitude: number, currentLongitude: number): boolean {
+        if (this.latitude === 0 || this.longitude === 0) {
+            return true;
+        }
         let R = 6371; // Radius of the earth in km
         let dLat = this.deg2rad(currentLatitude - this.latitude);  // deg2rad below
         let dLon = this.deg2rad(currentLongitude - this.longitude);

@@ -6,6 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Entity
 @Table(name = "event")
@@ -44,5 +46,13 @@ public class Event extends AbstractIdentifiableEntity {
 
     public void setDepartureTime(Instant departureTime) {
         this.departureTime = departureTime;
+    }
+
+    public void setCurrentArrivalTime() {
+        this.arrivalTime = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+    }
+
+    public void setCurrentDepartureTime() {
+        this.departureTime = LocalDateTime.now().toInstant(ZoneOffset.UTC);
     }
 }

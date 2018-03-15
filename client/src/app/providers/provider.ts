@@ -5,8 +5,8 @@ import { Address } from '../address';
 export class Provider{
     id: number;
     name: string;
-    parkingsDto: Parking[];
+    parkingIds: number[];
     employeesDto: Client[];
-    legalAddressDto: Address;
+    address: Address;
     active: boolean;
 }
