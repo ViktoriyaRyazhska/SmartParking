@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ProviderService} from "../provider.service";
-import {Provider} from "../provider";
-import {ActivatedRoute} from "@angular/router";
+import {ProviderService} from '../provider.service';
+import {Provider} from '../provider';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-provider-detail',
@@ -17,17 +17,17 @@ export class ProviderDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getProviderDetail2();
+        this.getProviderDetail();
     }
 
-    getProviderDetail(): void {
+/*    getProviderDetail(): void {
         const id = +this.route.snapshot.paramMap.get('id');
         this.providerService.getAll()
             .subscribe(providers => this.provider = providers.find(provider => provider.id === id));
-    }
+    }*/
 
-    getProviderDetail2(): void {
-        const id = parseInt(this.route.snapshot.paramMap.get('id'));
+    getProviderDetail(): void {
+        const id = +this.route.snapshot.paramMap.get('id');
         this.providerService.getProviderDetail(id)
             .subscribe(provider => this.provider = provider);
     }

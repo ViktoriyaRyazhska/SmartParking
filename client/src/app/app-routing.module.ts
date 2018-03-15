@@ -8,6 +8,7 @@ import {ProviderListComponent} from "./providers/provider-list/provider-list.com
 import {LoginComponent} from "./auth/login/login.component";
 import {ProviderDetailComponent} from "./providers/provider-detail/provider-detail.component";
 import {ClientDetailComponent} from "./clients/client-detail/client-detail.component";
+import {AddProviderComponent} from './providers/add-provider/add-provider.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -19,7 +20,8 @@ const routes: Routes = [
     {path: 'configuration/clients/:id', component: ClientDetailComponent},
     {path: 'configuration/providers', component: ProviderListComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'configuration/providers/:id', component: ProviderDetailComponent}
+    {path: 'configuration/providers/:id', component: ProviderDetailComponent},
+    {path: 'configuration/provider/add', component: AddProviderComponent}
 ];
 
 @NgModule({

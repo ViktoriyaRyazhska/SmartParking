@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
-import {Provider} from "./provider";
-import {Observable} from "rxjs/Observable";
+import {Provider} from './provider';
+import {Observable} from 'rxjs/Observable';
+import {ProviderRequest} from './add-provider/provider-request';
 
 @Injectable()
 export class ProviderService {
@@ -17,6 +18,11 @@ export class ProviderService {
     }
 
     getProviderDetail(id: number): Observable<Provider> {
-        return this.http.get<Provider>(this.providerUrl + "/" + id);
+        return this.http.get<Provider>(this.providerUrl + '/' + id);
+    }
+
+    saveProvider(providerRequest: ProviderRequest): Observable<any> {
+        console.log(providerRequest.city);
+        return this.http.post('/ssss', providerRequest);
     }
 }
