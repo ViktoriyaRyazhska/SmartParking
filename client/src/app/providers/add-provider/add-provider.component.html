@@ -1,0 +1,37 @@
+<div class = "container-fluid">
+    <form [formGroup]="providerForm" class = "formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6"
+          (ngSubmit)="saveProvider()">
+        <legend>Add provider</legend>
+        <div class = "row">
+            <mat-form-field class = "customwidth">
+                <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+        </div>
+        <div class = "row">
+            <mat-form-field class = "customwidth">
+                <input matInput placeholder="State" formControlName="state">
+            </mat-form-field>
+        </div>
+        <div class = "row">
+            <mat-form-field class = "customwidth">
+                <input matInput placeholder="City" formControlName="city">
+            </mat-form-field>
+        </div>
+        <div class = "row">
+            <mat-form-field class = "customwidth">
+                <input matInput placeholder="Street" formControlName="street">
+            </mat-form-field>
+        </div>
+        <div class = "row">
+            <mat-form-field class = "customwidth">
+                <input matInput placeholder="Building number" formControlName="buildingNumber">
+            </mat-form-field>
+        </div>
+
+        <div class = "row">
+            <button mat-button>Submit</button>
+        </div>
+    </form>
+</div>
+
+
