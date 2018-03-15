@@ -9,7 +9,7 @@ const GEOLOCATION_ERRORS = {
     'errors.location.timeout': 'Service timeout has been reached'
 };
 
-@Injectable
+@Injectable()
 export class GeoLocationService {
 
     public getLocation(geoLocationOptions?: any): Observable<any> {

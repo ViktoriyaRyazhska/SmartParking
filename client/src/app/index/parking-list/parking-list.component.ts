@@ -1,16 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 
-import {Parking} from '../parking';
-import {ParkingService} from '../parking.service';
-import {GeoLocationService} from '../geo-location.service';
-
+import {Parking} from '../../model/view/parking';
+import {ParkingService} from '../../parking.service';
+import {GeoLocationService} from '../../geo-location.service';
 
 @Component({
     selector: 'app-parking-list',
     templateUrl: './parking-list.component.html',
     styleUrls: ['./parking-list.component.css']
 })
-export class ParkingsComponent implements OnInit {
+export class ParkingListComponent implements OnInit {
 
     parkings: Parking[] = Array(0);
     filteredParkings: Parking[] = Array(0);

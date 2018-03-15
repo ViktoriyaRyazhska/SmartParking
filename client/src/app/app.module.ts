@@ -6,9 +6,8 @@ import {RouterModule} from '@angular/router';
 
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
-import {ParkingsComponent} from './parkings/parkings.component';
+import {ParkingListComponent} from './index/parking-list/parking-list.component';
 import {ParkingService} from './parking.service';
-import {AppNavbarFooterComponent} from './app-navbar-footer/app-navbar-footer.component';
 import {GeoLocationService} from './geo-location.service';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -26,14 +25,16 @@ import {LoginComponent} from "./auth/login/login.component";
 import {RegistrationComponent} from "./auth/registration/registration.component";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularMaterialsModule} from "./angular-materials.module";
+import {IndexComponent} from "./index/index.component";
+import {ParkingListFilter} from "./index/parking-list-filter/parking-list-filter.component";
 
 
 @NgModule({
     declarations: [
+        IndexComponent,
         AppComponent,
         AppNavbarHeaderComponent,
-        ParkingsComponent,
-        AppNavbarFooterComponent,
+        ParkingListComponent,
         SuperuserConfigurationComponent,
         ParkingDetailComponent,
         SuperuserConfigurationComponent,
@@ -44,7 +45,8 @@ import {AngularMaterialsModule} from "./angular-materials.module";
         ProviderListComponent,
         LoginComponent,
         RegistrationComponent,
-        ProviderDetailComponent
+        ProviderDetailComponent,
+        ParkingListFilter
     ],
     imports: [
         HttpClientModule,
