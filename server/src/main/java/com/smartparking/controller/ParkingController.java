@@ -7,6 +7,7 @@ import com.smartparking.dto.ProviderDto;
 import com.smartparking.entity.Parking;
 import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.service.ParkingService;
+import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +23,12 @@ public class ParkingController {
     @Autowired
     ParkingService parkingService;
 
+    @Autowired
+    SpotService spotService;
+
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("p")
-    List<ParkingDto> findAllParkings(){
+    List<ParkingDto> findAllParkings() {
         List<Parking> parkings = parkingService.findAll();
         List<ParkingDto> parkingsDto = new ArrayList<>();
         ParkingDto parkingDto;
@@ -51,9 +55,17 @@ public class ParkingController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkingdetail/{id}")
-    ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id){
+
+    ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
-        return ParkingDetailResponse.of(parking);
+        ParkingDetailResponse parkingDetailResponse = ParkingDetailResponse.of(parking);
+        parkingDetailResponse.setNumberSpots(
+                spotService.countAllSpotsByParkingId(id)
+        );
+        parkingDetailResponse.setNumberAvailableSpots(
+                spotService.countAvailableSpotsByParkingId(id)
+        );
+        return parkingDetailResponse;
     }
 
 }

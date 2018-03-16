@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Parking } from './parking';
 import { PARKINGS } from './mock-parkings';
+import { Spot } from './spot';
 
 @Injectable()
 export class ParkingService {
@@ -26,6 +27,10 @@ export class ParkingService {
 
    getParking(id: number): Observable<Parking> {
     return this.http.get<Parking>(this.parkingDetailUrl + id);
+   }
+
+   getSpotsByParkingId(id: number): Observable<Spot[]> {
+    return this.http.get<Spot[]>(this.parkingDetailUrl + id +'/spots');
    }
 
 }
