@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {LoginData} from "./login-data";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -8,21 +10,43 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
     hide: boolean = true;
-    loginForm = new FormGroup ({
-        email: new FormControl('', [
-            Validators.required,
-            Validators.email,
-        ]),
-        password: new FormControl('', [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.maxLength(16)
-        ])
-    });
+    loginForm: FormGroup;
+    loginData: LoginData;
+    error: boolean;
 
-  constructor() { }
+    emailControl: FormControl = new FormControl('', [
+        Validators.required,
+        Validators.email,
+    ]);
+    passwordControl: FormControl = new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(16),
+    ]);
 
-  ngOnInit() {
-  }
+    constructor(private formBuilder: FormBuilder,
+                /*private loginService: LoginService,*/
+                private router: Router,
+                /*private cookie: CookieService*/) {}
+
+    ngOnInit() {
+        this.loginForm = this.formBuilder.group({
+            email: this.emailControl,
+            password: this.passwordControl
+        });
+    }
+
+    /*login = () => {
+        this.loginData = this.loginForm.value;
+        this.loginService.signIn(this.account)
+            .subscribe((response:ResponseToken)=>{
+                    this.cookie.put('auth',response.token);
+                    this.error=false;
+                    this.router.navigate(['/']);
+                }, error2 => {
+                    this.error = true;
+                }
+            );
+    };*/
 
 }

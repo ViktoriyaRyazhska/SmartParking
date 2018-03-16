@@ -1,4 +1,4 @@
-import { Parking } from './parking';
+import {Parking} from './model/view/parking';
 
 export const PARKINGS: Parking[] = [
     // {id: 1, address:'Lviv/Fedkovicha/60A', providerName: 'PP-Vasja Pupkin', price: '10$'},
