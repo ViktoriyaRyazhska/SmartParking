@@ -8,6 +8,7 @@ import {ProviderListComponent} from "./providers/provider-list/provider-list.com
 import {LoginComponent} from "./auth/login/login.component";
 import {ProviderDetailComponent} from "./providers/provider-detail/provider-detail.component";
 import {ClientDetailComponent} from "./clients/client-detail/client-detail.component";
+import {RegistrationComponent} from "./auth/registration/registration.component";
 import {AddProviderComponent} from './providers/add-provider/add-provider.component';
 
 const routes: Routes = [
@@ -22,6 +23,8 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/provider/add', component: AddProviderComponent}
+    {path: 'registration', component: RegistrationComponent},
+    {path: 'configuration/providers/:id', component: ProviderDetailComponent}
 ];
 
 @NgModule({
