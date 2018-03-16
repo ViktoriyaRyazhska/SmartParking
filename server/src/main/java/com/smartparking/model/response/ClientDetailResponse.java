@@ -1,5 +1,6 @@
 package com.smartparking.model.response;
 
+import com.smartparking.dto.FavoriteDto;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Favorite;
 
@@ -14,6 +15,7 @@ public class ClientDetailResponse {
     private String provider;
     private String role;
     private List<Long> favoritesId;
+    private List<String> favoritesNames;
 
     public static ClientDetailResponse of(Client client) {
         ClientDetailResponse response = new ClientDetailResponse();
@@ -25,6 +27,9 @@ public class ClientDetailResponse {
         response.setProvider(client.getProvider().getName());
         response.setFavoritesId(client.getFavorites()
                 .stream().map(Favorite::getId)
+                .collect(Collectors.toList()));
+        response.setFavoritesNames(client.getFavorites()
+                .stream().map(Favorite::getName)
                 .collect(Collectors.toList()));
         return response;
     }
@@ -83,5 +88,13 @@ public class ClientDetailResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<String> getFavoritesNames() {
+        return favoritesNames;
+    }
+
+    public void setFavoritesNames(List<String> favoritesNames) {
+        this.favoritesNames = favoritesNames;
     }
 }

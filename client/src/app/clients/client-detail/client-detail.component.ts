@@ -20,7 +20,7 @@ export class ClientDetailComponent implements OnInit {
     }
 
     getClientById(): void {
-        const id = parseInt(this.route.snapshot.paramMap.get('id'));
+        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
         this.clientService.getClientDetail(id)
             .subscribe(client => this.client = client);
     }

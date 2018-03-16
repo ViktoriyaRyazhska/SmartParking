@@ -1,10 +1,10 @@
 <div>
     <p>Client firs name: {{client.firstName}}</p>
     <p>Client last name: {{client.lastName}}</p>
-    <p>Client last name: {{client.provider}}</p>
-    <p>Client last name: {{client.role}}</p>
-    <p>Client last name: {{client.id}}</p>
+    <p>Client provider: {{client.provider}}</p>
+    <p>Client role: {{client.role}}</p>
+    <p>Client id: {{client.id}}</p>
 </div>
-<div *ngFor="let client of clients">
-    <h4>{{client.favorite.na}}</h4>
-</div>
+Favorites parkings:
+<li *ngFor="let favoriteName of client.favoritesNames">{{favoriteName}}></li>
+
