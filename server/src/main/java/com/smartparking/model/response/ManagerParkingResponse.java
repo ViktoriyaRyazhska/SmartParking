@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 // TODO Refactoring. Remove getters-setters boilerplate code: use Lombok.
 
 public class ManagerParkingResponse {
+    private Long id;
 
     private AddressResponse address;
     private Double latitude;
@@ -21,6 +22,7 @@ public class ManagerParkingResponse {
     private Integer spotsCount;
 
     private ManagerParkingResponse(Parking parking) {
+        this.id = parking.getId();
         this.address = AddressResponse.of(parking.getAddress());
         this.latitude = parking.getLatitude();
         this.longitude = parking.getLongitude();
@@ -38,6 +40,14 @@ public class ManagerParkingResponse {
 
     public static List<ManagerParkingResponse> listOf(List<Parking> parkings) {
         return parkings.stream().map(ManagerParkingResponse::of).collect(Collectors.toList());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public AddressResponse getAddress() {
