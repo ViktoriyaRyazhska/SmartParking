@@ -17,10 +17,10 @@ public class EventRepositoryImpl extends AbstractRepository<Event, Long> impleme
     }
 
     @Override
-    public Event findBySpotId(Long spotId) {
+    public Event findLastBySpotId(Long spotId) {
         Query query = getEntityManager().createQuery("SELECT event " +
                 "FROM Event event " +
-                "WHERE event.departureTime IS NULL AND " +
+                "WHERE event.timestamp = (SELECT MAX(even) FROM Event even WHERE event.spot.id = :spotId ) AND " +
                 "event.spot.id = :spotId");
         query.setParameter("spotId", spotId);
         return (Event) query.getSingleResult();

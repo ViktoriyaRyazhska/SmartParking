@@ -22,6 +22,7 @@ public abstract class AbstractService<T, ID, R extends Repository<T, ID>> implem
     @Override
     @Transactional
     public void save(T entity) {
+        entity.toString();
         repository.save(entity);
     }
 

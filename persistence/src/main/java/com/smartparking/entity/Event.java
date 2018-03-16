@@ -18,11 +18,13 @@ public class Event extends AbstractIdentifiableEntity {
     private Spot spot;
 
     @NotNull
-    @Column(name = "arrival_time", nullable = false)
-    private Instant arrivalTime;
+    @Column(name = "timestamp", nullable = false)
+    private Instant timestamp;
 
-    @Column(name = "departure_time")
-    private Instant departureTime;
+    @NotNull
+    @Column(name = "occasion", nullable = false)
+    private Occasion occasion;
+
 
     public Spot getSpot() {
         return spot;
@@ -32,27 +34,23 @@ public class Event extends AbstractIdentifiableEntity {
         this.spot = spot;
     }
 
-    public Instant getArrivalTime() {
-        return arrivalTime;
+    public Instant getTimestamp() {
+        return timestamp;
     }
 
-    public void setArrivalTime(Instant arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public Instant getDepartureTime() {
-        return departureTime;
+    public Occasion getOccasion() {
+        return occasion;
     }
 
-    public void setDepartureTime(Instant departureTime) {
-        this.departureTime = departureTime;
+    public void setOccasion(Occasion occasion) {
+        this.occasion = occasion;
     }
 
-    public void setCurrentArrivalTime() {
-        this.arrivalTime = LocalDateTime.now().toInstant(ZoneOffset.UTC);
-    }
-
-    public void setCurrentDepartureTime() {
-        this.departureTime = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+    public void setCurrentEventTime() {
+        this.timestamp = LocalDateTime.now().toInstant(ZoneOffset.UTC);
     }
 }
