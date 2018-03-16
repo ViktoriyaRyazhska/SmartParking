@@ -7,6 +7,7 @@ import {ClientsComponent} from "./clients/clients.component";
 import {ProviderListComponent} from "./providers/provider-list/provider-list.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {ProviderDetailComponent} from "./providers/provider-detail/provider-detail.component";
+import {ManagerParkingConfigureComponent} from "./manager/manager-parking-configure/manager-parking-configure.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path: 'configuration/clientlist', component: ClientsComponent},
     {path: 'configuration/providers', component: ProviderListComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'provider-manager-configuration/parking/:id', component: ManagerParkingConfigureComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent}
 ];
 
