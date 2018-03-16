@@ -2,6 +2,7 @@ package com.smartparking.controller;
 
 
 import com.smartparking.entity.Parking;
+import com.smartparking.model.response.ManagerParkingResponse;
 import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.model.response.ParkingItemResponse;
 import com.smartparking.service.ParkingService;
@@ -46,4 +47,10 @@ public class ParkingController {
         return parkingDetailResponse;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping("manager-parking-configure/{id}")
+    ManagerParkingResponse managerParkingConfigure(@PathVariable Long id) {
+        Parking parking = parkingService.findById(id);
+        return ManagerParkingResponse.of(parking);
+    }
 }
