@@ -1,3 +1,3 @@
-export class Favorite{
-    
+export class Favorite {
+    name: String;
 }

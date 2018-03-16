@@ -4,6 +4,7 @@ import com.smartparking.dto.AddressDto;
 import com.smartparking.dto.ClientDto;
 import com.smartparking.dto.ProviderDto;
 import com.smartparking.entity.Client;
+import com.smartparking.entity.Role;
 import com.smartparking.model.response.ClientDetailResponse;
 import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.service.ClientService;
@@ -38,7 +39,8 @@ public class ClientController {
                     .setFirstName(client.getFirstName())
                     .setLastName(client.getLastName())
                     .setEmail(client.getEmail())
-                    .setProviderDto(providerDto);
+                    .setProviderDto(providerDto)
+                    .setRole(client.getRole().toString());
             clientsDto.add(clientDto);
         }
         return clientsDto;
@@ -46,7 +48,7 @@ public class ClientController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("clients/{id}")
-    ClientDetailResponse find(@PathVariable Long id){
+    ClientDetailResponse find(@PathVariable Long id) {
         Client provider = clientService.findById(id);
         return ClientDetailResponse.of(provider);
     }

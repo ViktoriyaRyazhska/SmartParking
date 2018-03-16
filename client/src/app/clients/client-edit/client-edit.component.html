@@ -5,14 +5,3 @@
     <!--</li>-->
 <!--</ul>-->
 
-<div id="search-component">
-    <input [(ngModel)]="searchText" placeholder="search text goes here">
-    <!--<input #searchBox id="search-box" (keyup)="search(searchBox.value)"/>-->
-
-    <ul class="search-result">
-        <li *ngFor="let client of clients$ | filter : searchText">
-            <!--The $ is a convention that indicates heroes$ is an Observable, not an array.-->
-            {{client.lastName}}
-        </li>
-    </ul>
-</div>

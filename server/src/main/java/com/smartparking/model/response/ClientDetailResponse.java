@@ -12,11 +12,13 @@ public class ClientDetailResponse {
     private String lastName;
     private String email;
     private String provider;
+    private String role;
     private List<Long> favoritesId;
 
     public static ClientDetailResponse of(Client client) {
         ClientDetailResponse response = new ClientDetailResponse();
         response.setId(client.getId());
+        response.setRole(client.getRole().toString());
         response.setFirstName(client.getFirstName());
         response.setLastName(client.getLastName());
         response.setEmail(client.getEmail());
@@ -73,5 +75,13 @@ public class ClientDetailResponse {
 
     public void setFavoritesId(List<Long> favoritesId) {
         this.favoritesId = favoritesId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ClientService} from "../client.service";
-import {Client} from '../client';
+import {Client} from "../../model/view/client";
 
 @Component({
     selector: 'app-client-detail',
