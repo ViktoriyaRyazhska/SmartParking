@@ -11,7 +11,6 @@ export class Parking {
     price: number;
     providerDto: Provider;
     favoritesDto: Favorite[];
-    spotsDto: Spot[];
     numberSpots: number;
     numberAvailableSpots: number;
   }

@@ -5,6 +5,7 @@ import com.smartparking.entity.Parking;
 import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.model.response.ParkingItemResponse;
 import com.smartparking.service.ParkingService;
+import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,9 @@ public class ParkingController {
     ParkingService parkingService;
 
     @Autowired
+    SpotService spotService;
+
+    @Autowired
     ParkingService addressService;
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -32,7 +36,14 @@ public class ParkingController {
     @RequestMapping("parkingdetail/{id}")
     ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
-        return ParkingDetailResponse.of(parking);
+        ParkingDetailResponse parkingDetailResponse = ParkingDetailResponse.of(parking);
+        parkingDetailResponse.setNumberSpots(
+                spotService.countAllSpotsByParkingId(id)
+        );
+        parkingDetailResponse.setNumberAvailableSpots(
+                spotService.countAvailableSpotsByParkingId(id)
+        );
+        return parkingDetailResponse;
     }
 
 }
