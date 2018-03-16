@@ -30,6 +30,8 @@ import {RegistrationComponent} from "./auth/registration/registration.component"
 import {AngularMaterialsModule} from "./angular-materials.module";
 import {IndexComponent} from "./index/index.component";
 import {ParkingListFilter} from "./index/parking-list-filter/parking-list-filter.component";
+import {ManagerParkingConfigureComponent} from "./manager/manager-parking-configure/manager-parking-configure.component";
+import {ManagerParkingListComponent} from "./manager/manager-parking-list/manager-parking-list.component";
 
 
 @NgModule({
@@ -49,6 +51,9 @@ import {ParkingListFilter} from "./index/parking-list-filter/parking-list-filter
         LoginComponent,
         RegistrationComponent,
         ProviderDetailComponent,
+        ParkingListFilter,
+        ManagerParkingConfigureComponent,
+        ManagerParkingListComponent,
         AddProviderComponent,
         FilterPipe,
         ClientDetailComponent,

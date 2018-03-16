@@ -1,0 +1,81 @@
+<!--<div class = "container-fluid">-->
+<!--<form [formGroup]="loginForm" class = "formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">-->
+<!--<legend>Parking Details</legend>-->
+<!--<div class = "row">-->
+<!--<mat-form-field class = "customwidth">-->
+<!--<input matInput placeholder="Address" formControlName="email">-->
+<!--</mat-form-field>-->
+<!--</div>-->
+<!--<div class = "row">-->
+<!--<mat-form-field class = "customwidth">-->
+<!--<input matInput placeholder="Spots count" formControlName="spotsCount">-->
+<!--</mat-form-field>-->
+<!--</div>-->
+<!--<div class = "row">-->
+<!--<mat-form-field class = "customwidth">-->
+<!--<input matInput placeholder="Price" formControlName="price">-->
+<!--</mat-form-field>-->
+<!--</div>-->
+<!--<div class = "row">-->
+<!--<button mat-button>Submit</button>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+
+<div *ngIf="parking">
+
+    <div class="col-md-12">
+        <h1 class="page-title page-header">Parking Details</h1>
+        <h4 class="page-title">
+            Address: {{parking.addressDto.city}}
+        </h4>
+        <h4 class="page-title">Address:
+            <input [(ngModel)]="parking.addressDto" placeholder="Address"/>
+        </h4>
+        <h4 class="page-title">
+            Spots count: {{parking.numberSpots}}
+        </h4>
+        <h4 class="page-title">
+            Spots count: <input [(ngModel)]="parking.numberSpots" placeholder="Spots count"/>
+        </h4>
+        <h5 class="page-title">
+            Price (per hour): {{parking.price}}&#8372;
+        </h5>
+        <h5 class="page-title">
+            Price (per hour): <input [(ngModel)]="parking.price" placeholder="Price (per hour)"/>
+        </h5>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <a href="#collapseOne" aria-controls="collapseOne"
+                       class="btn btn-primary">
+                        Show spots list
+                        <i class="fa fa-arrow-down ml-1"></i>
+                    </a>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse"
+                 data-parent="#accordion">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="text-center">Spot id</th>
+                            <th class="text-center">Location</th>
+                            <th class="text-center">Genre</th>
+                            <th class="text-center">Release year</th>
+                            <th class="text-center">Available count</th>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
