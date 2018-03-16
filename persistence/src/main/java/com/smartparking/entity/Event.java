@@ -14,6 +14,13 @@ import java.time.ZoneOffset;
 public class Event extends AbstractIdentifiableEntity {
 
     @NotNull
+    @Column(name = "event_marker", nullable = false)
+    private EventMarker eventMarker;
+
+    public Event() {
+    }
+
+    @NotNull
     @ManyToOne(optional = false)
     private Spot spot;
 
@@ -21,9 +28,11 @@ public class Event extends AbstractIdentifiableEntity {
     @Column(name = "timestamp", nullable = false)
     private Instant timestamp;
 
-    @NotNull
-    @Column(name = "occasion", nullable = false)
-    private Occasion occasion;
+    public Event(@NotNull Spot spot, @NotNull Instant timestamp, @NotNull EventMarker eventMarker) {
+        this.spot = spot;
+        this.timestamp = timestamp;
+        this.eventMarker = eventMarker;
+    }
 
 
     public Spot getSpot() {
@@ -42,15 +51,24 @@ public class Event extends AbstractIdentifiableEntity {
         this.timestamp = timestamp;
     }
 
-    public Occasion getOccasion() {
-        return occasion;
+    public EventMarker getEventMarker() {
+        return eventMarker;
     }
 
-    public void setOccasion(Occasion occasion) {
-        this.occasion = occasion;
+    public void setEventMarker(EventMarker eventMarker) {
+        this.eventMarker = eventMarker;
     }
 
     public void setCurrentEventTime() {
         this.timestamp = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "spotId=" + spot.getId() +
+                ", timestamp=" + timestamp +
+                ", eventMarker=" + eventMarker +
+                '}';
     }
 }

@@ -9,7 +9,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("SELECT event " +
             "FROM Event event " +
-            "WHERE event.departureTime IS NULL AND " +
+            "WHERE event.timestamp = (SELECT MAX(even.timestamp)FROM Event even WHERE event.spot.id = :spotId) AND " +
             "event.spot.id = :spotId")
     Event findLastBySpotId(@Param("spotId") Long spotId);
 }

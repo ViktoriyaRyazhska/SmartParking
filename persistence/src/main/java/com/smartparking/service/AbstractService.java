@@ -22,7 +22,6 @@ public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> imp
     @Override
     @Transactional
     public void save(T entity) {
-        entity.toString();
         repository.save(entity);
     }
 

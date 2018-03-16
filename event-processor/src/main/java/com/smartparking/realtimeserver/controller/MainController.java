@@ -1,18 +1,11 @@
 package com.smartparking.realtimeserver.controller;
 
 import com.smartparking.entity.Event;
-import com.smartparking.entity.Occasion;
+import com.smartparking.entity.EventMarker;
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
-import com.smartparking.realtimeserver.element.InRequest;
-import com.smartparking.repository.EventRepository;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
@@ -29,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,7 +33,7 @@ import java.util.stream.Collectors;
 public class MainController {
 
     private Map<Long, String> tokens;
-    private List<InRequest> requests = new ArrayList<>();
+    private List<Event> events = new LinkedList<>();
     private Map<Long, Spot> spots;
 
     @Autowired
@@ -53,8 +48,6 @@ public class MainController {
     @Autowired
     private Job job;
 
-    @Autowired
-    private EventRepository eventRepository;
 
 
     @PostConstruct
@@ -87,31 +80,18 @@ public class MainController {
             return new ResponseEntity(HttpStatus.OK);
         }
     }
-//
-//    @RequestMapping("parking/delete")
-//    public ResponseEntity parkingDelete(@RequestParam Long parkingId){
-//        tokens.remove(parkingId);
-//        spots = spotService.findAll().stream()
-//                .collect(Collectors.toMap(Spot::getId, s -> s));
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
-//
-//    @RequestMapping("spot/delete")
-//    public ResponseEntity spotDelete(@RequestParam Long spotId){
-//        spots.remove(spotId);
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
+
 
 
 
     @RequestMapping(value = "spot/update", method = RequestMethod.POST)
     public ResponseEntity processingInRequests(@RequestParam String id,
-                                               @RequestParam String parkingToken) {
+                                               @RequestParam String parkingToken,
+                                               @RequestParam String currentEvent) {
 
-        System.out.println(id);
-        System.out.println(parkingToken);
         Long spotId = null;
-        if (id != null) {
+        EventMarker eventMarker = null;
+        if (id != null && currentEvent != null) {
             try {
                 spotId = Long.valueOf(id);
             } catch (IllegalArgumentException e) {
@@ -121,25 +101,46 @@ public class MainController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-//        Spot spot = spots.get(spotId);
-//        if (spot!=null && tokens.containsValue(parkingToken)){
-//            requests.add(new InRequest(spotId, parkingToken,LocalDateTime.now().toInstant(ZoneOffset.UTC)));
-//            return new ResponseEntity(HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//        }
+        if (currentEvent.equals("0")) {
+            eventMarker = EventMarker.ARRIVED;
+        } else if (currentEvent.equals("0")) {
+            eventMarker = EventMarker.DEPARTUDED;
+        } else {
+            eventMarker = EventMarker.BLOCK;
+        }
+
+        if (!tokens.containsValue(parkingToken)) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
 
         System.out.println(id);
         System.out.println(parkingToken);
         System.out.println(spots.get(spotId).getId());
-        Event event = new Event();
-        event.setSpot(spots.get(spotId));
-        event.setOccasion(Occasion.ARRIVED);
-        event.setCurrentEventTime();
 
-        eventRepository.save(event);
+        Spot spot = spots.get(spotId);
+        if (spot != null && tokens.containsValue(parkingToken)) {
+            events.add(new Event(spot, LocalDateTime.now().toInstant(ZoneOffset.UTC), eventMarker));
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity(HttpStatus.OK);
+
+//*****************for test********************************
+//        System.out.println(id);
+//        System.out.println(parkingToken);
+//        System.out.println(spots.get(spotId).getId());
+//        Event event = new Event();
+//        event.setSpot(spots.get(spotId));
+//        event.setEventMarker(EventMarker.ARRIVED);
+//        event.setCurrentEventTime();
+//
+//        eventService.save(event);
+//
+//        return new ResponseEntity(HttpStatus.OK);
+//**********************************************************
+
 
 //        if (spot == null) {
 //            spot = spotService.findById(spotId);
@@ -166,37 +167,41 @@ public class MainController {
 //        }
     }
 
-    public List<InRequest> getRequests() {
-        return requests;
+    public List<Event> getEvents() {
+        return events;
     }
 
     public Map<Long, Spot> getSpots() {
         return spots;
     }
 
-    @RequestMapping("/test/request")
-    public void testRequest() {
-        System.out.println("**************************************");
-        HttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost("http://localhost:8081/spot/update");
-        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("id", "100"));
-        urlParameters.add(new BasicNameValuePair("parkingToken", "qwerty"));
-    }
+//    @RequestMapping("/test/request")
+//    public void testRequest() {
+//        System.out.println("**************************************");
+//        HttpClient client = HttpClientBuilder.create().build();
+//        HttpPost post = new HttpPost("http://localhost:8081/spot/update");
+//        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+//        urlParameters.add(new BasicNameValuePair("id", "100"));
+//        urlParameters.add(new BasicNameValuePair("parkingToken", "qwerty"));
+//    }
 
     @RequestMapping("/test/flush")
-    public void testFlush() {
+    public ResponseEntity testFlush() {
         try {
             jobLauncher.run(job, new JobParameters());
         } catch (JobExecutionAlreadyRunningException e) {
             e.printStackTrace();
         } catch (JobRestartException e) {
             e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } catch (JobInstanceAlreadyCompleteException e) {
             e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } catch (JobParametersInvalidException e) {
             e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

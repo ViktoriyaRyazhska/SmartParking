@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class RequestItemWriter implements ItemWriter<List<Event>> {
+public class RequestItemWriter implements ItemWriter<Event> {
 
     @Autowired
     EventService eventService;
 
     @Override
-    public void write(List<? extends List<Event>> list) throws Exception {
-        eventService.insertListEvents(list.get(0));
+    public void write(List<? extends Event> list) throws Exception {
+        System.out.println("**********writer***********");
+        eventService.insertListEvents((List<Event>) list);
+
     }
 }

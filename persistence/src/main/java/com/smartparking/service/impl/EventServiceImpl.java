@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class EventServiceImpl extends AbstractService<Event, Long, EventRepository> implements EventService {
 
-    protected EventServiceImpl(@Autowired EventRepository eventRepository) {
-        super(eventRepository);
+    protected EventServiceImpl(@Autowired EventRepository repository) {
+        super(repository);
     }
 
     @Override

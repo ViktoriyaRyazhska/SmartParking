@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface EventService extends Service<Event, Long, EventRepository> {
     Event findBySpotId(Long spotId);
-
     void insertListEvents(List<Event> events);
 }
