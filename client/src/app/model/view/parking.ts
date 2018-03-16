@@ -9,7 +9,7 @@ export class Parking {
     latitude: number;
     longitude: number;
     price: number;
-    providerDto: Provider
+    providerDto: Provider;
     favoritesDto: Favorite[];
     spotsDto: Spot[];
     numberSpots: number;
