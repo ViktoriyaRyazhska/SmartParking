@@ -1,0 +1,31 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="create_event" author="Oleksiy">
+        <createTable tableName="event">
+            <column name="id" type="bigint(20)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="arrival_time" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="departure_time" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="spot_id" type="bigint(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-fk-between-event_and_spot" author="Oleksiy">
+        <addForeignKeyConstraint constraintName="fk_ev_sp"
+                                 baseTableName="event" baseColumnNames="spot_id" referencedTableName="spot"
+                                 referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    </changeSet>
+
+</databaseChangeLog>

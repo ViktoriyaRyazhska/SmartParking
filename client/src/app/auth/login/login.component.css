@@ -1,8 +1,18 @@
+.container-style {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin-top: 15%;
+}
+.heading {
+    margin-bottom: 5%;
+}
+.submit {
+    margin-top: 2%;
+}
+.registration {
+    margin-top: 10%;
+}
 .customwidth {
     width: 100%;
-}
-.formstyle {
-    border: thin;
 }
 .cursor {
     cursor: pointer;

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
-import { Parking } from '../parking';
-import { ParkingService } from "../parking.service";
-import { Spot } from '../spot';
+import {Parking} from '../model/view/parking';
+import {ParkingService} from "../parking.service";
+import { Spot } from '../model/view/spot';
 
 @Component({
   selector: 'app-parking-detail',
