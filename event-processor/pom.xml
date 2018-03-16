@@ -25,7 +25,7 @@
     </properties>
 
     <build>
-        <finalName>SmartParkingRealtimeServer</finalName>
+        <finalName>event-processor</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
