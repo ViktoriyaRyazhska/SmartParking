@@ -21,8 +21,7 @@ export class ProviderService {
         return this.http.get<Provider>(this.providerUrl + '/' + id);
     }
 
-    saveProvider(providerRequest: ProviderRequest): Observable<any> {
-        console.log(providerRequest.city);
-        return this.http.post('/ssss', providerRequest);
+    public saveProvider(providerRequest: ProviderRequest) {
+        return this.http.post('http://localhost:8080/add', providerRequest);
     }
 }

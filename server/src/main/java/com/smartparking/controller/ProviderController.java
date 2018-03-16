@@ -38,7 +38,7 @@ public class ProviderController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/ssss")
+    @PostMapping("/add")
     ResponseEntity save(@RequestBody ProviderRequest providerRequest) {
         new RuntimeException();
         providerService.saveFromRequest(providerRequest);

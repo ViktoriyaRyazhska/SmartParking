@@ -37,8 +37,11 @@ export class AddProviderComponent implements OnInit {
         ;
     }
 
-    saveProvider() {
+    saveProvider(): void {
         this.provider = this.providerForm.value;
-        this.providerService.saveProvider(this.provider);
+        this.providerService.saveProvider(this.provider).subscribe(data => {
+            alert('User created successfully.');
+        });
+        ;
     }
 }

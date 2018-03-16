@@ -22,7 +22,7 @@ const routes: Routes = [
     {path: 'configuration/providers', component: ProviderListComponent},
     {path: 'login', component: LoginComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
-    {path: 'configuration/provider/add', component: AddProviderComponent}
+    {path: 'configuration/provider/add', component: AddProviderComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent}
 ];
