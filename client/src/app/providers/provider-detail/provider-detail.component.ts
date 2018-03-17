@@ -20,15 +20,15 @@ export class ProviderDetailComponent implements OnInit {
         this.getProviderDetail();
     }
 
-/*    getProviderDetail(): void {
-        const id = +this.route.snapshot.paramMap.get('id');
-        this.providerService.getAll()
-            .subscribe(providers => this.provider = providers.find(provider => provider.id === id));
-    }*/
-
     getProviderDetail(): void {
         const id = +this.route.snapshot.paramMap.get('id');
         this.providerService.getProviderDetail(id)
+            .subscribe(provider => this.provider = provider);
+    }
+
+    changeState(): void {
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.providerService.changeState(id)
             .subscribe(provider => this.provider = provider);
     }
 }

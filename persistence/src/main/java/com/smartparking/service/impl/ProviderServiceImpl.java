@@ -39,4 +39,13 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
         getRepository().save(provider);
 
     }
+
+    @Override
+    public Provider changeState(Long id) {
+        Provider provider = findById(id);
+        provider.setActive(!provider.getActive());
+        getRepository().save(provider);
+        return provider;
+    }
+
 }

@@ -38,10 +38,21 @@ public class ProviderController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/add")
+    @GetMapping("providers/changeState/{id}")
+    ProviderDetailResponse changeState(@PathVariable Long id) {
+        return ProviderDetailResponse.of(providerService.changeState(id));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/providers/add")
     ResponseEntity save(@RequestBody ProviderRequest providerRequest) {
-        new RuntimeException();
-        providerService.saveFromRequest(providerRequest);
-        return new ResponseEntity(HttpStatus.OK);
+        if (providerRequest.getName() != "" && providerRequest.getState() != "" &&
+                providerRequest.getCity() != "" && providerRequest.getStreet() != "" &&
+                providerRequest.getBuildingNumber() != "") {
+            providerService.saveFromRequest(providerRequest);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+        }
     }
 }

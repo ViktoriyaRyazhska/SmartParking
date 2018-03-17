@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Client} from "../client";
 import {ClientService} from "../client.service";
+import {Client} from "../../model/view/client";
 
 @Component({
   selector: 'app-client-list',
@@ -15,10 +15,10 @@ export class ClientListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getParkings();
+        this.getClients();
     }
 
-    getParkings(): void {
+    getClients(): void {
         this.clientService.getClients()
             .subscribe(clients => this.clients = clients);
     }

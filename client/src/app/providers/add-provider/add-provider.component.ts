@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Address} from '../../model/view/address';
 import {Provider} from '../provider';
 import {ProviderService} from '../provider.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProviderRequest} from './provider-request';
 
 @Component({
@@ -13,28 +13,45 @@ import {ProviderRequest} from './provider-request';
 export class AddProviderComponent implements OnInit {
 
     provider: ProviderRequest;
-
     providerForm: FormGroup;
-
     address: Address;
 
-    constructor(private providerService: ProviderService) {
+    nameControl: FormControl = new FormControl('', [
+        Validators.required
+    ]);
+    stateControl: FormControl = new FormControl('', [
+        Validators.required
+    ]);
+    cityControl: FormControl = new FormControl('', [
+        Validators.required
+    ]);
+    streetControl: FormControl = new FormControl('', [
+        Validators.required
+    ]);
+    buildingNumberControl: FormControl = new FormControl('', [
+        Validators.required, Validators.pattern('^\\d+[a-zA-Z]{0,1}$')
+    ]);
+
+    constructor(private providerService: ProviderService,
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
         this.providerForm = new FormGroup({
-            name: new FormControl('', [
-                Validators.required]),
-            state: new FormControl('', [
-                Validators.required]),
-            city: new FormControl('', [
-                Validators.required]),
-            street: new FormControl('', [
-                Validators.required]),
-            buildingNumber: new FormControl('', [
-                Validators.required])
+            name: new FormControl(''),
+            state: new FormControl(''),
+            city: new FormControl(''),
+            street: new FormControl(''),
+            buildingNumber: new FormControl('')
         })
         ;
+        this.providerForm = this.formBuilder.group({
+            name: this.nameControl,
+            state: this.stateControl,
+            city: this.cityControl,
+            street: this.streetControl,
+            buildingNumber: this.buildingNumberControl
+        });
     }
 
     saveProvider(): void {

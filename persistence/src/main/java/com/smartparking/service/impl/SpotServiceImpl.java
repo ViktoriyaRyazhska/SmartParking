@@ -18,17 +18,20 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
 
     @Override
     public List<Spot> findAllAvailableSpotsByParkingId(Long id) {
-        return repository.findAllAvailableSpotsByParkingId(id);
+//        return repository.findAllAvailableSpotsByParkingId(id);
+        return null;
     }
 
     @Override
     public Long countAvailableSpotsByParkingId(Long id) {
-        return repository.countAvailableSpotsByParkingId(id);
+        //return repository.countAvailableSpotsByParkingId(id);
+        return null;
     }
 
     @Override
     public Long countAllSpotsByParkingId(Long id) {
-        return repository.countAllSpotsByParkingId(id);
+        //return repository.countAllSpotsByParkingId(id);
+        return null;
     }
 
     @Override

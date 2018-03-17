@@ -25,7 +25,7 @@ const routes: Routes = [
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/provider/add', component: AddProviderComponent},
     {path: 'registration', component: RegistrationComponent},
-    {path: 'provider-manager-configuration/parking/:id', component: ManagerParkingConfigureComponent},
+    {path: 'manager-configuration/parking/:id', component: ManagerParkingConfigureComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent}
 ];
 

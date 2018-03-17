@@ -1,8 +1,10 @@
 package com.smartparking.model.response;
 
+import com.smartparking.dto.FavoriteDto;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Favorite;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,17 +14,23 @@ public class ClientDetailResponse {
     private String lastName;
     private String email;
     private String provider;
+    private String role;
     private List<Long> favoritesId;
+    private List<String> favoritesNames;
 
     public static ClientDetailResponse of(Client client) {
         ClientDetailResponse response = new ClientDetailResponse();
         response.setId(client.getId());
+        response.setRole(client.getRole().toString());
         response.setFirstName(client.getFirstName());
         response.setLastName(client.getLastName());
         response.setEmail(client.getEmail());
         response.setProvider(client.getProvider().getName());
         response.setFavoritesId(client.getFavorites()
                 .stream().map(Favorite::getId)
+                .collect(Collectors.toList()));
+        response.setFavoritesNames(client.getFavorites()
+                .stream().map(Favorite::getName)
                 .collect(Collectors.toList()));
         return response;
     }
@@ -74,4 +82,21 @@ public class ClientDetailResponse {
     public void setFavoritesId(List<Long> favoritesId) {
         this.favoritesId = favoritesId;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public List<String> getFavoritesNames() {
+        return favoritesNames;
+    }
+
+    public void setFavoritesNames(List<String> favoritesNames) {
+        this.favoritesNames = favoritesNames;
+    }
+
 }
