@@ -6,4 +6,6 @@ import com.smartparking.model.request.ProviderRequest;
 
 public interface ProviderService extends Service<Provider, Long, ProviderRepository> {
     void saveFromRequest(ProviderRequest providerRequest);
+
+    Provider changeState(Long id);
 }
