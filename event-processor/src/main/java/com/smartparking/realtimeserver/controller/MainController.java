@@ -103,7 +103,7 @@ public class MainController {
 
         if (currentEvent.equals("0")) {
             eventMarker = EventMarker.ARRIVED;
-        } else if (currentEvent.equals("0")) {
+        } else if (currentEvent.equals("1")) {
             eventMarker = EventMarker.DEPARTUDED;
         } else {
             eventMarker = EventMarker.BLOCK;
