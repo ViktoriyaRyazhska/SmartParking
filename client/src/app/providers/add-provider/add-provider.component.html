@@ -1,37 +1,55 @@
-<div class = "container-fluid">
-    <form [formGroup]="providerForm" class = "formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6"
-          (ngSubmit)="saveProvider()">
-        <legend>Add provider</legend>
-        <div class = "row">
-            <mat-form-field class = "customwidth">
-                <input matInput placeholder="Name" formControlName="name">
-            </mat-form-field>
-        </div>
-        <div class = "row">
-            <mat-form-field class = "customwidth">
-                <input matInput placeholder="State" formControlName="state">
-            </mat-form-field>
-        </div>
-        <div class = "row">
-            <mat-form-field class = "customwidth">
-                <input matInput placeholder="City" formControlName="city">
-            </mat-form-field>
-        </div>
-        <div class = "row">
-            <mat-form-field class = "customwidth">
-                <input matInput placeholder="Street" formControlName="street">
-            </mat-form-field>
-        </div>
-        <div class = "row">
-            <mat-form-field class = "customwidth">
-                <input matInput placeholder="Building number" formControlName="buildingNumber">
-            </mat-form-field>
-        </div>
+<div class="container-fluid">
+    <legend>Add provider</legend>
+    <form class="example-form" [formGroup]="providerForm" (ngSubmit)="saveProvider()">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Company name" formControlName="name">
+            <mat-error *ngIf="nameControl.hasError('required')">
+                Company name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="State" formControlName="state">
+                        <mat-error *ngIf="stateControl.hasError('required')">
+                            State name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="City" formControlName="city">
+                        <mat-error *ngIf="cityControl.hasError('required')">
+                            City name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Street" formControlName="street">
+                        <mat-error *ngIf="streetControl.hasError('required')">
+                            Street name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Number building" formControlName="buildingNumber">
+                        <mat-error *ngIf="buildingNumberControl.hasError('required')">
+                            Building number is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="buildingNumberControl.hasError('pattern')&&!buildingNumberControl.hasError('required')">
+                            Wrong style. Example: <strong>101b</strong>
+                        </mat-error>
 
-        <div class = "row">
-            <button mat-button>Submit</button>
+                    </mat-form-field>
+
+                </td>
+            </tr>
+        </table>
+        <div class="row offset-5 submit">
+            <button mat-button class="btn btn-success" [disabled]="!providerForm.valid">Submit</button>
         </div>
     </form>
 </div>
-
-
