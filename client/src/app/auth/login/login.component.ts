@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginData} from "./login-data";
 import {Router} from "@angular/router";
+import {CookieService} from "angular2-cookie/core";
+import {ResponseToken} from "./response-token";
+import {LoginService} from "./login.service";
 
 @Component({
   selector: 'app-login',
@@ -25,9 +28,9 @@ export class LoginComponent implements OnInit {
     ]);
 
     constructor(private formBuilder: FormBuilder,
-                /*private loginService: LoginService,*/
+                private loginService: LoginService,
                 private router: Router,
-                /*private cookie: CookieService*/) {}
+                private cookie: CookieService) {}
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -36,7 +39,7 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    /*login = () => {
+    login = () => {
         this.loginData = this.loginForm.value;
         this.loginService.signIn(this.account)
             .subscribe((response:ResponseToken)=>{
@@ -47,6 +50,6 @@ export class LoginComponent implements OnInit {
                     this.error = true;
                 }
             );
-    };*/
+    };
 
 }

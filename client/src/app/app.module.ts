@@ -67,7 +67,8 @@ import {ParkingListFilter} from "./index/parking-list-filter/parking-list-filter
         ParkingService,
         GeoLocationService,
         ProviderService,
-        ClientService
+        ClientService,
+        LoginService
     ],
     bootstrap: [AppComponent]
 })
