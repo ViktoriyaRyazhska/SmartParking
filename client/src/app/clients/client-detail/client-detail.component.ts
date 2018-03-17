@@ -9,6 +9,7 @@ import {Client} from "../../model/view/client";
     styleUrls: ['./client-detail.component.css']
 })
 export class ClientDetailComponent implements OnInit {
+
     client: Client;
 
     constructor(private route: ActivatedRoute,

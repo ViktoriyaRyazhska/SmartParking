@@ -4,6 +4,7 @@ import com.smartparking.dto.FavoriteDto;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Favorite;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,4 +98,5 @@ public class ClientDetailResponse {
     public void setFavoritesNames(List<String> favoritesNames) {
         this.favoritesNames = favoritesNames;
     }
+
 }
