@@ -1,4 +1,29 @@
-<div>
-  <p>Client firs name: {{client.firstName}}</p>
-  <p>Client last name: {{client.lastName}}</p>
+<div class="container-fluid container-style">
+    <form class="formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+        <h3 class="heading row offset-4">Cliet details</h3>
+        <div class="row">
+            <h5><b>Firs name</b>: {{client.firstName}}</h5>
+        </div>
+
+        <div class="row">
+            <h5><b>Last name</b>: {{client.lastName}}</h5>
+        </div>
+
+        <div class="row">
+            <h5><b>Provider</b>: {{client.provider}}</h5>
+        </div>
+
+        <div class="row">
+            <h5><b>Role</b>: {{client.role}}</h5>
+        </div>
+
+        <div>
+            <h3>Favorites parkings:</h3>
+            <li *ngFor="let favoriteName of client.favoritesNames">{{favoriteName}}></li>
+        </div>
+    </form>
 </div>
+
+
+
+

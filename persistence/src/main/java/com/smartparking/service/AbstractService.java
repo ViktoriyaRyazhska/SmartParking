@@ -1,7 +1,9 @@
 package com.smartparking.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -9,8 +11,15 @@ public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> imp
 
     protected final R repository;
 
+    @Autowired
+    private EntityManager entityManager;
+
     protected AbstractService(R repository) {
         this.repository = repository;
+    }
+
+    protected EntityManager getEntityManager(){
+        return entityManager;
     }
 
     @Override

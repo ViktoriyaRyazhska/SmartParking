@@ -6,7 +6,8 @@
                      class="media-photo">
             </a>
             <div class="media-body">
-                <h6>id:{{client.id}}</h6>
+                <h6 [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'red' : 'black'}">
+                    id:{{client.id}},{{client.role}}</h6>
                 <span class="media-meta pull-right">{{client.email}}</span>
                 <h4 class="title">
                     {{client.firstName}} {{client.lastName}}
@@ -15,10 +16,7 @@
         </div>
     </td>
     <td>
-        <button type="button" class="btn btn-success">Edit Client</button>
-        <a routerLink='{{client.id}}' class="btn btn-primary">More info</a>
     </td>
-    <td>
-
-    </td>
+    <a routerLink='edit/{{client.id}}' class="btn btn-success">Edit Client</a>
+    <a routerLink='{{client.id}}' class="btn btn-primary">More info</a>
 </tr>

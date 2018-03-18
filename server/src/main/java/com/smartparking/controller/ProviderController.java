@@ -1,6 +1,7 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Provider;
+import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
 import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.model.response.ProviderItemResponse;
@@ -21,8 +22,12 @@ public class ProviderController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers")
-    List<ProviderItemResponse> findAll() {
-        List<Provider> providers = providerService.findAll();
+    List<ProviderItemResponse> findAll(@RequestParam String active,
+                                       @RequestParam String companyName) {
+        ProviderFilter providerFilter = new ProviderFilter();
+        providerFilter.setActive(active);
+        providerFilter.setCompanyName(companyName);
+        List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
         for (Provider provider : providers) {
             providerResponses.add(ProviderItemResponse.of(provider));
@@ -38,10 +43,21 @@ public class ProviderController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/add")
+    @GetMapping("providers/changeState/{id}")
+    ProviderDetailResponse changeState(@PathVariable Long id) {
+        return ProviderDetailResponse.of(providerService.changeState(id));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/providers/add")
     ResponseEntity save(@RequestBody ProviderRequest providerRequest) {
-        new RuntimeException();
-        providerService.saveFromRequest(providerRequest);
-        return new ResponseEntity(HttpStatus.OK);
+        if (providerRequest.getName() != "" && providerRequest.getState() != "" &&
+                providerRequest.getCity() != "" && providerRequest.getStreet() != "" &&
+                providerRequest.getBuildingNumber() != "") {
+            providerService.saveFromRequest(providerRequest);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+        }
     }
 }
