@@ -1,10 +1,8 @@
 package com.smartparking.model.response;
 
-import com.smartparking.dto.FavoriteDto;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Favorite;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

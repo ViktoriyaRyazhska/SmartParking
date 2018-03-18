@@ -9,6 +9,7 @@ export class Client{
     password: string;
     favoritesId: number[];
     favoritesNames: string[];
-    provider: Provider;
+    favorite: Favorite[];
+    provider: string;
     role: string;
 }

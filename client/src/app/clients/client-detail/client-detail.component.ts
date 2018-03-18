@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
+import {ClientRequest} from "../client-edit/client-request";
 
 @Component({
     selector: 'app-client-detail',
@@ -10,7 +11,7 @@ import {Client} from "../../model/view/client";
 })
 export class ClientDetailComponent implements OnInit {
 
-    client: Client;
+    client: ClientRequest;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService) {

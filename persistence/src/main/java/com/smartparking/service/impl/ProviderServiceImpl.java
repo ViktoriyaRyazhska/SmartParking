@@ -44,7 +44,6 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
         provider.setActive(true);
         provider.setLegalAddress(address);
         getRepository().save(provider);
-
     }
 
     @Override

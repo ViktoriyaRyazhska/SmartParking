@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Client} from "../model/view/client";
-
+import {ClientRequest} from "./client-edit/client-request";
 
 @Injectable()
 export class ClientService {
@@ -16,9 +16,12 @@ export class ClientService {
         return this.http.get<Client[]>(this.clientsUrl);
     }
 
-    getClientDetail(id: number): Observable<Client> {
-        return this.http.get<Client>(this.clientsUrl + "/" + id);
+    getClientDetail(id: number): Observable<ClientRequest> {
+        return this.http.get<ClientRequest>(this.clientsUrl + "/" + id);
     }
 
+    updateClient(id: number, client: ClientRequest) {
+        return this.http.post(this.clientsUrl + '/update/' + id, client);
+    }
 
 }

@@ -1,7 +1,5 @@
 package com.smartparking.dto;
 
-import com.smartparking.entity.Role;
-
 import java.util.List;
 
 public class ClientDto {

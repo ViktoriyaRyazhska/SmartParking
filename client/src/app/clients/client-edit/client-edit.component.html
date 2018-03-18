@@ -1,7 +1,40 @@
-<!--<input [(ngModel)]="searchText" placeholder="search text goes here">-->
-<!--<ul>-->
-    <!--<li *ngFor="let c of characters | filter : searchText">-->
-        <!--{{c}}-->
-    <!--</li>-->
-<!--</ul>-->
+<div class="container-fluid container-style">
+    <form novalidate #clientForm="ngForm" (ngSubmit)="onUpdate()"
+          class="formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+        <h3 class="heading row offset-4">Cliet Edit Form</h3>
+
+        <div class="row">
+            <input type="text" name="firstName" [(ngModel)]="client.firstName" class="form-control" required
+                   minlength="3">
+        </div>
+
+        <div class="row">
+            <input type="text" name="lastName" [(ngModel)]="client.lastName" class="form-control" required
+                   minlength="3">
+        </div>
+
+        <div class="row">
+            <input type="text" name="email" [(ngModel)]="client.email" class="form-control">
+        </div>
+
+        <div class="row">
+            <input type="text" name="provider" [(ngModel)]="client.provider" class="form-control">
+        </div>
+
+        <div class="row">
+            <input type="text" name="role" [(ngModel)]="client.role" class="form-control">
+        </div>
+
+        <div class="row offset-5 submit">
+            <button class="btn btn-outline-primary"
+                    type="submit"
+                    [disabled]="!clientForm.valid"
+                    (click)="udateClientById()">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+
+
 
