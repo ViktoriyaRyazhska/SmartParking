@@ -4,7 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Provider} from './provider';
 import {Observable} from 'rxjs/Observable';
 import {ProviderRequest} from './add-provider/provider-request';
-import {ProviderListFilterParameters} from '../model/filter/provider-list-filetr-parameters';
+import {ProviderListFilterParameters} from '../../model/filter/provider-list-filetr-parameters';
 
 @Injectable()
 export class ProviderService {
