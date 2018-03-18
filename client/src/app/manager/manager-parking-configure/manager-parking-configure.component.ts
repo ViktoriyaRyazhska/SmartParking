@@ -1,25 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {Parking} from "../../model/view/parking";
-import {ParkingService} from "../../parking.service";
 import {ActivatedRoute} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+
+import {ManagerParkingService} from "../manager-parking.service";
+import {ManagerParkingResponse} from "../manager-parking-response";
 
 @Component({
-    selector: 'app-parking-configure',
+    selector: 'app-manager-parking-configure',
     templateUrl: './manager-parking-configure.component.html',
     styleUrls: ['./manager-parking-configure.component.css']
 })
 export class ManagerParkingConfigureComponent implements OnInit {
 
-    parking: Parking = new Parking();
-
-    parkingForm = new FormGroup({
-        address: new FormControl('', []),
-        spotsCount: new FormControl('', [])
-    });
+    parking: ManagerParkingResponse;
 
     constructor(private route: ActivatedRoute,
-                private parkingService: ParkingService) {
+                private formBuilder: FormBuilder,
+                private managerParkingService: ManagerParkingService) {
     }
 
     ngOnInit() {
@@ -28,7 +25,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
 
     getParking(): void {
         const id = parseInt(this.route.snapshot.paramMap.get('id'));
-        this.parkingService.getParking(id)
+        this.managerParkingService.getParking(id)
             .subscribe(parking => this.parking = parking);
     }
 }
