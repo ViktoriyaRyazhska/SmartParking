@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Provider} from '../provider';
 import {ProviderService} from '../provider.service';
-import {ProviderListFilterParameters} from '../../model/filter/provider-list-filetr-parameters';
+import {ProviderListFilterParameters} from '../../../model/filter/provider-list-filter-parameters';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -12,7 +12,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 export class ProviderListComponent implements OnInit {
     providers: Provider[];
     providerFilterForm = new FormGroup({
-        active: new FormControl('null', [])});
+        active: new FormControl('null', []),
+        companyName: new FormControl('', [])
+    });
     providerFilter: ProviderListFilterParameters;
 
     constructor(private providerService: ProviderService,

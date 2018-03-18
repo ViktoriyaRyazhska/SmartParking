@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Address} from '../../model/view/address';
-import {Provider} from '../provider';
+import {Address} from '../../../model/view/address';
 import {ProviderService} from '../provider.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProviderRequest} from './provider-request';

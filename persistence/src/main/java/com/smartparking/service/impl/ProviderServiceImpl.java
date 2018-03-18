@@ -56,16 +56,19 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
 
     @Override
     public List<Provider> findAllByFilter(ProviderFilter providerFilter) {
-        CriteriaBuilder criteriaBuilder = getEntitManager().getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Provider> criteria = criteriaBuilder.createQuery(Provider.class);
         Root<Provider> provider = criteria.from(Provider.class);
         criteria.select(provider);
         List<Predicate> predicates = new ArrayList<>();
-        if (!providerFilter.getActive().equals("null")) {
+        if (providerFilter.getActive().equals("true") || providerFilter.getActive().equals("false")) {
             predicates.add(criteriaBuilder.and(criteriaBuilder.equal(provider.get("active"), Boolean.valueOf(providerFilter.getActive()))));
         }
+        if (!providerFilter.getCompanyName().equals("")) {
+            predicates.add((criteriaBuilder.and(criteriaBuilder.like(provider.get("name"), providerFilter.getCompanyName() + "%"))));
+        }
         criteria.where(predicates.toArray(new Predicate[predicates.size()]));
-        return getEntitManager().createQuery(criteria).getResultList();
+        return getEntityManager().createQuery(criteria).getResultList();
     }
 
 }

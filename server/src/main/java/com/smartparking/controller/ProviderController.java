@@ -22,9 +22,11 @@ public class ProviderController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers")
-    List<ProviderItemResponse> findAll(@RequestParam String active) {
+    List<ProviderItemResponse> findAll(@RequestParam String active,
+                                       @RequestParam String companyName) {
         ProviderFilter providerFilter = new ProviderFilter();
         providerFilter.setActive(active);
+        providerFilter.setCompanyName(companyName);
         List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
         for (Provider provider : providers) {
