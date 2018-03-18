@@ -3,12 +3,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
+import {MatButtonModule, MatDividerModule, MatExpansionModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
 import {ParkingListComponent} from './index/parking-list/parking-list.component';
 import {ParkingService} from './parking.service';
 import {GeoLocationService} from './geo-location.service';
+import {ManagerParkingService} from "./manager/manager-parking.service";
 
 import {AppRoutingModule} from './app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
@@ -67,10 +69,14 @@ import {ManagerParkingListComponent} from "./manager/manager-parking-list/manage
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        AngularMaterialsModule
+        AngularMaterialsModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatButtonModule
     ],
     providers: [
         ParkingService,
+        ManagerParkingService,
         GeoLocationService,
         ProviderService,
         ClientService
