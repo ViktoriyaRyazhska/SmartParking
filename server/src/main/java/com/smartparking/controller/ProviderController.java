@@ -1,6 +1,7 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Provider;
+import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
 import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.model.response.ProviderItemResponse;
@@ -21,8 +22,10 @@ public class ProviderController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers")
-    List<ProviderItemResponse> findAll() {
-        List<Provider> providers = providerService.findAll();
+    List<ProviderItemResponse> findAll(@RequestParam String active) {
+        ProviderFilter providerFilter = new ProviderFilter();
+        providerFilter.setActive(active);
+        List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
         for (Provider provider : providers) {
             providerResponses.add(ProviderItemResponse.of(provider));

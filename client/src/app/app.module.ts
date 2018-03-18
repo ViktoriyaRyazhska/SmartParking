@@ -1,9 +1,9 @@
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {MatButtonModule, MatDividerModule, MatExpansionModule} from '@angular/material';
+import {MAT_LABEL_GLOBAL_OPTIONS, MatButtonModule, MatDividerModule, MatExpansionModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
@@ -81,7 +81,8 @@ import {ManagerParkingListComponent} from "./manager/manager-parking-list/manage
         ProviderService,
         ClientService
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule {
 }

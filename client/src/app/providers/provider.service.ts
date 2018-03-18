@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {Provider} from './provider';
 import {Observable} from 'rxjs/Observable';
 import {ProviderRequest} from './add-provider/provider-request';
+import {ProviderListFilterParameters} from '../model/filter/provider-list-filetr-parameters';
 
 @Injectable()
 export class ProviderService {
@@ -13,8 +14,10 @@ export class ProviderService {
     constructor(private http: HttpClient) {
     }
 
-    getAll(): Observable<Provider[]> {
-        return this.http.get<Provider[]>(this.providerUrl);
+    getProviders(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
+        console.log(providerFilter)
+        let params = new HttpParams().set("active", providerFilter.active);
+        return this.http.get<Provider[]>(this.providerUrl, {params: params});
     }
 
     getProviderDetail(id: number): Observable<Provider> {
@@ -28,4 +31,5 @@ export class ProviderService {
     changeState(id: number): Observable<Provider> {
         return this.http.get<Provider>(this.providerUrl + '/changeState/' + id);
     }
+
 }
