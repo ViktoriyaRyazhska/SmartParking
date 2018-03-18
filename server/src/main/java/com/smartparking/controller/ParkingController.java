@@ -50,7 +50,7 @@ public class ParkingController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping("manager-parking-configure/{id}")
+    @RequestMapping("manager-parkings-configure/{id}")
     ResponseEntity<ManagerParkingResponse> managerParkingConfigure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
         if (parking != null) {
