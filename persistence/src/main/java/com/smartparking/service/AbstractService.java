@@ -18,7 +18,7 @@ public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> imp
         this.repository = repository;
     }
 
-    protected EntityManager getEntitManager(){
+    protected EntityManager getEntityManager(){
         return entityManager;
     }
 
