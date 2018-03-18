@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.2",
     "@angular/animations": "^5.2.0",
     "@angular/cdk": "^5.2.4",
     "@angular/common": "^5.2.0",
@@ -23,6 +24,7 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "@google/maps": "^0.4.5",
     "@ng-bootstrap/ng-bootstrap": "^1.0.1",
     "angular-in-memory-web-api": "^0.5.4",
     "bootstrap": "^4.0.0-beta.3",
