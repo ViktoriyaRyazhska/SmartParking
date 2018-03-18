@@ -3,9 +3,19 @@
     <div>Filtering: </div>
     <p>By state: <input type="hidden" value="tr"></p>
     <form class="example-form" [formGroup]="providerFilterForm" (ngSubmit)="getProviders()">
-        <input formControlName="active" type="radio" value="true"> Active <br/>
-        <input formControlName="active" type="radio" value="false"> Non active <br/>
-        <input formControlName="active" type="radio" value="null"> All <br/>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Company name" formControlName="companyName">
+        </mat-form-field>
+        <hr/>
+        <div class="radio">
+            <label><input formControlName="active" type="radio" value="true"> Active</label>
+        </div>
+        <div class="radio">
+            <label><input formControlName="active" type="radio" value="false"> Non active</label>
+        </div>
+        <div class="radio disabled">
+            <label><input formControlName="active" type="radio" value="null"> All</label>
+        </div>
         <div class="row offset-5 submit">
             <button mat-button class="btn btn-success">Submit</button>
         </div>

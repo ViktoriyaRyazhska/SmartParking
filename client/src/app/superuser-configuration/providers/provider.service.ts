@@ -4,7 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Provider} from './provider';
 import {Observable} from 'rxjs/Observable';
 import {ProviderRequest} from './add-provider/provider-request';
-import {ProviderListFilterParameters} from '../../model/filter/provider-list-filetr-parameters';
+import {ProviderListFilterParameters} from '../../model/filter/provider-list-filter-parameters';
 
 @Injectable()
 export class ProviderService {
@@ -16,7 +16,8 @@ export class ProviderService {
 
     getProviders(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
         console.log(providerFilter)
-        let params = new HttpParams().set("active", providerFilter.active);
+        let params = new HttpParams().set("active", providerFilter.active)
+            .set("companyName", providerFilter.companyName);
         return this.http.get<Provider[]>(this.providerUrl, {params: params});
     }
 
