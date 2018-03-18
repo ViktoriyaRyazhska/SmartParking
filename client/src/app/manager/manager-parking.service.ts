@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 
-import {ManagerParkingRequest} from "./manager-parking-request";
-import {ManagerParkingResponse} from "./manager-parking-response";
+import {Parking} from "../model/view/parking";
 
 @Injectable()
 export class ManagerParkingService {
@@ -13,11 +12,11 @@ export class ManagerParkingService {
     constructor(private http: HttpClient) {
     }
 
-    getParking(id: number): Observable<ManagerParkingResponse> {
-        return this.http.get<ManagerParkingResponse>(this.parkingConfigureUrl + "/" + id);
+    getParking(id: number): Observable<Parking> {
+        return this.http.get<Parking>(this.parkingConfigureUrl + "/" + id);
     }
 
-    updateParking(parkingRequest: ManagerParkingRequest) {
-        return this.http.post(this.parkingConfigureUrl + '/update', parkingRequest);
+    updateParking(parking: Parking) {
+        return this.http.post(this.parkingConfigureUrl + '/update', parking);
     }
 }
