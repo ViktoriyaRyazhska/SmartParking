@@ -14,7 +14,8 @@
         </div>
 
         <div class="row">
-            <input type="text" name="email" [(ngModel)]="client.email" class="form-control">
+            <input type="email" name="email" [(ngModel)]="client.email" class="form-control"
+                   required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*">
         </div>
 
         <div class="row">

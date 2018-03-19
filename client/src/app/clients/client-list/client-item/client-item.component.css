@@ -5,3 +5,8 @@
 td {
     min-width: 35em;
 }
+
+#aInfo {
+    display: block;
+    margin-top: 40%;
+}

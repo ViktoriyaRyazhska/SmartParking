@@ -11,6 +11,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepository> implements ClientService {
 
@@ -26,5 +28,10 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
         client.setLastName(clientRequest.getLastName());
         client.setEmail(clientRequest.getEmail());
         getRepository().save(client);
+    }
+
+    @Override
+    public List<Client> findClientsByAnyMatch(String input) {
+        return getRepository().findClientsByAnyMatch(input);
     }
 }

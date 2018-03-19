@@ -1,7 +1,11 @@
 <h1>Clients List</h1>
 
 <div class="table-container">
-    <input [(ngModel)]="searchText" placeholder="search">
+    <input *ngIf="!backEndMode" [(ngModel)]=searchText placeholder="front-end search">
+    <input *ngIf="backEndMode" #searchBox id="search-box" (keyup)="findClientsFromBackEnd(searchBox.value)" placeholder="back-end search">
+    <button class="btn btn-outline-primary"
+            (click)="switchMode()">Switch
+    </button>
     <table class="table table-filter">
         <tbody>
         <app-client-item

@@ -64,4 +64,17 @@ public class ClientController {
         return ProviderDetailResponse.of(provider);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("clients/findclients/{input}")
+    List<ClientItemResponse> findClientsByAnyMatch(@PathVariable String input) {
+        if (input != "") {
+            List<Client> clients = clientService.findClientsByAnyMatch(input);
+            List<ClientItemResponse> clientItemResponses = new ArrayList<>();
+            for (Client client : clients) {
+                clientItemResponses.add(ClientItemResponse.of(client));
+            }
+            return clientItemResponses;
+        } else return findAll();
+    }
+
 }

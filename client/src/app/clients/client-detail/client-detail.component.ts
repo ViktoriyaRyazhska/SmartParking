@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
 import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
-import {ClientRequest} from "../client-request";
 import {ClientsProviderRequest} from "../clients-provider-request";
+import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
     selector: 'app-client-detail',
@@ -17,7 +16,8 @@ export class ClientDetailComponent implements OnInit {
     showProviderDetails: boolean = false;
 
     constructor(private route: ActivatedRoute,
-                private clientService: ClientService) {
+                private clientService: ClientService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -39,6 +39,14 @@ export class ClientDetailComponent implements OnInit {
 
     seeProviderDetails() {
         this.showProviderDetails = !this.showProviderDetails;
+    }
+
+    goToClientsList() {
+        this.router.navigate(['configuration/clients']);
+    }
+
+    goToClientEditForm() {
+        this.router.navigate(['configuration/clients/edit/', this.client.id]);
     }
 
 
