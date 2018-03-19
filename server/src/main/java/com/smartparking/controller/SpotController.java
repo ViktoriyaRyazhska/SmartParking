@@ -27,7 +27,21 @@ public class SpotController {
         for (Spot spot : allSpots) {
             SpotDto spotDto = new SpotDto();
             spotDto.setId(spot.getId());
-            spotDto.setFree(freeSpots.contains(spot));
+            spotDto.setIsFree(freeSpots.contains(spot));
+            spotDtoList.add(spotDto);
+        }
+        return spotDtoList;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping("parkingdetail/{id}/freespots")
+    List<SpotDto> findAvailableSpotsDto (@PathVariable Long id){
+        List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
+        List<SpotDto> spotDtoList = new ArrayList<>();
+        for (Spot spot : freeSpots) {
+            SpotDto spotDto = new SpotDto();
+            spotDto.setId(spot.getId());
+            spotDto.setIsFree(true);
             spotDtoList.add(spotDto);
         }
         return spotDtoList;
