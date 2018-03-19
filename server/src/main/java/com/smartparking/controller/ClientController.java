@@ -6,11 +6,21 @@ import com.smartparking.dto.ProviderDto;
 import com.smartparking.dto.RegistrationClient;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
+import com.smartparking.entity.Provider;
+import com.smartparking.model.request.ClientRequest;
+import com.smartparking.model.request.ProviderRequest;
 import com.smartparking.model.response.ClientDetailResponse;
+import com.smartparking.model.response.ClientItemResponse;
 import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.service.ClientService;
+import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,33 +35,69 @@ public class ClientController {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
+    @Autowired
+    ProviderService providerService;
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("clients")
-    List<ClientDto> findAll() {
+    List<ClientItemResponse> findAll() {
         List<Client> clients = clientService.findAll();
-        List<ClientDto> clientsDto = new ArrayList<>();
-        ProviderDto providerDto;
-        ClientDto clientDto;
+        List<ClientItemResponse> clientItemResponses = new ArrayList<>();
         for (Client client : clients) {
-            providerDto = ProviderDto.builder()
-                    .setId(client.getProvider().getId())
-                    .setName(client.getProvider().getName())
-                    .setActive(client.getProvider().getActive());
-            clientDto = ClientDto.builder().setId(client.getId())
-                    .setFirstName(client.getFirstName())
-                    .setLastName(client.getLastName())
-                    .setEmail(client.getEmail())
-                    .setProviderDto(providerDto);
-            clientsDto.add(clientDto);
+            clientItemResponses.add(ClientItemResponse.of(client));
         }
-        return clientsDto;
+        return clientItemResponses;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("clients/clientslimit")
+    List<ClientItemResponse> limitFindClients() {
+        List<Client> clients = clientService.findLimitNumberOfClients(new PageRequest(0, 50));
+        List<ClientItemResponse> clientItemResponses = new ArrayList<>();
+        for (Client client : clients) {
+            clientItemResponses.add(ClientItemResponse.of(client));
+        }
+        return clientItemResponses;
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("clients/{id}")
-    ClientDetailResponse find(@PathVariable Long id){
-        Client provider = clientService.findById(id);
-        return ClientDetailResponse.of(provider);
+    ClientDetailResponse find(@PathVariable Long id) {
+        Client client = clientService.findById(id);
+        return ClientDetailResponse.of(client);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/clients/update/{id}")
+    ResponseEntity save(@PathVariable Long id, @RequestBody ClientRequest clientRequest) {
+//        if (clientRequest.getFirsName() != "" && clientRequest.getLastName() != "" &&
+//                clientRequest.getEmail() != "") {
+        System.out.println(clientRequest.getFirsName());
+        clientService.updateFromRequest(id, clientRequest);
+        return new ResponseEntity(HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+//        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("clients/findprovider/{id}")
+    ProviderDetailResponse findProviderById(@PathVariable Long id) {
+        Provider provider = providerService.findProviderByClientId(id);
+        return ProviderDetailResponse.of(provider);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("clients/findclients/{input}")
+    List<ClientItemResponse> findClientsByAnyMatch(@PathVariable String input) {
+        if (input != "") {
+            List<Client> clients = clientService.findClientsByAnyMatch(input);
+            List<ClientItemResponse> clientItemResponses = new ArrayList<>();
+            for (Client client : clients) {
+                clientItemResponses.add(ClientItemResponse.of(client));
+            }
+            return clientItemResponses;
+        } else return findAll();
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)

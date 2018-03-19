@@ -1,0 +1,57 @@
+<div class="container-fluid" *ngIf="parking && parking.address">
+    <form class="parking-configure-form" [formGroup]="parkingConfigureForm" (ngSubmit)="updateParking()">
+        <legend>Edit parking</legend>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.address.state" placeholder="Region" formControlName="addressRegion">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.address.city" placeholder="City" formControlName="addressCity">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.address.street" placeholder="Street" formControlName="addressStreet">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.address.buildingNumber" placeholder="Building number"
+                   formControlName="addressBuildingNumber">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.latitude" placeholder="Location latitude"
+                   formControlName="locationLatitude">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.longitude" placeholder="Location longitude"
+                   formControlName="locationLongitude">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.price" placeholder="Price" formControlName="price">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.token" placeholder="Token" formControlName="token">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.providerName" placeholder="Provider" formControlName="providerName">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.favoritesCount" placeholder="Favorites count"
+                   formControlName="favoritesCount">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput [(ngModel)]="parking.spotsCount" placeholder="Spots count" formControlName="spotsCount">
+        </mat-form-field>
+        <div class="row submit">
+            <button mat-raised-button class="full-width" color="accent" [disabled]="!parkingConfigureForm.valid">
+                Submit
+                <mat-icon aria-label="Send and save changes">send</mat-icon>
+            </button>
+        </div>
+    </form>
+</div>

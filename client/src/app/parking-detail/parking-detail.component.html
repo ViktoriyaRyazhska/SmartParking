@@ -1,6 +1,44 @@
 <div *ngIf="parking">
   <h2>Parking Details</h2>
-  <h3> <b><i>Address: </i></b> {{parking.address}}</h3>
-  <p> <b><i>Provider name:</i></b> {{parking.providerName}}</p>
-  <p> <b><i>Price:</i></b> {{parking.price}} &#8372;</p>
+  <h3><b><i>Address: </i></b> {{parking.address}}</h3>
+  <h5><b><i>Provider name:</i></b> {{parking.providerName}}</h5>
+  <h5><b><i>Provider address:</i></b> {{parking.providerAddress}}</h5>
+  <h5><b><i>Price:</i></b> {{parking.price}} &#8372;</h5>
+  <h3><b><i>Spots: </i></b> General: {{parking.numberSpots}} / Available: {{parking.numberAvailableSpots}}</h3>
+
+      <h4><b><i>Fullness: </i></b></h4>
+      <p> <ngb-progressbar [type]="info" [value]="[(parking.numberSpots - parking.numberAvailableSpots)]" [max]=[(parking.numberSpots)]> <b>{{parking.numberSpots - parking.numberAvailableSpots}} spots are busy!</b></ngb-progressbar></p>
+      <ngb-accordion>
+          <ngb-panel id="preventchange-1" title="Show all spots">
+            <ng-template ngbPanelContent>
+                <table class="table table-hover">
+                    <thead>
+                      <tr class="text-center">
+                        <th scope="col">Spot number #</th>
+                        <th scope="col">Availability</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let spot of spots" class="text-center">
+                          <th scope="row">{{spot.id}}</th>
+                          
+                          <td scope="row" *ngIf="[(spot.isFree)]; else free">
+                            <button type="button" class="btn btn-sm btn-secondary" disabled>
+                              Not Free
+                            </button>
+                          </td>
+                          <ng-template #free>
+                          <td scope="row">
+                            <button type="button" class="btn btn-sm btn-success" disabled>
+                              Free
+                            </button>
+                          </td>
+                        </ng-template>
+                        </tr>
+                    </tbody>
+                  </table>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+
 </div>

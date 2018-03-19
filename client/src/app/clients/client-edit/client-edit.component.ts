@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Subject} from "rxjs/Subject";
-import {Observable} from "rxjs/Observable";
-import {Client} from "../client";
 import {ClientService} from "../client.service";
-import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
+import {ActivatedRoute, Router} from '@angular/router';
+import {ClientRequest} from "../client-request";
 
 @Component({
     selector: 'app-client-edit',
@@ -12,21 +10,40 @@ import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 })
 export class ClientEditComponent implements OnInit {
 
-    constructor() {
+    id: number;
+    client: ClientRequest;
+
+    constructor(private route: ActivatedRoute,
+                private clientService: ClientService,
+                private router: Router) {
     }
 
-    ngOnInit(): void {
-      }
+    ngOnInit() {
+        this.getClientById();
+    }
 
-    name = 'Angular';
-    characters = [
-        'Finn the human',
-        'Jake the dog',
-        'Princess bubblegum',
-        'Lumpy Space Princess',
-        'Beemo1',
-        'Beemo2'
-    ]
+    getClientById(): void {
+        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
+        this.clientService.getClientDetailToEdit(id)
+            .subscribe(client => this.client = client);
+    }
 
+    onUpdate() {
+        this.udateClientById();
+    }
+
+    udateClientById(): void {
+        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
+        this.clientService.updateClient(id, this.client)
+            .subscribe(data => {
+                alert('Client was updated successfully.');
+            });
+    }
+
+    goToClientList() {
+        this.router.navigate(['configuration/clients']);
+    }
 
 }
+
+

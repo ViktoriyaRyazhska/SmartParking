@@ -1,0 +1,1 @@
+INSERT INTO address (id, building_number,city , state, street) values(3,'181','Lviv','Lvivska','Horodotska');
