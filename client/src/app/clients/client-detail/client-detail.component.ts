@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ClientService} from "../client.service";
-import {Client} from '../client';
+import {Client} from "../../model/view/client";
+import {ClientRequest} from "../client-edit/client-request";
 
 @Component({
     selector: 'app-client-detail',
@@ -9,7 +10,8 @@ import {Client} from '../client';
     styleUrls: ['./client-detail.component.css']
 })
 export class ClientDetailComponent implements OnInit {
-    client: Client;
+
+    client: ClientRequest;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService) {
@@ -20,7 +22,7 @@ export class ClientDetailComponent implements OnInit {
     }
 
     getClientById(): void {
-        const id = parseInt(this.route.snapshot.paramMap.get('id'));
+        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
         this.clientService.getClientDetail(id)
             .subscribe(client => this.client = client);
     }

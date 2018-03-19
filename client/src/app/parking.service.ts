@@ -29,8 +29,4 @@ export class ParkingService {
     getSpotsByParkingId(id: number): Observable<Spot[]> {
         return this.http.get<Spot[]>(this.parkingDetailUrl + id + '/spots');
     }
-
-    getManagerParkingConfigure(id: number): Observable<Parking> {
-        return this.http.get<Parking>("http://localhost:8080/manager-parking-configure/" + id);
-    }
 }

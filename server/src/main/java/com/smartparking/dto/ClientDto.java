@@ -11,6 +11,7 @@ public class ClientDto {
     private String password;
     private List<FavoriteDto> favoriteDto;
     private ProviderDto providerDto;
+    private String role;
 
     public static ClientDto builder() {
         ClientDto clientDto = new ClientDto();
@@ -52,6 +53,15 @@ public class ClientDto {
         return this;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public ClientDto setRole(String role) {
+        this.role = role;
+        return this;
+    }
+
     public Long getId() {
         return id;
     }
@@ -79,5 +89,6 @@ public class ClientDto {
     public ProviderDto getProviderDto() {
         return providerDto;
     }
+
 
 }
