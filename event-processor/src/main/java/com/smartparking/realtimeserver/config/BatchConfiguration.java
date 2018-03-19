@@ -41,14 +41,16 @@ public class BatchConfiguration {
     @Autowired
     private PlatformTransactionManager transactionManager;
 
+    @Autowired
+    JobRepository jobRepository;
+
+    @Autowired
+    Job job;
+
     @Scheduled(cron = "*/10 * * * * *")
     public void perform() {
         try {
-            JobExecution execution = jobLauncher(jobRepository())
-                    .run(job(step1(requestItemReader(),
-                            requestItemProcessor(),
-                            requestItemWriter())),
-                            new JobParameters());
+            JobExecution execution = jobLauncher(jobRepository).run(job, new JobParameters());
         } catch (JobExecutionAlreadyRunningException e) {
             e.printStackTrace();
         } catch (JobRestartException e) {
