@@ -11,7 +11,7 @@ public class ClientDetailResponse {
     private String firstName;
     private String lastName;
     private String email;
-    private String provider;
+    private String providerName;
     private String role;
     private List<Long> favoritesId;
     private List<String> favoritesNames;
@@ -66,11 +66,11 @@ public class ClientDetailResponse {
     }
 
     public String getProvider() {
-        return provider;
+        return providerName;
     }
 
     public void setProvider(String provider) {
-        this.provider = provider;
+        this.providerName = provider;
     }
 
     public List<Long> getFavoritesId() {

@@ -55,6 +55,11 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
     }
 
     @Override
+    public Provider findProviderByClientId(Long id) {
+        return getRepository().findProviderByClientId(id);
+    }
+
+    @Override
     public List<Provider> findAllByFilter(ProviderFilter providerFilter) {
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Provider> criteria = criteriaBuilder.createQuery(Provider.class);
