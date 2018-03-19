@@ -11,4 +11,6 @@ export class Parking {
     providerName: string;
     favoritesCount: number;
     spotsCount: number;
+    numberSpots: number;
+    numberAvailableSpots: number;
   }
