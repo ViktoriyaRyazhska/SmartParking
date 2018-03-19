@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
-import {ClientRequest} from "../client-edit/client-request";
+import {ClientRequest} from "../client-request";
+import {ClientsProviderRequest} from "../clients-provider-request";
 
 @Component({
     selector: 'app-client-detail',
@@ -11,7 +12,9 @@ import {ClientRequest} from "../client-edit/client-request";
 })
 export class ClientDetailComponent implements OnInit {
 
-    client: ClientRequest;
+    client: Client;
+    provider: ClientsProviderRequest;
+    showProviderDetails: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService) {
@@ -19,6 +22,7 @@ export class ClientDetailComponent implements OnInit {
 
     ngOnInit() {
         this.getClientById();
+        this.getProvidersByClientId();
     }
 
     getClientById(): void {
@@ -26,5 +30,16 @@ export class ClientDetailComponent implements OnInit {
         this.clientService.getClientDetail(id)
             .subscribe(client => this.client = client);
     }
+
+    getProvidersByClientId(): void {
+        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
+        this.clientService.getProviderByClientId(id)
+            .subscribe(provider => this.provider = provider);
+    }
+
+    seeProviderDetails() {
+        this.showProviderDetails = !this.showProviderDetails;
+    }
+
 
 }

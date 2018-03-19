@@ -3,7 +3,9 @@ import {Client} from "../../model/view/client";
 import {ClientService} from "../client.service";
 import {ActivatedRoute} from '@angular/router';
 import {FormGroup, FormControl, FormArray, Validators, FormBuilder, NgForm} from '@angular/forms';
-import {ClientRequest} from "./client-request";
+import {ClientRequest} from "../client-request";
+import {ProviderRequest} from "../../superuser-configuration/providers/add-provider/provider-request";
+import {ClientsProviderRequest} from "../clients-provider-request";
 
 @Component({
     selector: 'app-client-edit',
@@ -14,7 +16,6 @@ export class ClientEditComponent implements OnInit {
 
     id: number;
     client: ClientRequest;
-    clientRequest: ClientRequest;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService) {
@@ -26,7 +27,7 @@ export class ClientEditComponent implements OnInit {
 
     getClientById(): void {
         const id = +parseInt(this.route.snapshot.paramMap.get('id'));
-        this.clientService.getClientDetail(id)
+        this.clientService.getClientDetailToEdit(id)
             .subscribe(client => this.client = client);
     }
 
