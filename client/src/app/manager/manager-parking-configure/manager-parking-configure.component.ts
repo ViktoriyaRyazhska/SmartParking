@@ -46,6 +46,8 @@ export class ManagerParkingConfigureComponent implements OnInit {
     updateParking(): void {
         // this.parking = this.parkingConfigureForm.value;
         this.managerParkingService.updateParking(this.parking)
-            .subscribe(data => alert('Parking updated successfully.'));
+            .subscribe(response => {
+
+            });
     }
 }
