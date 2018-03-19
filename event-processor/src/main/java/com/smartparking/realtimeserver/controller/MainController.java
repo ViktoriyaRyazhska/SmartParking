@@ -6,13 +6,6 @@ import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,11 +35,6 @@ public class MainController {
     @Autowired
     private SpotService spotService;
 
-    @Autowired
-    private JobLauncher jobLauncher;
-
-    @Autowired
-    private Job job;
 
 
 
@@ -89,6 +77,10 @@ public class MainController {
                                                @RequestParam String parkingToken,
                                                @RequestParam String currentEvent) {
 
+        System.out.println(id);
+        System.out.println(parkingToken);
+        System.out.println(currentEvent);
+
         Long spotId = null;
         EventMarker eventMarker = null;
         if (id != null && currentEvent != null) {
@@ -103,16 +95,19 @@ public class MainController {
 
         if (currentEvent.equals("0")) {
             eventMarker = EventMarker.ARRIVED;
-        } else if (currentEvent.equals("0")) {
+        } else if (currentEvent.equals("1")) {
             eventMarker = EventMarker.DEPARTUDED;
         } else {
             eventMarker = EventMarker.BLOCK;
         }
 
-        if (!tokens.containsValue(parkingToken)) {
+        if (tokens.containsValue(parkingToken)) {
+            if (!spots.get(spotId).getParking().getToken().equals(parkingToken)) {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+        } else {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-
 
         System.out.println(id);
         System.out.println(parkingToken);
@@ -125,46 +120,6 @@ public class MainController {
         } else {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-
-
-//*****************for test********************************
-//        System.out.println(id);
-//        System.out.println(parkingToken);
-//        System.out.println(spots.get(spotId).getId());
-//        Event event = new Event();
-//        event.setSpot(spots.get(spotId));
-//        event.setEventMarker(EventMarker.ARRIVED);
-//        event.setCurrentEventTime();
-//
-//        eventService.save(event);
-//
-//        return new ResponseEntity(HttpStatus.OK);
-//**********************************************************
-
-
-//        if (spot == null) {
-//            spot = spotService.findById(spotId);
-//            if (spot == null) {
-//                return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//            } else {
-//                spots.put(spotId, spot);
-//            }
-//        }
-//
-//        if (spot.getParking().getToken().equals(parkingToken)) {
-//            Event event = eventService.findBySpotId(spotId);
-//            if (event == null) {
-//                event = new Event();
-//                event.setSpot(spot);
-//                event.setCurrentArrivalTime();
-//                eventService.save(event);
-//            } else {
-//                event.setCurrentDepartureTime();
-//            }
-//            return new ResponseEntity(HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//        }
     }
 
     public List<Event> getEvents() {
@@ -173,35 +128,6 @@ public class MainController {
 
     public Map<Long, Spot> getSpots() {
         return spots;
-    }
-
-//    @RequestMapping("/test/request")
-//    public void testRequest() {
-//        System.out.println("**************************************");
-//        HttpClient client = HttpClientBuilder.create().build();
-//        HttpPost post = new HttpPost("http://localhost:8081/spot/update");
-//        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-//        urlParameters.add(new BasicNameValuePair("id", "100"));
-//        urlParameters.add(new BasicNameValuePair("parkingToken", "qwerty"));
-//    }
-
-    @RequestMapping("/test/flush")
-    public ResponseEntity testFlush() {
-        try {
-            jobLauncher.run(job, new JobParameters());
-        } catch (JobExecutionAlreadyRunningException e) {
-            e.printStackTrace();
-        } catch (JobRestartException e) {
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        } catch (JobInstanceAlreadyCompleteException e) {
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        } catch (JobParametersInvalidException e) {
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
