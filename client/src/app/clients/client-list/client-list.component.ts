@@ -17,11 +17,16 @@ export class ClientListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getClients();
+        this.getLimitClients();
     }
 
-    getClients(): void {
+    getAllClients(): void {
         this.clientService.getClients()
+            .subscribe(clients => this.clients = clients);
+    }
+
+    getLimitClients(): void {
+        this.clientService.getLimitNumberOfClients()
             .subscribe(clients => this.clients = clients);
     }
 
@@ -33,7 +38,7 @@ export class ClientListComponent implements OnInit {
     switchMode() {
         this.backEndMode = !this.backEndMode;
         if (!this.backEndMode) {
-            this.getClients();
+            this.getAllClients();
         }
     }
 

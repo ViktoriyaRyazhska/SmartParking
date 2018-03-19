@@ -10,6 +10,8 @@ import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,17 @@ public class ClientController {
     @GetMapping("clients")
     List<ClientItemResponse> findAll() {
         List<Client> clients = clientService.findAll();
+        List<ClientItemResponse> clientItemResponses = new ArrayList<>();
+        for (Client client : clients) {
+            clientItemResponses.add(ClientItemResponse.of(client));
+        }
+        return clientItemResponses;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("clients/clientslimit")
+    List<ClientItemResponse> limitFindClients() {
+        List<Client> clients = clientService.findLimitNumberOfClients(new PageRequest(0, 50));
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
         for (Client client : clients) {
             clientItemResponses.add(ClientItemResponse.of(client));

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +35,10 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
     @Override
     public List<Client> findClientsByAnyMatch(String input) {
         return getRepository().findClientsByAnyMatch(input);
+    }
+
+    @Override
+    public List<Client> findLimitNumberOfClients(Pageable pageable) {
+        return getRepository().findLimitNumberOfClients(pageable);
     }
 }

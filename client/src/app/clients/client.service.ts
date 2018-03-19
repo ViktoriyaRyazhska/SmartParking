@@ -17,6 +17,10 @@ export class ClientService {
         return this.http.get<Client[]>(this.clientsUrl);
     }
 
+    getLimitNumberOfClients(): Observable<Client[]> {
+        return this.http.get<Client[]>(this.clientsUrl + "/clientslimit");
+    }
+
     getClientDetail(id: number): Observable<Client> {
         return this.http.get<Client>(this.clientsUrl + "/" + id);
     }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../client.service";
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ClientRequest} from "../client-request";
 
 @Component({
@@ -14,7 +14,8 @@ export class ClientEditComponent implements OnInit {
     client: ClientRequest;
 
     constructor(private route: ActivatedRoute,
-                private clientService: ClientService) {
+                private clientService: ClientService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -37,6 +38,10 @@ export class ClientEditComponent implements OnInit {
             .subscribe(data => {
                 alert('Client was updated successfully.');
             });
+    }
+
+    goToClientList() {
+        this.router.navigate(['configuration/clients']);
     }
 
 }
