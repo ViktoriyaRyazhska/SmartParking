@@ -11,9 +11,8 @@ import {ProviderRequest} from './provider-request';
 })
 export class AddProviderComponent implements OnInit {
 
-    provider: ProviderRequest;
+    providerRequest: ProviderRequest;
     providerForm: FormGroup;
-    address: Address;
 
     nameControl: FormControl = new FormControl('', [
         Validators.required
@@ -36,14 +35,6 @@ export class AddProviderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.providerForm = new FormGroup({
-            name: new FormControl(''),
-            state: new FormControl(''),
-            city: new FormControl(''),
-            street: new FormControl(''),
-            buildingNumber: new FormControl('')
-        })
-        ;
         this.providerForm = this.formBuilder.group({
             name: this.nameControl,
             state: this.stateControl,
@@ -54,9 +45,9 @@ export class AddProviderComponent implements OnInit {
     }
 
     saveProvider(): void {
-        this.provider = this.providerForm.value;
-        this.providerService.saveProvider(this.provider).subscribe(data => {
-            alert('User created successfully.');
+        this.providerRequest = this.providerForm.value;
+        this.providerService.saveProvider(this.providerRequest).subscribe(data => {
+            alert('Provider added successfully.');
         });
         ;
     }

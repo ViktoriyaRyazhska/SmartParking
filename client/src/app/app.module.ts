@@ -39,7 +39,6 @@ import {Interceptor} from "./app.interceptor";
 import {RegistrationService} from "./auth/registration/registration.service";
 import {TokenStorage} from "./auth/login/token-storage";
 
-
 @NgModule({
     declarations: [
         IndexComponent,

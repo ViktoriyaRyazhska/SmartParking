@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Provider} from '../provider';
+import {Provider} from '../../../model/view/provider';
 import {ProviderService} from '../provider.service';
 import {ProviderListFilterParameters} from '../../../model/filter/provider-list-filter-parameters';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup,} from '@angular/forms';
 
 @Component({
     selector: 'app-provider-list',
@@ -17,8 +17,7 @@ export class ProviderListComponent implements OnInit {
     });
     providerFilter: ProviderListFilterParameters;
 
-    constructor(private providerService: ProviderService,
-                private formBuilder: FormBuilder) {
+    constructor(private providerService: ProviderService) {
     }
 
     ngOnInit() {
@@ -27,7 +26,6 @@ export class ProviderListComponent implements OnInit {
 
     getProviders(): void {
         this.providerFilter = this.providerFilterForm.value;
-        console.log(this.providerFilter);
         this.providerService.getProviders(this.providerFilter)
             .subscribe(providers => this.providers = providers);
     }
