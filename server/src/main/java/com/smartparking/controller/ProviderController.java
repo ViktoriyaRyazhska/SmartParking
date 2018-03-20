@@ -57,7 +57,7 @@ public class ProviderController {
             providerService.saveFromRequest(providerRequest);
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+            return new ResponseEntity<>("Bad data input.", HttpStatus.NO_CONTENT);
         }
     }
 }

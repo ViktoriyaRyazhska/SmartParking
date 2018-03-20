@@ -47,7 +47,8 @@ export class ManagerParkingConfigureComponent implements OnInit {
         // this.parking = this.parkingConfigureForm.value;
         this.managerParkingService.updateParking(this.parking)
             .subscribe(response => {
-
+                console.log('Response: ' + response)
+                // TODO Write response handler
             });
     }
 }
