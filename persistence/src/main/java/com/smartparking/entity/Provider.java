@@ -19,12 +19,19 @@ public class Provider extends AbstractIdentifiableEntity {
     private List<Client> employees;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Address legalAddress;
-
-    @NotNull
     @Column(name = "active", nullable = false)
     private Boolean active;
+
+    @NotNull
+    @Column(name = "city", nullable = false)
+    private String city;
+
+    @NotNull
+    @Column(name = "street", nullable = false)
+    private String street;
+
+    @Column(name = "building")
+    private String building;
 
     public String getName() {
         return name;
@@ -50,19 +57,35 @@ public class Provider extends AbstractIdentifiableEntity {
         this.employees = employees;
     }
 
-    public Address getLegalAddress() {
-        return legalAddress;
-    }
-
-    public void setLegalAddress(Address legalAddress) {
-        this.legalAddress = legalAddress;
-    }
-
     public Boolean getActive() {
         return active;
     }
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 }

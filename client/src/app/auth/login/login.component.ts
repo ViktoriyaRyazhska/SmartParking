@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginData} from "./login-data";
 import {Router} from "@angular/router";
+import {ResponseToken} from "./response-token";
+import {LoginService} from "./login.service";
+import {TokenStorage} from "./token-storage";
 
 @Component({
   selector: 'app-login',
@@ -25,9 +28,10 @@ export class LoginComponent implements OnInit {
     ]);
 
     constructor(private formBuilder: FormBuilder,
-                /*private loginService: LoginService,*/
+                private loginService: LoginService,
                 private router: Router,
-                /*private cookie: CookieService*/) {}
+                private storage: TokenStorage
+    ) {}
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -36,17 +40,19 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    /*login = () => {
+    login = () => {
         this.loginData = this.loginForm.value;
-        this.loginService.signIn(this.account)
+        this.loginService.signIn(this.loginData)
             .subscribe((response:ResponseToken)=>{
-                    this.cookie.put('auth',response.token);
                     this.error=false;
+                    this.storage.saveCredentials(response.token, response.role);
+                    alert("Succesful authentifictaon" + response.token + "  " + response.role)
                     this.router.navigate(['/']);
                 }, error2 => {
+                    console.log("error");
                     this.error = true;
                 }
             );
-    };*/
+    };
 
 }

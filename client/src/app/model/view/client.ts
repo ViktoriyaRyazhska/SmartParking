@@ -1,4 +1,4 @@
-import {Provider} from "../../providers/provider";
+import {Provider} from './provider';
 import {Favorite} from "./favorite";
 
 export class Client{
@@ -9,6 +9,7 @@ export class Client{
     password: string;
     favoritesId: number[];
     favoritesNames: string[];
-    provider: Provider;
+    favorite: Favorite[];
+    provider: string;
     role: string;
 }

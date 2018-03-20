@@ -7,17 +7,17 @@ import { Spot } from './model/view/spot';
 
 @Injectable()
 export class ParkingService {
-  // private parkingUrl = 'assets/test.json';
-  private parkingUrl = 'http://localhost:8080/p';
-  private parkingDetailUrl = 'http://localhost:8080/parkingdetail/';
+    parkings: Parking[];
+    // private parkingUrl = 'assets/test.json';
+    private parkingUrl = 'http://localhost:8080/p';
+    private parkingDetailUrl = 'http://localhost:8080/parkingdetail/';
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
-  parkings: Parking[];
+    /** Log a HeroService message with the MessageService */
 
-  /** Log a HeroService message with the MessageService */
 
-  
   getParkings(): Observable<Parking[]>{
     return this.http.get<Parking[]>(this.parkingUrl);
   }
@@ -26,9 +26,9 @@ export class ParkingService {
     return this.http.get<Parking>(this.parkingDetailUrl + id);
    }
 
-   getSpotsByParkingId(id: number): Observable<Spot[]> {
-    return this.http.get<Spot[]>(this.parkingDetailUrl + id +'/spots');
-   }
+    getSpotsByParkingId(id: number): Observable<Spot[]> {
+        return this.http.get<Spot[]>(this.parkingDetailUrl + id + '/spots');
+    }
 
    getAvailableSpotsByParkingId(id: number): Observable<Spot[]>{
     return this.http.get<Spot[]>(this.parkingDetailUrl + id +'/freespots');

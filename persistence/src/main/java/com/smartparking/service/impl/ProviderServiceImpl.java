@@ -2,21 +2,34 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Address;
 import com.smartparking.entity.Provider;
+import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
 import com.smartparking.repository.AddressRepository;
+import com.smartparking.repository.ProviderFilterRepository;
 import com.smartparking.repository.ProviderRepository;
 import com.smartparking.service.AbstractService;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProviderServiceImpl extends AbstractService<Provider, Long, ProviderRepository> implements ProviderService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private ProviderFilterRepository providerFilterRepository;
 
     protected ProviderServiceImpl(@Autowired ProviderRepository repository) {
         super(repository);
@@ -37,7 +50,6 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
         provider.setActive(true);
         provider.setLegalAddress(address);
         getRepository().save(provider);
-
     }
 
     @Override
@@ -46,6 +58,16 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
         provider.setActive(!provider.getActive());
         getRepository().save(provider);
         return provider;
+    }
+
+    @Override
+    public Provider findProviderByClientId(Long id) {
+        return getRepository().findProviderByClientId(id);
+    }
+
+    @Override
+    public List<Provider> findAllByFilter(ProviderFilter providerFilter) { ;
+        return providerFilterRepository.findAllByFilter(providerFilter);
     }
 
 }
