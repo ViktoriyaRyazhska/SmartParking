@@ -1,6 +1,6 @@
 <div class = "container-fluid container-style">
 
-  <form [formGroup]="registrationForm" class = "formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+  <form [formGroup]="registrationForm" (ngSubmit)="register()" class = "formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
       <h3 class="heading row offset-4">Registration</h3>
       <div class = "row">
           <mat-form-field class = "customwidth">

@@ -100,15 +100,17 @@ public class ClientController {
         } else return findAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public void saveUser(@RequestBody RegistrationClient regClient){
+    public String saveUser(@RequestBody RegistrationClient regClient){
         Client client = new Client();
         client.setEmail(regClient.getEmail());
         client.setPassword(bcryptEncoder.encode(regClient.getPassword()));
-        client.setFirstName(regClient.getFirstName());
-        client.setLastName(regClient.getLastName());
+        client.setFirstName(regClient.getFirstname());
+        client.setLastName(regClient.getLastname());
         client.setRole(Role.DRIVER);
         clientService.save(client);
+        return "registration successful";
     }
 
 }
