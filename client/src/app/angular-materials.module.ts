@@ -8,7 +8,8 @@ import {
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule
 } from '@angular/material';
 
 
@@ -21,7 +22,8 @@ import {
         MatIconModule,
         MatButtonModule,
         MatToolbarModule,
-        MatTabsModule
+        MatTabsModule,
+        MatSelectModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -31,7 +33,8 @@ import {
         MatIconModule,
         MatButtonModule,
         MatToolbarModule,
-        MatTabsModule
+        MatTabsModule,
+        MatSelectModule
     ]
 })
 export class AngularMaterialsModule {
