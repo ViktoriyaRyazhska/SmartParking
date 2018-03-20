@@ -3,5 +3,4 @@ export class ClientRequest {
     lastName: string;
     email: string;
     role: string;
-    roleId: number;
 }

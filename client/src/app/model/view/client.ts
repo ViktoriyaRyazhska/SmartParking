@@ -12,5 +12,4 @@ export class Client {
     favorite: Favorite[];
     provider: string;
     role: string;
-    roleId: number;
 }

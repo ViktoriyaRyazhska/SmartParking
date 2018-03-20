@@ -115,7 +115,7 @@ public class ClientController {
         client.setPassword(bcryptEncoder.encode(regClient.getPassword()));
         client.setFirstName(regClient.getFirstname());
         client.setLastName(regClient.getLastname());
-        client.setRole(Role.DRIVER);
+        client.setRole(String.valueOf(Role.DRIVER));
         clientService.save(client);
         return "registration successful";
     }

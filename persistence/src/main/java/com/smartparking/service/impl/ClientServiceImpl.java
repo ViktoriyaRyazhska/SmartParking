@@ -37,8 +37,7 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
         client.setFirstName(clientRequest.getFirstName());
         client.setLastName(clientRequest.getLastName());
         client.setEmail(clientRequest.getEmail());
-//        Role role = findRoleById(clientRequest.getRoleId());
-//        client.setRole(role);
+        client.setRole(clientRequest.getRole());
         getRepository().save(client);
     }
 
@@ -52,7 +51,4 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
         return getRepository().findLimitNumberOfClients(pageable);
     }
 
-//    public Role findRoleById(Long id) {
-//        return getRepository().findLRoleById(id);
-//    }
 }

@@ -14,7 +14,7 @@ export class ClientEditComponent implements OnInit {
     client: Client;
     id: number;
     roles: Role[];
-    selectedRole: number;
+    selectedRole: string;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService,
@@ -34,7 +34,7 @@ export class ClientEditComponent implements OnInit {
     }
 
     udateClientById(): void {
-        this.client.roleId = this.selectedRole;
+        this.client.role = this.selectedRole;
         this.clientService.updateClient(this.id, this.client)
             .subscribe(data => {
                 alert('Client was updated successfully.');

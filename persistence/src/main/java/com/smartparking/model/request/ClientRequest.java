@@ -4,7 +4,7 @@ public class ClientRequest {
     private String firstName;
     private String lastName;
     private String email;
-    private Long roleId;
+    private String role;
 
     public String getFirstName() {
         return firstName;
@@ -30,11 +30,11 @@ public class ClientRequest {
         this.email = email;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
