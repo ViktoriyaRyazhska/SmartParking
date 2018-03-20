@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderService} from '../provider.service';
-import {Provider} from '../provider';
+import {Provider} from '../../../model/view/provider';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

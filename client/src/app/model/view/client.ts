@@ -1,4 +1,4 @@
-import {Provider} from '../../superuser-configuration/providers/provider';
+import {Provider} from './provider';
 import {Favorite} from "./favorite";
 
 export class Client{

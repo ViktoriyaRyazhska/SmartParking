@@ -20,7 +20,6 @@ public class ProviderItemResponse {
                 ", " + provider.getLegalAddress().getStreet() +
                 ", " + provider.getLegalAddress().getBuildingNumber());
         providerResponse.setActive(provider.getActive());
-      //  providerResponse.setParkingIds(provider.getParkings().stream().map(Parking::getId).collect(Collectors.toList()));
         return providerResponse;
     }
 
