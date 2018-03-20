@@ -26,7 +26,7 @@ return next.handle(authReq).do(
         if (err instanceof HttpErrorResponse) {
 
             if (err.status === 401) {
-                this.router.navigate(['user']);
+                this.router.navigate(['/']);
             }
         }
     }

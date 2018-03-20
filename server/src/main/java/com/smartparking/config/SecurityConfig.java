@@ -62,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/token/*", "/signup").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-        http.headers().cacheControl();
     }
 
     protected void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
