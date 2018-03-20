@@ -21,6 +21,7 @@ const routes: Routes = [
     {path: 'configuration', component: SuperuserConfigurationComponent,},
     {path: 'configuration/clients', component: ClientsComponent},
     {path: 'configuration/clients/:id', component: ClientDetailComponent},
+    {path: 'configuration/clients/:id/edit/:id', component: ClientDetailComponent},
     {path: 'configuration/clients/edit/:id', component: ClientEditComponent},
     {path: 'configuration/providers', component: ProviderListComponent},
     {path: 'login', component: LoginComponent},

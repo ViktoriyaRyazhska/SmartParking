@@ -5,14 +5,16 @@ import com.smartparking.entity.Event;
 import com.smartparking.realtimeserver.element.RequestItemProcessor;
 import com.smartparking.realtimeserver.element.RequestItemReader;
 import com.smartparking.realtimeserver.element.RequestItemWriter;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
@@ -21,11 +23,14 @@ import org.springframework.batch.support.transaction.ResourcelessTransactionMana
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.PlatformTransactionManager;
 
 
 @Configuration
 @EnableBatchProcessing
+@EnableScheduling
 public class BatchConfiguration {
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
@@ -36,6 +41,26 @@ public class BatchConfiguration {
     @Autowired
     private PlatformTransactionManager transactionManager;
 
+    @Autowired
+    JobRepository jobRepository;
+
+    @Autowired
+    Job job;
+
+    @Scheduled(cron = "*/10 * * * * *")
+    public void perform() {
+        try {
+            JobExecution execution = jobLauncher(jobRepository).run(job, new JobParameters());
+        } catch (JobExecutionAlreadyRunningException e) {
+            e.printStackTrace();
+        } catch (JobRestartException e) {
+            e.printStackTrace();
+        } catch (JobInstanceAlreadyCompleteException e) {
+            e.printStackTrace();
+        } catch (JobParametersInvalidException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Bean
     JobLauncher jobLauncher(JobRepository jobRepository) {
@@ -70,6 +95,7 @@ public class BatchConfiguration {
                 .processor(processor)
                 .writer(writer)
                 .transactionManager(transactionManager)
+                .allowStartIfComplete(true)
                 .build();
     }
 

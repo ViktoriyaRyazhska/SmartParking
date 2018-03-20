@@ -6,7 +6,6 @@ import {RouterModule} from '@angular/router';
 import {MAT_LABEL_GLOBAL_OPTIONS, MatButtonModule, MatDividerModule, MatExpansionModule} from '@angular/material';
 
 import {CommonModule} from '@angular/common';
-
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
 import {ParkingListComponent} from './index/parking-list/parking-list.component';
@@ -38,6 +37,10 @@ import {MatSelectModule, MatAutocompleteModule } from "@angular/material";
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 import {AgmCoreModule} from '@agm/core';
+import {LoginService} from "./auth/login/login.service";
+import {Interceptor} from "./app.interceptor";
+import {RegistrationService} from "./auth/registration/registration.service";
+import {TokenStorage} from "./auth/login/token-storage";
 
 
 @NgModule({
@@ -91,6 +94,10 @@ import {AgmCoreModule} from '@agm/core';
         GeoLocationService,
         ProviderService,
         ClientService,
+        LoginService,
+        Interceptor,
+        RegistrationService,
+        TokenStorage
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
