@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule} from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatToolbarModule, MatTabsModule}  from '@angular/material';
 
 
 @NgModule({
@@ -12,7 +12,9 @@ import {MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule} from
       MatFormFieldModule,
       MatInputModule,
       MatIconModule,
-      MatButtonModule
+      MatButtonModule,
+      MatToolbarModule,
+      MatTabsModule
   ],
   exports: [
       BrowserAnimationsModule,
@@ -20,7 +22,9 @@ import {MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule} from
       MatFormFieldModule,
       MatInputModule,
       MatIconModule,
-      MatButtonModule
+      MatButtonModule,
+      MatToolbarModule,
+      MatTabsModule
   ]
 })
 export class AngularMaterialsModule { }

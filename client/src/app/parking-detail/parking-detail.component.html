@@ -1,9 +1,12 @@
 <div *ngIf="parking">
   <h2>Parking Details</h2>
+  <hr>
   <h3><b><i>Address: </i></b> {{parking.address}}</h3>
   <h5><b><i>Provider name:</i></b> {{parking.providerName}}</h5>
   <h5><b><i>Provider address:</i></b> {{parking.providerAddress}}</h5>
-  <h5><b><i>Price:</i></b> {{parking.price}} &#8372;</h5>
+  <hr>
+  <h4><b><i>Price:</i></b> {{parking.price}} &#8372;</h4>
+  <hr>
   <div class="row">
     <div class="col-10">
         <h3><b><i>Spots: </i></b> General: {{parking.numberSpots}} / Available: {{parking.numberAvailableSpots}}</h3>
