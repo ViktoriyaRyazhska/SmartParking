@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {RegistrationData} from "./registration-data";
+import {RegistrationService} from "./registration.service";
+import {Router} from "@angular/router";
 
 export class PasswordValidation {
 
@@ -23,6 +26,7 @@ export class PasswordValidation {
 export class RegistrationComponent implements OnInit {
     hide: boolean = true;
     registrationForm: FormGroup;
+    registrationData: RegistrationData;
     emailControl: FormControl = new FormControl('', [
         Validators.required,
         Validators.email,
@@ -45,7 +49,10 @@ export class RegistrationComponent implements OnInit {
         Validators.minLength(6),
         Validators.maxLength(16),
     ]);
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private registrationService: RegistrationService,
+              private router: Router
+  ) { }
 
   ngOnInit() {
       this.registrationForm = this.formBuilder.group({
@@ -57,5 +64,14 @@ export class RegistrationComponent implements OnInit {
       },{
           validator: PasswordValidation.MatchPassword
       });
+  }
+
+  register = () => {
+      this.registrationData = this.registrationForm.value;
+      this.registrationService.register(this.registrationData).subscribe(data =>{
+          console.log(data);
+          this.router.navigate(['/']);
+
+      }, error2 => {console.log("error")})
   }
 }

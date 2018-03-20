@@ -13,4 +13,6 @@ public interface ProviderService extends Service<Provider, Long, ProviderReposit
     Provider changeState(Long id);
 
     List<Provider> findAllByFilter(ProviderFilter providerFilter);
+
+    Provider findProviderByClientId(Long id);
 }

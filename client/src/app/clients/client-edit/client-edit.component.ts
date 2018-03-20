@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Client} from "../../model/view/client";
 import {ClientService} from "../client.service";
-import {ActivatedRoute} from '@angular/router';
-import {FormGroup, FormControl, FormArray, Validators, FormBuilder, NgForm} from '@angular/forms';
-import {ClientRequest} from "./client-request";
+import {ActivatedRoute, Router} from '@angular/router';
+import {ClientRequest} from "../client-request";
 
 @Component({
     selector: 'app-client-edit',
@@ -14,10 +12,10 @@ export class ClientEditComponent implements OnInit {
 
     id: number;
     client: ClientRequest;
-    clientRequest: ClientRequest;
 
     constructor(private route: ActivatedRoute,
-                private clientService: ClientService) {
+                private clientService: ClientService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -26,7 +24,7 @@ export class ClientEditComponent implements OnInit {
 
     getClientById(): void {
         const id = +parseInt(this.route.snapshot.paramMap.get('id'));
-        this.clientService.getClientDetail(id)
+        this.clientService.getClientDetailToEdit(id)
             .subscribe(client => this.client = client);
     }
 
@@ -42,13 +40,9 @@ export class ClientEditComponent implements OnInit {
             });
     }
 
-    // setUpClientRequest(): void {
-    //     this.clientRequest.firstName = this.client.firstName;
-    //     this.clientRequest.lastName = this.client.lastName;
-    //     this.clientRequest.email = this.client.email;
-    //     this.clientRequest.provider = this.client.provider;
-    //     this.clientRequest.role = this.client.role;
-    // }
+    goToClientList() {
+        this.router.navigate(['configuration/clients']);
+    }
 
 }
 
