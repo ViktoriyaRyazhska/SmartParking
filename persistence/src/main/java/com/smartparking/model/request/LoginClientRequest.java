@@ -1,12 +1,12 @@
-package com.smartparking.dto;
+package com.smartparking.model.request;
 
-public class LoginClient {
+public class LoginClientRequest {
     private String email;
     private String password;
 
-    public LoginClient(){}
+    public LoginClientRequest(){}
 
-    public LoginClient(String email, String password) {
+    public LoginClientRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }

@@ -1,7 +1,7 @@
 package com.smartparking.controller;
 
-import com.smartparking.dto.AuthToken;
-import com.smartparking.dto.LoginClient;
+import com.smartparking.model.response.AuthTokenResponse;
+import com.smartparking.model.request.LoginClientRequest;
 import com.smartparking.entity.Client;
 import com.smartparking.security.tokens.TokenUtil;
 import com.smartparking.service.ClientService;
@@ -29,17 +29,17 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
-    public ResponseEntity register(@RequestBody LoginClient loginClient) throws AuthenticationException {
+    public ResponseEntity register(@RequestBody LoginClientRequest loginClientRequest) throws AuthenticationException {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginClient.getEmail(),
-                        loginClient.getPassword()
+                        loginClientRequest.getEmail(),
+                        loginClientRequest.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final Client client = clientService.findOne(loginClient.getEmail());
+        final Client client = clientService.findOne(loginClientRequest.getEmail());
         final String token = tokenUtil.generateToken(client);
-        return ResponseEntity.ok(new AuthToken(token));
+        return ResponseEntity.ok(new AuthTokenResponse(token, client.getRole()));
     }
 
 }

@@ -1,15 +1,15 @@
-package com.smartparking.dto;
+package com.smartparking.model.request;
 
-public class RegistrationClient {
+public class RegistrationClientRequest {
     private String firstname;
     private String lastname;
     private String email;
     private String password;
     private String confirmPassword;
 
-    public RegistrationClient(){}
+    public RegistrationClientRequest(){}
 
-    public RegistrationClient(String firstname, String lastname, String email, String password, String confirmPassword) {
+    public RegistrationClientRequest(String firstname, String lastname, String email, String password, String confirmPassword) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
