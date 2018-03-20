@@ -1,7 +1,5 @@
 package com.smartparking.model.response;
 
-import com.smartparking.dto.ParkingDto;
-import com.smartparking.dto.SpotDto;
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Provider;
 
@@ -15,12 +13,12 @@ public class ProviderDetailResponse {
     private Boolean active;
     private List<Long> parkingIds;
 
-    public static ProviderDetailResponse of(Provider provider){
+    public static ProviderDetailResponse of(Provider provider) {
         ProviderDetailResponse response = new ProviderDetailResponse();
         response.setActive(provider.getActive());
-        response.setAddress(provider.getLegalAddress().getCity() +
-                ", " + provider.getLegalAddress().getStreet() +
-                ", " + provider.getLegalAddress().getBuildingNumber());
+        response.setAddress(provider.getCity() +
+                ", " + provider.getStreet() +
+                ", " + provider.getBuilding());
         response.setName(provider.getName());
         response.setId(provider.getId());
         response.setParkingIds(provider.getParkings()
