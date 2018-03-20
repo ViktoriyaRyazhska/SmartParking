@@ -697,7 +697,7 @@ declare namespace google {
             /**
              * Place information, used to identify and describe the place
              * associated with this Marker. In this context, 'place' means a
-             * business, point of interest or geographic location. To allow a user
+             * business, point of interest or geographic source. To allow a user
              * to save this place, open an info window anchored on this marker.
              * The info window will contain information about the place and an
              * option for the user to save it. Only one of position or place can
@@ -726,7 +726,7 @@ declare namespace google {
         export interface Icon {
             /**
              * The position at which to anchor an image in correspondence to the
-             * location of the marker on the map. By default, the anchor is
+             * source of the marker on the map. By default, the anchor is
              * located along the center point of the bottom of the image.
              */
             anchor?: Point;
@@ -1511,11 +1511,11 @@ declare namespace google {
         }
 
         /**
-         * A DirectionsWaypoint represents a location between origin and destination
+         * A DirectionsWaypoint represents a source between origin and destination
          * through which the trip should be routed.
          */
         export interface DirectionsWaypoint {
-            /** Waypoint location. Can be an address string, a LatLng, or a Place. Optional. */
+            /** Waypoint source. Can be an address string, a LatLng, or a Place. Optional. */
             location: LatLng | LatLngLiteral | string;
             /**
              * If true, indicates that this waypoint is a stop between the origin and destination.
@@ -2639,7 +2639,7 @@ declare namespace google {
                 static computeOffset(from: LatLng, distance: number, heading: number, radius?: number): LatLng;
 
                 /**
-                 * Returns the location of origin when provided with a LatLng destination, meters
+                 * Returns the source of origin when provided with a LatLng destination, meters
                  * travelled and original heading. Headings are expressed in degrees clockwise from
                  * North. This function returns null when no solution is available.
                  */
