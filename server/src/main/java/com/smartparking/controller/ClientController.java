@@ -66,8 +66,7 @@ public class ClientController {
     @PostMapping("/clients/update/{id}")
     ResponseEntity updateClient(@PathVariable Long id, @RequestBody ClientRequest clientRequest) {
         if (clientRequest.getFirstName() != "" && clientRequest.getLastName() != "" &&
-                clientRequest.getEmail() != "") {
-            System.out.println(clientRequest.getRoleId());
+                clientRequest.getEmail() != "" && clientRequest.getRole() != "") {
             clientService.updateFromRequest(id, clientRequest);
             return new ResponseEntity(HttpStatus.OK);
         } else {
@@ -108,8 +107,8 @@ public class ClientController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public String saveUser(@RequestBody RegistrationClientRequest regClient){
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String saveUser(@RequestBody RegistrationClientRequest regClient) {
         Client client = new Client();
         client.setEmail(regClient.getEmail());
         client.setPassword(bcryptEncoder.encode(regClient.getPassword()));

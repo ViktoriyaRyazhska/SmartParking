@@ -2,11 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Client} from "../model/view/client";
-import {ClientRequest} from "./client-request";
 import {ClientsProviderRequest} from "./clients-provider-request";
-import {Provider} from "../superuser-configuration/providers/provider";
 import {Role} from "./role";
 import {ROLES} from "./mock-roles";
+import {Provider} from "../model/view/provider";
 
 @Injectable()
 export class ClientService {
