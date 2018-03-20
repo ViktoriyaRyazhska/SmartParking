@@ -4,6 +4,9 @@ import {Observable} from "rxjs/Observable";
 import {Client} from "../model/view/client";
 import {ClientRequest} from "./client-request";
 import {ClientsProviderRequest} from "./clients-provider-request";
+import {Provider} from "../superuser-configuration/providers/provider";
+import {Role} from "./role";
+import {ROLES} from "./mock-roles";
 
 @Injectable()
 export class ClientService {
@@ -25,11 +28,11 @@ export class ClientService {
         return this.http.get<Client>(this.clientsUrl + "/" + id);
     }
 
-    getClientDetailToEdit(id: number): Observable<ClientRequest> {
-        return this.http.get<ClientRequest>(this.clientsUrl + "/" + id);
+    getClientDetailToEdit(id: number): Observable<Client> {
+        return this.http.get<Client>(this.clientsUrl + "/" + id);
     }
 
-    updateClient(id: number, client: ClientRequest) {
+    updateClient(id: number, client: Client) {
         return this.http.post(this.clientsUrl + '/update/' + id, client);
     }
 
@@ -39,6 +42,14 @@ export class ClientService {
 
     findClientsByAnyMatch(input: string): Observable<Client[]> {
         return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
+    }
+
+    getProviders(): Observable<Provider[]> {
+        return this.http.get<Provider[]>(this.clientsUrl + '/getproviders');
+    }
+
+    getRoles(): Role[] {
+        return ROLES;
     }
 
 }

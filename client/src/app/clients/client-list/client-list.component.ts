@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'app-client-list',
@@ -10,14 +11,18 @@ import {Client} from "../../model/view/client";
 export class ClientListComponent implements OnInit {
 
     clients: Client[];
-    searchText: string;
-    backEndMode: boolean = true;
+    in: string;
 
-    constructor(private clientService: ClientService) {
+    constructor(private clientService: ClientService,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.getLimitClients();
+        const input = (this.route.snapshot.paramMap.get('input'));
+        if (input != null) {
+            this.findClientsFromBackEnd(input);
+        } else
+            this.getLimitNumberOfClients();
     }
 
     getAllClients(): void {
@@ -25,21 +30,15 @@ export class ClientListComponent implements OnInit {
             .subscribe(clients => this.clients = clients);
     }
 
-    getLimitClients(): void {
+    getLimitNumberOfClients(): void {
         this.clientService.getLimitNumberOfClients()
             .subscribe(clients => this.clients = clients);
     }
 
-    findClientsFromBackEnd(input: string): void {
-        this.clientService.findClientsByAnyMatch(input)
+    findClientsFromBackEnd(searchInput: string): void {
+        this.clientService.findClientsByAnyMatch(searchInput)
             .subscribe(clients => this.clients = clients);
     }
 
-    switchMode() {
-        this.backEndMode = !this.backEndMode;
-        if (!this.backEndMode) {
-            this.getAllClients();
-        }
-    }
 
 }

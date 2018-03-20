@@ -55,7 +55,7 @@ CREATE TABLE `client` (
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
   `provider_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_bfgjs3fem0hmjhvih80158x29` (`email`),

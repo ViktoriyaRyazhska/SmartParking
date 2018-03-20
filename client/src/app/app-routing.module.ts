@@ -12,6 +12,7 @@ import {ClientDetailComponent} from './clients/client-detail/client-detail.compo
 import {RegistrationComponent} from './auth/registration/registration.component';
 import {AddProviderComponent} from './superuser-configuration/providers/add-provider/add-provider.component';
 import {ClientEditComponent} from "./clients/client-edit/client-edit.component";
+import {ClientListComponent} from "./clients/client-list/client-list.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -29,7 +30,8 @@ const routes: Routes = [
     {path: 'configuration/provider/add', component: AddProviderComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'manager-configuration/parking/:id', component: ManagerParkingConfigureComponent},
-    {path: 'configuration/providers/:id', component: ProviderDetailComponent}
+    {path: 'configuration/providers/:id', component: ProviderDetailComponent},
+    {path: 'configuration/clients/findclients/:input', component: ClientsComponent}
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import {Provider} from '../../superuser-configuration/providers/provider';
 import {Favorite} from "./favorite";
 
-export class Client{
+export class Client {
     id: string;
     firstName: string;
     lastName: string;
@@ -12,4 +12,5 @@ export class Client{
     favorite: Favorite[];
     provider: string;
     role: string;
+    roleId: number;
 }

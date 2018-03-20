@@ -35,7 +35,6 @@ import {ParkingListFilter} from './index/parking-list-filter/parking-list-filter
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
-
 @NgModule({
     declarations: [
         IndexComponent,
