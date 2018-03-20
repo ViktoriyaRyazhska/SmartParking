@@ -1,10 +1,5 @@
 package com.smartparking.dto;
 
-import com.smartparking.entity.Address;
-import com.smartparking.entity.Client;
-import com.smartparking.entity.Parking;
-import com.smartparking.entity.Provider;
-
 import java.util.List;
 
 public class ProviderDto {
@@ -12,10 +7,9 @@ public class ProviderDto {
     private String name;
     private List<ParkingDto> parkingsDto;
     private List<ClientDto> employeesDto;
-    private AddressDto legalAddressDto;
     private Boolean active;
 
-    public static ProviderDto builder(){
+    public static ProviderDto builder() {
         ProviderDto providerDto = new ProviderDto();
         return providerDto;
     }
@@ -53,15 +47,6 @@ public class ProviderDto {
 
     public ProviderDto setEmployeesDto(List<ClientDto> employeesDto) {
         this.employeesDto = employeesDto;
-        return this;
-    }
-
-    public AddressDto getLegalAddressDto() {
-        return legalAddressDto;
-    }
-
-    public ProviderDto setLegalAddressDto(AddressDto legalAddressDto) {
-        this.legalAddressDto = legalAddressDto;
         return this;
     }
 

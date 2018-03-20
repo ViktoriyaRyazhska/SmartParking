@@ -51,9 +51,9 @@ public class ProviderController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/providers/add")
     ResponseEntity<?> save(@RequestBody ProviderRequest providerRequest) {
-        if (!(providerRequest.getName().equals("") && providerRequest.getState().equals("") &&
-                providerRequest.getCity().equals("") && providerRequest.getStreet().equals("") &&
-                providerRequest.getBuildingNumber().equals(""))) {
+        if (!(providerRequest.getName().equals("") && providerRequest.getCity().equals("")
+                && providerRequest.getStreet().equals("")
+                && providerRequest.getBuilding().equals(""))) {
             providerService.saveFromRequest(providerRequest);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

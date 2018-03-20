@@ -3,10 +3,9 @@ package com.smartparking.model.request;
 public class ProviderRequest {
     private Long id;
     private String name;
-    private String state;
     private String city;
     private String street;
-    private String buildingNumber;
+    private String building;
 
     public Long getId() {
         return id;
@@ -22,14 +21,6 @@ public class ProviderRequest {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public String getCity() {
@@ -48,11 +39,11 @@ public class ProviderRequest {
         this.street = street;
     }
 
-    public String getBuildingNumber() {
-        return buildingNumber;
+    public String getBuilding() {
+        return building;
     }
 
-    public void setBuildingNumber(String buildingNumber) {
-        this.buildingNumber = buildingNumber;
+    public void setBuilding(String building) {
+        this.building = building;
     }
 }

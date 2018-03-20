@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Address} from '../../../model/view/address';
 import {ProviderService} from '../provider.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProviderRequest} from './provider-request';
@@ -17,16 +16,13 @@ export class AddProviderComponent implements OnInit {
     nameControl: FormControl = new FormControl('', [
         Validators.required
     ]);
-    stateControl: FormControl = new FormControl('', [
-        Validators.required
-    ]);
     cityControl: FormControl = new FormControl('', [
         Validators.required
     ]);
     streetControl: FormControl = new FormControl('', [
         Validators.required
     ]);
-    buildingNumberControl: FormControl = new FormControl('', [
+    buildingControl: FormControl = new FormControl('', [
         Validators.required, Validators.pattern('^\\d+[a-zA-Z]{0,1}$')
     ]);
 
@@ -37,10 +33,9 @@ export class AddProviderComponent implements OnInit {
     ngOnInit() {
         this.providerForm = this.formBuilder.group({
             name: this.nameControl,
-            state: this.stateControl,
             city: this.cityControl,
             street: this.streetControl,
-            buildingNumber: this.buildingNumberControl
+            building: this.buildingControl
         });
     }
 
