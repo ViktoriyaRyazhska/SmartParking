@@ -34,6 +34,11 @@ import {IndexComponent} from './index/index.component';
 import {ParkingListFilter} from './index/parking-list-filter/parking-list-filter.component';
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
+import {LoginService} from "./auth/login/login.service";
+import {Interceptor} from "./app.interceptor";
+import {RegistrationService} from "./auth/registration/registration.service";
+import {TokenStorage} from "./auth/login/token-storage";
+
 
 @NgModule({
     declarations: [
@@ -78,7 +83,11 @@ import {ManagerParkingListComponent} from './manager/manager-parking-list/manage
         ManagerParkingService,
         GeoLocationService,
         ProviderService,
-        ClientService
+        ClientService,
+        LoginService,
+        Interceptor,
+        RegistrationService,
+        TokenStorage
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -10,9 +10,6 @@ import java.util.List;
 @Table(name = "parking")
 public class Parking extends AbstractIdentifiableEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Address address;
-
     @NotNull
     @Column(name = "latitude", nullable = false)
     private Double latitude;
@@ -39,13 +36,16 @@ public class Parking extends AbstractIdentifiableEntity {
     @OneToMany(mappedBy = "parking", cascade = CascadeType.REMOVE)
     private List<Spot> spots;
 
-    public Address getAddress() {
-        return address;
-    }
+    @NotNull
+    @Column(name = "city", nullable = false)
+    private String city;
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+    @NotNull
+    @Column(name = "street", nullable = false)
+    private String street;
+
+    @Column(name = "building")
+    private String building;
 
     public Double getLatitude() {
         return latitude;
@@ -101,5 +101,29 @@ public class Parking extends AbstractIdentifiableEntity {
 
     public void setSpots(List<Spot> spots) {
         this.spots = spots;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 }

@@ -8,7 +8,7 @@ public class SpotDto {
 
     private Boolean isFree;
 
-    public Boolean getFree() {
+    public Boolean getIsFree() {
         return isFree;
     }
 
@@ -20,8 +20,8 @@ public class SpotDto {
         this.id = id;
     }
 
-    public void setFree(Boolean free) {
-        isFree = free;
+    public void setIsFree(Boolean isFree) {
+        this.isFree = isFree;
     }
 
 }

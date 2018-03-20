@@ -16,11 +16,10 @@ public class ProviderItemResponse {
         ProviderItemResponse providerResponse = new ProviderItemResponse();
         providerResponse.setId(provider.getId());
         providerResponse.setName(provider.getName());
-        providerResponse.setAddress(provider.getLegalAddress().getCity() +
-                ", " + provider.getLegalAddress().getStreet() +
-                ", " + provider.getLegalAddress().getBuildingNumber());
+        providerResponse.setAddress(provider.getCity() +
+                ", " + provider.getStreet() +
+                ", " + provider.getBuilding());
         providerResponse.setActive(provider.getActive());
-      //  providerResponse.setParkingIds(provider.getParkings().stream().map(Parking::getId).collect(Collectors.toList()));
         return providerResponse;
     }
 

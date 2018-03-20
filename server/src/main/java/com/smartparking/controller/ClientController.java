@@ -1,6 +1,8 @@
 package com.smartparking.controller;
 
+import com.smartparking.model.request.RegistrationClientRequest;
 import com.smartparking.entity.Client;
+import com.smartparking.entity.Role;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.model.response.ClientDetailResponse;
@@ -10,10 +12,11 @@ import com.smartparking.model.response.ProviderItemResponse;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,9 @@ public class ClientController {
 
     @Autowired
     ClientService clientService;
+
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
 
     @Autowired
     ProviderService providerService;
@@ -99,6 +105,19 @@ public class ClientController {
             providerItemResponses.add(ProviderItemResponse.of(provider));
         }
         return providerItemResponses;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping(value="/signup", method = RequestMethod.POST)
+    public String saveUser(@RequestBody RegistrationClientRequest regClient){
+        Client client = new Client();
+        client.setEmail(regClient.getEmail());
+        client.setPassword(bcryptEncoder.encode(regClient.getPassword()));
+        client.setFirstName(regClient.getFirstname());
+        client.setLastName(regClient.getLastname());
+        client.setRole(Role.DRIVER);
+        clientService.save(client);
+        return "registration successful";
     }
 
 }

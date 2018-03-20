@@ -83,29 +83,26 @@ public class ParkingDetailResponse {
     }
 
     /*
-     *This method don`t set numberSpots and numberAvailableSpots values please set its after using this method
-     */
-    public static ParkingDetailResponse of(Parking parking){
+         *This method don`t set numberSpots and numberAvailableSpots values please set its after using this method
+         */
+    public static ParkingDetailResponse of(Parking parking) {
         ParkingDetailResponse parkingDetailResponse = new ParkingDetailResponse();
 
         parkingDetailResponse.setId(parking.getId());
 
         parkingDetailResponse.setAddress(
-                parking.getAddress().getState() +
-                "/" + parking.getAddress().getCity() +
-                "/" + parking.getAddress().getStreet() +
-                "/" + parking.getAddress().getBuildingNumber());
+                parking.getCity() +
+                        "/" + parking.getStreet() +
+                        "/" + parking.getBuilding());
 
         parkingDetailResponse.setPrice(parking.getPrice());
 
         parkingDetailResponse.setProviderName(parking.getProvider().getName());
 
         parkingDetailResponse.setProviderAddress(
-                parking.getProvider().getLegalAddress().getState() +
-                        "/" + parking.getProvider().getLegalAddress().getCity() +
-                        "/" + parking.getProvider().getLegalAddress().getStreet() +
-                        "/" + parking.getProvider().getLegalAddress().getBuildingNumber());
-
+                parking.getProvider().getCity() +
+                        "/" + parking.getStreet() +
+                        "/" + parking.getBuilding());
         return parkingDetailResponse;
     }
 }

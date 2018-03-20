@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 
 import {ManagerParkingService} from "../manager-parking.service";
-import {ManagerParkingResponse} from "../manager-parking-response";
+import {Parking} from "../../model/view/parking";
 
 @Component({
     selector: 'app-manager-parking-configure',
@@ -12,7 +12,7 @@ import {ManagerParkingResponse} from "../manager-parking-response";
 })
 export class ManagerParkingConfigureComponent implements OnInit {
 
-    parking: ManagerParkingResponse;
+    parking: Parking;
 
     parkingConfigureForm = new FormGroup({
         addressRegion: new FormControl('', []),
@@ -44,8 +44,11 @@ export class ManagerParkingConfigureComponent implements OnInit {
     }
 
     updateParking(): void {
-        this.parking = this.parkingConfigureForm.value;
+        // this.parking = this.parkingConfigureForm.value;
         this.managerParkingService.updateParking(this.parking)
-            .subscribe(data => alert('Parking updated successfully.'));
+            .subscribe(response => {
+                console.log('Response: ' + response)
+                // TODO Write response handler
+            });
     }
 }
