@@ -1,56 +1,182 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/debounceTime';
+import {Subject} from 'rxjs/Subject';
+import {Subscription} from 'rxjs/Subscription';
+import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete/typings/autocomplete';
 
 @Component({
     selector: 'app-parking-list',
     templateUrl: './parking-list.component.html',
     styleUrls: ['./parking-list.component.css']
 })
-export class ParkingListComponent implements OnInit {
+export class ParkingListComponent implements OnInit, OnDestroy {
 
-    locationControl: FormControl = new FormControl();
+    public readonly locationControl: FormControl = new FormControl();
 
-    public predictions: google.maps.places.AutocompletePrediction[] = [];
+    @ViewChild(MatAutocomplete)
+    private locationAutocomplete: MatAutocomplete;
+
+    @ViewChild(MatAutocompleteTrigger)
+    private locationAutocompleteTrigger: MatAutocompleteTrigger;
+
+    public predictionItems: PredictionItem[] = [];
+
+    public locationItem: LocationItem;
+
+    private previousSelectedItem: AutocompleteItem<any>;
+
+    private selectedItem: AutocompleteItem<any>;
+
+    private locationControlValueChangesSubscription: Subscription;
+
+    private geocodeService: google.maps.Geocoder;
+
+    private autocompleteService: google.maps.places.AutocompleteService;
+
+    private geolocationDescriptor: number;
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private changeDetector: ChangeDetectorRef) {
     }
 
-    ngOnInit() {
-        this.mapsAPILoader.load().then(() => {
-            const autocompleteService = new google.maps.places.AutocompleteService();
-            this.locationControl.valueChanges.subscribe(value => {
-                if (value !== null && value.length > 0) {
-                    let request = {
-                        input: value,
-                        location: new google.maps.LatLng(0, 0),
-                        radius: 0
-                    };
-                    autocompleteService.getPlacePredictions(request, (predictions) => {
-                        if (predictions !== null) {
-                            this.notifyPreconditionsChanged(predictions);
-                        } else {
-                            this.notifyPreconditionsChanged([]);
-                        }
-                    });
-                } else {
-                    this.notifyPreconditionsChanged([]);
-                }
-            });
+    ngOnInit(): void {
+        this.initMapsAPI().then(() => {
+            this.requestGeolocation();
         });
     }
 
-    public onPredictionSelectionChange(prediction: google.maps.places.AutocompletePrediction): void {
-        console.log(prediction);
+    private initMapsAPI(): Promise<void> {
+        return this.mapsAPILoader.load().then(() => {
+            this.geocodeService = new google.maps.Geocoder();
+            this.autocompleteService = new google.maps.places.AutocompleteService();
+            this.locationControlValueChangesSubscription =
+                this.locationControl.valueChanges.subscribe((value: AutocompleteItem<any> | string) => {
+                    if (value instanceof AutocompleteItem) {
+                        this.previousSelectedItem = this.selectedItem;
+                        this.selectedItem = value;
+                    } else {
+                        if (this.selectedItem && !this.selectedItem.equalsWithLabel(value)) {
+                            this.previousSelectedItem = this.selectedItem;
+                            this.selectedItem = null;
+                        }
+                        if(this.previousSelectedItem && this.previousSelectedItem.equalsWithLabel(value)) {
+                            let buffer = this.previousSelectedItem;
+                            this.previousSelectedItem = this.selectedItem;
+                            this.selectedItem = buffer;
+                        }
+                        this.updateLocationAutocompletePredictionItems(value);
+                    }
+                });
+        });
     }
 
-    private notifyPreconditionsChanged(predictions: google.maps.places.AutocompletePrediction[]): void {
-        this.predictions = predictions;
+    public onLocationInputBlur(): void {
+        if (!this.selectedItem) {
+            this.locationControl.setErrors(
+                {'locationAutocompleteItemNotSelected': {value: this.locationControl.value}});
+        } else {
+            this.locationControl.setErrors(null);
+        }
+    }
+
+    private requestGeolocation(): void {
+        if (window.navigator && window.navigator.geolocation) {
+            this.geolocationDescriptor = window.navigator.geolocation.watchPosition(
+                position => this.onGeolocationSuccess(position),
+                error => this.onGeolocationError(error),
+                <PositionOptions> {
+                    timeout: 60000,
+                    enableHighAccuracy: false
+                }
+            );
+        }
+    }
+
+    private onGeolocationSuccess(position: Position): void {
+        let request = <google.maps.GeocoderRequest> {
+            location: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        };
+        this.geocodeService.geocode(request, (results, status) => {
+            if (status === google.maps.GeocoderStatus.OK) {
+                this.locationItem = new LocationItem(new Location(position.coords, results[0]));
+                if(this.locationItem === this.selectedItem) {
+                    this.locationControl.setValue(this.locationAutocompleteDisplayWith(this.locationItem));
+                }
+                this.refreshComponentView();
+            } else if (status === google.maps.GeocoderStatus.ZERO_RESULTS) {
+                let address = position.coords.latitude + ', ' + position.coords.longitude;
+                this.locationItem = new LocationItem(new Location(position.coords, null, address));
+            } else {
+                console.warn('Google API Geocoder error: ' + status);
+            }
+        });
+    }
+
+    private onGeolocationError(error: PositionError): void {
+        let errorName: string;
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                errorName = 'PERMISSION_DENIED';
+                break;
+            case error.POSITION_UNAVAILABLE:
+                errorName = 'POSITION_UNAVAILABLE';
+                break;
+            case error.TIMEOUT:
+                errorName = 'TIMEOUT';
+                break;
+        }
+        console.log('Current geolocation error: ' + errorName);
+    }
+
+    public locationAutocompleteDisplayWith(item: AutocompleteItem<any>): string {
+        return item ? item.label : '';
+    }
+
+    public locationAutocompleteItemNotSelected(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } => {
+            return this.selectedItem
+                ? {'locationAutocompleteItemNotSelected': {value: control.value}}
+                : null;
+        };
+    }
+
+    private updateLocationAutocompletePredictionItems(value: string): void {
+        if (value !== null && value.length > 0) {
+            const request = <google.maps.places.AutocompletionRequest> {
+                input: value,
+                location: this.locationItem ? this.locationItem.source.toLatLng() : undefined,
+                radius: 0
+            };
+            this.autocompleteService.getPlacePredictions(request, (predictions) => {
+                if (value == this.locationControl.value) {
+                    if (predictions !== null) {
+                        this.predictionItems = predictions
+                            .filter((value, index) => index < 4)
+                            .map(p => new PredictionItem(p));
+                    } else {
+                        this.predictionItems = [];
+                    }
+                    this.refreshComponentView();
+                }
+            });
+        } else {
+            this.predictionItems = [];
+            this.refreshComponentView();
+        }
+    }
+
+    private refreshComponentView(): void {
         this.changeDetector.detectChanges();
         setTimeout(() => this.changeDetector.detectChanges(), 1);
+    }
+
+    ngOnDestroy(): void {
+        this.locationControlValueChangesSubscription.unsubscribe();
+        window.navigator.geolocation.clearWatch(this.geolocationDescriptor);
     }
 
     // locationControl: FormControl = new FormControl();
@@ -250,5 +376,66 @@ export class ParkingListComponent implements OnInit {
     //         });
     //     }
     // }
+}
 
+export abstract class AutocompleteItem<T> {
+
+    public readonly label: string;
+
+    public readonly source: T;
+
+    public constructor(label: string, source: T) {
+        this.label = label;
+        this.source = source;
+    }
+
+    public equalsWithLabel(label: string): boolean {
+        if (!label) {
+            return false;
+        }
+        let thisTokens = this.labelToTokens(this.label);
+        let otherTokens = this.labelToTokens(label);
+        return thisTokens.length == otherTokens.length
+            && thisTokens.every((v, i) => v === otherTokens[i]);
+    }
+
+    protected labelToTokens(label: string): string[] {
+        return label.trim().split(/[, ]+/);
+    }
+}
+
+export class PredictionItem extends AutocompleteItem<google.maps.places.AutocompletePrediction> {
+
+    public constructor(source: google.maps.places.AutocompletePrediction) {
+        super(source.description, source);
+    }
+}
+
+export class LocationItem extends AutocompleteItem<Location> {
+
+    public constructor(source: Location) {
+        super(source.address, source);
+    }
+}
+
+export class Location {
+
+    public readonly source: google.maps.GeocoderResult;
+
+    public readonly address: string;
+
+    public readonly latitude: number;
+
+    public readonly longitude: number;
+
+    public constructor(coordinates: Coordinates, source: google.maps.GeocoderResult, address?: string) {
+        this.source = source;
+        this.address = typeof address !== 'undefined' ? address: source.formatted_address;
+        this.latitude = coordinates.latitude;
+        this.longitude = coordinates.longitude;
+    }
+
+    public toLatLng(): google.maps.LatLng {
+        return new google.maps.LatLng(this.latitude, this.longitude);
+    }
 }
