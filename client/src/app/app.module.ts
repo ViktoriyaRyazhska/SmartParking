@@ -1,16 +1,15 @@
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {MAT_LABEL_GLOBAL_OPTIONS, MatButtonModule, MatDividerModule, MatExpansionModule} from '@angular/material';
+import {MatAutocompleteModule, MatButtonModule, MatDividerModule, MatExpansionModule, MatSelectModule} from '@angular/material';
 
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
 import {ParkingListComponent} from './index/parking-list/parking-list.component';
 import {ParkingService} from './parking.service';
-import {GeoLocationService} from './geo-location.service';
 import {ManagerParkingService} from './manager/manager-parking.service';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -33,14 +32,18 @@ import {RegistrationComponent} from './auth/registration/registration.component'
 import {AngularMaterialsModule} from './angular-materials.module';
 import {IndexComponent} from './index/index.component';
 import {ParkingListFilterComponent} from './index/parking-list-filter/parking-list-filter.component';
-import {MatSelectModule, MatAutocompleteModule } from "@angular/material";
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 import {AgmCoreModule} from '@agm/core';
-import {LoginService} from "./auth/login/login.service";
-import {Interceptor} from "./app.interceptor";
-import {RegistrationService} from "./auth/registration/registration.service";
-import {TokenStorage} from "./auth/login/token-storage";
+import {LoginService} from './auth/login/login.service';
+import {Interceptor} from './app.interceptor';
+import {RegistrationService} from './auth/registration/registration.service';
+import {TokenStorage} from './auth/login/token-storage';
+import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
+import {IpLocationService} from './service/ip-location.service';
+import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/radius-field.component';
+import {MatSliderModule} from '@angular/material/slider';
+import {PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
 
 
 @NgModule({
@@ -65,7 +68,10 @@ import {TokenStorage} from "./auth/login/token-storage";
         ManagerParkingListComponent,
         AddProviderComponent,
         FilterPipe,
-        ClientDetailComponent
+        ClientDetailComponent,
+        LocationFieldComponent,
+        RadiusFieldComponent,
+        PriceRangeFieldComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -86,18 +92,19 @@ import {TokenStorage} from "./auth/login/token-storage";
         AngularMaterialsModule,
         MatDividerModule,
         MatExpansionModule,
-        MatButtonModule
+        MatButtonModule,
+        MatSliderModule
     ],
     providers: [
         ParkingService,
         ManagerParkingService,
-        GeoLocationService,
         ProviderService,
         ClientService,
         LoginService,
         Interceptor,
         RegistrationService,
-        TokenStorage
+        TokenStorage,
+        IpLocationService,
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
