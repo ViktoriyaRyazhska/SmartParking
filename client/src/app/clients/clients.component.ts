@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ROLES} from "./mock-roles";
 
 @Component({
     selector: 'app-clients',
