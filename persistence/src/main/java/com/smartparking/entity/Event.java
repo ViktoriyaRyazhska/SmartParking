@@ -14,15 +14,26 @@ import java.time.ZoneOffset;
 public class Event extends AbstractIdentifiableEntity {
 
     @NotNull
+    @Column(name = "event_marker", nullable = false)
+    private EventMarker eventMarker;
+
+    public Event() {
+    }
+
+    @NotNull
     @ManyToOne(optional = false)
     private Spot spot;
 
     @NotNull
-    @Column(name = "arrival_time", nullable = false)
-    private Instant arrivalTime;
+    @Column(name = "timestamp", nullable = false)
+    private Instant timestamp;
 
-    @Column(name = "departure_time")
-    private Instant departureTime;
+    public Event(@NotNull Spot spot, @NotNull Instant timestamp, @NotNull EventMarker eventMarker) {
+        this.spot = spot;
+        this.timestamp = timestamp;
+        this.eventMarker = eventMarker;
+    }
+
 
     public Spot getSpot() {
         return spot;
@@ -32,27 +43,32 @@ public class Event extends AbstractIdentifiableEntity {
         this.spot = spot;
     }
 
-    public Instant getArrivalTime() {
-        return arrivalTime;
+    public Instant getTimestamp() {
+        return timestamp;
     }
 
-    public void setArrivalTime(Instant arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public Instant getDepartureTime() {
-        return departureTime;
+    public EventMarker getEventMarker() {
+        return eventMarker;
     }
 
-    public void setDepartureTime(Instant departureTime) {
-        this.departureTime = departureTime;
+    public void setEventMarker(EventMarker eventMarker) {
+        this.eventMarker = eventMarker;
     }
 
-    public void setCurrentArrivalTime() {
-        this.arrivalTime = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+    public void setCurrentEventTime() {
+        this.timestamp = LocalDateTime.now().toInstant(ZoneOffset.UTC);
     }
 
-    public void setCurrentDepartureTime() {
-        this.departureTime = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+    @Override
+    public String toString() {
+        return "Event{" +
+                "spotId=" + spot.getId() +
+                ", timestamp=" + timestamp +
+                ", eventMarker=" + eventMarker +
+                '}';
     }
 }

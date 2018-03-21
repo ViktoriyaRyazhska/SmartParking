@@ -2,13 +2,16 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-parking-list-filter',
-    templateUrl: './app-navbar-footer.component.html',
-    styleUrls: ['./app-navbar-footer.component.css']
+    templateUrl: './parking-list-filter.component.html',
+    styleUrls: ['./parking-list-filter.component.css']
 })
-export class AppNavbarFooterComponent implements OnInit {
+export class ParkingListFilter implements OnInit {
+
+
     navTitle = 'Filtering';
 
     constructor() {
+
     }
 
     ngOnInit() {

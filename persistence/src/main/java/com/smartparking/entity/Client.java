@@ -1,12 +1,18 @@
 package com.smartparking.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "client")
-public class Client extends AbstractIdentifiableEntity {
+public class Client extends AbstractIdentifiableEntity implements UserDetails {
 
     @NotNull
     @Column(name = "first_name", nullable = false)
@@ -34,6 +40,43 @@ public class Client extends AbstractIdentifiableEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Provider provider;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(role.name()));
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -58,10 +101,6 @@ public class Client extends AbstractIdentifiableEntity {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -70,8 +109,8 @@ public class Client extends AbstractIdentifiableEntity {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.role = Role.valueOf(role);
     }
 
     public List<Favorite> getFavorites() {

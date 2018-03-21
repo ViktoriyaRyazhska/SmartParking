@@ -3,5 +3,10 @@
 }
 
 td {
-    min-width: 40em;
+    min-width: 35em;
+}
+
+#aInfo {
+    display: block;
+    margin-top: 40%;
 }

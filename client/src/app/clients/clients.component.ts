@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Client} from "./clients";
-import {ClientService} from "./client.service";
+import {ROLES} from "./mock-roles";
 
 @Component({
     selector: 'app-clients',

@@ -1,17 +1,17 @@
-import {Address} from './address';
-import {Provider} from '../../providers/provider';
-import {Favorite} from './favorite';
-import {Spot} from './spot';
 
 export class Parking {
     id: number;
-    addressDto: Address;
+    city: string;
+    street: string;
+    building: string;
     latitude: number;
     longitude: number;
+    token: string;
     price: number;
-    providerDto: Provider
-    favoritesDto: Favorite[];
-    spotsDto: Spot[];
+    providerId: number;
+    providerName: string;
+    favoritesCount: number;
+    spotsCount: number;
     numberSpots: number;
     numberAvailableSpots: number;
   }

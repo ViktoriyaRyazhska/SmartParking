@@ -2,6 +2,9 @@ package com.smartparking.model.response;
 
 import com.smartparking.dto.SpotDto;
 import com.smartparking.entity.Parking;
+import com.smartparking.repository.SpotRepository;
+import com.smartparking.service.SpotService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,11 +22,9 @@ public class ParkingDetailResponse {
 
     private String providerAddress;
 
-    private List<SpotDto> spotsDto;
+    private Long numberSpots;
 
-    private Integer numberSpots;
-
-    private Integer numberAvailableSpots;
+    private Long numberAvailableSpots;
 
     public Long getId() {
         return id;
@@ -41,24 +42,15 @@ public class ParkingDetailResponse {
         this.price = price;
     }
 
-    public List<SpotDto> getSpotsDto() {
-        return spotsDto;
-    }
-
-    public void setSpotsDto(List<SpotDto> spotsDto) {
-        this.spotsDto = spotsDto;
-        this.numberSpots = Integer.valueOf(spotsDto.size());
-    }
-
-    public Integer getNumberSpots() {
+    public Long getNumberSpots() {
         return numberSpots;
     }
 
-    public Integer getNumberAvailableSpots() {
+    public Long getNumberAvailableSpots() {
         return numberAvailableSpots;
     }
 
-    public void setNumberAvailableSpots(Integer numberAvailableSpots) {
+    public void setNumberAvailableSpots(Long numberAvailableSpots) {
         this.numberAvailableSpots = numberAvailableSpots;
     }
 
@@ -78,7 +70,7 @@ public class ParkingDetailResponse {
         this.providerAddress = providerAddress;
     }
 
-    public void setNumberSpots(Integer numberSpots) {
+    public void setNumberSpots(Long numberSpots) {
         this.numberSpots = numberSpots;
     }
 
@@ -90,30 +82,27 @@ public class ParkingDetailResponse {
         this.address = address;
     }
 
-    public static ParkingDetailResponse of(Parking parking){
+    /*
+         *This method don`t set numberSpots and numberAvailableSpots values please set its after using this method
+         */
+    public static ParkingDetailResponse of(Parking parking) {
         ParkingDetailResponse parkingDetailResponse = new ParkingDetailResponse();
 
         parkingDetailResponse.setId(parking.getId());
 
         parkingDetailResponse.setAddress(
-                parking.getAddress().getState() +
-                "/" + parking.getAddress().getCity() +
-                "/" + parking.getAddress().getStreet() +
-                "/" + parking.getAddress().getBuildingNumber());
+                parking.getCity() +
+                        "/" + parking.getStreet() +
+                        "/" + parking.getBuilding());
 
         parkingDetailResponse.setPrice(parking.getPrice());
 
         parkingDetailResponse.setProviderName(parking.getProvider().getName());
 
         parkingDetailResponse.setProviderAddress(
-                parking.getProvider().getLegalAddress().getState() +
-                        "/" + parking.getProvider().getLegalAddress().getCity() +
-                        "/" + parking.getProvider().getLegalAddress().getStreet() +
-                        "/" + parking.getProvider().getLegalAddress().getBuildingNumber());
-
-        parkingDetailResponse.setSpotsDto(parking.getSpots()
-                .stream().map(SpotDto::of).collect(Collectors.toList()));
-
+                parking.getProvider().getCity() +
+                        "/" + parking.getStreet() +
+                        "/" + parking.getBuilding());
         return parkingDetailResponse;
     }
 }

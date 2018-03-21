@@ -16,6 +16,7 @@
     <version>1.0</version>
 
     <properties>
+        <spring-security-version>5.0.3.RELEASE</spring-security-version>
         <spring-version>5.0.4.RELEASE</spring-version>
         <hibernate-version>5.2.14.Final</hibernate-version>
         <jackson-version>2.9.4</jackson-version>
@@ -24,7 +25,7 @@
     </properties>
 
     <build>
-        <finalName>SmartParkingServer</finalName>
+        <finalName>server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -50,7 +51,6 @@
     </build>
 
     <dependencies>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -124,6 +124,16 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
 
         <!-- Jackson -->
         <dependency>
@@ -143,6 +153,14 @@
             <version>1.0</version>
         </dependency>
 
+        <!--JWT-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.6.0</version>
+        </dependency>
     </dependencies>
+
+
 
 </project>
