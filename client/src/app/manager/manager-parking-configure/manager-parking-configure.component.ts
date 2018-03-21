@@ -15,6 +15,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
 
     step = -1;
 
+    gettedParking: Parking;
     parking: Parking;
 
     parkingConfigureForm = new FormGroup({
@@ -43,9 +44,13 @@ export class ManagerParkingConfigureComponent implements OnInit {
     getParking(): void {
         const id = parseInt(this.route.snapshot.paramMap.get('id'));
         this.managerParkingService.getParking(id)
-            .subscribe(parking => this.parking = parking);
+            .subscribe(parking => {
+                this.gettedParking = parking;
+                this.parking = parking.clone();
+            });
         // TODo Catch errors
     }
+
     saveParking(): void {
         this.managerParkingService.saveParking(this.parking)
             .subscribe(response => {
@@ -75,7 +80,22 @@ export class ManagerParkingConfigureComponent implements OnInit {
         this.parking.token = uuid();
     }
 
-    resetToken() {
+    resetAddress() {
+        this.parking.city = this.gettedParking.city;
+        this.parking.street = this.gettedParking.street;
+        this.parking.building = this.gettedParking.building;
+    }
 
+    resetLocation() {
+        this.parking.latitude = this.gettedParking.latitude;
+        this.parking.longitude = this.gettedParking.longitude;
+    }
+
+    resetPrice() {
+        this.parking.price = this.gettedParking.price;
+    }
+
+    resetToken() {
+        this.parking.token = this.gettedParking.token;
     }
 }

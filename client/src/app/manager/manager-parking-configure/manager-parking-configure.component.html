@@ -66,6 +66,8 @@
                            formControlName="building">
                 </mat-form-field>
                 <mat-action-row>
+                    <button mat-button type="button" color="warn" (click)="resetAddress()">Reset</button>
+                    <div class="full-width"></div>
                     <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                 </mat-action-row>
             </mat-expansion-panel>
@@ -100,6 +102,8 @@
                         (click)="showOnMap()">Show on map
                 </button>
                 <mat-action-row>
+                    <button mat-button type="button" color="warn" (click)="resetLocation()">Reset</button>
+                    <div class="full-width"></div>
                     <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
                     <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                 </mat-action-row>
@@ -125,6 +129,8 @@
                            formControlName="price">
                 </mat-form-field>
                 <mat-action-row>
+                    <button mat-button type="button" color="warn" (click)="resetPrice()">Reset</button>
+                    <div class="full-width"></div>
                     <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
                     <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                 </mat-action-row>
