@@ -14,7 +14,7 @@ export class ProviderService {
     constructor(private http: HttpClient) {
     }
 
-    getProviders(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
+    getAll(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
         var params = {
             active: providerFilter.active,
             companyName: providerFilter.companyName
@@ -22,16 +22,19 @@ export class ProviderService {
         return this.http.get<Provider[]>(this.providerUrl, {params: params});
     }
 
-    getProviderDetail(id: number): Observable<Provider> {
+    getDetail(id: number): Observable<Provider> {
         return this.http.get<Provider>(this.providerUrl + '/' + id);
     }
 
-    saveProvider(providerRequest: ProviderRequest) {
+    save(providerRequest: ProviderRequest) {
         return this.http.post(this.providerUrl + '/add', providerRequest);
+    }
+
+    update(id: string, providerRequest: ProviderRequest) {
+        return this.http.post(this.providerUrl + '/add/' + id, providerRequest);
     }
 
     changeState(id: number): Observable<Provider> {
         return this.http.get<Provider>(this.providerUrl + '/changeState/' + id);
     }
-
 }
