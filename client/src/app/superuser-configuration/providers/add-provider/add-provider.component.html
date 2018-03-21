@@ -27,7 +27,8 @@
                 </td>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Number building" formControlName="building">
+                        <input matInput placeholder="Number building"
+                               formControlName="building">
                         <mat-error *ngIf="buildingControl.hasError('required')">
                             Building number is <strong>required</strong>
                         </mat-error>

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ProviderService} from '../provider.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProviderRequest} from './provider-request';
+import {ActivatedRoute} from '@angular/router';
+import {Provider} from '../../../model/view/provider';
 
 @Component({
     selector: 'app-add-provider',
@@ -41,9 +43,10 @@ export class AddProviderComponent implements OnInit {
 
     saveProvider(): void {
         this.providerRequest = this.providerForm.value;
-        this.providerService.saveProvider(this.providerRequest).subscribe(data => {
+        this.providerService.save(this.providerRequest).subscribe(data => {
             alert('Provider added successfully.');
         });
         ;
     }
+    
 }
