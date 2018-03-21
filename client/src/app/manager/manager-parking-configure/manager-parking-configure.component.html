@@ -1,42 +1,46 @@
-<div class="container-fluid" *ngIf="parking && parking.address">
-    <form class="parking-configure-form" [formGroup]="parkingConfigureForm" (ngSubmit)="updateParking()">
+<div class="container-fluid" *ngIf="!parking">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container-fluid" *ngIf="parking">
+    <form class="parking-configure-form" [formGroup]="parkingConfigureForm" (ngSubmit)="saveParking()">
         <legend>Edit parking</legend>
         <mat-form-field>
-            <input matInput [(ngModel)]="parking.address.state" placeholder="Region" formControlName="addressRegion">
+            <input matInput [(ngModel)]="parking.city" placeholder="City"
+                   formControlName="city">
         </mat-form-field>
         <br>
         <mat-form-field>
-            <input matInput [(ngModel)]="parking.address.city" placeholder="City" formControlName="addressCity">
+            <input matInput [(ngModel)]="parking.street" placeholder="Street"
+                   formControlName="street">
         </mat-form-field>
         <br>
         <mat-form-field>
-            <input matInput [(ngModel)]="parking.address.street" placeholder="Street" formControlName="addressStreet">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <input matInput [(ngModel)]="parking.address.buildingNumber" placeholder="Building number"
-                   formControlName="addressBuildingNumber">
+            <input matInput [(ngModel)]="parking.building" placeholder="Building number"
+                   formControlName="building">
         </mat-form-field>
         <br>
         <mat-form-field>
             <input matInput [(ngModel)]="parking.latitude" placeholder="Location latitude"
-                   formControlName="locationLatitude">
+                   formControlName="latitude">
         </mat-form-field>
         <mat-form-field>
             <input matInput [(ngModel)]="parking.longitude" placeholder="Location longitude"
-                   formControlName="locationLongitude">
+                   formControlName="longitude">
         </mat-form-field>
         <br>
         <mat-form-field>
-            <input matInput [(ngModel)]="parking.price" placeholder="Price" formControlName="price">
+            <input matInput [(ngModel)]="parking.price" placeholder="Price"
+                   formControlName="price">
         </mat-form-field>
         <br>
         <mat-form-field>
-            <input matInput [(ngModel)]="parking.token" placeholder="Token" formControlName="token">
+            <input matInput [(ngModel)]="parking.token" placeholder="Token"
+                   formControlName="token">
         </mat-form-field>
         <br>
         <mat-form-field>
-            <input matInput [(ngModel)]="parking.providerName" placeholder="Provider" formControlName="providerName">
+            <input matInput [(ngModel)]="parking.providerName" placeholder="Provider"
+                   formControlName="providerName">
         </mat-form-field>
         <br>
         <mat-form-field>
@@ -45,7 +49,8 @@
         </mat-form-field>
         <br>
         <mat-form-field>
-            <input matInput [(ngModel)]="parking.spotsCount" placeholder="Spots count" formControlName="spotsCount">
+            <input matInput [(ngModel)]="parking.spotsCount" placeholder="Spots count"
+                   formControlName="spotsCount">
         </mat-form-field>
         <div class="row submit">
             <button mat-raised-button class="full-width" type="submit" color="accent"

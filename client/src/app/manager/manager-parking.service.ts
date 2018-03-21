@@ -20,8 +20,8 @@ export class ManagerParkingService {
         return this.http.get<Parking>(this.parkingConfigureUrl + "/" + id);
     }
 
-    updateParking(parking: Parking): Observable<HttpResponse<any>> {
+    saveParking(parking: Parking): Observable<HttpResponse<any>> {
         return this.http.post<HttpResponse<any>>(
-            this.parkingConfigureUrl + '/update', parking, {observe: 'response'});
+            this.parkingConfigureUrl + '/save', parking, {observe: 'response'});
     }
 }
