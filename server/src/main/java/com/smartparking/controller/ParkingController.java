@@ -61,8 +61,8 @@ public class ParkingController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/manager-parkings-configure/update")
-    ResponseEntity<?> save(ParkingRequest parkingRequest) {
+    @PostMapping("/manager-parkings-configure/save")
+    ResponseEntity<?> save(@RequestBody ParkingRequest parkingRequest) {
         parkingService.save(parkingRequest.toParking());
 
 //        if (providerRequest.getName() != "" && providerRequest.getState() != "" &&

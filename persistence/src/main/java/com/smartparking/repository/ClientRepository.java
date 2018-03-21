@@ -1,6 +1,7 @@
 package com.smartparking.repository;
 
 import com.smartparking.entity.Client;
+import com.smartparking.entity.Role;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("SELECT c from Client c")
     List<Client> findLimitNumberOfClients(Pageable pageable);
+
+//    @Query("SELECT r from Client c join c.role r where r.id=?1")
+//    Role findRoleById(Long id);
 
 }

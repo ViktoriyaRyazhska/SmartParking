@@ -15,12 +15,11 @@ export class ManagerParkingConfigureComponent implements OnInit {
     parking: Parking;
 
     parkingConfigureForm = new FormGroup({
-        addressRegion: new FormControl('', []),
-        addressCity: new FormControl('', []),
-        addressStreet: new FormControl('', []),
-        addressBuildingNumber: new FormControl('', []),
-        locationLatitude: new FormControl('', []),
-        locationLongitude: new FormControl('', []),
+        city: new FormControl('', []),
+        street: new FormControl('', []),
+        building: new FormControl('', []),
+        latitude: new FormControl('', []),
+        longitude: new FormControl('', []),
         price: new FormControl('', []),
         token: new FormControl('', []),
         providerName: new FormControl('', []),
@@ -41,11 +40,12 @@ export class ManagerParkingConfigureComponent implements OnInit {
         const id = parseInt(this.route.snapshot.paramMap.get('id'));
         this.managerParkingService.getParking(id)
             .subscribe(parking => this.parking = parking);
+        // TODo Catch errors
     }
 
-    updateParking(): void {
+    saveParking(): void {
         // this.parking = this.parkingConfigureForm.value;
-        this.managerParkingService.updateParking(this.parking)
+        this.managerParkingService.saveParking(this.parking)
             .subscribe(response => {
                 console.log('Response: ' + response)
                 // TODO Write response handler

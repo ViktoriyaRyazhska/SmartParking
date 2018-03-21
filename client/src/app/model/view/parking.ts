@@ -1,6 +1,9 @@
 
 export class Parking {
     id: number;
+    city: string;
+    street: string;
+    building: string;
     latitude: number;
     longitude: number;
     token: string;
