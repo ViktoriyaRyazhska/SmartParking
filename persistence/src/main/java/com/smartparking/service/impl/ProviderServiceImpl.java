@@ -51,7 +51,6 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
 
     @Override
     public List<Provider> findAllByFilter(ProviderFilter providerFilter) {
-        ;
         return providerFilterRepository.findAllByFilter(providerFilter);
     }
 

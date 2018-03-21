@@ -38,6 +38,7 @@ import {LoginService} from "./auth/login/login.service";
 import {Interceptor} from "./app.interceptor";
 import {RegistrationService} from "./auth/registration/registration.service";
 import {TokenStorage} from "./auth/login/token-storage";
+import { UpdateProviderComponent } from './superuser-configuration/providers/update-provider/update-provider.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import {TokenStorage} from "./auth/login/token-storage";
         AddProviderComponent,
         FilterPipe,
         ClientDetailComponent,
-        ParkingListFilter
+        ParkingListFilter,
+        UpdateProviderComponent
     ],
     imports: [
         HttpClientModule,
