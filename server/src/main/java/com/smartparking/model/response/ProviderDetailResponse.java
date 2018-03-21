@@ -9,16 +9,18 @@ import java.util.stream.Collectors;
 public class ProviderDetailResponse {
     private Long id;
     private String name;
-    private String address;
+    private String city;
+    private String street;
+    private String building;
     private Boolean active;
     private List<Long> parkingIds;
 
     public static ProviderDetailResponse of(Provider provider) {
         ProviderDetailResponse response = new ProviderDetailResponse();
         response.setActive(provider.getActive());
-        response.setAddress(provider.getCity() +
-                ", " + provider.getStreet() +
-                ", " + provider.getBuilding());
+        response.setCity(provider.getCity());
+        response.setStreet(provider.getStreet());
+        response.setBuilding(provider.getBuilding());
         response.setName(provider.getName());
         response.setId(provider.getId());
         response.setParkingIds(provider.getParkings()
@@ -43,12 +45,28 @@ public class ProviderDetailResponse {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 
     public Boolean getActive() {
