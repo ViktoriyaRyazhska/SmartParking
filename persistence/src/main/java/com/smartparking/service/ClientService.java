@@ -9,9 +9,14 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ClientService extends Service<Client, Long, ClientRepository> {
+
     Client findOne(String email);
-    void updateFromRequest(Long id, ClientRequest clientRequest);
+
     List<Client> findClientsByAnyMatch(String input);
+
     List<Client> findLimitNumberOfClients(Pageable pageable);
-//    Role findRoleById(Long id);
+
+    List<Client> findClientsByRole(String input);
+
+    void updateFromRequest(Long id, ClientRequest clientRequest);
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    Optional<Client> findClientByEmail (String email);
+    Optional<Client> findClientByEmail(String email);
 
     @Query("SELECT c from Client c where c.firstName like %?1% or c.lastName like %?1%" +
             " or c.email like %?1% or c.role like %?1% or c.provider.name like %?1%")
@@ -20,7 +20,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("SELECT c from Client c")
     List<Client> findLimitNumberOfClients(Pageable pageable);
 
-//    @Query("SELECT r from Client c join c.role r where r.id=?1")
-//    Role findRoleById(Long id);
+    @Query("SELECT c from Client c where c.role=?1")
+    List<Client> findClientsByRole(String input);
 
 }

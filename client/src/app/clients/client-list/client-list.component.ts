@@ -40,5 +40,20 @@ export class ClientListComponent implements OnInit {
             .subscribe(clients => this.clients = clients);
     }
 
+    findDrivers(): void {
+        this.clientService.findClientsByAnyMatch("0")
+            .subscribe(clients => this.clients = clients);
+    }
+
+    findProviderManagers(): void {
+        this.clientService.findClientsByAnyMatch("1")
+            .subscribe(clients => this.clients = clients);
+    }
+
+    findSuperusers(): void {
+        this.clientService.findClientsByAnyMatch("2")
+            .subscribe(clients => this.clients = clients);
+    }
+
 
 }
