@@ -11,5 +11,9 @@
     <include file="liquibase/db-table-spot/create_table_spot.xml"/>
     <include file="liquibase/db-table-favorite/create_table_favorite.xml"/>
     <include file="liquibase/db-table-event/create_table_event.xml"/>
+    <include file="liquibase/db-table-parking/insert_into_table_parking.xml"/>
+    <include file="liquibase/db-table-spot/insert_into_table_spot.xml"/>
+    <include file="liquibase/db-table-favorite/insert_into_table_favorite.xml"/>
+    <include file="liquibase/db-table-event/insert_into_table_event.xml"/>
 
 </databaseChangeLog>

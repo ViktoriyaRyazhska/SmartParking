@@ -22,7 +22,7 @@ public class ConnectionWithJDBC {
   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
   static final String DATABASE_URL = "jdbc:mysql://localhost:3306/smartparking";
   static final String USER = "root";
-  static final String PASSWORD = "root";
+  static final String PASSWORD = "abcde1234567890";
 
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException,LiquibaseException {

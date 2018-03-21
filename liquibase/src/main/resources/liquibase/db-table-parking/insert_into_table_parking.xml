@@ -1,0 +1,13 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Oleksiy" id="201803211515" dbms="MYSQL">
+        <sql>
+            INSERT INTO parking (latitude ,longitude ,price ,token,provider_id) values(49.85,24.45,50.4,'qwert',2);
+        </sql>
+        <comment>Inserting into table parking</comment>
+    </changeSet>
+
+</databaseChangeLog>
