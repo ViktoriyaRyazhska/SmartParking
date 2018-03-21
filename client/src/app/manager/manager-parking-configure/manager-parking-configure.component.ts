@@ -4,6 +4,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {ManagerParkingService} from '../manager-parking.service';
 import {Parking} from '../../model/view/parking';
+import {v4 as uuid} from 'uuid';
 
 @Component({
     selector: 'app-manager-parking-configure',
@@ -46,7 +47,6 @@ export class ManagerParkingConfigureComponent implements OnInit {
         // TODo Catch errors
     }
     saveParking(): void {
-        // this.parking = this.parkingConfigureForm.value;
         this.managerParkingService.saveParking(this.parking)
             .subscribe(response => {
                 console.log('Response: ' + response)
@@ -67,8 +67,15 @@ export class ManagerParkingConfigureComponent implements OnInit {
     }
 
     showOnMap(): void {
-        // this.router.navigateByUrl('https://www.google.com.ua/maps/@49.836294,23.9972129?hl=ru');
         window.open(`https://www.google.com/maps/search/?api=1&query=
                     ${this.parking.latitude},${this.parking.longitude}`);
+    }
+
+    generateToken() {
+        this.parking.token = uuid();
+    }
+
+    resetToken() {
+
     }
 }

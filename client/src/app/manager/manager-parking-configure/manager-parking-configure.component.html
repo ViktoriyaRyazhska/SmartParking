@@ -20,7 +20,7 @@
                    formControlName="spotsCount">
         </mat-form-field>
         <div class="row submit">
-            <button mat-raised-button class="full-width" type="submit" color="accent"
+            <button mat-raised-button type="submit" color="accent" class="full-width"
                     [disabled]="!parkingConfigureForm.valid">
                 Submit
                 <mat-icon aria-label="Send and save changes">send</mat-icon>
@@ -66,7 +66,7 @@
                            formControlName="building">
                 </mat-form-field>
                 <mat-action-row>
-                    <button mat-button color="primary" (click)="nextStep()">Next</button>
+                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                 </mat-action-row>
             </mat-expansion-panel>
 
@@ -95,12 +95,13 @@
                            type="number"
                            formControlName="longitude">
                 </mat-form-field>
-                <button mat-raised-button [disabled]="parking.latitude === null || parking.longitude === null"
-                        color="primary" (click)="showOnMap()">Show on map
+                <button mat-raised-button type="button" color="primary"
+                        [disabled]="parking.latitude === null || parking.longitude === null"
+                        (click)="showOnMap()">Show on map
                 </button>
                 <mat-action-row>
-                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button color="primary" (click)="nextStep()">Next</button>
+                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                 </mat-action-row>
             </mat-expansion-panel>
 
@@ -124,8 +125,8 @@
                            formControlName="price">
                 </mat-form-field>
                 <mat-action-row>
-                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button color="primary" (click)="nextStep()">Next</button>
+                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                 </mat-action-row>
             </mat-expansion-panel>
 
@@ -145,12 +146,17 @@
                     <mat-icon>settings_remote</mat-icon>
                 </mat-expansion-panel-header>
                 <mat-form-field>
-                    <input matInput [(ngModel)]="parking.token" placeholder="Token"
-                           formControlName="token" readonly>
+                    <textarea matInput [(ngModel)]="parking.token" placeholder="Token"
+                              formControlName="token" readonly></textarea>
                 </mat-form-field>
+                <button mat-raised-button type="button" color="primary"
+                        (click)="generateToken()">Generate token
+                </button>
                 <mat-action-row>
-                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button color="primary" (click)="nextStep()">Next</button>
+                    <button mat-button type="button" color="warn" (click)="resetToken()">Reset</button>
+                    <div class="full-width"></div>
+                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                 </mat-action-row>
             </mat-expansion-panel>
 
@@ -165,8 +171,8 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-action-row>
-                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button color="primary" (click)="nextStep()">End</button>
+                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button type="button" color="primary" (click)="nextStep()">End</button>
                 </mat-action-row>
             </mat-expansion-panel>
 
