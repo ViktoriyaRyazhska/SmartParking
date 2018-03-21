@@ -1,1 +1,0 @@
-INSERT INTO client (id, email ,first_name ,last_name ,password,role ,provider_id) values(1,'fox@gmail.com','Kook','Petro','kout',1,1);
