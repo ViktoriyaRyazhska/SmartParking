@@ -10,4 +10,28 @@
         <comment>Inserting into table spot</comment>
     </changeSet>
 
+
+    <changeSet author="Oleksiy" id="201803211613" dbms="MYSQL">
+        <sql>
+            INSERT INTO spot (parking_id) values(2);
+        </sql>
+        <comment>Inserting into table spot</comment>
+    </changeSet>
+
+
+    <changeSet author="Oleksiy" id="201803211614" dbms="MYSQL">
+        <sql>
+            INSERT INTO spot (parking_id) values(3);
+        </sql>
+        <comment>Inserting into table spot</comment>
+    </changeSet>
+
+
+    <changeSet author="Oleksiy" id="201803211615" dbms="MYSQL">
+        <sql>
+            INSERT INTO spot (parking_id) values(4);
+        </sql>
+      <comment>Inserting into table spot</comment>
+    </changeSet>
+
 </databaseChangeLog>
