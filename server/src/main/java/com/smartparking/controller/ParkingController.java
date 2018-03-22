@@ -29,7 +29,8 @@ public class ParkingController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkings")
-    List<ParkingItemResponse> parkings() {
+    List<ParkingItemResponse> parkings(@RequestParam("latitude") Double latitude,
+                                       @RequestParam("longitude") Double longitude) {
         return ParkingItemResponse.listOf(parkingService.findAll());
     }
 
