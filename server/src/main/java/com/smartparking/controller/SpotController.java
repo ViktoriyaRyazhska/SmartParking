@@ -18,7 +18,6 @@ public class SpotController {
     @Autowired
     SpotService spotService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkingdetail/{id}/spots")
     List<SpotDto> findAllSpotsDto (@PathVariable Long id){
         List<Spot> allSpots = spotService.findAllSpotsByParkingId(id);
@@ -33,7 +32,6 @@ public class SpotController {
         return spotDtoList;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkingdetail/{id}/freespots")
     List<SpotDto> findAvailableSpotsDto (@PathVariable Long id){
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);

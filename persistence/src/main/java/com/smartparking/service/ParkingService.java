@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ParkingService extends Service<Parking, Long, ParkingRepository> {
     List<Parking> findAllByProviderId(Long id);
+
+    List<Parking> findAllNearby(Double latitude, Double longitude, Double radius);
 }

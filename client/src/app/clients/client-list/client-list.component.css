@@ -1,14 +1,7 @@
 input {
     min-width: 70%;
     position: relative;
-    left: 88%;
     text-align: center;
-}
-
-h1 {
-    position: relative;
-    left: 104%;
-    font-family: Candara;
 }
 
 button {
@@ -17,13 +10,40 @@ button {
     margin-bottom: 2%;
 }
 
-#buttons {
-    min-width: 150%;
-    display: block;
-    margin-left: 63%;
-}
+/*#buttons {*/
+    /*min-width: 150%;*/
+    /*display: block;*/
+    /*margin-left: 63%;*/
+/*}*/
 
 div {
     display: block;
     margin-top: 5%;
+}
+
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-container > * {
+    width: 100%;
+}
+
+.example-container form {
+    margin-bottom: 20px;
+}
+
+.example-container form > * {
+    margin: 5px 0;
+}
+
+.example-container .mat-radio-button {
+    margin: 0 5px;
+}
+
+.hr-red {
+    margin-bottom: 50px;
+    background-color: blueviolet;
 }

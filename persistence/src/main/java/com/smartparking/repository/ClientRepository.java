@@ -20,7 +20,4 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("SELECT c from Client c")
     List<Client> findLimitNumberOfClients(Pageable pageable);
 
-    @Query("SELECT c from Client c where c.role=?1")
-    List<Client> findClientsByRole(String input);
-
 }

@@ -28,13 +28,13 @@ public class ParkingController {
     ParkingService addressService;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping("parkings")
-    List<ParkingItemResponse> parkings(@RequestParam("latitude") Double latitude,
-                                       @RequestParam("longitude") Double longitude) {
-        return ParkingItemResponse.listOf(parkingService.findAll());
+    @RequestMapping("parkings-nearby")
+    public List<ParkingItemResponse> parkingsNearby(@RequestParam("latitude") Double latitude,
+                                                    @RequestParam("longitude") Double longitude,
+                                                    @RequestParam("radius") Double radius) {
+        return ParkingItemResponse.listOf(parkingService.findAllNearby(latitude, longitude, radius));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkingdetail/{id}")
     ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
@@ -50,8 +50,7 @@ public class ParkingController {
 
     // TODO Change url to manager-configuration/parking/{id}
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("manager-parkings-configure/{id}")
+    @RequestMapping("manager-parkings-configure/{id}")
     ResponseEntity<ManagerParkingResponse> managerParkingConfigure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
         if (parking != null) {
@@ -61,7 +60,6 @@ public class ParkingController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/manager-parkings-configure/save")
     ResponseEntity<?> save(@RequestBody ParkingRequest parkingRequest) {
         parkingService.save(parkingRequest.toParking());
