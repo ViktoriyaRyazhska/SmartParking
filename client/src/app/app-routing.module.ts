@@ -14,10 +14,8 @@ import {
 import {ClientDetailComponent} from './clients/client-detail/client-detail.component';
 import {RegistrationComponent} from './auth/registration/registration.component';
 import {AddProviderComponent} from './superuser-configuration/providers/add-provider/add-provider.component';
-import {ClientEditComponent} from "./clients/client-edit/client-edit.component";
-import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
-import {ClientListComponent} from "./clients/client-list/client-list.component";
 import {ClientEditComponent} from './clients/client-edit/client-edit.component';
+import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
 const routes: Routes = [
