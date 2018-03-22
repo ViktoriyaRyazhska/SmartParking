@@ -41,12 +41,13 @@ import {IndexComponent} from './index/index.component';
 import {ParkingListFilterComponent} from './index/parking-list-filter/parking-list-filter.component';
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
-import {LoginService} from "./auth/login/login.service";
-import {RegistrationService} from "./auth/registration/registration.service";
-import {TokenStorage} from "./auth/login/token-storage";
+
 import {InterceptorService} from "./interceptor.service";
 import {JwtModule} from "@auth0/angular-jwt";
 import {AgmCoreModule} from '@agm/core';
+import {LoginService} from './auth/login/login.service';
+import {RegistrationService} from './auth/registration/registration.service';
+import {TokenStorage} from './auth/login/token-storage';
 import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
 import {IpLocationService} from './service/ip-location.service';
 import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/radius-field.component';
@@ -58,7 +59,6 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 export function tokenGetter() {
     return localStorage.getItem('access_token');
 }
-import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
     declarations: [
@@ -116,8 +116,7 @@ import {MatRadioModule} from '@angular/material/radio';
         MatExpansionModule,
         MatButtonModule,
         MatSliderModule,
-        MatProgressSpinnerModule,
-        MatRadioModule
+        MatProgressSpinnerModule
     ],
     providers: [
         /*{
