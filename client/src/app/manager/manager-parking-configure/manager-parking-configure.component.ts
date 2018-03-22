@@ -1,10 +1,12 @@
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
-
-import {ManagerParkingService} from '../manager-parking.service';
-import {Parking} from '../../model/view/parking';
 import {v4 as uuid} from 'uuid';
+import {MatSnackBar} from '@angular/material';
+
+import {Parking} from '../../model/view/parking';
+import {ManagerParkingService} from '../manager-parking.service';
+import {HttpResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-manager-parking-configure',
@@ -13,9 +15,11 @@ import {v4 as uuid} from 'uuid';
 })
 export class ManagerParkingConfigureComponent implements OnInit {
 
+    configureType: ConfigureType;
+
     step = -1;
 
-    gettedParking: Parking;
+    loadedParking: Parking;
     parking: Parking;
 
     parkingConfigureForm = new FormGroup({
@@ -32,30 +36,44 @@ export class ManagerParkingConfigureComponent implements OnInit {
     });
 
     constructor(private route: ActivatedRoute,
-                private router: Router,
+                public snackBar: MatSnackBar,
                 private formBuilder: FormBuilder,
                 private managerParkingService: ManagerParkingService) {
     }
 
     ngOnInit() {
-        this.getParking();
+        if (this.route.root.firstChild.snapshot.data['configureType'] ===
+            ManagerParkingConfigureType.EDIT) {
+            this.configureType = new ConfigureType('edit', ManagerParkingConfigureType.EDIT);
+            this.loadParking();
+        } else {
+            this.configureType = new ConfigureType('add', ManagerParkingConfigureType.ADD);
+            this.loadedParking = new Parking();
+            this.parking = new Parking();
+        }
     }
 
-    getParking(): void {
+    loadParking(): void {
         const id = parseInt(this.route.snapshot.paramMap.get('id'));
         this.managerParkingService.getParking(id)
             .subscribe(parking => {
-                this.gettedParking = parking;
+                this.loadedParking = parking;
                 this.parking = parking.clone();
             });
         // TODo Catch errors
     }
 
     saveParking(): void {
+        if (this.configureType.type === ManagerParkingConfigureType.ADD) {
+            this.parking.providerId = 1;
+        }
         this.managerParkingService.saveParking(this.parking)
-            .subscribe(response => {
-                console.log('Response: ' + response)
+            .subscribe((response: HttpResponse<any>) => {
+                console.log('Response: ' + response);
                 // TODO Write response handler
+                this.snackBar.open('Parking updated sucsessfully.', null, {
+                    duration: 2000
+                });
             });
     }
 
@@ -81,21 +99,30 @@ export class ManagerParkingConfigureComponent implements OnInit {
     }
 
     resetAddress() {
-        this.parking.city = this.gettedParking.city;
-        this.parking.street = this.gettedParking.street;
-        this.parking.building = this.gettedParking.building;
+        this.parking.city = this.loadedParking.city;
+        this.parking.street = this.loadedParking.street;
+        this.parking.building = this.loadedParking.building;
     }
 
     resetLocation() {
-        this.parking.latitude = this.gettedParking.latitude;
-        this.parking.longitude = this.gettedParking.longitude;
+        this.parking.latitude = this.loadedParking.latitude;
+        this.parking.longitude = this.loadedParking.longitude;
     }
 
     resetPrice() {
-        this.parking.price = this.gettedParking.price;
+        this.parking.price = this.loadedParking.price;
     }
 
     resetToken() {
-        this.parking.token = this.gettedParking.token;
+        this.parking.token = this.loadedParking.token;
+    }
+}
+
+export enum ManagerParkingConfigureType {
+    EDIT, ADD
+}
+
+class ConfigureType {
+    constructor(public text: string, public type: ManagerParkingConfigureType) {
     }
 }
