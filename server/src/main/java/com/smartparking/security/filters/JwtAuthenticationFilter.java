@@ -50,7 +50,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 e.printStackTrace();
             } catch (ExpiredJwtException e) {
                 System.out.println("the token is expired and not valid anymore");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             } catch(SignatureException e){
                 System.out.println("Authentication Failed. Username or Password not valid.");
                 e.printStackTrace();
