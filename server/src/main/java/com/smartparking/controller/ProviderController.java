@@ -58,7 +58,7 @@ public class ProviderController {
         }
     }
 
-    @PostMapping("/providers/add/{id}")
+    @PostMapping("/providers/update/{id}")
     ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProviderRequest providerRequest) {
         Provider provider = providerService.findById(id);
         provider.setName(providerRequest.getName());
@@ -68,4 +68,9 @@ public class ProviderController {
         providerService.save(provider);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("providers/statistic")
+    ProviderStatisticRequest statistic() {
+        return providerService.getStatistic();
+    }
+
 }

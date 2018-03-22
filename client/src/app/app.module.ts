@@ -3,9 +3,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {
-    MAT_LABEL_GLOBAL_OPTIONS, MatButtonModule, MatDividerModule, MatExpansionModule
-} from '@angular/material';
-import {
+    MAT_LABEL_GLOBAL_OPTIONS,
     MatAutocompleteModule,
     MatButtonModule,
     MatDividerModule,
@@ -49,10 +47,6 @@ import {TokenStorage} from "./auth/login/token-storage";
 import {InterceptorService} from "./interceptor.service";
 import {JwtModule} from "@auth0/angular-jwt";
 import {AgmCoreModule} from '@agm/core';
-import {LoginService} from './auth/login/login.service';
-import {Interceptor} from './app.interceptor';
-import {RegistrationService} from './auth/registration/registration.service';
-import {TokenStorage} from './auth/login/token-storage';
 import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
 import {IpLocationService} from './service/ip-location.service';
 import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/radius-field.component';
@@ -64,6 +58,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 export function tokenGetter() {
     return localStorage.getItem('access_token');
 }
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
     declarations: [
@@ -121,7 +116,8 @@ export function tokenGetter() {
         MatExpansionModule,
         MatButtonModule,
         MatSliderModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRadioModule
     ],
     providers: [
         /*{
