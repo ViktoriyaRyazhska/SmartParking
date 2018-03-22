@@ -2,6 +2,7 @@ package com.smartparking.service;
 
 import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
+import com.smartparking.model.request.ProviderStatisticRequest;
 import com.smartparking.repository.ProviderRepository;
 import com.smartparking.model.request.ProviderRequest;
 
@@ -15,4 +16,6 @@ public interface ProviderService extends Service<Provider, Long, ProviderReposit
     List<Provider> findAllByFilter(ProviderFilter providerFilter);
 
     Provider findProviderByClientId(Long id);
+
+    ProviderStatisticRequest getStatistic();
 }

@@ -52,7 +52,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-field/price-range-field.component';
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
     declarations: [
@@ -103,7 +103,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
         MatExpansionModule,
         MatButtonModule,
         MatSliderModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRadioModule
     ],
     providers: [
         ParkingService,
