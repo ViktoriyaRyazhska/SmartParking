@@ -28,7 +28,7 @@
         </div>
 
         <mat-form-field *ngIf="selectedRole=='PROVIDER_MANAGER'">
-            <mat-select [(value)]="selectedProvidersId" placeholder="select role">
+            <mat-select [(value)]="selectedProvidersId" placeholder="select provider">
                 <mat-option *ngFor="let provider of providers" [value]="provider.id">
                     {{ provider.name }}
                 </mat-option>

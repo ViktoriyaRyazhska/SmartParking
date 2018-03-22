@@ -68,4 +68,16 @@ public class ProviderItemResponse {
     public void setBuilding(String building) {
         this.building = building;
     }
+
+    @Override
+    public String toString() {
+        return "ProviderItemResponse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", building='" + building + '\'' +
+                ", active=" + active +
+                '}';
+    }
 }

@@ -56,6 +56,7 @@ import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {PagerService} from './_services/pager.service';
+import {MatRadioModule} from '@angular/material/radio';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -117,7 +118,8 @@ export function tokenGetter() {
         MatExpansionModule,
         MatButtonModule,
         MatSliderModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRadioModule
     ],
     providers: [
         /*{
