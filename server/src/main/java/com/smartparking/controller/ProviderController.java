@@ -3,6 +3,7 @@ package com.smartparking.controller;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
+import com.smartparking.model.request.ProviderStatisticRequest;
 import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.model.response.ProviderItemResponse;
 import com.smartparking.service.ProviderService;
@@ -63,7 +64,7 @@ public class ProviderController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/providers/add/{id}")
+    @PostMapping("/providers/update/{id}")
     ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProviderRequest providerRequest) {
         Provider provider = providerService.findById(id);
         provider.setName(providerRequest.getName());
@@ -73,4 +74,10 @@ public class ProviderController {
         providerService.save(provider);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("providers/statistic")
+    ProviderStatisticRequest statistic() {
+        return providerService.getStatistic();
+    }
+
 }

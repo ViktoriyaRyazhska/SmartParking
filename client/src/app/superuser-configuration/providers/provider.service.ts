@@ -5,6 +5,7 @@ import {Provider} from '../../model/view/provider';
 import {Observable} from 'rxjs/Observable';
 import {ProviderRequest} from './add-provider/provider-request';
 import {ProviderListFilterParameters} from '../../model/filter/provider-list-filter-parameters';
+import {ProviderStatisticRequest} from './provider-list/ProviderStatisticRequest';
 
 @Injectable()
 export class ProviderService {
@@ -31,10 +32,14 @@ export class ProviderService {
     }
 
     update(id: string, providerRequest: ProviderRequest) {
-        return this.http.post(this.providerUrl + '/add/' + id, providerRequest);
+        return this.http.post(this.providerUrl + '/update/' + id, providerRequest);
     }
 
     changeState(id: number): Observable<Provider> {
         return this.http.get<Provider>(this.providerUrl + '/changeState/' + id);
+    }
+
+    getAmount(): Observable<ProviderStatisticRequest> {
+        return this.http.get<ProviderStatisticRequest>(this.providerUrl + '/statistic');
     }
 }
