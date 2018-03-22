@@ -9,9 +9,11 @@ import java.util.stream.Collectors;
 // TODO Refactoring. Remove getters-setters boilerplate code: use Lombok.
 
 public class ManagerParkingResponse {
-    private Long id;
 
-    private AddressResponse address;
+    private Long id;
+    private String city;
+    private String street;
+    private String building;
     private Double latitude;
     private Double longitude;
     private BigDecimal price;
@@ -23,7 +25,9 @@ public class ManagerParkingResponse {
 
     private ManagerParkingResponse(Parking parking) {
         this.id = parking.getId();
-        this.address = AddressResponse.of(parking.getAddress());
+        this.city = parking.getCity();
+        this.street = parking.getStreet();
+        this.building = parking.getBuilding();
         this.latitude = parking.getLatitude();
         this.longitude = parking.getLongitude();
         this.price = parking.getPrice();
@@ -50,12 +54,28 @@ public class ManagerParkingResponse {
         this.id = id;
     }
 
-    public AddressResponse getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(AddressResponse address) {
-        this.address = address;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 
     public Double getLatitude() {

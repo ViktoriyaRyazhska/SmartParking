@@ -1,7 +1,7 @@
 export class ProviderRequest {
+    id: number;
     name: string;
-    state: string;
     city: string;
     street: string;
-    buildingNumber: string;
+    building: string;
 }

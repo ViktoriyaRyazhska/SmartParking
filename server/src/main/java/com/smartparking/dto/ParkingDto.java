@@ -1,22 +1,23 @@
 package com.smartparking.dto;
 
 
+import com.smartparking.entity.Parking;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 public class ParkingDto {
     private Long id;
-    private AddressDto addressDto;
     private Double latitude;
     private Double longitude;
     private BigDecimal price;
     private ProviderDto providerDto;
     private List<FavoriteDto> favoritesDto;
     private List<SpotDto> spotsDto;
-    private Long numberSpots;
+    private Integer numberSpots;
     private Long numberAvailableSpots;
 
-    public static ParkingDto builder(){
+    public static ParkingDto builder() {
         ParkingDto parkingDto = new ParkingDto();
         return parkingDto;
     }
@@ -26,10 +27,6 @@ public class ParkingDto {
         return this;
     }
 
-    public ParkingDto setAddressDto(AddressDto addressDto) {
-        this.addressDto = addressDto;
-        return this;
-    }
 
     public ParkingDto setLatitude(Double latitude) {
         this.latitude = latitude;
@@ -58,11 +55,11 @@ public class ParkingDto {
 
     public ParkingDto setSpotsDto(List<SpotDto> spotsDto) {
         this.spotsDto = spotsDto;
-        this.numberSpots = Long.valueOf(spotsDto.size());
+        this.numberSpots = Integer.valueOf(spotsDto.size());
         return this;
     }
 
-    public ParkingDto setNumberSpots(Long numberSpots) {
+    public ParkingDto setNumberSpots(Integer numberSpots) {
         this.numberSpots = numberSpots;
         return this;
     }
@@ -74,10 +71,6 @@ public class ParkingDto {
 
     public Long getId() {
         return id;
-    }
-
-    public AddressDto getAddressDto() {
-        return addressDto;
     }
 
     public Double getLatitude() {
@@ -104,11 +97,12 @@ public class ParkingDto {
         return spotsDto;
     }
 
-    public Long getNumberSpots() {
+    public Integer getNumberSpots() {
         return numberSpots;
     }
 
     public Long getNumberAvailableSpots() {
         return numberAvailableSpots;
     }
+
 }

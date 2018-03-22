@@ -1,26 +1,23 @@
 package com.smartparking.model.response;
 
-import com.smartparking.entity.Parking;
 import com.smartparking.entity.Provider;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProviderItemResponse {
     private Long id;
     private String name;
-    private String address;
+    private String city;
+    private String street;
+    private String building;
     private Boolean active;
 
-    public static ProviderItemResponse of(Provider provider){
+    public static ProviderItemResponse of(Provider provider) {
         ProviderItemResponse providerResponse = new ProviderItemResponse();
         providerResponse.setId(provider.getId());
         providerResponse.setName(provider.getName());
-        providerResponse.setAddress(provider.getLegalAddress().getCity() +
-                ", " + provider.getLegalAddress().getStreet() +
-                ", " + provider.getLegalAddress().getBuildingNumber());
+        providerResponse.setCity(provider.getCity());
+        providerResponse.setStreet(provider.getStreet());
+        providerResponse.setBuilding(provider.getBuilding());
         providerResponse.setActive(provider.getActive());
-      //  providerResponse.setParkingIds(provider.getParkings().stream().map(Parking::getId).collect(Collectors.toList()));
         return providerResponse;
     }
 
@@ -40,19 +37,35 @@ public class ProviderItemResponse {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public Boolean getActive() {
         return active;
     }
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 }

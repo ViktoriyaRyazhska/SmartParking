@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
         this.loginService.signIn(this.loginData)
             .subscribe((response:ResponseToken)=>{
                     this.error=false;
-                    this.storage.saveToken(response.token);
-                    console.log("success");
+                    this.storage.saveCredentials(response.token, response.role);
+                    alert("Succesful authentifictaon" + response.token + "  " + response.role)
                     this.router.navigate(['/']);
                 }, error2 => {
                     console.log("error");
