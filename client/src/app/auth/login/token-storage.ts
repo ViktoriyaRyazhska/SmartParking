@@ -1,33 +1,37 @@
 import { Injectable } from '@angular/core';
+import * as jwt_decode from 'jwt-decode';
 
-const TOKEN_KEY = 'AuthToken';
-const ROLE_KEY = 'AuthTokenRole';
+
+const TOKEN_KEY = 'access_token';
 
 @Injectable()
 export class TokenStorage {
 
+    isExpired: boolean = false;
+
     constructor() { }
 
-    signOut() {
+    public signOut() {
         window.localStorage.removeItem(TOKEN_KEY);
-        window.localStorage.removeItem(ROLE_KEY);
         window.localStorage.clear();
     }
 
-    public saveCredentials(token: string, role: string) {
+    public static saveToken(token: string) {
         window.localStorage.removeItem(TOKEN_KEY);
-        window.localStorage.removeItem(ROLE_KEY);
         window.localStorage.setItem(TOKEN_KEY,  token);
-        window.localStorage.setItem(ROLE_KEY,  role);
     }
 
-    public getToken(): string {
+    public static getToken(): string {
         return localStorage.getItem(TOKEN_KEY);
     }
 
-    public getRole(): string {
-        return localStorage.getItem(ROLE_KEY);
+    public static decodeToken(): string {
+        let token = TokenStorage.getToken();
+        let decodedToken = jwt_decode(token);
+        alert(decodedToken.payload);
+        return decodedToken;
     }
+
 
 
 

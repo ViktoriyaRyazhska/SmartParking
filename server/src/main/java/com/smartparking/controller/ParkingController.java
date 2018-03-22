@@ -29,13 +29,11 @@ public class ParkingController {
     @Autowired
     ParkingService addressService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping("parkings")
+    @RequestMapping("/parkings")
     List<ParkingItemResponse> parkings() {
         return ParkingItemResponse.listOf(parkingService.findAll());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkingdetail/{id}")
     ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
@@ -49,7 +47,6 @@ public class ParkingController {
         return parkingDetailResponse;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("manager-parkings-configure/{id}")
     ResponseEntity<ManagerParkingResponse> managerParkingConfigure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);

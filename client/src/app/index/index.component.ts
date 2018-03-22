@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TokenStorage} from "../auth/login/token-storage";
 
 @Component({
     selector: 'app-index',
@@ -11,6 +12,7 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() {
+
     }
 
 }

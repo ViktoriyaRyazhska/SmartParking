@@ -27,7 +27,6 @@ public class AuthenticationController {
     @Autowired
     private ClientService clientService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
     public ResponseEntity register(@RequestBody LoginClientRequest loginClientRequest) throws AuthenticationException {
         final Authentication authentication = authenticationManager.authenticate(
@@ -39,7 +38,7 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final Client client = clientService.findOne(loginClientRequest.getEmail());
         final String token = tokenUtil.generateToken(client);
-        return ResponseEntity.ok(new AuthTokenResponse(token, client.getRole()));
+        return ResponseEntity.ok(new AuthTokenResponse(token));
     }
 
 }

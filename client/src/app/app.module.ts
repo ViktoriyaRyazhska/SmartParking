@@ -1,9 +1,11 @@
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {MAT_LABEL_GLOBAL_OPTIONS, MatButtonModule, MatDividerModule, MatExpansionModule} from '@angular/material';
+import {
+    MAT_LABEL_GLOBAL_OPTIONS, MatButtonModule, MatDividerModule, MatExpansionModule
+} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
@@ -35,10 +37,14 @@ import {ParkingListFilter} from './index/parking-list-filter/parking-list-filter
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 import {LoginService} from "./auth/login/login.service";
-import {Interceptor} from "./app.interceptor";
 import {RegistrationService} from "./auth/registration/registration.service";
 import {TokenStorage} from "./auth/login/token-storage";
+import {InterceptorService} from "./interceptor.service";
+import {JwtModule} from "@auth0/angular-jwt";
 
+export function tokenGetter() {
+    return localStorage.getItem('access_token');
+}
 
 @NgModule({
     declarations: [
@@ -66,6 +72,13 @@ import {TokenStorage} from "./auth/login/token-storage";
         ParkingListFilter
     ],
     imports: [
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                whitelistedDomains: ['localhost:8080'],
+                blacklistedRoutes: []
+            }
+        }),
         HttpClientModule,
         BrowserModule,
         RouterModule,
@@ -79,13 +92,18 @@ import {TokenStorage} from "./auth/login/token-storage";
         MatButtonModule
     ],
     providers: [
+        /*{
+            provide: HTTP_INTERCEPTORS,
+            useClass: InterceptorService,
+            multi: true
+        }*/
+        ,
         ParkingService,
         ManagerParkingService,
         GeoLocationService,
         ProviderService,
         ClientService,
         LoginService,
-        Interceptor,
         RegistrationService,
         TokenStorage
     ],

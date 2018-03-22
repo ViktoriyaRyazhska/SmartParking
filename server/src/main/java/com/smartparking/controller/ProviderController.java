@@ -20,7 +20,6 @@ public class ProviderController {
     @Autowired
     private ProviderService providerService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers")
     List<ProviderItemResponse> findAll(@RequestParam String active,
                                        @RequestParam String companyName) {
@@ -35,20 +34,17 @@ public class ProviderController {
         return providerResponses;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers/{id}")
     ProviderDetailResponse find(@PathVariable Long id) {
         Provider provider = providerService.findById(id);
         return ProviderDetailResponse.of(provider);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers/changeState/{id}")
     ProviderDetailResponse changeState(@PathVariable Long id) {
         return ProviderDetailResponse.of(providerService.changeState(id));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/providers/add")
     ResponseEntity save(@RequestBody ProviderRequest providerRequest) {
         if (providerRequest.getName() != "" && providerRequest.getState() != "" &&

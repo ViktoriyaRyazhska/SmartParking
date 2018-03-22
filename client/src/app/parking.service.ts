@@ -9,7 +9,7 @@ import {Spot} from './model/view/spot';
 export class ParkingService {
     parkings: Parking[];
     // private parkingUrl = 'assets/test.json';
-    private parkingUrl = 'http://localhost:8080/p';
+    private parkingUrl = 'http://localhost:8080/parkings';
     private parkingDetailUrl = 'http://localhost:8080/parkingdetail/';
 
     constructor(private http: HttpClient) {
