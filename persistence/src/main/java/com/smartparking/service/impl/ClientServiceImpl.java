@@ -51,8 +51,4 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
         return getRepository().findLimitNumberOfClients(pageable);
     }
 
-    @Override
-    public List<Client> findClientsByRole(String input) {
-        return getRepository().findClientsByRole(input);
-    }
 }

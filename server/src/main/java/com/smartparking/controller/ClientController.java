@@ -119,17 +119,5 @@ public class ClientController {
         return "registration successful";
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("clients/findclientsbyrole/{input}")
-    List<ClientItemResponse> findClientsByRole(@PathVariable String input) {
-        if (input != "") {
-            List<Client> clients = clientService.findClientsByRole(input);
-            List<ClientItemResponse> clientItemResponses = new ArrayList<>();
-            for (Client client : clients) {
-                clientItemResponses.add(ClientItemResponse.of(client));
-            }
-            return clientItemResponses;
-        } else return findAllClients();
-    }
 
 }

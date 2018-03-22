@@ -3,7 +3,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {MAT_LABEL_GLOBAL_OPTIONS, MatButtonModule, MatDividerModule, MatExpansionModule, MatProgressSpinnerModule} from '@angular/material';
+import {
+    MAT_LABEL_GLOBAL_OPTIONS,
+    MatButtonModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule
+} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
@@ -38,8 +44,8 @@ import {LoginService} from "./auth/login/login.service";
 import {Interceptor} from "./app.interceptor";
 import {RegistrationService} from "./auth/registration/registration.service";
 import {TokenStorage} from "./auth/login/token-storage";
-import { UpdateProviderComponent } from './superuser-configuration/providers/update-provider/update-provider.component';
-
+import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
+import {PagerService} from './_services/pager.service';
 
 @NgModule({
     declarations: [
@@ -90,7 +96,8 @@ import { UpdateProviderComponent } from './superuser-configuration/providers/upd
         LoginService,
         Interceptor,
         RegistrationService,
-        TokenStorage
+        TokenStorage,
+        PagerService
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
