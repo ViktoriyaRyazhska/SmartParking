@@ -3,7 +3,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Nazariy" id="201803220601" dbms="MYSQL">
+    <changeSet author="Nazariy" id="201803220601" dbms="MYSQL5">
         <sql>
             DELIMITER //
             CREATE FUNCTION LOCATION_DISTANCE(latitude_a DOUBLE, longitude_a DOUBLE, latitude_b DOUBLE, longitude_b
