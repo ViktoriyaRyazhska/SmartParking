@@ -2,8 +2,6 @@
 <div class="row">
     <div class="col-md-3">
         <ul>
-            <div>Filtering:</div>
-            <p>By state: <input type="hidden" value="tr"></p>
             <form class="example-form" [formGroup]="providerFilterForm" (ngSubmit)="getProviders()">
                 <mat-form-field class="example-full-width">
                     <input matInput placeholder="Company name" formControlName="companyName">
