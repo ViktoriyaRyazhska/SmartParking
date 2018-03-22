@@ -41,7 +41,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/provider/add', component: AddProviderComponent},
-    {path: 'configuration/provider/add/:id', component: UpdateProviderComponent},
+    {path: 'configuration/provider/update/:id', component: UpdateProviderComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/clients/findclients/:input', component: ClientsComponent}

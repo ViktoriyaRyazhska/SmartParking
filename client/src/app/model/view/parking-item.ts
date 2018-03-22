@@ -1,8 +1,7 @@
-import {Address} from "./address";
 
 export class ParkingItem {
     id: number;
-    address: Address;
+    address: string;
     latitude: number;
     longitude: number;
     price: number;

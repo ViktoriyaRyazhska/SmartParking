@@ -36,6 +36,7 @@
                     <p><b><i>Address: </i></b>{{provider.city}} / {{provider.street}} / {{provider.building}}</p>
                     <div>
                         <button mat-raised-button routerLink='{{provider.id}}' color="primary" class="mt-1 full-width">More info</button>
+                        <button mat-raised-button routerLink="/configuration/provider/update/{{provider.id}}" color="primary" class="mt-1 full-width">Edit</button>
                     </div>
                 </ngb-alert>
             </div>
