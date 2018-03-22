@@ -1,10 +1,13 @@
-
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {
-    MAT_LABEL_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatDividerModule, MatExpansionModule, MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
     MatSelectModule
 } from '@angular/material';
 
@@ -47,7 +50,7 @@ import {IpLocationService} from './service/ip-location.service';
 import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/radius-field.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-field/price-range-field.component';
-import { UpdateProviderComponent } from './superuser-configuration/providers/update-provider/update-provider.component';
+import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
@@ -77,7 +80,6 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
         LocationFieldComponent,
         RadiusFieldComponent,
         PriceRangeFieldComponent,
-        ParkingListFilter,
         UpdateProviderComponent
     ],
     imports: [
