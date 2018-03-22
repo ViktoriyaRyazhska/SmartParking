@@ -23,7 +23,10 @@
             DECLARE t3 DOUBLE DEFAULT SIN(a1) * SIN(b1);
             DECLARE tt DOUBLE DEFAULT ACOS(t1 + t2 + t3);
 
-            RETURN 6366000 * tt;
+            IF tt IS NOT NULL
+            THEN RETURN 6366000 * tt;
+            ELSE RETURN 0;
+            END IF;
             END//
             DELIMITER ;
         </sql>
