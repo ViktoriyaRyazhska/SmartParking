@@ -1,4 +1,4 @@
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
@@ -38,6 +38,8 @@ import {LoginService} from "./auth/login/login.service";
 import {Interceptor} from "./app.interceptor";
 import {RegistrationService} from "./auth/registration/registration.service";
 import {TokenStorage} from "./auth/login/token-storage";
+import { UpdateProviderComponent } from './superuser-configuration/providers/update-provider/update-provider.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -63,7 +65,8 @@ import {TokenStorage} from "./auth/login/token-storage";
         AddProviderComponent,
         FilterPipe,
         ClientDetailComponent,
-        ParkingListFilter
+        ParkingListFilter,
+        UpdateProviderComponent
     ],
     imports: [
         HttpClientModule,

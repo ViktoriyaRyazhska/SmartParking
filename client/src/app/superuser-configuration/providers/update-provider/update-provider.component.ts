@@ -1,17 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderService} from '../provider.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ProviderRequest} from './provider-request';
 import {ActivatedRoute} from '@angular/router';
 import {Provider} from '../../../model/view/provider';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ProviderRequest} from '../add-provider/provider-request';
 
 @Component({
-    selector: 'app-add-provider',
-    templateUrl: './add-provider.component.html',
-    styleUrls: ['./add-provider.component.css']
+    selector: 'app-update-provider',
+    templateUrl: './update-provider.component.html',
+    styleUrls: ['./update-provider.component.css']
 })
-export class AddProviderComponent implements OnInit {
+export class UpdateProviderComponent implements OnInit {
 
+    provider: Provider;
     providerRequest: ProviderRequest;
     providerForm: FormGroup;
 
@@ -29,10 +30,12 @@ export class AddProviderComponent implements OnInit {
     ]);
 
     constructor(private providerService: ProviderService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
+        this.getProvider();
         this.providerForm = this.formBuilder.group({
             name: this.nameControl,
             city: this.cityControl,
@@ -41,12 +44,17 @@ export class AddProviderComponent implements OnInit {
         });
     }
 
-    saveProvider(): void {
-        this.providerRequest = this.providerForm.value;
-        this.providerService.save(this.providerRequest).subscribe(data => {
-            alert('Provider added successfully.');
-        });
-        ;
+    getProvider() {
+        const id = parseInt(this.route.snapshot.paramMap.get('id'));
+        console.log(id);
+        this.providerService.getDetail(id).subscribe(provider => this.provider = provider);
     }
-    
+
+    updateProvider(): void {
+        this.providerRequest = this.providerForm.value;
+        const id = this.route.snapshot.paramMap.get('id');
+        this.providerService.update(id, this.providerRequest).subscribe(data => {
+            alert("Provider was updated successfully!");
+        });
+    }
 }

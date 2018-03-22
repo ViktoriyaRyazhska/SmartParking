@@ -22,7 +22,7 @@ export class ProviderDetailComponent implements OnInit {
 
     getProviderDetail(): void {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.providerService.getProviderDetail(id)
+        this.providerService.getDetail(id)
             .subscribe(provider => this.provider = provider);
     }
 

@@ -1,8 +1,8 @@
 <div class="container-fluid">
-    <legend>Add provider</legend>
-    <form class="example-form" [formGroup]="providerForm" (ngSubmit)="saveProvider()">
+    <legend>Update provider</legend>
+    <form class="example-form" [formGroup]="providerForm" (ngSubmit)="updateProvider()">
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Company name" formControlName="name">
+            <input matInput [(ngModel)]="provider.name" placeholder="Company name" formControlName="name">
             <mat-error *ngIf="nameControl.hasError('required')">
                 Company name is <strong>required</strong>
             </mat-error>
@@ -11,7 +11,7 @@
             <tr>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="City" formControlName="city">
+                        <input matInput [(ngModel)]="provider.city" placeholder="City" formControlName="city">
                         <mat-error *ngIf="cityControl.hasError('required')">
                             City name is <strong>required</strong>
                         </mat-error>
@@ -19,7 +19,7 @@
                 </td>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Street" formControlName="street">
+                        <input matInput [(ngModel)]="provider.street" placeholder="Street" formControlName="street">
                         <mat-error *ngIf="streetControl.hasError('required')">
                             Street name is <strong>required</strong>
                         </mat-error>
@@ -27,7 +27,7 @@
                 </td>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Number building"
+                        <input matInput [(ngModel)]="provider.building" placeholder="Number building"
                                formControlName="building">
                         <mat-error *ngIf="buildingControl.hasError('required')">
                             Building number is <strong>required</strong>

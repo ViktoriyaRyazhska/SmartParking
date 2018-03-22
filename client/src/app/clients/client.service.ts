@@ -43,6 +43,10 @@ export class ClientService {
         return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
     }
 
+    findClientsByRole(input: string): Observable<Client[]> {
+        return this.http.get<Client[]>(this.clientsUrl + '/findclientsbyrole/' + input);
+    }
+
     getProviders(): Observable<Provider[]> {
         return this.http.get<Provider[]>(this.clientsUrl + '/getproviders');
     }

@@ -14,6 +14,9 @@ import {
 import {ClientDetailComponent} from './clients/client-detail/client-detail.component';
 import {RegistrationComponent} from './auth/registration/registration.component';
 import {AddProviderComponent} from './superuser-configuration/providers/add-provider/add-provider.component';
+import {ClientEditComponent} from "./clients/client-edit/client-edit.component";
+import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
+import {ClientListComponent} from "./clients/client-list/client-list.component";
 import {ClientEditComponent} from './clients/client-edit/client-edit.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
@@ -40,6 +43,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/provider/add', component: AddProviderComponent},
+    {path: 'configuration/provider/add/:id', component: UpdateProviderComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/clients/findclients/:input', component: ClientsComponent}

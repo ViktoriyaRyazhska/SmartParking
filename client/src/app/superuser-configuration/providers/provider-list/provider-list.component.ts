@@ -26,7 +26,7 @@ export class ProviderListComponent implements OnInit {
 
     getProviders(): void {
         this.providerFilter = this.providerFilterForm.value;
-        this.providerService.getProviders(this.providerFilter)
+        this.providerService.getAll(this.providerFilter)
             .subscribe(providers => this.providers = providers);
     }
 
