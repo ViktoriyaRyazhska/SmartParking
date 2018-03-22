@@ -28,10 +28,11 @@ public class ParkingController {
     ParkingService addressService;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping("parkings")
-    List<ParkingItemResponse> parkings(@RequestParam("latitude") Double latitude,
-                                       @RequestParam("longitude") Double longitude) {
-        return ParkingItemResponse.listOf(parkingService.findAll());
+    @RequestMapping("parkings-nearby")
+    public List<ParkingItemResponse> parkingsNearby(@RequestParam("latitude") Double latitude,
+                                                    @RequestParam("longitude") Double longitude,
+                                                    @RequestParam("radius") Double radius) {
+        return ParkingItemResponse.listOf(parkingService.findAllNearby(latitude, longitude, radius));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

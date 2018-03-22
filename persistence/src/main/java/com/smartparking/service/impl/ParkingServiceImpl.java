@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRepository> implements ParkingService {
@@ -19,5 +20,16 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     @Override
     public List<Parking> findAllByProviderId(Long id) {
         return getRepository().findAllByProviderId(id);
+    }
+
+    @Override
+    public List<Parking> findAllNearby(Double latitude, Double longitude, Double radius) {
+        Objects.requireNonNull(latitude, "latitude");
+        Objects.requireNonNull(longitude, "longitude");
+        Objects.requireNonNull(radius, "radius");
+        if (radius < 0) {
+            throw new IllegalArgumentException("Radius can`t be less then zero.");
+        }
+        return getRepository().findAllNearby(latitude, longitude, radius);
     }
 }
