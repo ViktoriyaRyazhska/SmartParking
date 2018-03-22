@@ -47,15 +47,11 @@ export class PriceRangeFieldComponent implements OnInit {
                 return false;
             } else if (max && min > max) {
                 this.minControl.setErrors({'greaterThanMax': min});
+                this.maxControl.setErrors(null);
                 return false;
             }
         }
-        if (max && (max >= 0 || (min && max > min))) {
-            this.maxControl.setErrors(null);
-            return true;
-        } else {
-            return this.maxControl.errors === null;
-        }
+        return this.maxControl.errors === null;
     }
 
     private validateMax(max: number | null): boolean {
@@ -67,15 +63,11 @@ export class PriceRangeFieldComponent implements OnInit {
             }
             if (min && max < min) {
                 this.maxControl.setErrors({'lessThanMin': max});
+                this.minControl.setErrors(null);
                 return false;
             }
         }
-        if (min && (min >= 0 || (max && min < max))) {
-            this.minControl.setErrors(null);
-            return true;
-        } else {
-            return this.minControl.errors === null;
-        }
+        return this.minControl.errors === null;
     }
 }
 
