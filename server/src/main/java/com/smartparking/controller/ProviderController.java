@@ -3,6 +3,7 @@ package com.smartparking.controller;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
+import com.smartparking.model.request.ProviderStatisticRequest;
 import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.model.response.ProviderItemResponse;
 import com.smartparking.service.ProviderService;
@@ -20,7 +21,6 @@ public class ProviderController {
     @Autowired
     private ProviderService providerService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers")
     List<ProviderItemResponse> findAll(@RequestParam String active,
                                        @RequestParam String companyName) {
@@ -35,7 +35,6 @@ public class ProviderController {
         return providerResponses;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers/{id}")
     ProviderDetailResponse find(@PathVariable Long id) {
         Provider provider = providerService.findById(id);
@@ -43,13 +42,11 @@ public class ProviderController {
         return ProviderDetailResponse.of(provider);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("providers/changeState/{id}")
     ProviderDetailResponse changeState(@PathVariable Long id) {
         return ProviderDetailResponse.of(providerService.changeState(id));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/providers/add")
     ResponseEntity<?> save(@RequestBody ProviderRequest providerRequest) {
         if (!(providerRequest.getName().equals("") && providerRequest.getCity().equals("")
@@ -62,8 +59,7 @@ public class ProviderController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/providers/add/{id}")
+    @PostMapping("/providers/update/{id}")
     ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProviderRequest providerRequest) {
         Provider provider = providerService.findById(id);
         provider.setName(providerRequest.getName());
@@ -73,4 +69,9 @@ public class ProviderController {
         providerService.save(provider);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("providers/statistic")
+    ProviderStatisticRequest statistic() {
+        return providerService.getStatistic();
+    }
+
 }

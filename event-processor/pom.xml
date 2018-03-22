@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>event-processor</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>event-processor</name>
     <url>http://maven.apache.org</url>
@@ -36,13 +36,14 @@
                 </configuration>
             </plugin>
 
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
                     <warSourceDirectory>src/main/webapp</warSourceDirectory>
-                    <warName>event-processor</warName>
+                    <warName>smartparking-server</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
@@ -156,6 +157,9 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.3</version>
         </dependency>
+
+
+
 
 
     </dependencies>

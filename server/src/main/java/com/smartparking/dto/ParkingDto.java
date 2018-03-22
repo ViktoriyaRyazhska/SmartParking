@@ -1,6 +1,8 @@
 package com.smartparking.dto;
 
 
+import com.smartparking.entity.Parking;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class ParkingDto {
     private ProviderDto providerDto;
     private List<FavoriteDto> favoritesDto;
     private List<SpotDto> spotsDto;
-    private Long numberSpots;
+    private Integer numberSpots;
     private Long numberAvailableSpots;
 
     public static ParkingDto builder() {
@@ -53,11 +55,11 @@ public class ParkingDto {
 
     public ParkingDto setSpotsDto(List<SpotDto> spotsDto) {
         this.spotsDto = spotsDto;
-        this.numberSpots = Long.valueOf(spotsDto.size());
+        this.numberSpots = Integer.valueOf(spotsDto.size());
         return this;
     }
 
-    public ParkingDto setNumberSpots(Long numberSpots) {
+    public ParkingDto setNumberSpots(Integer numberSpots) {
         this.numberSpots = numberSpots;
         return this;
     }
@@ -95,11 +97,12 @@ public class ParkingDto {
         return spotsDto;
     }
 
-    public Long getNumberSpots() {
+    public Integer getNumberSpots() {
         return numberSpots;
     }
 
     public Long getNumberAvailableSpots() {
         return numberAvailableSpots;
     }
+
 }

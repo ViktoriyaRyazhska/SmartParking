@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+
 @Entity
 @Table(name = "provider")
 public class Provider extends AbstractIdentifiableEntity {

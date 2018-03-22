@@ -16,7 +16,7 @@
                     <label><input formControlName="active" type="radio" value="false"> Non active</label>
                 </div>
                 <div class="radio disabled">
-                    <label><input formControlName="active" type="radio" value="null"> All</label>
+                    <label><input formControlName="active" type="radio" value="all"> All</label>
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -26,7 +26,6 @@
             </form>
         </ul>
     </div>
-    <div class="col-md-1"></div>
     <div class="col-md-6">
         <ul>
             <div *ngFor="let provider of providers">
@@ -35,15 +34,27 @@
                     <p><b><i>ID:</i></b> {{provider.id}}</p>
                     <p><b><i>Address: </i></b>{{provider.city}} / {{provider.street}} / {{provider.building}}</p>
                     <div>
-                        <button mat-raised-button routerLink='{{provider.id}}' color="primary" class="mt-1 full-width">More info</button>
+                        <button mat-raised-button routerLink='{{provider.id}}' color="primary" class="mt-1 full-width">
+                            More info
+                        </button>
+                        <button mat-raised-button routerLink="/configuration/provider/update/{{provider.id}}"
+                                color="primary" class="mt-1 full-width">Edit
+                        </button>
                     </div>
                 </ngb-alert>
             </div>
         </ul>
     </div>
-    <div class="col-md-1"></div>
+    <div class="col-md-2">
+        <h4>Statistic</h4>
+        <p><b>All:</b> {{providerStatistic.allAmount}}</p>
+        <p><b>Active:</b> {{providerStatistic.activeAmount}}</p>
+        <p><b>Non active:</b> {{providerStatistic.nonactiveAmount}}</p>
+    </div>
     <div class="col-md-1">
-        <button mat-raised-button routerLink='/configuration/provider/add' color="primary" class="mt-5 full-width">Add provider</button>
+        <button mat-raised-button routerLink='/configuration/provider/add' color="primary" class="mt-5 full-width">Add
+            provider
+        </button>
     </div>
 </div>
 
