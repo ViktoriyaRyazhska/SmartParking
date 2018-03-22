@@ -2,8 +2,6 @@ import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSlider} from '@angular/material';
 import {Subject} from 'rxjs/Subject';
 
-;
-
 @Component({
     selector: 'app-parking-list-filter-radius-field',
     templateUrl: './radius-field.component.html',
@@ -11,7 +9,8 @@ import {Subject} from 'rxjs/Subject';
 })
 export class RadiusFieldComponent implements OnInit {
 
-    @ViewChild('slider') public slider: MatSlider;
+    @ViewChild('slider')
+    private slider: MatSlider;
 
     private readonly valueSubject = new Subject<number | null>();
 

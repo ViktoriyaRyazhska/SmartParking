@@ -43,7 +43,7 @@ import {LocationFieldComponent} from './index/parking-list-filter/location-field
 import {IpLocationService} from './service/ip-location.service';
 import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/radius-field.component';
 import {MatSliderModule} from '@angular/material/slider';
-import {PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
+import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-field/price-range-field.component';
 
 
 @NgModule({

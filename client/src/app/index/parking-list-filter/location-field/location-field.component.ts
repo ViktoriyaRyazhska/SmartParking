@@ -13,13 +13,21 @@ import {Subject} from 'rxjs/Subject';
 export class LocationFieldComponent implements OnInit {
 
     public readonly control: FormControl = new FormControl();
-    public predictionItems: PredictionItem[] = [];
-    public geolocationItem: GeolocationItem;
-    public ipLocationItem: IpLocationItem;
+
+    private predictionItems: PredictionItem[] = [];
+
+    private geolocationItem: GeolocationItem;
+
+    private ipLocationItem: IpLocationItem;
+
     private geocodeService: google.maps.Geocoder;
+
     private autocompleteService: google.maps.places.AutocompleteService;
+
     private controlChangesSubscription: Subscription;
+
     private geolocationDescriptor: number;
+
     private previousSelectedItem: AutocompleteItem<any>;
 
     private selectedItem: AutocompleteItem<any>;
@@ -133,7 +141,6 @@ export class LocationFieldComponent implements OnInit {
                     let longitude = results[0].geometry.location.lng();
                     this.valueSubject.next(new Location(latitude, longitude));
                 } else {
-                    this.valueSubject.next(null);
                     console.warn('Google API Geocoder error: ' + status);
                 }
             });

@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ParkingListFilter} from '../../model/filter/parking-list-filter';
-import {LocationFieldComponent} from './location-field/location-field.component';
+import {Location, LocationFieldComponent} from './location-field/location-field.component';
 import {FormGroup} from '@angular/forms';
 import {RadiusFieldComponent} from './radius-field/radius-field.component';
+import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'app-parking-list-filter',
@@ -11,24 +12,32 @@ import {RadiusFieldComponent} from './radius-field/radius-field.component';
 })
 export class ParkingListFilterComponent implements OnInit {
 
-    @ViewChild('locationField') locationField: LocationFieldComponent;
+    @ViewChild('locationField')
+    private locationField: LocationFieldComponent;
 
-    @ViewChild('radiusField') radiusField: RadiusFieldComponent;
-    public filter: ParkingListFilter;
-    private formGroup: FormGroup;
+    @ViewChild('radiusField')
+    private radiusField: RadiusFieldComponent;
+
+    @ViewChild('priceRangeField')
+    private priceRangeField: PriceRangeFieldComponent;
+
+    private readonly formGroup = new FormGroup({});
 
     constructor() {
     }
 
+    public get location(): Observable<Location> {
+        return this.locationField.value;
+    }
+
+    public get radius(): Observable<number | null> {
+        return this.radiusField.value;
+    }
+
+    public get priceRange(): Observable<PriceRange> {
+        return this.priceRangeField.value;
+    }
+
     ngOnInit() {
-        this.formGroup = new FormGroup({
-            firstName: this.locationField.control,
-        });
-        this.locationField.value.subscribe(value => {
-            console.log(value);
-        });
-        this.radiusField.value.subscribe(value => {
-            console.log(value);
-        });
     }
 }
