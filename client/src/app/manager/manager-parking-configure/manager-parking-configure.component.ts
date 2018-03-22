@@ -1,5 +1,5 @@
 import {ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 import {v4 as uuid} from 'uuid';
 import {MatSnackBar} from '@angular/material';
@@ -23,13 +23,15 @@ export class ManagerParkingConfigureComponent implements OnInit {
     parking: Parking;
 
     parkingConfigureForm = new FormGroup({
-        city: new FormControl('', []),
-        street: new FormControl('', []),
-        building: new FormControl('', []),
-        latitude: new FormControl('', []),
-        longitude: new FormControl('', []),
-        price: new FormControl('', []),
-        token: new FormControl('', []),
+        city: new FormControl('', [
+            Validators.required,
+        ]),
+        street: new FormControl('', [Validators.required,]),
+        building: new FormControl('', [Validators.required,]),
+        latitude: new FormControl('', [Validators.required,]),
+        longitude: new FormControl('', [Validators.required,]),
+        price: new FormControl('', [Validators.required,]),
+        token: new FormControl('', [Validators.required,]),
         providerName: new FormControl('', []),
         favoritesCount: new FormControl('', []),
         spotsCount: new FormControl('', [])
