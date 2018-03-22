@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
-import {Parking} from "../model/view/parking";
+import {Parking} from '../model/view/parking';
 
 @Injectable()
 export class ManagerParkingService {
@@ -17,7 +17,9 @@ export class ManagerParkingService {
     }
 
     getParking(id: number): Observable<Parking> {
-        return this.http.get<Parking>(this.parkingConfigureUrl + "/" + id);
+        return this.http.get<Parking>(this.parkingConfigureUrl + '/' + id).map(json => {
+            return Parking.copyOf(json);
+        });
     }
 
     saveParking(parking: Parking): Observable<HttpResponse<any>> {

@@ -14,4 +14,12 @@ export class Parking {
     spotsCount: number;
     numberSpots: number;
     numberAvailableSpots: number;
+
+    public static copyOf(parking: Parking): Parking {
+        return Object.assign(new Parking(), parking);
+    }
+
+    public clone(): Parking {
+        return Parking.copyOf(this);
+    }
   }
