@@ -29,10 +29,15 @@ public class ParkingController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkings-nearby")
-    public List<ParkingItemResponse> parkingsNearby(@RequestParam("latitude") Double latitude,
-                                                    @RequestParam("longitude") Double longitude,
-                                                    @RequestParam("radius") Double radius) {
-        return ParkingItemResponse.listOf(parkingService.findAllNearby(latitude, longitude, radius));
+    public ResponseEntity<?> parkingsNearby(@RequestParam("latitude") Double latitude,
+                                            @RequestParam("longitude") Double longitude,
+                                            @RequestParam("radius") Double radius) {
+        if (radius < 0) {
+            return new ResponseEntity<>("Radius must be positive or zero.", HttpStatus.BAD_REQUEST);
+        }
+        List<ParkingItemResponse> parkingItems =
+                ParkingItemResponse.listOf(parkingService.findAllNearby(latitude, longitude, radius));
+        return new ResponseEntity<>(parkingItems, HttpStatus.OK);
     }
 
     @RequestMapping("parkingdetail/{id}")
