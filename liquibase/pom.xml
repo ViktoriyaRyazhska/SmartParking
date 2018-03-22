@@ -2,9 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
     <groupId>com.sanss.demo</groupId>
     <artifactId>liquibase-helloworld-demo</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>liquibase-helloworld-demo</name>
@@ -12,6 +13,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>5.0.4.RELEASE</spring.version>
+
     </properties>
 
     <dependencies>
@@ -22,28 +26,39 @@
             <version>5.1.6</version>
         </dependency>
 
-        </dependencies>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+
+     </dependencies>
 
     <build>
         <finalName>liquibase-helloworld-demo</finalName>
         <plugins>
-            <!-- Use Java 1.7 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <encoding>UTF-8</encoding>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>ConnectionWithJDBC/ConnectionWithJDBC</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
             </plugin>
 
@@ -52,20 +67,7 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.4.2</version>
-                <configuration>
-                    <propertyFile>liquibase/liquibase.properties</propertyFile>
-                    <changeLogFile>liquibase/db-changelog-master.xml</changeLogFile>
-                </configuration>
-                <!--  I personally prefer run  it manually
-                <executions>
-                  <execution>
-                    <phase>process-resources</phase>
-                    <goals>
-                      <goal>update</goal>
-                    </goals>
-                  </execution>
-                </executions>
-                -->
+
             </plugin>
         </plugins>
     </build>

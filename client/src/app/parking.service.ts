@@ -31,4 +31,9 @@ export class ParkingService {
     getSpotsByParkingId(id: number): Observable<Spot[]> {
         return this.http.get<Spot[]>(this.parkingDetailUrl + id + '/spots');
     }
+
+    getAvailableSpotsByParkingId(id: number): Observable<Spot[]> {
+        return this.http.get<Spot[]>(this.parkingDetailUrl + id + '/freespots');
+    }
+
 }

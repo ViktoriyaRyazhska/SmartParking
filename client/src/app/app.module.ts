@@ -1,9 +1,12 @@
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {MatAutocompleteModule, MatButtonModule, MatDividerModule, MatExpansionModule, MatSelectModule} from '@angular/material';
+import {
+    MAT_LABEL_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatDividerModule, MatExpansionModule, MatProgressSpinnerModule,
+    MatSelectModule
+} from '@angular/material';
 
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -44,6 +47,8 @@ import {IpLocationService} from './service/ip-location.service';
 import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/radius-field.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-field/price-range-field.component';
+import { UpdateProviderComponent } from './superuser-configuration/providers/update-provider/update-provider.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -71,7 +76,9 @@ import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-
         ClientDetailComponent,
         LocationFieldComponent,
         RadiusFieldComponent,
-        PriceRangeFieldComponent
+        PriceRangeFieldComponent,
+        ParkingListFilter,
+        UpdateProviderComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -93,7 +100,8 @@ import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-
         MatDividerModule,
         MatExpansionModule,
         MatButtonModule,
-        MatSliderModule
+        MatSliderModule,
+        MatProgressSpinnerModule
     ],
     providers: [
         ParkingService,

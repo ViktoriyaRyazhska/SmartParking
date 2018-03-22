@@ -39,6 +39,7 @@ public class ProviderController {
     @GetMapping("providers/{id}")
     ProviderDetailResponse find(@PathVariable Long id) {
         Provider provider = providerService.findById(id);
+        System.out.println(id);
         return ProviderDetailResponse.of(provider);
     }
 
@@ -50,14 +51,26 @@ public class ProviderController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/providers/add")
-    ResponseEntity save(@RequestBody ProviderRequest providerRequest) {
-        if (providerRequest.getName() != "" && providerRequest.getState() != "" &&
-                providerRequest.getCity() != "" && providerRequest.getStreet() != "" &&
-                providerRequest.getBuildingNumber() != "") {
+    ResponseEntity<?> save(@RequestBody ProviderRequest providerRequest) {
+        if (!(providerRequest.getName().equals("") && providerRequest.getCity().equals("")
+                && providerRequest.getStreet().equals("")
+                && providerRequest.getBuilding().equals(""))) {
             providerService.saveFromRequest(providerRequest);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+            return new ResponseEntity<>("Bad data input.", HttpStatus.NO_CONTENT);
         }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/providers/add/{id}")
+    ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProviderRequest providerRequest) {
+        Provider provider = providerService.findById(id);
+        provider.setName(providerRequest.getName());
+        provider.setCity(providerRequest.getCity());
+        provider.setStreet(providerRequest.getStreet());
+        provider.setBuilding(providerRequest.getBuilding());
+        providerService.save(provider);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderService} from '../provider.service';
-import {Provider} from '../provider';
+import {Provider} from '../../../model/view/provider';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProviderDetailComponent implements OnInit {
 
     getProviderDetail(): void {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.providerService.getProviderDetail(id)
+        this.providerService.getDetail(id)
             .subscribe(provider => this.provider = provider);
     }
 

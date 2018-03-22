@@ -18,6 +18,7 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
 
     @Override
     public List<Spot> findAllAvailableSpotsByParkingId(Long id) {
+        System.out.println(repository.findAllAvailableSpotsByParkingId(id));
         return repository.findAllAvailableSpotsByParkingId(id);
     }
 

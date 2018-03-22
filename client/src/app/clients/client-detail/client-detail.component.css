@@ -27,10 +27,6 @@ input {
     margin: 1%;
 }
 
-h4 {
-    font-family: "Times New Roman";
-}
-
 li {
     font-size: 1.3em;
 }
@@ -47,6 +43,11 @@ h3 {
     color: saddlebrown;
 }
 
+#head{
+    display: block;
+    margin-left: 4%;
+}
+
 button {
 
 }
@@ -57,4 +58,8 @@ button {
 
  a{
      color: #6610f2;
+ }
+
+ b{
+     text-decoration: underline ;
  }

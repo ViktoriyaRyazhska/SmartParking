@@ -1,18 +1,17 @@
 package com.smartparking.model.request;
 
 public class ClientRequest {
-    private String firsName;
+    private String firstName;
     private String lastName;
     private String email;
-    private String provider;
     private String role;
 
-    public String getFirsName() {
-        return firsName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirsName(String firsName) {
-        this.firsName = firsName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -29,14 +28,6 @@ public class ClientRequest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
     }
 
     public String getRole() {

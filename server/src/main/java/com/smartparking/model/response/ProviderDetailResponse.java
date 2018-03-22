@@ -1,7 +1,5 @@
 package com.smartparking.model.response;
 
-import com.smartparking.dto.ParkingDto;
-import com.smartparking.dto.SpotDto;
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Provider;
 
@@ -11,16 +9,18 @@ import java.util.stream.Collectors;
 public class ProviderDetailResponse {
     private Long id;
     private String name;
-    private String address;
+    private String city;
+    private String street;
+    private String building;
     private Boolean active;
     private List<Long> parkingIds;
 
-    public static ProviderDetailResponse of(Provider provider){
+    public static ProviderDetailResponse of(Provider provider) {
         ProviderDetailResponse response = new ProviderDetailResponse();
         response.setActive(provider.getActive());
-        response.setAddress(provider.getLegalAddress().getCity() +
-                ", " + provider.getLegalAddress().getStreet() +
-                ", " + provider.getLegalAddress().getBuildingNumber());
+        response.setCity(provider.getCity());
+        response.setStreet(provider.getStreet());
+        response.setBuilding(provider.getBuilding());
         response.setName(provider.getName());
         response.setId(provider.getId());
         response.setParkingIds(provider.getParkings()
@@ -45,12 +45,28 @@ public class ProviderDetailResponse {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 
     public Boolean getActive() {

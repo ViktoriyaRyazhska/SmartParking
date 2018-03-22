@@ -1,8 +1,9 @@
-import {Address} from './address';
 
 export class Parking {
     id: number;
-    address: Address;
+    city: string;
+    street: string;
+    building: string;
     latitude: number;
     longitude: number;
     token: string;
@@ -11,4 +12,6 @@ export class Parking {
     providerName: string;
     favoritesCount: number;
     spotsCount: number;
+    numberSpots: number;
+    numberAvailableSpots: number;
   }
