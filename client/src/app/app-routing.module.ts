@@ -11,8 +11,8 @@ import {ManagerParkingConfigureComponent} from './manager/manager-parking-config
 import {ClientDetailComponent} from './clients/client-detail/client-detail.component';
 import {RegistrationComponent} from './auth/registration/registration.component';
 import {AddProviderComponent} from './superuser-configuration/providers/add-provider/add-provider.component';
-import {ClientEditComponent} from "./clients/client-edit/client-edit.component";
-import {ClientListComponent} from "./clients/client-list/client-list.component";
+import {ClientEditComponent} from './clients/client-edit/client-edit.component';
+import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -25,11 +25,13 @@ const routes: Routes = [
     {path: 'configuration/clients/:id/edit/:id', component: ClientDetailComponent},
     {path: 'configuration/clients/edit/:id', component: ClientEditComponent},
     {path: 'configuration/providers', component: ProviderListComponent},
+    {path: 'manager-configuration/parkings/', component: ManagerParkingListComponent},
+    {path: 'manager-configuration/parkings/add/', component: ManagerParkingConfigureComponent},
+    {path: 'manager-configuration/parkings/edit/:id', component: ManagerParkingConfigureComponent},
     {path: 'login', component: LoginComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/provider/add', component: AddProviderComponent},
     {path: 'registration', component: RegistrationComponent},
-    {path: 'manager-configuration/parking/:id', component: ManagerParkingConfigureComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'configuration/clients/findclients/:input', component: ClientsComponent}
 ];
