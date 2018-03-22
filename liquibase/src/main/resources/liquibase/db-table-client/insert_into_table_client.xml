@@ -5,7 +5,7 @@
 
     <changeSet author="Oleksiy" id="201803202047" dbms="MYSQL">
         <sql>
-            INSERT INTO client (email ,first_name ,last_name ,password,role,provider_id) values('fox@gmail.com','Kook','Petro','kout',1,1);
+            INSERT INTO client (email ,first_name ,last_name ,password,role,provider_id) values('admin@gmail.com','Kook','Petro','admin',2,1);
         </sql>
         <comment>Inserting into table client</comment>
     </changeSet>

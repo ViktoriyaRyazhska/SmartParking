@@ -1,18 +1,12 @@
-package ConnectionWithJDBC;
+package liquibase;
 
 import java.sql.*;
 
-import liquibase.Contexts;
-import liquibase.LabelExpression;
-import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
-import liquibase.database.OfflineConnection;
 import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
-
 
 public class ConnectionWithJDBC {
 
@@ -25,7 +19,7 @@ public class ConnectionWithJDBC {
     static final String PASSWORD = "root";
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         try {
             Class.forName(JDBC_DRIVER);
@@ -39,20 +33,16 @@ public class ConnectionWithJDBC {
             liquibase.update(new Contexts(), new LabelExpression());
 
             connection.close();
-        } catch ( SQLException exception )
-        {
-            System.out.println("You have done sql exception" );
-             exception.printStackTrace();
-        } catch ( ClassNotFoundException exception )
-        {
-            System.out.println("You have done classNotFoundException exception" );
+        } catch (SQLException exception) {
+            System.out.println("You have done sql exception");
             exception.printStackTrace();
-        } catch ( LiquibaseException exception )
-        {
-            System.out.println("You have done LiquibaseException exception" );
+        } catch (ClassNotFoundException exception) {
+            System.out.println("You have done classNotFoundException exception");
+            exception.printStackTrace();
+        } catch (LiquibaseException exception) {
+            System.out.println("You have done LiquibaseException exception");
             exception.printStackTrace();
         }
-
 
 
     }
