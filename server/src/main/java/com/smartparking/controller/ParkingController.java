@@ -28,7 +28,6 @@ public class ParkingController {
     @Autowired
     ParkingService addressService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkings-nearby")
     public ResponseEntity<?> parkingsNearby(@RequestParam("latitude") Double latitude,
                                             @RequestParam("longitude") Double longitude,
@@ -56,7 +55,7 @@ public class ParkingController {
 
     // TODO Change url to manager-configuration/parking/{id}
 
-    @GetMapping("manager-parkings-configure/{id}")
+    @GetMapping("manager-configuration/parking/{id}")
     ResponseEntity<ManagerParkingResponse> configure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
         if (parking != null) {
@@ -66,7 +65,6 @@ public class ParkingController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("manager-configuration/parkings")
     ResponseEntity<List<ManagerParkingResponse>> parkings() {
         List<Parking> parkings = parkingService.findAll();
@@ -84,8 +82,7 @@ public class ParkingController {
         // TODO Check this predicates
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/manager-parkings-configure/save")
+    @PostMapping("/manager-configuration/parking/save")
     ResponseEntity<?> save(@RequestBody ParkingRequest parkingRequest) {
         parkingService.save(parkingRequest.toParking());
         //TODO Handle different HttpStatuses.

@@ -6,7 +6,7 @@
                     <mat-icon>local_parking</mat-icon>
                 </div>
                 <!--TODO Fix this hard code.-->
-                <div style="min-width: 200px;">
+                <div style="min-width: 70%;">
                     <div>
                         <mat-card-title>{{parking.city}}, {{parking.street}} street, {{parking.building}}
                         </mat-card-title>
@@ -15,7 +15,7 @@
                 </div>
                 <div style="width: 100%"></div>
                 <mat-icon style="color: #1e7e34">attach_money</mat-icon>
-                {{parking.price}}
+                <p style="font-size: 18px;">{{parking.price}}</p>
             </mat-card-header>
 
             <mat-card-content>
@@ -36,7 +36,7 @@
             </mat-card-content>
             <mat-card-actions align="right">
                 <button mat-button color="warn">DELETE</button>
-                <button mat-button button color="primary">EDIT</button>
+                <button mat-button color="primary">EDIT</button>
             </mat-card-actions>
         </mat-card>
     </div>
