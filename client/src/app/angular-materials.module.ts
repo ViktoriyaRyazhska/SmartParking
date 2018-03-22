@@ -7,6 +7,7 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
@@ -27,6 +28,7 @@ import {
         MatSelectModule,
         MatCardModule,
         MatSnackBarModule,
+        MatListModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -40,6 +42,7 @@ import {
         MatSelectModule,
         MatCardModule,
         MatSnackBarModule,
+        MatListModule
     ]
 })
 export class AngularMaterialsModule {

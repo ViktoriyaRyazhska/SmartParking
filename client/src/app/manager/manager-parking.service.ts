@@ -22,6 +22,11 @@ export class ManagerParkingService {
         });
     }
 
+    getParkings(): Observable<HttpResponse<Parking[] | any>> {
+        return this.http.get<HttpResponse<Parking[] | any>>(
+            'http://localhost:8080/manager-configuration/parkings', {observe: 'response'});
+    }
+
     saveParking(parking: Parking): Observable<HttpResponse<any>> {
         return this.http.post<HttpResponse<any>>(
             this.parkingConfigureUrl + '/save', parking, {observe: 'response'});
