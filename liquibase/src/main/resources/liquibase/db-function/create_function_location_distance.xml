@@ -3,7 +3,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Nazariy" id="201803220601" dbms="MYSQL">
+    <changeSet author="Nazariy" id="201803220601" dbms="MYSQL5">
         <sql>
             DELIMITER //
             CREATE FUNCTION LOCATION_DISTANCE(latitude_a DOUBLE, longitude_a DOUBLE, latitude_b DOUBLE, longitude_b
@@ -23,7 +23,10 @@
             DECLARE t3 DOUBLE DEFAULT SIN(a1) * SIN(b1);
             DECLARE tt DOUBLE DEFAULT ACOS(t1 + t2 + t3);
 
-            RETURN 6366000 * tt;
+            IF tt IS NOT NULL
+            THEN RETURN 6366000 * tt;
+            ELSE RETURN 0;
+            END IF;
             END//
             DELIMITER ;
         </sql>

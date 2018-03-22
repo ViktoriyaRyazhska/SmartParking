@@ -15,10 +15,10 @@ import {
 } from '@angular/material';
 
 
+
 @NgModule({
     imports: [
         BrowserAnimationsModule,
-        // NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
@@ -32,7 +32,6 @@ import {
     ],
     exports: [
         BrowserAnimationsModule,
-        // NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,

@@ -29,13 +29,18 @@ public class ParkingController {
     ParkingService addressService;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping("parkings")
-    List<ParkingItemResponse> parkings(@RequestParam("latitude") Double latitude,
-                                       @RequestParam("longitude") Double longitude) {
-        return ParkingItemResponse.listOf(parkingService.findAll());
+    @RequestMapping("parkings-nearby")
+    public ResponseEntity<?> parkingsNearby(@RequestParam("latitude") Double latitude,
+                                            @RequestParam("longitude") Double longitude,
+                                            @RequestParam("radius") Double radius) {
+        if (radius < 0) {
+            return new ResponseEntity<>("Radius must be positive or zero.", HttpStatus.BAD_REQUEST);
+        }
+        List<ParkingItemResponse> parkingItems =
+                ParkingItemResponse.listOf(parkingService.findAllNearby(latitude, longitude, radius));
+        return new ResponseEntity<>(parkingItems, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("parkingdetail/{id}")
     ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
@@ -50,9 +55,7 @@ public class ParkingController {
     }
 
     // TODO Change url to manager-configuration/parking/{id}
-    // TODO Delete @CrossOrigin anywhere
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("manager-parkings-configure/{id}")
     ResponseEntity<ManagerParkingResponse> configure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);

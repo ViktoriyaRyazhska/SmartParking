@@ -1,21 +1,14 @@
-<tr data-status="pagado">
-    <td>
-        <div class="media">
-            <a href="#" class="pull-left">
-                <img id="clientImage" src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg"
-                     class="media-photo">
-            </a>
-            <div class="media-body">
-                <h6 [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'red' : 'blue'}">
-                    id:{{client.id}},{{client.role}}</h6>
-                <span class="media-meta pull-right">{{client.email}}</span>
-                <h4 class="title">
-                    {{client.firstName}} {{client.lastName}}
-                </h4>
-            </div>
-        </div>
-    </td>
-    <td>
-    </td>
-    <a id="aInfo" routerLink="{{client.id}}" class="btn btn-success">More info</a>
-</tr>
+<ngb-alert type="dark" [dismissible]="false" id="cont">
+    <div>
+        <h3>{{client.firstName}} {{client.lastName}}</h3>
+        <p><b><i>ID:</i></b> {{client.id}}</p>
+        <p [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'red' : 'green'}"><b><i>Role: </i></b>{{client.providerName}}
+            {{client.role}}</p>
+    </div>
+    <div>
+        <button mat-raised-button routerLink='{{client.id}}' color="primary" class="mt-1 full-width">More info
+        </button>
+        <button mat-raised-button routerLink='edit/{{client.id}}' color="primary" class="mt-1 full-width">Edit
+        </button>
+    </div>
+</ngb-alert>

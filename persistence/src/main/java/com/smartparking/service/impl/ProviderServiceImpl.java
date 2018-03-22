@@ -4,6 +4,7 @@ package com.smartparking.service.impl;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
+import com.smartparking.model.request.ProviderStatisticRequest;
 import com.smartparking.repository.ProviderFilterRepository;
 import com.smartparking.repository.ProviderRepository;
 import com.smartparking.service.AbstractService;
@@ -47,6 +48,15 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
     @Override
     public Provider findProviderByClientId(Long id) {
         return getRepository().findProviderByClientId(id);
+    }
+
+    @Override
+    public ProviderStatisticRequest getStatistic() {
+        ProviderStatisticRequest request = new ProviderStatisticRequest();
+        request.setActiveAmount(String.valueOf(getRepository().countProviderByActive(true)));
+        request.setNonactiveAmount(String.valueOf(getRepository().countProviderByActive(false)));
+        request.setAllAmount(String.valueOf(getRepository().countProviderBy()));
+        return request;
     }
 
     @Override

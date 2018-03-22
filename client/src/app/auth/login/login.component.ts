@@ -29,8 +29,7 @@ export class LoginComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private loginService: LoginService,
-                private router: Router,
-                private storage: TokenStorage
+                private router: Router
     ) {}
 
     ngOnInit() {
@@ -38,15 +37,22 @@ export class LoginComponent implements OnInit {
             email: this.emailControl,
             password: this.passwordControl
         });
+        /*if(this.storage.isExpired) {
+            if(!confirm('Your token is expired please sign in again.')) {
+                this.storage.isExpired = false;
+                this.router.navigate(['/']);
+            }
+        }*/
     }
+
 
     login = () => {
         this.loginData = this.loginForm.value;
         this.loginService.signIn(this.loginData)
             .subscribe((response:ResponseToken)=>{
                     this.error=false;
-                    this.storage.saveCredentials(response.token, response.role);
-                    alert("Succesful authentifictaon" + response.token + "  " + response.role)
+                    TokenStorage.saveToken(response.token);
+                    alert("Succesful authentifictaon" + response.token)
                     this.router.navigate(['/']);
                 }, error2 => {
                     console.log("error");

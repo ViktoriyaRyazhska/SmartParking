@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
-import {Client} from "../model/view/client";
-import {ClientsProviderRequest} from "./clients-provider-request";
-import {Role} from "./role";
-import {ROLES} from "./mock-roles";
-import {Provider} from "../model/view/provider";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {Client} from '../model/view/client';
+import {ClientsProviderRequest} from './clients-provider-request';
+import {Role} from './role';
+import {ROLES} from './mock-roles';
+import {Provider} from '../model/view/provider';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class ClientService {
 
-    private clientsUrl = 'http://localhost:8080/clients';
+    private clientsUrl = environment.apiUrl + '/clients';
 
     constructor(private http: HttpClient) {
     }
@@ -20,15 +21,15 @@ export class ClientService {
     }
 
     getLimitNumberOfClients(): Observable<Client[]> {
-        return this.http.get<Client[]>(this.clientsUrl + "/clientslimit");
+        return this.http.get<Client[]>(this.clientsUrl + '/clientslimit');
     }
 
     getClientDetail(id: number): Observable<Client> {
-        return this.http.get<Client>(this.clientsUrl + "/" + id);
+        return this.http.get<Client>(this.clientsUrl + '/' + id);
     }
 
     getClientDetailToEdit(id: number): Observable<Client> {
-        return this.http.get<Client>(this.clientsUrl + "/" + id);
+        return this.http.get<Client>(this.clientsUrl + '/' + id);
     }
 
     updateClient(id: number, client: Client) {
@@ -36,15 +37,11 @@ export class ClientService {
     }
 
     getProviderByClientId(id: number): Observable<ClientsProviderRequest> {
-        return this.http.get<ClientsProviderRequest>(this.clientsUrl + "/findprovider/" + id);
+        return this.http.get<ClientsProviderRequest>(this.clientsUrl + '/findprovider/' + id);
     }
 
     findClientsByAnyMatch(input: string): Observable<Client[]> {
         return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
-    }
-
-    findClientsByRole(input: string): Observable<Client[]> {
-        return this.http.get<Client[]>(this.clientsUrl + '/findclientsbyrole/' + input);
     }
 
     getProviders(): Observable<Provider[]> {
