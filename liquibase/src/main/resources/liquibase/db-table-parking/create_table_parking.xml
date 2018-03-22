@@ -12,6 +12,9 @@
             longitude double,
             price decimal(19,2),
             token varchar(255),
+            city varchar(255),
+            street varchar(255),
+            building varchar(255),
             provider_id  bigint(20),
             CONSTRAINT Parking_pkey PRIMARY KEY (id),
             constraint fk_between_parking_and_provider foreign key (provider_id) references provider(id));
