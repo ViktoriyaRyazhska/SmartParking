@@ -1,12 +1,8 @@
 package com.smartparking.model.response;
 
-import com.smartparking.entity.Parking;
-
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class ParkingItemResponse {
+public class ParkingResponse {
 
     private Long id;
     private String city;
@@ -15,28 +11,9 @@ public class ParkingItemResponse {
     private Double latitude;
     private Double longitude;
     private BigDecimal price;
+    private Double distance;
     private Long spotsNumber;
     private Long availableSpotsNumber;
-
-    public ParkingItemResponse(Parking parking) {
-        this.id = parking.getId();
-        this.city = parking.getCity();
-        this.street = parking.getStreet();
-        this.building = parking.getBuilding();
-        this.latitude = parking.getLatitude();
-        this.longitude = parking.getLongitude();
-        this.price = parking.getPrice();
-        this.spotsNumber = (long) parking.getSpots().size();
-        // TODO Calculate available spots number.
-    }
-
-    public static ParkingItemResponse of(Parking parking) {
-        return new ParkingItemResponse(parking);
-    }
-
-    public static List<ParkingItemResponse> listOf(List<Parking> parkings) {
-        return parkings.stream().map(ParkingItemResponse::of).collect(Collectors.toList());
-    }
 
     public Long getId() {
         return id;
@@ -108,5 +85,13 @@ public class ParkingItemResponse {
 
     public void setBuilding(String building) {
         this.building = building;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 }

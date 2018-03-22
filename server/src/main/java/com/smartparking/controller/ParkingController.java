@@ -5,7 +5,6 @@ import com.smartparking.entity.Parking;
 import com.smartparking.model.request.ParkingRequest;
 import com.smartparking.model.response.ManagerParkingResponse;
 import com.smartparking.model.response.ParkingDetailResponse;
-import com.smartparking.model.response.ParkingItemResponse;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +34,7 @@ public class ParkingController {
         if (radius < 0) {
             return new ResponseEntity<>("Radius must be positive or zero.", HttpStatus.BAD_REQUEST);
         }
-        List<ParkingItemResponse> parkingItems =
-                ParkingItemResponse.listOf(parkingService.findAllNearby(latitude, longitude, radius));
-        return new ResponseEntity<>(parkingItems, HttpStatus.OK);
+        return new ResponseEntity<>(parkingService.findAllNearby(latitude, longitude, radius), HttpStatus.OK);
     }
 
     @RequestMapping("parkingdetail/{id}")
