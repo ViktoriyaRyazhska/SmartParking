@@ -20,7 +20,7 @@ public class ConnectionWithJDBC {
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/smartparking";
     private static final String USER = "root";
-    private static final String PASSWORD = "abcde1234567890";
+    private static final String PASSWORD = "root";
 
 
     public static void main(String[] args) {
