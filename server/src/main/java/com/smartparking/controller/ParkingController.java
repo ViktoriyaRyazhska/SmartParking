@@ -2,6 +2,7 @@ package com.smartparking.controller;
 
 
 import com.smartparking.entity.Parking;
+import com.smartparking.model.request.ParkingRequest;
 import com.smartparking.model.response.ManagerParkingResponse;
 import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.model.response.ParkingItemResponse;
@@ -26,10 +27,8 @@ public class ParkingController {
     @Autowired
     ParkingService addressService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping("parkings")
-    List<ParkingItemResponse> parkings(@RequestParam("latitude") Double latitude,
-                                       @RequestParam("longitude") Double longitude) {
+
+
     @RequestMapping("/parkings")
     List<ParkingItemResponse> parkings() {
         return ParkingItemResponse.listOf(parkingService.findAll());
@@ -50,8 +49,7 @@ public class ParkingController {
 
     // TODO Change url to manager-configuration/parking/{id}
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("manager-parkings-configure/{id}")
+
     @RequestMapping("manager-parkings-configure/{id}")
     ResponseEntity<ManagerParkingResponse> managerParkingConfigure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
@@ -62,7 +60,7 @@ public class ParkingController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @PostMapping("/manager-parkings-configure/save")
     ResponseEntity<?> save(@RequestBody ParkingRequest parkingRequest) {
         parkingService.save(parkingRequest.toParking());

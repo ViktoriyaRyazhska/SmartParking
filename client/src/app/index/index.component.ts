@@ -1,5 +1,3 @@
-import {Component, OnInit} from '@angular/core';
-import {TokenStorage} from "../auth/login/token-storage";
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ParkingListFilterComponent} from './parking-list-filter/parking-list-filter.component';
 import {ParkingService} from '../parking.service';

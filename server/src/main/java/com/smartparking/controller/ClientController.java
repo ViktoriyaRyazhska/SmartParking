@@ -33,10 +33,6 @@ public class ClientController {
     @Autowired
     ProviderService providerService;
 
-
-    @GetMapping("/clients")
-    List<ClientItemResponse> findAll() {
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("clients")
     List<ClientItemResponse> findAllClients() {
         List<Client> clients = clientService.findAll();
@@ -47,10 +43,7 @@ public class ClientController {
         return clientItemResponses;
     }
 
-    @GetMapping("/clients/clientslimit")
-    List<ClientItemResponse> limitFindClients() {
-        System.out.println("jdsfjsdfjsdjfjsdfjdsfj"+SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("clients/clientslimit")
     List<ClientItemResponse> findLimitNumberOfClients() {
         List<Client> clients = clientService.findLimitNumberOfClients(new PageRequest(0, 50));
@@ -61,9 +54,7 @@ public class ClientController {
         return clientItemResponses;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("clients/{id}")
-    ClientDetailResponse getClientsDetail(@PathVariable Long id) {
+
     @GetMapping("/clients/{id}")
     ClientDetailResponse find(@PathVariable Long id) {
         Client client = clientService.findById(id);
@@ -100,7 +91,6 @@ public class ClientController {
         } else return findAllClients();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("clients/getproviders")
     List<ProviderItemResponse> findAllProviders() {
         List<Provider> providers = providerService.findAll();
@@ -111,9 +101,7 @@ public class ClientController {
         return providerItemResponses;
     }
 
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public String saveUser(@RequestBody RegistrationClientRequest regClient){
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String saveUser(@RequestBody RegistrationClientRequest regClient) {
         Client client = new Client();
@@ -126,7 +114,6 @@ public class ClientController {
         return "registration successful";
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("clients/findclientsbyrole/{input}")
     List<ClientItemResponse> findClientsByRole(@PathVariable String input) {
         if (input != "") {

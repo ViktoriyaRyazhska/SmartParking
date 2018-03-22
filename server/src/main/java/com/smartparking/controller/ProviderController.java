@@ -58,7 +58,6 @@ public class ProviderController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/providers/add/{id}")
     ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProviderRequest providerRequest) {
         Provider provider = providerService.findById(id);
