@@ -18,6 +18,7 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.filter.location.subscribe(location => {
             this.parkingService.getParkings(location.latitude, location.longitude).subscribe((response) => {
                 console.log(response);

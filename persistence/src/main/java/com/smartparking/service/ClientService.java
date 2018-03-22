@@ -16,7 +16,5 @@ public interface ClientService extends Service<Client, Long, ClientRepository> {
 
     List<Client> findLimitNumberOfClients(Pageable pageable);
 
-    List<Client> findClientsByRole(String input);
-
     void updateFromRequest(Long id, ClientRequest clientRequest);
 }

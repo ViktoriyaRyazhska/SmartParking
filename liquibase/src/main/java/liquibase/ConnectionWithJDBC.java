@@ -7,19 +7,25 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConnectionWithJDBC {
 
     /**
      * JDBC Driver and database url
      */
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/smartparking";
-    static final String USER = "root";
-    static final String PASSWORD = "root";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionWithJDBC.class);
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/smartparking";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
 
     public static void main(String[] args) {
+
+        LOGGER.info("-------------------Creating a new database and filling it with data---------------------------- ");
 
         try {
             Class.forName(JDBC_DRIVER);
@@ -34,13 +40,13 @@ public class ConnectionWithJDBC {
 
             connection.close();
         } catch (SQLException exception) {
-            System.out.println("You have done sql exception");
+            LOGGER.info("You have done sql exception");
             exception.printStackTrace();
         } catch (ClassNotFoundException exception) {
-            System.out.println("You have done classNotFoundException exception");
+            LOGGER.info("You have done classNotFoundException exception");
             exception.printStackTrace();
         } catch (LiquibaseException exception) {
-            System.out.println("You have done LiquibaseException exception");
+            LOGGER.info("You have done LiquibaseException exception");
             exception.printStackTrace();
         }
 
