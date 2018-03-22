@@ -1,3 +1,8 @@
+.parent {
+    background-color: rgb(252, 252, 252);
+    z-index: 1030;
+}
+
 .filter {
     position: fixed;
     right: 0;

@@ -20,7 +20,8 @@ export class ParkingService {
             params: {
                 latitude: latitude.toString(),
                 longitude: longitude.toString(),
-            }
+            },
+            observe: 'response'
         });
     }
 
