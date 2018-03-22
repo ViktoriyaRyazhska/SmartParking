@@ -1,187 +1,186 @@
 <div class="container-fluid" *ngIf="!parking">
-    <mat-spinner></mat-spinner>
+    <mat-spinner mode="indeterminate"></mat-spinner>
 </div>
 <div class="container-fluid" *ngIf="parking">
-    <form class="parking-configure-form" [formGroup]="parkingConfigureForm" (ngSubmit)="saveParking()">
-        <legend>Edit parking</legend>
 
-        <mat-form-field>
-            <input matInput [(ngModel)]="parking.providerName" placeholder="Provider"
-                   formControlName="providerName">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <input matInput [(ngModel)]="parking.favoritesCount" placeholder="Favorites count"
-                   formControlName="favoritesCount">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <input matInput [(ngModel)]="parking.spotsCount" placeholder="Spots count"
-                   formControlName="spotsCount">
-        </mat-form-field>
-        <div class="row submit">
-            <button mat-raised-button type="submit" color="accent" class="full-width"
-                    [disabled]="!parkingConfigureForm.valid">
-                Submit
-                <mat-icon aria-label="Send and save changes">send</mat-icon>
-            </button>
-        </div>
-    </form>
-</div>
+    <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
+        <mat-card-header>
+            <legend>Edit parking</legend>
+        </mat-card-header>
+        <mat-card-content>
 
+            <form class="formstyle"
+                  [formGroup]="parkingConfigureForm" (ngSubmit)="saveParking()">
 
-<div class="container-fluid" *ngIf="!parking">
-    <mat-spinner align="center"></mat-spinner>
-</div>
-<div class="container-fluid" *ngIf="parking">
-    <form class="parking-configure-form" [formGroup]="parkingConfigureForm" (ngSubmit)="saveParking()">
-        <legend>Edit parking</legend>
-        <mat-accordion class="example-headers-align">
+                <mat-accordion class="parking-configure-headers-align">
 
-            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Address
-                    </mat-panel-title>
-                    <mat-panel-description>
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Address
+                            </mat-panel-title>
+                            <mat-panel-description>
                         <span *ngIf="!parking.city && !parking.street && !parking.building">
                             Type city, street and building
                         </span>
-                        <span *ngIf="parking.city || parking.street || parking.building">
+                                <span *ngIf="parking.city || parking.street || parking.building">
                             {{parking.city}}, {{parking.street}} street, {{parking.building}}
                         </span>
-                    </mat-panel-description>
-                    <mat-icon>store</mat-icon>
-                </mat-expansion-panel-header>
-                <mat-form-field>
-                    <input matInput [(ngModel)]="parking.city" placeholder="City"
-                           formControlName="city">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput [(ngModel)]="parking.street" placeholder="Street"
-                           formControlName="street">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput [(ngModel)]="parking.building" placeholder="Building number"
-                           formControlName="building">
-                </mat-form-field>
-                <mat-action-row>
-                    <button mat-button type="button" color="warn" (click)="resetAddress()">Reset</button>
-                    <div class="full-width"></div>
-                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
-                </mat-action-row>
-            </mat-expansion-panel>
+                            </mat-panel-description>
+                            <mat-icon>store</mat-icon>
+                        </mat-expansion-panel-header>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.city" placeholder="City"
+                                   formControlName="city">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.street" placeholder="Street"
+                                   formControlName="street">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.building" placeholder="Building number"
+                                   formControlName="building">
+                        </mat-form-field>
+                        <mat-action-row>
+                            <button mat-button type="button" color="warn" (click)="resetAddress()">Reset</button>
+                            <div class="full-width"></div>
+                            <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Location
-                    </mat-panel-title>
-                    <mat-panel-description>
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Location
+                            </mat-panel-title>
+                            <mat-panel-description>
                         <span *ngIf="!parking.latitude && !parking.longitude">
                             Type latitude and longitude
                         </span>
-                        <span *ngIf="parking.latitude || parking.longitude">
+                                <span *ngIf="parking.latitude || parking.longitude">
                             {{parking.latitude}}; {{parking.longitude}}
                         </span>
-                    </mat-panel-description>
-                    <mat-icon>place</mat-icon>
-                </mat-expansion-panel-header>
-                <mat-form-field>
-                    <input matInput [(ngModel)]="parking.latitude" placeholder="Location latitude"
-                           type="number"
-                           formControlName="latitude">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput [(ngModel)]="parking.longitude" placeholder="Location longitude"
-                           type="number"
-                           formControlName="longitude">
-                </mat-form-field>
-                <button mat-raised-button type="button" color="primary"
-                        [disabled]="parking.latitude === null || parking.longitude === null"
-                        (click)="showOnMap()">Show on map
-                </button>
-                <mat-action-row>
-                    <button mat-button type="button" color="warn" (click)="resetLocation()">Reset</button>
-                    <div class="full-width"></div>
-                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
-                </mat-action-row>
-            </mat-expansion-panel>
+                            </mat-panel-description>
+                            <mat-icon>place</mat-icon>
+                        </mat-expansion-panel-header>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.latitude" placeholder="Location latitude"
+                                   type="number"
+                                   formControlName="latitude">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.longitude" placeholder="Location longitude"
+                                   type="number"
+                                   formControlName="longitude">
+                        </mat-form-field>
+                        <button mat-raised-button type="button" color="primary"
+                                [disabled]="parking.latitude === null || parking.longitude === null"
+                                (click)="showOnMap()">Show on map
+                        </button>
+                        <mat-action-row>
+                            <button mat-button type="button" color="warn" (click)="resetLocation()">Reset</button>
+                            <div class="full-width"></div>
+                            <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Price
-                    </mat-panel-title>
-                    <mat-panel-description>
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Price
+                            </mat-panel-title>
+                            <mat-panel-description>
                         <span *ngIf="!parking.price">
                             Type price
                         </span>
-                        <span *ngIf="parking.price">
+                                <span *ngIf="parking.price">
                             {{parking.price}}
                         </span>
-                    </mat-panel-description>
-                    <mat-icon>attach_money</mat-icon>
-                </mat-expansion-panel-header>
-                <mat-form-field>
-                    <input matInput [(ngModel)]="parking.price" placeholder="Price"
-                           formControlName="price">
-                </mat-form-field>
-                <mat-action-row>
-                    <button mat-button type="button" color="warn" (click)="resetPrice()">Reset</button>
-                    <div class="full-width"></div>
-                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
-                </mat-action-row>
-            </mat-expansion-panel>
+                            </mat-panel-description>
+                            <mat-icon>attach_money</mat-icon>
+                        </mat-expansion-panel-header>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.price" placeholder="Price"
+                                   formControlName="price">
+                        </mat-form-field>
+                        <mat-action-row>
+                            <button mat-button type="button" color="warn" (click)="resetPrice()">Reset</button>
+                            <div class="full-width"></div>
+                            <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Token
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        <span *ngIf="!parking.token">
-                            Generate token
-                        </span>
-                        <span *ngIf="parking.token">
-                            {{parking.token}}
-                        </span>
-                    </mat-panel-description>
-                    <mat-icon>settings_remote</mat-icon>
-                </mat-expansion-panel-header>
-                <mat-form-field>
-                    <textarea matInput [(ngModel)]="parking.token" placeholder="Token"
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Token
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <span *ngIf="!parking.token">
+                                    Generate token
+                                </span>
+                                <span *ngIf="parking.token">
+                                    {{parking.token}}
+                                </span>
+                            </mat-panel-description>
+                            <mat-icon>settings_remote</mat-icon>
+                        </mat-expansion-panel-header>
+                        <mat-form-field class="tokenField">
+                    <textarea matInput matTextareaAutosize
+                              [(ngModel)]="parking.token" placeholder="Token"
                               formControlName="token" readonly></textarea>
-                </mat-form-field>
-                <button mat-raised-button type="button" color="primary"
-                        (click)="generateToken()">Generate token
+                        </mat-form-field>
+                        <button mat-raised-button type="button" color="primary"
+                                (click)="generateToken()">Generate token
+                        </button>
+                        <mat-action-row>
+                            <button mat-button type="button" color="warn" (click)="resetToken()">Reset</button>
+                            <div class="full-width"></div>
+                            <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Other
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Information about provider, spots count
+                            </mat-panel-description>
+                            <mat-icon>info_outline</mat-icon>
+                        </mat-expansion-panel-header>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.providerName" placeholder="Provider"
+                                   formControlName="providerName" readonly>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.favoritesCount" placeholder="Favorites count"
+                                   formControlName="favoritesCount" readonly>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parking.spotsCount" placeholder="Spots count"
+                                   formControlName="spotsCount" readonly>
+                        </mat-form-field>
+                        <mat-action-row>
+                            <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button type="button" color="primary" (click)="nextStep()">End</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <!--<div class="row submit">-->
+                <button class="submit-button" mat-raised-button type="submit" color="accent"
+                        [disabled]="!parkingConfigureForm.valid">
+                    Submit
+                    <mat-icon aria-label="Send and save changes">send</mat-icon>
                 </button>
-                <mat-action-row>
-                    <button mat-button type="button" color="warn" (click)="resetToken()">Reset</button>
-                    <div class="full-width"></div>
-                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
-                </mat-action-row>
-            </mat-expansion-panel>
+                <!--</div>-->
+            </form>
 
-            <mat-expansion-panel [expanded]="step === 10" (opened)="setStep(10)" hideToggle="true">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Last
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Last
-                        <mat-icon>date_range</mat-icon>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <mat-action-row>
-                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button type="button" color="primary" (click)="nextStep()">End</button>
-                </mat-action-row>
-            </mat-expansion-panel>
-
-        </mat-accordion>
-    </form>
+        </mat-card-content>
+    </mat-card>
 </div>
