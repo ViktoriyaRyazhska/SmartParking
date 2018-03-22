@@ -6,11 +6,12 @@ import {Observable} from 'rxjs/Observable';
 import {ProviderRequest} from './add-provider/provider-request';
 import {ProviderListFilterParameters} from '../../model/filter/provider-list-filter-parameters';
 import {ProviderStatisticRequest} from './provider-list/ProviderStatisticRequest';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ProviderService {
 
-    private providerUrl = 'http://localhost:8080/providers';
+    private providerUrl = environment.apiUrl+'/providers';
 
     constructor(private http: HttpClient) {
     }

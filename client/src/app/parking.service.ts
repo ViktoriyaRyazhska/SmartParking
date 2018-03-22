@@ -5,12 +5,13 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Parking} from './model/view/parking';
 import {ParkingItem} from './model/view/parking-item';
 import {Spot} from './model/view/spot';
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class ParkingService {
 
-    private parkingUrl = 'http://localhost:8080/parkings/';
-    private parkingDetailUrl = 'http://localhost:8080/parkingdetail/';
+    private parkingUrl = environment.apiUrl + '/parkings/';
+    private parkingDetailUrl = environment.apiUrl + '/parkingdetail/';
 
     constructor(private http: HttpClient) {
     }
