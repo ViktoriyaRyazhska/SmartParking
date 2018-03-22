@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {ManagerParkingService} from '../manager-parking.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-manager-parking-list',
@@ -11,7 +12,8 @@ export class ManagerParkingListComponent implements OnInit {
 
     parkings: Parking[];
 
-    constructor(private managerParkingService: ManagerParkingService) {
+    constructor(private managerParkingService: ManagerParkingService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -31,4 +33,7 @@ export class ManagerParkingListComponent implements OnInit {
                     ${latitude},${longitude}`);
     }
 
+    onParkingDeleteClick(parking: Parking): void {
+
+    }
 }
