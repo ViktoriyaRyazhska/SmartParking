@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../client.service";
 import {ActivatedRoute, Router} from '@angular/router';
-import {ClientRequest} from "../client-request";
+import {Role} from "../role";
+import {Client} from "../../model/view/client";
 
 @Component({
     selector: 'app-client-edit',
@@ -10,8 +11,10 @@ import {ClientRequest} from "../client-request";
 })
 export class ClientEditComponent implements OnInit {
 
+    client: Client;
     id: number;
-    client: ClientRequest;
+    roles: Role[];
+    selectedRole: string;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService,
@@ -20,21 +23,19 @@ export class ClientEditComponent implements OnInit {
 
     ngOnInit() {
         this.getClientById();
+        this.getRoles();
     }
 
     getClientById(): void {
         const id = +parseInt(this.route.snapshot.paramMap.get('id'));
+        this.id = id;
         this.clientService.getClientDetailToEdit(id)
             .subscribe(client => this.client = client);
     }
 
-    onUpdate() {
-        this.udateClientById();
-    }
-
     udateClientById(): void {
-        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
-        this.clientService.updateClient(id, this.client)
+        this.client.role = this.selectedRole;
+        this.clientService.updateClient(this.id, this.client)
             .subscribe(data => {
                 alert('Client was updated successfully.');
             });
@@ -42,6 +43,10 @@ export class ClientEditComponent implements OnInit {
 
     goToClientList() {
         this.router.navigate(['configuration/clients']);
+    }
+
+    getRoles(): void {
+        this.roles = this.clientService.getRoles();
     }
 
 }

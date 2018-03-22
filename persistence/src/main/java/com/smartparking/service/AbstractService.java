@@ -11,15 +11,8 @@ public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> imp
 
     protected final R repository;
 
-    @Autowired
-    private EntityManager entityManager;
-
     protected AbstractService(R repository) {
         this.repository = repository;
-    }
-
-    protected EntityManager getEntityManager(){
-        return entityManager;
     }
 
     @Override

@@ -11,14 +11,6 @@
             <tr>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="State" formControlName="state">
-                        <mat-error *ngIf="stateControl.hasError('required')">
-                            State name is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </td>
-                <td>
-                    <mat-form-field class="example-full-width">
                         <input matInput placeholder="City" formControlName="city">
                         <mat-error *ngIf="cityControl.hasError('required')">
                             City name is <strong>required</strong>
@@ -35,11 +27,13 @@
                 </td>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Number building" formControlName="buildingNumber">
-                        <mat-error *ngIf="buildingNumberControl.hasError('required')">
+                        <input matInput placeholder="Number building"
+                               formControlName="building">
+                        <mat-error *ngIf="buildingControl.hasError('required')">
                             Building number is <strong>required</strong>
                         </mat-error>
-                        <mat-error *ngIf="buildingNumberControl.hasError('pattern')&&!buildingNumberControl.hasError('required')">
+                        <mat-error
+                                *ngIf="buildingControl.hasError('pattern')&&!buildingControl.hasError('required')">
                             Wrong style. Example: <strong>101b</strong>
                         </mat-error>
                     </mat-form-field>

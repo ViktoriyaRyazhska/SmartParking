@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 public class ParkingItemResponse {
 
     private Long id;
-    private AddressResponse address;
+    private String city;
+    private String street;
+    private String building;
     private Double latitude;
     private Double longitude;
     private BigDecimal price;
@@ -18,7 +20,9 @@ public class ParkingItemResponse {
 
     public ParkingItemResponse(Parking parking) {
         this.id = parking.getId();
-        this.address = AddressResponse.of(parking.getAddress());
+        this.city = parking.getCity();
+        this.street = parking.getStreet();
+        this.building = parking.getBuilding();
         this.latitude = parking.getLatitude();
         this.longitude = parking.getLongitude();
         this.price = parking.getPrice();
@@ -40,14 +44,6 @@ public class ParkingItemResponse {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public AddressResponse getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressResponse address) {
-        this.address = address;
     }
 
     public Double getLatitude() {
@@ -88,5 +84,29 @@ public class ParkingItemResponse {
 
     public void setAvailableSpotsNumber(Long availableSpotsNumber) {
         this.availableSpotsNumber = availableSpotsNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 }

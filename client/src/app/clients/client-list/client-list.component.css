@@ -1,17 +1,26 @@
 input {
     min-width: 70%;
-    position:relative;
-    left:88%;
+    position: relative;
+    left: 88%;
     text-align: center;
 }
 
 h1 {
-    position:relative;
-    left:100%;
+    position: relative;
+    left: 104%;
+    font-family: Candara;
 }
 
 button {
+    color: green;
+    display: inline;
+    margin-bottom: 2%;
+}
 
+#buttons {
+    min-width: 150%;
+    display: block;
+    margin-left: 63%;
 }
 
 div {

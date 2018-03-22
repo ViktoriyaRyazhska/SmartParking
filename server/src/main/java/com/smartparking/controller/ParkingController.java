@@ -10,10 +10,7 @@ import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,10 @@ public class ParkingController {
     @Autowired
     ParkingService addressService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping("parkings")
+    List<ParkingItemResponse> parkings(@RequestParam("latitude") Double latitude,
+                                       @RequestParam("longitude") Double longitude) {
     @RequestMapping("/parkings")
     List<ParkingItemResponse> parkings() {
         return ParkingItemResponse.listOf(parkingService.findAll());
@@ -47,6 +48,10 @@ public class ParkingController {
         return parkingDetailResponse;
     }
 
+    // TODO Change url to manager-configuration/parking/{id}
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("manager-parkings-configure/{id}")
     @RequestMapping("manager-parkings-configure/{id}")
     ResponseEntity<ManagerParkingResponse> managerParkingConfigure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
@@ -55,5 +60,21 @@ public class ParkingController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/manager-parkings-configure/save")
+    ResponseEntity<?> save(@RequestBody ParkingRequest parkingRequest) {
+        parkingService.save(parkingRequest.toParking());
+
+//        if (providerRequest.getName() != "" && providerRequest.getState() != "" &&
+//                providerRequest.getCity() != "" && providerRequest.getStreet() != "" &&
+//                providerRequest.getBuildingNumber() != "") {
+//            providerService.saveFromRequest(providerRequest);
+//            return new ResponseEntity(HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+//        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
