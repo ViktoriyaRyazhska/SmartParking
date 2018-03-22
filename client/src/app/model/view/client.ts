@@ -11,5 +11,6 @@ export class Client {
     favoritesNames: string[];
     favorite: Favorite[];
     provider: string;
+    providersId: number;
     role: string;
 }

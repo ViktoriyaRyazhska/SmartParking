@@ -20,12 +20,20 @@
         </div>
 
         <div class="row">
-            <input type="text" name="provider" [(ngModel)]="client.provider" class="form-control" readonly>
+            <h5>Current provider: {{client.provider}}</h5>
         </div>
 
         <div class="row">
-            <h5 [(ngModel)]=client.provider>Current role: {{client.role}}</h5>
+            <h5>Current role: {{client.role}}</h5>
         </div>
+
+        <mat-form-field *ngIf="selectedRole=='PROVIDER_MANAGER'">
+            <mat-select [(value)]="selectedProvidersId" placeholder="select role">
+                <mat-option *ngFor="let provider of providers" [value]="provider.id">
+                    {{ provider.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
         <mat-form-field>
             <mat-select [(value)]="selectedRole" placeholder="select role">

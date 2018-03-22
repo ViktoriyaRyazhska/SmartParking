@@ -36,8 +36,8 @@ export class ClientService {
         return this.http.post(this.clientsUrl + '/update/' + id, client);
     }
 
-    getProviderByClientId(id: number): Observable<ClientsProviderRequest> {
-        return this.http.get<ClientsProviderRequest>(this.clientsUrl + '/findprovider/' + id);
+    getProviderByClientId(id: number): Observable<Provider> {
+        return this.http.get<Provider>(this.clientsUrl + '/findprovider/' + id);
     }
 
     findClientsByAnyMatch(input: string): Observable<Client[]> {
@@ -47,6 +47,7 @@ export class ClientService {
     getProviders(): Observable<Provider[]> {
         return this.http.get<Provider[]>(this.clientsUrl + '/getproviders');
     }
+
 
     getRoles(): Role[] {
         return ROLES;

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class ClientDetailResponse {
     private Long id;
+    private Long providersId;
     private String firstName;
     private String lastName;
     private String email;
@@ -19,11 +20,15 @@ public class ClientDetailResponse {
     public static ClientDetailResponse of(Client client) {
         ClientDetailResponse response = new ClientDetailResponse();
         response.setId(client.getId());
-        response.setRole(client.getRole().toString());
+
+        response.setProvidersId(client.getProvider().getId());
+        response.setProvider(client.getProvider().getName());
+
         response.setFirstName(client.getFirstName());
         response.setLastName(client.getLastName());
         response.setEmail(client.getEmail());
-        response.setProvider(client.getProvider().getName());
+        response.setRole(client.getRole().toString());
+
         response.setFavoritesId(client.getFavorites()
                 .stream().map(Favorite::getId)
                 .collect(Collectors.toList()));
@@ -97,4 +102,11 @@ public class ClientDetailResponse {
         this.favoritesNames = favoritesNames;
     }
 
+    public Long getProvidersId() {
+        return providersId;
+    }
+
+    public void setProvidersId(Long providersId) {
+        this.providersId = providersId;
+    }
 }
