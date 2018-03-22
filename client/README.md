@@ -2,7 +2,7 @@
 
 WARGING!!! We don`t add dependences of angular to gitRepository , so u need to install :
 
-1)ng new ng4fbbootstrap --skip-install //bootsrap-css dependence
+1)ng new ng4fbbootstrap --skip-install //bootstrap-css dependence
 
 2)npm install --save bootstrap@next
 
@@ -13,6 +13,13 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 5) npm install --save @angular/material @angular/cdk hammerjs
 
 6) npm install angular2-cookie --save
+
+7) npm install --save @agm/core
+
+8) npm install --save @google/maps
+
+9) npm install @types/uuid --save
+(UUID generator.)
 
 
 

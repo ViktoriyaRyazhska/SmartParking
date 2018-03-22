@@ -12,7 +12,7 @@
 
     <changeSet author="Oleksiy" id="201803211602" dbms="MYSQL">
         <sql>
-            INSERT INTO client (email ,first_name ,last_name ,password,role,provider_id) values('fox@yandex.ru','Ivanov','Ivan','root',1,2);
+            INSERT INTO client  (email ,first_name ,last_name ,password,role,provider_id) values('fox@yandex.ru','Ivanov','Ivan','root',1,2);
         </sql>
         <comment>Inserting into table client</comment>
     </changeSet>

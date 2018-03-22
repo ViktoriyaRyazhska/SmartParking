@@ -53,7 +53,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>ConnectionWithJDBC/ConnectionWithJDBC</mainClass>
+                            <mainClass>liquibase/ConnectionWithJDBC</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
