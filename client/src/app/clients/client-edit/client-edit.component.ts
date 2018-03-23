@@ -35,7 +35,7 @@ export class ClientEditComponent implements OnInit {
     getClientById(): void {
         const id = +parseInt(this.route.snapshot.paramMap.get('id'));
         this.id = id;
-        this.clientService.getClientDetailToEdit(id)
+        this.clientService.getClientDetail(id)
             .subscribe(client => this.client = client);
     }
 
@@ -54,6 +54,9 @@ export class ClientEditComponent implements OnInit {
         if (this.selectedRole == 'PROVIDER_MANAGER' && this.selectedProvidersId == null) {
             alert('pleace, select provider')
         } else {
+            if (this.selectedRole == 'DRIVER' || this.selectedRole == 'SUPERUSER') {
+                this.client.providersId = 0;
+            }
             this.clientService.updateClient(this.id, this.client)
                 .subscribe(data => {
                     alert('Client was updated successfully.');

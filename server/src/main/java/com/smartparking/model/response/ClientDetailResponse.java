@@ -21,8 +21,13 @@ public class ClientDetailResponse {
         ClientDetailResponse response = new ClientDetailResponse();
         response.setId(client.getId());
 
-        response.setProvidersId(client.getProvider().getId());
-        response.setProvider(client.getProvider().getName());
+        if (client.getProvider() == null) {
+            response.setProvidersId(0l);
+            response.setProvider("no provider");
+        } else {
+            response.setProvidersId(client.getProvider().getId());
+            response.setProvider(client.getProvider().getName());
+        }
 
         response.setFirstName(client.getFirstName());
         response.setLastName(client.getLastName());
