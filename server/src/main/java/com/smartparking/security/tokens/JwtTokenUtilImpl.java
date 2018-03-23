@@ -20,6 +20,9 @@ public class JwtTokenUtilImpl implements TokenUtil{
     @Value("${app.jwt.secret}")
     private String SECRET_KEY;
 
+    @Value ("${current_url}")
+    private String current_url;
+
     @Value("${app.jwt.expiration_time}")
     private Long expiration;
 
@@ -57,7 +60,7 @@ public class JwtTokenUtilImpl implements TokenUtil{
     public String generateToken(Client client) {
         return Jwts.builder().setClaims(generateClaims(client))
                 .setSubject(String.valueOf(client.getId()))
-                .setIssuer("http://localhost:8080")
+                .setIssuer(current_url)
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .setExpiration(generateExpirationDate())
@@ -80,6 +83,6 @@ public class JwtTokenUtilImpl implements TokenUtil{
 
     @Override
     public Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + expiration * MILLISECONDS_TO_SECONDS);
+        return new Date(System.currentTimeMillis() + expiration);
     }
 }
