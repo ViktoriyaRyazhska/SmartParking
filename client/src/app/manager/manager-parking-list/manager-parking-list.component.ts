@@ -31,7 +31,6 @@ export class ManagerParkingListComponent implements OnInit {
             .subscribe(parkings => {
                 this.parkings = parkings.body;
             });
-        // TODo Catch errors
     }
 
     showOnMap(latitude: number, longitude: number): void {
@@ -58,7 +57,6 @@ export class ManagerParkingListComponent implements OnInit {
 
     private onDeleteResponse(parking: Parking, response: HttpResponse<any>): void {
         if (response.status === HttpStatus.OK) {
-            // TODO Write response handler
             this.snackBar.open('Parking deleted sucsessfully.', null, {
                 duration: 2000
             });

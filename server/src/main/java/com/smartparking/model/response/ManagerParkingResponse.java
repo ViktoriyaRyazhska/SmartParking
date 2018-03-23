@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO Refactoring. Remove getters-setters boilerplate code: use Lombok.
-
 public class ManagerParkingResponse {
 
     private Long id;

@@ -50,8 +50,6 @@ public class ParkingController {
         return parkingDetailResponse;
     }
 
-    // TODO Change url to manager-configuration/parking/{id}
-
     @GetMapping("manager-configuration/parking/{id}")
     ResponseEntity<ManagerParkingResponse> configure(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
@@ -76,20 +74,17 @@ public class ParkingController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        // TODO Check this predicates
     }
 
     @PostMapping("/manager-configuration/parking/save")
     ResponseEntity<?> save(@RequestBody ParkingRequest parkingRequest) {
         parkingService.save(parkingRequest.toParking());
-        //TODO Handle different HttpStatuses.
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/manager-configuration/parking/delete")
     ResponseEntity<?> delete(@RequestBody ParkingRequest parkingRequest) {
         parkingService.delete(parkingRequest.toParking());
-        //TODO Handle different HttpStatuses.
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

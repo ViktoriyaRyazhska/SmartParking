@@ -62,7 +62,6 @@ export class ManagerParkingConfigureComponent implements OnInit {
                 this.loadedParking = parking;
                 this.parking = parking.clone();
             });
-        // TODo Catch errors
     }
 
     saveParking(): void {
@@ -71,7 +70,6 @@ export class ManagerParkingConfigureComponent implements OnInit {
         }
         this.managerParkingService.saveParking(this.parking)
             .subscribe((response: HttpResponse<any>) => {
-                // TODO Write response handler
                 this.snackBar.open('Parking updated sucsessfully.', null, {
                     duration: 2000
                 });
