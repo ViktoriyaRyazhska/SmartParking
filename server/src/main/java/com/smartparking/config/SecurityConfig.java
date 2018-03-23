@@ -34,8 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${cross_origin_url}")
     private String url;
 
-    private final int MAX_AGE = 3600;
-
     @Autowired
     private UserDetailsService userService;
 

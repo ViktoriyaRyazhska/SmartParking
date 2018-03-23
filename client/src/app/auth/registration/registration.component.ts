@@ -71,6 +71,8 @@ export class RegistrationComponent implements OnInit {
       this.registrationService.register(this.registrationData).subscribe(data =>{
           this.router.navigate(['/']);
           alert('You are successful registered')
-      }, error2 => {alert("Can`t register you now please try later")})
+      }, error2 => {
+          this.router.navigate(['/']);
+      alert("Can`t register you now please try later")})
   }
 }

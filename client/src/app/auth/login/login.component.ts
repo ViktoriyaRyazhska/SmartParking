@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
                     alert('You are successfully authorized')
                 }, error2 => {
                     this.error = true;
+                this.router.navigate(['/']);
                     alert('Can`t authorizate you now');
                 }
             );
