@@ -1,6 +1,7 @@
 package com.smartparking.model.request;
 
 public class ClientRequest {
+    private Long providersId;
     private String firstName;
     private String lastName;
     private String email;
@@ -36,5 +37,13 @@ public class ClientRequest {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getProvidersId() {
+        return providersId;
+    }
+
+    public void setProvidersId(Long providersId) {
+        this.providersId = providersId;
     }
 }

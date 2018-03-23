@@ -3,6 +3,7 @@ import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {ClientsProviderRequest} from "../clients-provider-request";
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {Provider} from "../../model/view/provider";
 
 @Component({
     selector: 'app-client-detail',
@@ -12,7 +13,7 @@ import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 export class ClientDetailComponent implements OnInit {
 
     client: Client;
-    provider: ClientsProviderRequest;
+    provider: Provider;
     showProviderDetails: boolean = false;
 
     constructor(private route: ActivatedRoute,
@@ -47,6 +48,10 @@ export class ClientDetailComponent implements OnInit {
 
     goToClientEditForm() {
         this.router.navigate(['configuration/clients/edit/', this.client.id]);
+    }
+
+    goToProvidersDetails() {
+        this.router.navigate(['configuration/providers/', this.provider.id]);
     }
 
 
