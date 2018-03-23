@@ -31,7 +31,7 @@ import {
         MatCardModule,
         MatSnackBarModule,
         MatListModule,
-        MatProgressBarModule
+        MatProgressBarModule,
         MatListModule,
         MatTooltipModule,
         MatDialogModule,
