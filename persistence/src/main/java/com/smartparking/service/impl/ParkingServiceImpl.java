@@ -1,7 +1,6 @@
 package com.smartparking.service.impl;
 
 import com.smartparking.entity.Parking;
-import com.smartparking.entity.Provider;
 import com.smartparking.model.response.ParkingResponse;
 import com.smartparking.repository.ParkingRepository;
 import com.smartparking.service.*;
@@ -13,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,37 +31,6 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
         super(repository);
     }
 
-    private static ParkingResponse parkingToParkingResponse(Parking parking) {
-        ParkingResponse response = new ParkingResponse();
-        response.setId(parking.getId());
-        response.setCity(parking.getCity());
-        response.setStreet(parking.getStreet());
-        response.setBuilding(parking.getBuilding());
-        response.setLatitude(parking.getLatitude());
-        response.setLongitude(parking.getLongitude());
-        response.setPrice(parking.getPrice());
-        response.setToken(parking.getToken());
-        response.setProviderId(parking.getProvider().getId());
-        response.setProviderName(parking.getProvider().getName());
-        response.setFavoritesCount((long) parking.getFavorites().size());
-        response.setSpotsCount((long) parking.getSpots().size());
-        return response;
-    }
-
-    private static ParkingResponse tupleToParkingResponse(Tuple tuple) {
-        ParkingResponse response = new ParkingResponse();
-        response.setId(tuple.get("id", BigInteger.class).longValue());
-        response.setPrice(tuple.get("price", BigDecimal.class));
-        response.setCity(tuple.get("city", String.class));
-        response.setStreet(tuple.get("street", String.class));
-        response.setToken(tuple.get("token", String.class));
-        response.setBuilding(tuple.get("building", String.class));
-        response.setLatitude(tuple.get("latitude", Double.class));
-        response.setLongitude(tuple.get("longitude", Double.class));
-        response.setDistance(tuple.get("distance", Double.class));
-        return response;
-    }
-
     @Override
     public List<ParkingResponse> findAllNearbyResponse(Double latitude, Double longitude, Double radius) {
         Objects.requireNonNull(latitude, "latitude");
@@ -77,10 +46,10 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
             response.setSpotsCount(spotService.countAllSpotsByParkingId(response.getId()));
             response.setAvailableSpotsCount(spotService.countAvailableSpotsByParkingId(response.getId()));
 
-            Provider provider = providerService.findProviderByClientId(response.getId());
-            response.setProviderId(provider.getId());
-            response.setProviderName(provider.getName());
-
+            providerService.findByParkingId(response.getId()).ifPresent(provider -> {
+                response.setProviderId(provider.getId());
+                response.setProviderName(provider.getName());
+            });
             return response;
         }).collect(Collectors.toList());
     }
@@ -89,14 +58,44 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     public List<ParkingResponse> findAllByProviderIdResponse(Long providerId) {
         Objects.requireNonNull(providerId, "clientId");
         return getRepository().findAllByProviderId(providerId).stream()
-                .map(ParkingServiceImpl::parkingToParkingResponse)
+                .map(this::parkingToParkingResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ParkingResponse findByIdResponse(Long id) {
-        return getRepository().findById(id)
-                .map(ParkingServiceImpl::parkingToParkingResponse)
-                .orElseThrow(() -> new IllegalArgumentException("Incorrect id."));
+    public Optional<ParkingResponse> findByIdResponse(Long id) {
+        return getRepository().findById(id).map(this::parkingToParkingResponse);
+    }
+
+    private ParkingResponse parkingToParkingResponse(Parking parking) {
+        ParkingResponse response = new ParkingResponse();
+        response.setId(parking.getId());
+        response.setCity(parking.getCity());
+        response.setStreet(parking.getStreet());
+        response.setBuilding(parking.getBuilding());
+        response.setLatitude(parking.getLatitude());
+        response.setLongitude(parking.getLongitude());
+        response.setPrice(parking.getPrice());
+        response.setToken(parking.getToken());
+        response.setProviderId(parking.getProvider().getId());
+        response.setProviderName(parking.getProvider().getName());
+        response.setFavoritesCount((long) parking.getFavorites().size());
+        response.setSpotsCount((long) parking.getSpots().size());
+        response.setAvailableSpotsCount(spotService.countAvailableSpotsByParkingId(parking.getId()));
+        return response;
+    }
+
+    private ParkingResponse tupleToParkingResponse(Tuple tuple) {
+        ParkingResponse response = new ParkingResponse();
+        response.setId(tuple.get("id", BigInteger.class).longValue());
+        response.setPrice(tuple.get("price", BigDecimal.class));
+        response.setCity(tuple.get("city", String.class));
+        response.setStreet(tuple.get("street", String.class));
+        response.setToken(tuple.get("token", String.class));
+        response.setBuilding(tuple.get("building", String.class));
+        response.setLatitude(tuple.get("latitude", Double.class));
+        response.setLongitude(tuple.get("longitude", Double.class));
+        response.setDistance(tuple.get("distance", Double.class));
+        return response;
     }
 }

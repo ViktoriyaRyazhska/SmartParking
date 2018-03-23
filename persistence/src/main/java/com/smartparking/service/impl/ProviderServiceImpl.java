@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProviderServiceImpl extends AbstractService<Provider, Long, ProviderRepository> implements ProviderService {
@@ -48,6 +49,11 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
     @Override
     public Provider findProviderByClientId(Long id) {
         return getRepository().findProviderByClientId(id);
+    }
+
+    @Override
+    public Optional<Provider> findByParkingId(Long parkingId) {
+        return getRepository().findByParkingId(parkingId);
     }
 
     @Override

@@ -5,10 +5,11 @@ import com.smartparking.model.response.ParkingResponse;
 import com.smartparking.repository.ParkingRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ParkingService extends Service<Parking, Long, ParkingRepository> {
 
-    ParkingResponse findByIdResponse(Long id);
+    Optional<ParkingResponse> findByIdResponse(Long id);
 
     List<ParkingResponse> findAllByProviderIdResponse(Long id);
 

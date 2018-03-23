@@ -53,11 +53,9 @@ public class ParkingController {
 
     @GetMapping("manager-configuration/parking/{id}")
     ResponseEntity<?> configure(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(parkingService.findByIdResponse(id), HttpStatus.OK);
-        } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return parkingService.findByIdResponse(id)
+                .map(parking -> new ResponseEntity<Object>(parking, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<Object>("Incorrect parking id", HttpStatus.BAD_REQUEST));
     }
 
     @GetMapping("manager-configuration/parkings")
