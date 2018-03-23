@@ -30,4 +30,8 @@ export class ParkingListComponent implements OnInit, OnDestroy {
     onMoreInfoClick(id: number): void {
         this.router.navigateByUrl('/parkingdetail/' + id);
     }
+
+    round(floatNumber: number): number {
+        return Math.round(floatNumber);
+    }
 }

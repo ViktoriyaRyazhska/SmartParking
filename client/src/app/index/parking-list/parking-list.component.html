@@ -24,8 +24,8 @@
                                   matTooltip="See location on the map!"
                                   (click)="showOnMap(parking.latitude, parking.longitude)">place
                         </mat-icon>
-                        <span> {{parking.latitude}}, {{parking.longitude}}. </span>
-                        <span>Parking is {{parking.distance}} meters away.</span>
+                        <span> {{parking.latitude}}, {{parking.longitude}}.  </span>
+                        <span>Parking is {{round(parking.distance)}} meters away.</span>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>
