@@ -31,4 +31,9 @@ export class ManagerParkingService {
         return this.http.post<HttpResponse<any>>(
             this.parkingConfigureUrl + '/parking/save', parking, {observe: 'response'});
     }
+
+    deleteParking(parking: Parking): Observable<HttpResponse<any>> {
+        return this.http.post<HttpResponse<any>>(
+            this.parkingConfigureUrl + '/parking/delete', parking, {observe: 'response'});
+    }
 }

@@ -4,6 +4,7 @@ import {BrowserAnimationsModule,} from '@angular/platform-browser/animations';
 import {
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -12,8 +13,8 @@ import {
     MatSnackBarModule,
     MatTabsModule,
     MatToolbarModule,
+    MatTooltipModule,
 } from '@angular/material';
-
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import {
         MatSelectModule,
         MatCardModule,
         MatSnackBarModule,
-        MatListModule
+        MatListModule,
+        MatTooltipModule,
+        MatDialogModule,
     ],
     exports: [
         BrowserAnimationsModule,
@@ -41,7 +44,9 @@ import {
         MatSelectModule,
         MatCardModule,
         MatSnackBarModule,
-        MatListModule
+        MatListModule,
+        MatTooltipModule,
+        MatDialogModule,
     ]
 })
 export class AngularMaterialsModule {

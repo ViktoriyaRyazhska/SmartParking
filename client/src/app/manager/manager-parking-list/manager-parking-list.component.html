@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="parkings">
+<div class="container-fluid">
     <div *ngFor="let parking of parkings">
         <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
             <mat-card-header>
@@ -22,6 +22,7 @@
                 <mat-list>
                     <mat-list-item>
                         <mat-icon color="warn" style="margin-right: 15px"
+                                  matTooltip="See location on the map!"
                                   (click)="showOnMap(parking.latitude, parking.longitude)">place
                         </mat-icon>
                         <span> {{parking.latitude}}, {{parking.longitude}}</span>
@@ -40,4 +41,7 @@
             </mat-card-actions>
         </mat-card>
     </div>
+    <a routerLink="/manager-configuration/parkings/add" class="float" mat-fab>
+        <mat-icon color="primary">add</mat-icon>
+    </a>
 </div>

@@ -71,7 +71,6 @@ export class ManagerParkingConfigureComponent implements OnInit {
         }
         this.managerParkingService.saveParking(this.parking)
             .subscribe((response: HttpResponse<any>) => {
-                console.log('Response: ' + response);
                 // TODO Write response handler
                 this.snackBar.open('Parking updated sucsessfully.', null, {
                     duration: 2000

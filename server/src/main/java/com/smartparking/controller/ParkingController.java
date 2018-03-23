@@ -85,4 +85,11 @@ public class ParkingController {
         //TODO Handle different HttpStatuses.
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/manager-configuration/parking/delete")
+    ResponseEntity<?> delete(@RequestBody ParkingRequest parkingRequest) {
+        parkingService.delete(parkingRequest.toParking());
+        //TODO Handle different HttpStatuses.
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

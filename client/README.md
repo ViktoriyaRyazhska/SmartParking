@@ -23,6 +23,8 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 
 11) npm install --save jwt-decode
 
+12) npm install http-status-codes --save
+
 
 
 
