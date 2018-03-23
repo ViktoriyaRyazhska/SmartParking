@@ -7,7 +7,10 @@ import com.smartparking.repository.ParkingRepository;
 import java.util.List;
 
 public interface ParkingService extends Service<Parking, Long, ParkingRepository> {
-    List<Parking> findAllByProviderId(Long id);
 
-    List<ParkingResponse> findAllNearby(Double latitude, Double longitude, Double radius);
+    ParkingResponse findByIdResponse(Long id);
+
+    List<ParkingResponse> findAllByProviderIdResponse(Long id);
+
+    List<ParkingResponse> findAllNearbyResponse(Double latitude, Double longitude, Double radius);
 }

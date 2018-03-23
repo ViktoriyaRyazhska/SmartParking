@@ -3,8 +3,8 @@ package com.smartparking.controller;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.model.request.ParkingRequest;
-import com.smartparking.model.response.ManagerParkingResponse;
 import com.smartparking.model.response.ParkingDetailResponse;
+import com.smartparking.model.response.ParkingResponse;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,7 +33,7 @@ public class ParkingController {
         if (radius < 0) {
             return new ResponseEntity<>("Radius must be positive or zero.", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(parkingService.findAllNearby(latitude, longitude, radius), HttpStatus.OK);
+        return new ResponseEntity<>(parkingService.findAllNearbyResponse(latitude, longitude, radius), HttpStatus.OK);
     }
 
     @RequestMapping("parkingdetail/{id}")
@@ -53,30 +52,17 @@ public class ParkingController {
     // TODO Change url to manager-configuration/parking/{id}
 
     @GetMapping("manager-configuration/parking/{id}")
-    ResponseEntity<ManagerParkingResponse> configure(@PathVariable Long id) {
-        Parking parking = parkingService.findById(id);
-        if (parking != null) {
-            return new ResponseEntity<>(ManagerParkingResponse.of(parking), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    ResponseEntity<?> configure(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(parkingService.findByIdResponse(id), HttpStatus.OK);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("manager-configuration/parkings")
-    ResponseEntity<List<ManagerParkingResponse>> parkings() {
-        List<Parking> parkings = parkingService.findAll();
-        if (parkings != null && !parkings.isEmpty()) {
-            List<ManagerParkingResponse> parkingResponses = new ArrayList<>();
-            for (Parking parking : parkings) {
-                parkingResponses.add(ManagerParkingResponse.of(parking));
-            }
-            return new ResponseEntity<>(parkingResponses, HttpStatus.OK);
-        } else if (parkings != null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        // TODO Check this predicates
+    ResponseEntity<List<ParkingResponse>> parkings() {
+        return new ResponseEntity<>(parkingService.findAllByProviderIdResponse(1L), HttpStatus.OK);
     }
 
     @PostMapping("/manager-configuration/parking/save")
