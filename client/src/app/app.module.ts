@@ -43,7 +43,6 @@ import {ManagerParkingConfigureComponent} from './manager/manager-parking-config
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
 import {InterceptorService} from "./interceptor.service";
-import {JwtModule} from "@auth0/angular-jwt";
 import {AgmCoreModule} from '@agm/core';
 import {LoginService} from './auth/login/login.service';
 import {RegistrationService} from './auth/registration/registration.service';
@@ -56,10 +55,7 @@ import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {PagerService} from './_services/pager.service';
-
-export function tokenGetter() {
-    return localStorage.getItem('access_token');
-}
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
     declarations: [
@@ -94,13 +90,6 @@ export function tokenGetter() {
             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
             libraries: ['places']
         }),
-        JwtModule.forRoot({
-            config: {
-                tokenGetter: tokenGetter,
-                whitelistedDomains: ['localhost:8080'],
-                blacklistedRoutes: []
-            }
-        }),
         HttpClientModule,
         BrowserModule,
         RouterModule,
@@ -117,15 +106,15 @@ export function tokenGetter() {
         MatExpansionModule,
         MatButtonModule,
         MatSliderModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRadioModule
     ],
     providers: [
-        /*{
+        {
             provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true
-        }*/
-        ,
+        },
         ParkingService,
         ManagerParkingService,
         ProviderService,
