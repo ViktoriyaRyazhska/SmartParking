@@ -3,6 +3,7 @@ import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {ClientsProviderRequest} from "../clients-provider-request";
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {Provider} from "../../model/view/provider";
 
 @Component({
     selector: 'app-client-detail',
@@ -12,7 +13,7 @@ import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 export class ClientDetailComponent implements OnInit {
 
     client: Client;
-    provider: ClientsProviderRequest;
+    provider: Provider;
     showProviderDetails: boolean = false;
 
     constructor(private route: ActivatedRoute,
@@ -22,19 +23,12 @@ export class ClientDetailComponent implements OnInit {
 
     ngOnInit() {
         this.getClientById();
-        this.getProvidersByClientId();
     }
 
     getClientById(): void {
         const id = +parseInt(this.route.snapshot.paramMap.get('id'));
         this.clientService.getClientDetail(id)
             .subscribe(client => this.client = client);
-    }
-
-    getProvidersByClientId(): void {
-        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
-        this.clientService.getProviderByClientId(id)
-            .subscribe(provider => this.provider = provider);
     }
 
     seeProviderDetails() {
@@ -47,6 +41,10 @@ export class ClientDetailComponent implements OnInit {
 
     goToClientEditForm() {
         this.router.navigate(['configuration/clients/edit/', this.client.id]);
+    }
+
+    goToProvidersDetails() {
+        this.router.navigate(['configuration/providers/', this.client.providersId]);
     }
 
 

@@ -29,7 +29,7 @@ const routes: Routes = [
     {path: 'configuration/clients/:id/edit/:id', component: ClientDetailComponent},
     {path: 'configuration/clients/edit/:id', component: ClientEditComponent},
     {path: 'configuration/providers', component: ProviderListComponent},
-    {path: 'manager-configuration/parkings/', component: ManagerParkingListComponent},
+    {path: 'manager-configuration/parkings', component: ManagerParkingListComponent},
     {
         path: 'manager-configuration/parkings/add', component: ManagerParkingConfigureComponent,
         data: {configureType: ManagerParkingConfigureType.ADD}

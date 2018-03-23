@@ -6,10 +6,8 @@ export class Client {
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
-    favoritesId: number[];
     favoritesNames: string[];
-    favorite: Favorite[];
     provider: string;
+    providersId: number;
     role: string;
 }

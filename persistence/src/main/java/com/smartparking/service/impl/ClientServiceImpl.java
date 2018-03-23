@@ -1,9 +1,11 @@
 package com.smartparking.service.impl;
 
 import com.smartparking.entity.Client;
+import com.smartparking.entity.Provider;
 import com.smartparking.entity.Role;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.repository.ClientRepository;
+import com.smartparking.repository.ProviderRepository;
 import com.smartparking.service.AbstractService;
 import com.smartparking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,14 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
     @Transactional
     public void updateFromRequest(Long id, ClientRequest clientRequest) {
         Client client = findById(id);
+
+        Provider provider = findProviderById(clientRequest.getProvidersId());
+        client.setProvider(provider);
+        client.setRole(clientRequest.getRole());
+
         client.setFirstName(clientRequest.getFirstName());
         client.setLastName(clientRequest.getLastName());
         client.setEmail(clientRequest.getEmail());
-        client.setRole(clientRequest.getRole());
         getRepository().save(client);
     }
 
@@ -52,7 +58,7 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
     }
 
     @Override
-    public List<Client> findClientsByRole(String input) {
-        return getRepository().findClientsByRole(input);
+    public Provider findProviderById(Long id) {
+        return getRepository().findProviderById(id);
     }
 }

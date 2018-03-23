@@ -16,7 +16,7 @@ export class ClientService {
     constructor(private http: HttpClient) {
     }
 
-    getClients(): Observable<Client[]> {
+    getAllClients(): Observable<Client[]> {
         return this.http.get<Client[]>(this.clientsUrl);
     }
 
@@ -24,11 +24,11 @@ export class ClientService {
         return this.http.get<Client[]>(this.clientsUrl + '/clientslimit');
     }
 
-    getClientDetail(id: number): Observable<Client> {
-        return this.http.get<Client>(this.clientsUrl + '/' + id);
+    getClientsByAnyMatch(input: string): Observable<Client[]> {
+        return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
     }
 
-    getClientDetailToEdit(id: number): Observable<Client> {
+    getClientDetail(id: number): Observable<Client> {
         return this.http.get<Client>(this.clientsUrl + '/' + id);
     }
 
@@ -36,20 +36,12 @@ export class ClientService {
         return this.http.post(this.clientsUrl + '/update/' + id, client);
     }
 
-    getProviderByClientId(id: number): Observable<ClientsProviderRequest> {
-        return this.http.get<ClientsProviderRequest>(this.clientsUrl + '/findprovider/' + id);
-    }
-
-    findClientsByAnyMatch(input: string): Observable<Client[]> {
-        return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
-    }
-
-    findClientsByRole(input: string): Observable<Client[]> {
-        return this.http.get<Client[]>(this.clientsUrl + '/findclientsbyrole/' + input);
-    }
-
     getProviders(): Observable<Provider[]> {
         return this.http.get<Provider[]>(this.clientsUrl + '/getproviders');
+    }
+
+    getProviderByClientId(id: number): Observable<Provider> {
+        return this.http.get<Provider>(this.clientsUrl + '/findprovider/' + id);
     }
 
     getRoles(): Role[] {

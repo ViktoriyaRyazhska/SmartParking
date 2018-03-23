@@ -9,7 +9,6 @@ import com.smartparking.model.response.*;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +30,7 @@ public class ClientController {
     ProviderService providerService;
 
     @GetMapping("clients")
-    List<ClientItemResponse> findAllClients() {
+    List<ClientItemResponse> getAllClients() {
         List<Client> clients = clientService.findAll();
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
         for (Client client : clients) {
@@ -42,7 +41,7 @@ public class ClientController {
 
 
     @GetMapping("clients/clientslimit")
-    List<ClientItemResponse> findLimitNumberOfClients() {
+    List<ClientItemResponse> getLimitNumberOfClients() {
         List<Client> clients = clientService.findLimitNumberOfClients(new PageRequest(0, 50));
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
         for (Client client : clients) {
@@ -53,7 +52,7 @@ public class ClientController {
 
 
     @GetMapping("/clients/{id}")
-    ClientDetailResponse find(@PathVariable Long id) {
+    ClientDetailResponse getClientDetails(@PathVariable Long id) {
         Client client = clientService.findById(id);
         return ClientDetailResponse.of(client);
     }
@@ -69,15 +68,14 @@ public class ClientController {
         }
     }
 
-
     @GetMapping("clients/findprovider/{id}")
-    ProviderDetailResponse findProviderById(@PathVariable Long id) {
+    ProviderDetailResponse getProviderById(@PathVariable Long id) {
         Provider provider = providerService.findProviderByClientId(id);
         return ProviderDetailResponse.of(provider);
     }
 
     @GetMapping("clients/findclients/{input}")
-    List<ClientItemResponse> findClientsByAnyMatch(@PathVariable String input) {
+    List<ClientItemResponse> getClientsByAnyMatch(@PathVariable String input) {
         if (input != "") {
             List<Client> clients = clientService.findClientsByAnyMatch(input);
             List<ClientItemResponse> clientItemResponses = new ArrayList<>();
@@ -85,11 +83,11 @@ public class ClientController {
                 clientItemResponses.add(ClientItemResponse.of(client));
             }
             return clientItemResponses;
-        } else return findAllClients();
+        } else return getAllClients();
     }
 
     @GetMapping("clients/getproviders")
-    List<ProviderItemResponse> findAllProviders() {
+    List<ProviderItemResponse> getAllProviders() {
         List<Provider> providers = providerService.findAll();
         List<ProviderItemResponse> providerItemResponses = new ArrayList<>();
         for (Provider provider : providers) {
@@ -111,16 +109,5 @@ public class ClientController {
         return new InfoResponse("Registration succsessful");
     }
 
-    @GetMapping("clients/findclientsbyrole/{input}")
-    List<ClientItemResponse> findClientsByRole(@PathVariable String input) {
-        if (input != "") {
-            List<Client> clients = clientService.findClientsByRole(input);
-            List<ClientItemResponse> clientItemResponses = new ArrayList<>();
-            for (Client client : clients) {
-                clientItemResponses.add(ClientItemResponse.of(client));
-            }
-            return clientItemResponses;
-        } else return findAllClients();
-    }
 
 }
