@@ -3,6 +3,7 @@ import {MapsAPILoader} from '@agm/core';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/debounceTime';
 import {Parking} from '../../model/view/parking';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-parking-list',
@@ -14,7 +15,8 @@ export class ParkingListComponent implements OnInit, OnDestroy {
     public parkings: Parking[];
 
     constructor(private mapsAPILoader: MapsAPILoader,
-                private changeDetector: ChangeDetectorRef) {
+                private changeDetector: ChangeDetectorRef,
+                private router: Router,) {
     }
 
     ngOnInit(): void {
@@ -221,4 +223,7 @@ export class ParkingListComponent implements OnInit, OnDestroy {
     //         });
     //     }
     // }
+    onMoreInfoClick(id: number): void {
+        this.router.navigateByUrl('/parkingdetail/' + id);
+    }
 }
