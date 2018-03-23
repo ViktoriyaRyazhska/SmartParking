@@ -4,8 +4,8 @@ import {Location} from '@angular/common';
 
 import {Parking} from '../model/view/parking';
 import {ParkingService} from "../parking.service";
-import { Spot } from '../model/view/spot';
-import { Observable } from 'rxjs/Observable';
+import {Spot} from '../model/view/spot';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-parking-detail',
@@ -48,8 +48,8 @@ export class ParkingDetailComponent implements OnInit {
   }
 
   fullnessBarCount(): void {
-    this.max = this.parking.numberSpots;
-    this.value =  this.parking.numberSpots -  this.parking.numberAvailableSpots;
+      this.max = this.parking.spotsCount;
+      this.value = this.parking.spotsCount - this.parking.availableSpotsCount;
     if (this.value < (this.max * 0.6)) {
       this.type = 'success';
       this.fullnessBarMessage = 'Welcome!';

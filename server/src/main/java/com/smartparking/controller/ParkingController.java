@@ -40,10 +40,10 @@ public class ParkingController {
     ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id) {
         Parking parking = parkingService.findById(id);
         ParkingDetailResponse parkingDetailResponse = ParkingDetailResponse.of(parking);
-        parkingDetailResponse.setNumberSpots(
+        parkingDetailResponse.setSpotsCount(
                 spotService.countAllSpotsByParkingId(id)
         );
-        parkingDetailResponse.setNumberAvailableSpots(
+        parkingDetailResponse.setAvailableSpotsCount(
                 spotService.countAvailableSpotsByParkingId(id)
         );
         return parkingDetailResponse;
