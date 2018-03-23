@@ -31,12 +31,15 @@ export class ManagerParkingListComponent implements OnInit {
             .subscribe(parkings => {
                 this.parkings = parkings.body;
             });
-        // TODo Catch errors
     }
 
     showOnMap(latitude: number, longitude: number): void {
         window.open(`https://www.google.com/maps/search/?api=1&query=
                     ${latitude},${longitude}`);
+    }
+
+    onParkingEditClick(id: number): void {
+        this.router.navigateByUrl('/manager-configuration/parkings/edit/' + id);
     }
 
     onParkingDeleteClick(parking: Parking): void {
@@ -54,7 +57,6 @@ export class ManagerParkingListComponent implements OnInit {
 
     private onDeleteResponse(parking: Parking, response: HttpResponse<any>): void {
         if (response.status === HttpStatus.OK) {
-            // TODO Write response handler
             this.snackBar.open('Parking deleted sucsessfully.', null, {
                 duration: 2000
             });

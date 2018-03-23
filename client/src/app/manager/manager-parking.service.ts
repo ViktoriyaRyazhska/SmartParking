@@ -9,8 +9,6 @@ import {Parking} from '../model/view/parking';
 @Injectable()
 export class ManagerParkingService {
 
-    // TODO Change url to manager-configuration/parking/{id}
-
     private parkingConfigureUrl = environment.apiUrl + '/manager-configuration';
 
     constructor(private http: HttpClient) {
