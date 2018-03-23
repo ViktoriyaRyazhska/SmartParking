@@ -33,4 +33,8 @@ export class RadiusFieldComponent implements OnInit {
         setTimeout(() => this.changeDetector.detectChanges(), 1);
     }
 
+    public get max(): number {
+        return this.slider.max;
+    }
+
 }

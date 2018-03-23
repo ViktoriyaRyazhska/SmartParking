@@ -13,4 +13,9 @@ public class FavoriteServiceImpl extends AbstractService<Favorite, Long, Favorit
     protected FavoriteServiceImpl(@Autowired FavoriteRepository repository) {
         super(repository);
     }
+
+    @Override
+    public Long getCountByClientId(Long id) {
+        return getRepository().getCountByClientId(id);
+    }
 }

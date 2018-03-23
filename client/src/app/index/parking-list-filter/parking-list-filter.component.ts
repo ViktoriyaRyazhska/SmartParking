@@ -34,6 +34,10 @@ export class ParkingListFilterComponent implements OnInit {
         return this.radiusField.value;
     }
 
+    public get radiusMax(): number {
+        return this.radiusField.max;
+    }
+
     public get priceRange(): Observable<PriceRange> {
         return this.priceRangeField.value;
     }

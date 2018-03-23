@@ -9,8 +9,6 @@ import {Parking} from '../model/view/parking';
 @Injectable()
 export class ManagerParkingService {
 
-    // TODO Change url to manager-configuration/parking/{id}
-
     private parkingConfigureUrl = environment.apiUrl + '/manager-configuration';
 
     constructor(private http: HttpClient) {
@@ -30,5 +28,10 @@ export class ManagerParkingService {
     saveParking(parking: Parking): Observable<HttpResponse<any>> {
         return this.http.post<HttpResponse<any>>(
             this.parkingConfigureUrl + '/parking/save', parking, {observe: 'response'});
+    }
+
+    deleteParking(parking: Parking): Observable<HttpResponse<any>> {
+        return this.http.post<HttpResponse<any>>(
+            this.parkingConfigureUrl + '/parking/delete', parking, {observe: 'response'});
     }
 }

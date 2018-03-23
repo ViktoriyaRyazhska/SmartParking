@@ -12,8 +12,12 @@ public class ParkingResponse {
     private Double longitude;
     private BigDecimal price;
     private Double distance;
-    private Long spotsNumber;
-    private Long availableSpotsNumber;
+    private Long spotsCount;
+    private Long availableSpotsCount;
+    private String token;
+    private Long providerId;
+    private String providerName;
+    private Long favoritesCount;
 
     public Long getId() {
         return id;
@@ -47,20 +51,20 @@ public class ParkingResponse {
         this.price = price;
     }
 
-    public Long getSpotsNumber() {
-        return spotsNumber;
+    public Long getSpotsCount() {
+        return spotsCount;
     }
 
-    public void setSpotsNumber(Long spotsNumber) {
-        this.spotsNumber = spotsNumber;
+    public void setSpotsCount(Long spotsCount) {
+        this.spotsCount = spotsCount;
     }
 
-    public Long getAvailableSpotsNumber() {
-        return availableSpotsNumber;
+    public Long getAvailableSpotsCount() {
+        return availableSpotsCount;
     }
 
-    public void setAvailableSpotsNumber(Long availableSpotsNumber) {
-        this.availableSpotsNumber = availableSpotsNumber;
+    public void setAvailableSpotsCount(Long availableSpotsCount) {
+        this.availableSpotsCount = availableSpotsCount;
     }
 
     public String getCity() {
@@ -93,5 +97,37 @@ public class ParkingResponse {
 
     public void setDistance(Double distance) {
         this.distance = distance;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getProviderName() {
+        return providerName;
+    }
+
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
+
+    public Long getFavoritesCount() {
+        return favoritesCount;
+    }
+
+    public void setFavoritesCount(Long favoritesCount) {
+        this.favoritesCount = favoritesCount;
     }
 }

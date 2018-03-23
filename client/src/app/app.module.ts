@@ -1,9 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {
-    MAT_LABEL_GLOBAL_OPTIONS,
     MatAutocompleteModule,
     MatButtonModule,
     MatDividerModule,
@@ -41,6 +40,7 @@ import {IndexComponent} from './index/index.component';
 import {ParkingListFilterComponent} from './index/parking-list-filter/parking-list-filter.component';
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
+import {JwtModule} from '@auth0/angular-jwt';
 
 import {InterceptorService} from "./interceptor.service";
 import {AgmCoreModule} from '@agm/core';
@@ -53,9 +53,14 @@ import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/rad
 import {MatSliderModule} from '@angular/material/slider';
 import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-field/price-range-field.component';
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PagerService} from './_services/pager.service';
 import {MatRadioModule} from '@angular/material/radio';
+import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
+
+export function tokenGetter() {
+    return localStorage.getItem('access_token');
+}
 
 @NgModule({
     declarations: [
@@ -83,12 +88,20 @@ import {MatRadioModule} from '@angular/material/radio';
         LocationFieldComponent,
         RadiusFieldComponent,
         PriceRangeFieldComponent,
-        UpdateProviderComponent
+        UpdateProviderComponent,
+        DeleteConfirmationDialogComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
             libraries: ['places']
+        }),
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                whitelistedDomains: ['localhost:8080'],
+                blacklistedRoutes: []
+            }
         }),
         HttpClientModule,
         BrowserModule,
@@ -109,12 +122,14 @@ import {MatRadioModule} from '@angular/material/radio';
         MatProgressSpinnerModule,
         MatRadioModule
     ],
+    entryComponents: [DeleteConfirmationDialogComponent],
     providers: [
-        {
+        /*{
             provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true
-        },
+        }*/
+        ,
         ParkingService,
         ManagerParkingService,
         ProviderService,
