@@ -30,14 +30,14 @@
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <mat-icon color="accent" style="margin-right: 15px">star</mat-icon>
-                        <span> {{parking.favoritesCount}} added to favorite</span>
+                        <span> {{parking.favoritesCount}} drivers added to favorite</span>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                 </mat-list>
             </mat-card-content>
             <mat-card-actions align="right">
                 <button mat-button color="warn" (click)="onParkingDeleteClick(parking)">DELETE</button>
-                <button mat-button color="primary" [routerLink]="['edit', parking.id]">EDIT</button>
+                <button mat-button color="primary" (click)="onParkingEditClick(parking.id)">EDIT</button>
             </mat-card-actions>
         </mat-card>
     </div>

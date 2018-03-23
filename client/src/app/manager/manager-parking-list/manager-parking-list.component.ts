@@ -39,6 +39,10 @@ export class ManagerParkingListComponent implements OnInit {
                     ${latitude},${longitude}`);
     }
 
+    onParkingEditClick(id: number): void {
+        this.router.navigateByUrl('/manager-configuration/parkings/edit/' + id);
+    }
+
     onParkingDeleteClick(parking: Parking): void {
         let dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
             data: {confirmed: false}
