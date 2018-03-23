@@ -8,12 +8,12 @@ import {
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatProgressBarModule,
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
     MatToolbarModule,
 } from '@angular/material';
-
 
 
 @NgModule({
@@ -28,7 +28,8 @@ import {
         MatSelectModule,
         MatCardModule,
         MatSnackBarModule,
-        MatListModule
+        MatListModule,
+        MatProgressBarModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -41,7 +42,8 @@ import {
         MatSelectModule,
         MatCardModule,
         MatSnackBarModule,
-        MatListModule
+        MatListModule,
+        MatProgressBarModule
     ]
 })
 export class AngularMaterialsModule {
