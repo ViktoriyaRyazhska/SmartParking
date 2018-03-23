@@ -9,6 +9,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatProgressBarModule,
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
@@ -30,6 +31,8 @@ import {
         MatCardModule,
         MatSnackBarModule,
         MatListModule,
+        MatProgressBarModule
+        MatListModule,
         MatTooltipModule,
         MatDialogModule,
     ],
@@ -47,6 +50,8 @@ import {
         MatListModule,
         MatTooltipModule,
         MatDialogModule,
+        MatListModule,
+        MatProgressBarModule
     ]
 })
 export class AngularMaterialsModule {

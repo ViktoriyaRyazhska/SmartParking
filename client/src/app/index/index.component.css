@@ -9,3 +9,11 @@
     bottom: 0;
     left: 0;
 }
+
+.progress-bar {
+    margin-bottom: 10px;
+}
+
+app-parking-list {
+    height: 100%;
+}
