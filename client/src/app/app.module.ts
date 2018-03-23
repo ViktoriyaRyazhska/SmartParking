@@ -43,7 +43,6 @@ import {ManagerParkingConfigureComponent} from './manager/manager-parking-config
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
 import {InterceptorService} from "./interceptor.service";
-import {JwtModule} from "@auth0/angular-jwt";
 import {AgmCoreModule} from '@agm/core';
 import {LoginService} from './auth/login/login.service';
 import {RegistrationService} from './auth/registration/registration.service';
@@ -55,10 +54,6 @@ import {MatSliderModule} from '@angular/material/slider';
 import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-field/price-range-field.component';
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-export function tokenGetter() {
-    return localStorage.getItem('access_token');
-}
 
 @NgModule({
     declarations: [
@@ -93,13 +88,6 @@ export function tokenGetter() {
             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
             libraries: ['places']
         }),
-        JwtModule.forRoot({
-            config: {
-                tokenGetter: tokenGetter,
-                whitelistedDomains: ['localhost:8080'],
-                blacklistedRoutes: []
-            }
-        }),
         HttpClientModule,
         BrowserModule,
         RouterModule,
@@ -119,12 +107,11 @@ export function tokenGetter() {
         MatProgressSpinnerModule
     ],
     providers: [
-        /*{
+        {
             provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true
-        }*/
-        ,
+        },
         ParkingService,
         ManagerParkingService,
         ProviderService,

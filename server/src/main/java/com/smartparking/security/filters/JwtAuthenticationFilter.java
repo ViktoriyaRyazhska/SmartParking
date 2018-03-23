@@ -47,12 +47,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("Username " + username);
             } catch (IllegalArgumentException e) {
                 System.out.println("an error occured during getting username from token");
-                e.printStackTrace();
             } catch (ExpiredJwtException e) {
                 System.out.println("the token is expired and not valid anymore");
             } catch(SignatureException e){
                 System.out.println("Authentication Failed. Username or Password not valid.");
-                e.printStackTrace();
             }
         } else {
             System.out.println("couldn't find bearer string, will ignore the header");
