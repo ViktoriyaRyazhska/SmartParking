@@ -13,7 +13,7 @@
             last_name varchar(255)NOT NULL,
             password varchar(255)NOT NULL,
             role int(11)NOT NULL,
-            provider_id  bigint(20)NOT NULL,
+            provider_id bigint(20) NULL,
             CONSTRAINT Client_pkey PRIMARY KEY (id),
             constraint fk_between_client_and_provider foreign key (provider_id) references provider(id));
         </sql>

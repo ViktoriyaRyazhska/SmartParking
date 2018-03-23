@@ -32,7 +32,7 @@ export class ClientListComponent implements OnInit {
         if (input != null) {
             this.findClientsFromBackEnd(input);
         } else
-        this.getLimitNumberOfClients();
+        this.findLimitNumberOfClients();
     }
 
     setPage(page: number) {
@@ -50,15 +50,15 @@ export class ClientListComponent implements OnInit {
         else this.pagedClientItems = this.clients;
     }
 
-    getAllClients(): void {
-        this.clientService.getClients()
+    findAllClients(): void {
+        this.clientService.getAllClients()
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
             });
     }
 
-    getLimitNumberOfClients(): void {
+    findLimitNumberOfClients(): void {
         this.clientService.getLimitNumberOfClients()
             .subscribe(clients => {
                 this.clients = clients;
@@ -67,7 +67,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findClientsFromBackEnd(searchInput: string): void {
-        this.clientService.findClientsByAnyMatch(searchInput)
+        this.clientService.getClientsByAnyMatch(searchInput)
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
@@ -76,7 +76,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findDrivers(): void {
-        this.clientService.findClientsByAnyMatch("0")
+        this.clientService.getClientsByAnyMatch("0")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
@@ -84,7 +84,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findProviderManagers(): void {
-        this.clientService.findClientsByAnyMatch("1")
+        this.clientService.getClientsByAnyMatch("1")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
@@ -92,7 +92,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findSuperusers(): void {
-        this.clientService.findClientsByAnyMatch("2")
+        this.clientService.getClientsByAnyMatch("2")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);

@@ -5,7 +5,6 @@ import {Router} from "@angular/router";
 import {ResponseToken} from "./response-token";
 import {LoginService} from "./login.service";
 import {TokenStorage} from "./token-storage";
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -37,12 +36,6 @@ export class LoginComponent implements OnInit {
             email: this.emailControl,
             password: this.passwordControl
         });
-        /*if(this.storage.isExpired) {
-            if(!confirm('Your token is expired please sign in again.')) {
-                this.storage.isExpired = false;
-                this.router.navigate(['/']);
-            }
-        }*/
     }
 
 
@@ -52,11 +45,11 @@ export class LoginComponent implements OnInit {
             .subscribe((response:ResponseToken)=>{
                     this.error=false;
                     TokenStorage.saveToken(response.token);
-                    alert("Succesful authentifictaon" + response.token)
                     this.router.navigate(['/']);
+                    alert('You are successfully authorized')
                 }, error2 => {
-                    console.log("error");
                     this.error = true;
+                    alert('Can`t authorizate you now');
                 }
             );
     };

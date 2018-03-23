@@ -41,6 +41,8 @@ import {ParkingListFilterComponent} from './index/parking-list-filter/parking-li
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 import {JwtModule} from '@auth0/angular-jwt';
+
+import {InterceptorService} from "./interceptor.service";
 import {AgmCoreModule} from '@agm/core';
 import {LoginService} from './auth/login/login.service';
 import {RegistrationService} from './auth/registration/registration.service';
@@ -53,6 +55,7 @@ import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PagerService} from './_services/pager.service';
+import {MatRadioModule} from '@angular/material/radio';
 import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 export function tokenGetter() {
@@ -116,7 +119,8 @@ export function tokenGetter() {
         MatExpansionModule,
         MatButtonModule,
         MatSliderModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRadioModule
     ],
     entryComponents: [DeleteConfirmationDialogComponent],
     providers: [
