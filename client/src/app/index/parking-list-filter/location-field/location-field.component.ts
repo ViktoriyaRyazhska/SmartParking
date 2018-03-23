@@ -32,16 +32,23 @@ export class LocationFieldComponent implements OnInit {
 
     private selectedItem: AutocompleteItem<any>;
 
-    private readonly valueSubject = new Subject<Location>();
+    private readonly valueChangesSubject = new Subject<Location>();
 
-    public readonly value = this.valueSubject.asObservable();
+    public readonly valueChanges = this.valueChangesSubject.asObservable();
+
+    private internalValue: Location;
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ipLocationService: IpLocationService,
                 private changeDetector: ChangeDetectorRef) {
     }
 
+    public get value(): Location {
+        return this.internalValue;
+    }
+
     ngOnInit(): void {
+        this.valueChanges.subscribe(value => this.internalValue = value);
         this.requestIpLocation();
         this.initMapsAPI().then(() => {
             this.requestGeolocation();
@@ -49,17 +56,11 @@ export class LocationFieldComponent implements OnInit {
     }
 
     public onLocationInputBlur(): void {
-        this.check();
-    }
-
-    public check(): boolean {
         if (!this.selectedItem) {
             this.control.setErrors(
                 {'locationAutocompleteItemNotSelected': {value: this.control.value}});
-            return false;
         } else {
             this.control.setErrors(null);
-            return true;
         }
     }
 
@@ -94,7 +95,7 @@ export class LocationFieldComponent implements OnInit {
                 position => this.onGeolocationSuccess(position),
                 error => this.onGeolocationError(error),
                 <PositionOptions> {
-                    timeout: 60000,
+                    timeout: 1000,
                     enableHighAccuracy: false
                 }
             );
@@ -130,7 +131,7 @@ export class LocationFieldComponent implements OnInit {
 
     private onSelectedItemChange(item: AutocompleteItem<any>): void {
         if (item instanceof LocationItem) {
-            this.valueSubject.next(item.location);
+            this.valueChangesSubject.next(item.location);
         } else if (item instanceof PredictionItem) {
             let request = <google.maps.GeocoderRequest> {
                 placeId: item.source.place_id,
@@ -139,7 +140,7 @@ export class LocationFieldComponent implements OnInit {
                 if (status === google.maps.GeocoderStatus.OK) {
                     let latitude = results[0].geometry.location.lat();
                     let longitude = results[0].geometry.location.lng();
-                    this.valueSubject.next(new Location(latitude, longitude));
+                    this.valueChangesSubject.next(new Location(latitude, longitude));
                 } else {
                     console.warn('Google API Geocoder error: ' + status);
                 }

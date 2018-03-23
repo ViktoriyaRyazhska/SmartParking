@@ -13,28 +13,37 @@ export class PriceRangeFieldComponent implements OnInit {
 
     @ViewChild('maxInput') maxInput: HTMLInputElement;
 
-    private readonly minControl: FormControl = new FormControl(0);
+    private readonly minControl: FormControl = new FormControl();
 
-    private readonly maxControl: FormControl = new FormControl(10);
+    private readonly maxControl: FormControl = new FormControl();
 
-    private readonly valueSubject = new Subject<PriceRange>();
+    private readonly valueChangesSubject = new Subject<PriceRange>();
 
-    public readonly value = this.valueSubject.asObservable();
+    public readonly valueChanges = this.valueChangesSubject.asObservable();
+
+    private internalValue: PriceRange;
 
     constructor() {
     }
 
+    public get value(): PriceRange {
+        return this.internalValue;
+    }
+
     ngOnInit(): void {
+        this.valueChanges.subscribe(value => this.internalValue = value);
         this.minControl.valueChanges.subscribe(min => {
             if (this.validateMin(min)) {
-                this.valueSubject.next(new PriceRange(min, this.maxControl.value));
+                this.valueChangesSubject.next(new PriceRange(min, this.maxControl.value));
             }
         });
         this.maxControl.valueChanges.subscribe(max => {
             if (this.validateMax(max)) {
-                this.valueSubject.next(new PriceRange(this.minControl.value, max));
+                this.valueChangesSubject.next(new PriceRange(this.minControl.value, max));
             }
         });
+        this.minControl.setValue(0);
+        this.maxControl.setValue(undefined);
         this.minControl.markAsTouched();
         this.maxControl.markAsTouched();
     }

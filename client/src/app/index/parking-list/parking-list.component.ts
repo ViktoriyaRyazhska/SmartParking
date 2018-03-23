@@ -1,5 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {MapsAPILoader} from '@agm/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/debounceTime';
 import {Parking} from '../../model/view/parking';
@@ -12,11 +11,9 @@ import {Router} from '@angular/router';
 })
 export class ParkingListComponent implements OnInit, OnDestroy {
 
-    public parkings: Parking[];
+    public parkings: Parking[] = [];
 
-    constructor(private mapsAPILoader: MapsAPILoader,
-                private changeDetector: ChangeDetectorRef,
-                private router: Router,) {
+    constructor(private router: Router) {
     }
 
     ngOnInit(): void {
