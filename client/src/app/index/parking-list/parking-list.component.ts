@@ -19,6 +19,10 @@ export class ParkingListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
     }
 
+    showOnMap(latitude: number, longitude: number): void {
+        window.open(`https://www.google.com/maps/search/?api=1&query=
+                    ${latitude},${longitude}`);
+    }
 
     ngOnDestroy(): void {
     }
