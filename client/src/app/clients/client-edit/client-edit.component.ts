@@ -13,10 +13,10 @@ import {ProviderService} from "../../superuser-configuration/providers/provider.
 })
 export class ClientEditComponent implements OnInit {
 
-    client: Client;
-    providers: Provider[];
-    provider: Provider;
     id: number;
+    client: Client;
+    provider: Provider;
+    providers: Provider[];
     roles: Role[];
     selectedRole: string;
     selectedProvidersId: number;
@@ -73,5 +73,3 @@ export class ClientEditComponent implements OnInit {
     }
 
 }
-
-

@@ -3,11 +3,10 @@ import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {ActivatedRoute} from "@angular/router";
 import {PagerService} from "../../_services/pager.service";
-import 'rxjs/add/operator/map'
+// import 'rxjs/add/operator/map'
 import {Observable} from "rxjs/Observable";
 
 @Component({
-    moduleId: module.id,
     selector: 'app-client-list',
     templateUrl: './client-list.component.html',
     styleUrls: ['./client-list.component.css']
@@ -32,7 +31,7 @@ export class ClientListComponent implements OnInit {
         if (input != null) {
             this.findClientsFromBackEnd(input);
         } else
-        this.findLimitNumberOfClients();
+            this.findLimitNumberOfClients();
     }
 
     setPage(page: number) {
@@ -67,12 +66,19 @@ export class ClientListComponent implements OnInit {
     }
 
     findClientsFromBackEnd(searchInput: string): void {
-        this.clientService.getClientsByAnyMatch(searchInput)
-            .subscribe(clients => {
-                this.clients = clients;
-                this.setPage(1);
-            });
+        if (this.inputInSearchFieldIsNull(searchInput)) {
+            this.findAllClients();
+        } else {
+            this.clientService.getClientsByAnyMatch(searchInput)
+                .subscribe(clients => {
+                    this.clients = clients;
+                    this.setPage(1);
+                });
+        }
+    }
 
+    inputInSearchFieldIsNull(searchInput: string): boolean {
+        return searchInput == "";
     }
 
     findDrivers(): void {

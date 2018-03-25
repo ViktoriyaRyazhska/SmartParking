@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @RestController
 public class ClientController {
 
@@ -62,12 +63,12 @@ public class ClientController {
 
     @PostMapping("/clients/update/{id}")
     ResponseEntity updateClient(@PathVariable Long id, @RequestBody ClientRequest clientRequest) {
-        if (clientRequest.getFirstName() != "" && clientRequest.getLastName() != "" &&
-                clientRequest.getEmail() != "" && clientRequest.getRole() != "") {
+        if (!clientRequest.getFirstName().equals("") && !clientRequest.getLastName().equals("") &&
+                !clientRequest.getEmail().equals("")) {
             clientService.updateFromRequest(id, clientRequest);
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+            return new ResponseEntity<>("Empty data input.", HttpStatus.NO_CONTENT);
         }
     }
 
