@@ -21,4 +21,6 @@ public interface ClientService extends Service<Client, Long, ClientRepository> {
 
     Provider findProviderById(Long id);
 
+    List<Client> findClientsByRole(String input);
+
 }

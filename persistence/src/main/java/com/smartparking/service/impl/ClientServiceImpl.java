@@ -61,4 +61,10 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
     public Provider findProviderById(Long id) {
         return getRepository().findProviderById(id);
     }
+
+    @Override
+    public List<Client> findClientsByRole(String input) {
+        return getRepository().findClientsByRole(input);
+    }
+
 }

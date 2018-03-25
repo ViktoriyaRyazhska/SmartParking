@@ -27,11 +27,7 @@ export class ClientListComponent implements OnInit {
     }
 
     ngOnInit() {
-        const input = (this.route.snapshot.paramMap.get('input'));
-        if (input != null) {
-            this.findClientsFromBackEnd(input);
-        } else
-            this.findAllClients();
+        this.findAllClients();
     }
 
     setPage(page: number) {
@@ -85,7 +81,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findDrivers(): void {
-        this.clientService.getClientsByAnyMatch("0")
+        this.clientService.getClientsByRole("0")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
@@ -93,7 +89,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findProviderManagers(): void {
-        this.clientService.getClientsByAnyMatch("1")
+        this.clientService.getClientsByRole("1")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
@@ -101,7 +97,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findSuperusers(): void {
-        this.clientService.getClientsByAnyMatch("2")
+        this.clientService.getClientsByRole("2")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);

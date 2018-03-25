@@ -27,6 +27,10 @@ export class ClientService {
         return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
     }
 
+    getClientsByRole(input: string): Observable<Client[]> {
+        return this.http.get<Client[]>(this.clientsUrl + '/findbyrole/' + input);
+    }
+
     getClientDetail(id: number): Observable<Client> {
         return this.http.get<Client>(this.clientsUrl + '/' + id);
     }
@@ -46,5 +50,6 @@ export class ClientService {
     getRoles(): Role[] {
         return ROLES;
     }
+
 
 }

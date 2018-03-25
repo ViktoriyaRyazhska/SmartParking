@@ -24,4 +24,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("SELECT c.provider from Client c where c.provider.id=?1")
     Provider findProviderById(Long id);
 
+    @Query("SELECT c from Client c where c.firstName like %?1% or c.role=?1")
+    List<Client> findClientsByRole(String input);
+
 }

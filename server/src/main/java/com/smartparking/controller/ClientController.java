@@ -87,6 +87,16 @@ public class ClientController {
         } else return getAllClients();
     }
 
+    @GetMapping("clients/findbyrole/{input}")
+    List<ClientItemResponse> getClientsByRole(@PathVariable String input) {
+        List<Client> clients = clientService.findClientsByRole(input);
+        List<ClientItemResponse> clientItemResponses = new ArrayList<>();
+        for (Client client : clients) {
+            clientItemResponses.add(ClientItemResponse.of(client));
+        }
+        return clientItemResponses;
+    }
+
     @GetMapping("clients/getproviders")
     List<ProviderItemResponse> getAllProviders() {
         List<Provider> providers = providerService.findAll();
