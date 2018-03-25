@@ -17,12 +17,13 @@
             <input type="email" name="email" [(ngModel)]="client.email" class="form-control" readonly>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="client.provider!='no provider'">
             <h6>Current provider: {{client.provider}}</h6>
         </div>
 
         <div class="row">
-            <h6>Current role: <span [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'Chocolate' : 'BlueViolet '}">{{client.role}}</span></h6>
+            <h6>Current role: <span [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'Chocolate' : 'BlueViolet '}">{{client.role}}</span>
+            </h6>
         </div>
 
         <mat-form-field>

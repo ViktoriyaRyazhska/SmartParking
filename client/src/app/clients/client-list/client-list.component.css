@@ -4,4 +4,7 @@
     color: #54456f;
 }
 
-
+.pagination {
+    margin-left: auto;
+    margin-right: auto;
+}

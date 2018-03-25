@@ -3,8 +3,6 @@ import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {ActivatedRoute} from "@angular/router";
 import {PagerService} from "../../_services/pager.service";
-// import 'rxjs/add/operator/map'
-import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'app-client-list',
@@ -21,6 +19,8 @@ export class ClientListComponent implements OnInit {
     // paged items
     pagedClientItems: Client[];
 
+    allClients: number;
+
     constructor(private clientService: ClientService,
                 private route: ActivatedRoute,
                 private pagerService: PagerService) {
@@ -31,7 +31,7 @@ export class ClientListComponent implements OnInit {
         if (input != null) {
             this.findClientsFromBackEnd(input);
         } else
-            this.findLimitNumberOfClients();
+            this.findAllClients();
     }
 
     setPage(page: number) {
@@ -46,7 +46,10 @@ export class ClientListComponent implements OnInit {
             // get current page of items
             this.pagedClientItems = this.clients.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
-        else this.pagedClientItems = this.clients;
+        else {
+            this.pagedClientItems = this.clients;
+        }
+        this.allClients = this.clients.length;
     }
 
     findAllClients(): void {
