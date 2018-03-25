@@ -1,14 +1,8 @@
 package com.smartparking.model.response;
 
-import com.smartparking.dto.SpotDto;
 import com.smartparking.entity.Parking;
-import com.smartparking.repository.SpotRepository;
-import com.smartparking.service.SpotService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ParkingDetailResponse {
 
@@ -22,9 +16,9 @@ public class ParkingDetailResponse {
 
     private String providerAddress;
 
-    private Long numberSpots;
+    private Long spotsCount;
 
-    private Long numberAvailableSpots;
+    private Long availableSpotsCount;
 
     public Long getId() {
         return id;
@@ -42,16 +36,16 @@ public class ParkingDetailResponse {
         this.price = price;
     }
 
-    public Long getNumberSpots() {
-        return numberSpots;
+    public Long getSpotsCount() {
+        return spotsCount;
     }
 
-    public Long getNumberAvailableSpots() {
-        return numberAvailableSpots;
+    public void setSpotsCount(Long spotsCount) {
+        this.spotsCount = spotsCount;
     }
 
-    public void setNumberAvailableSpots(Long numberAvailableSpots) {
-        this.numberAvailableSpots = numberAvailableSpots;
+    public Long getAvailableSpotsCount() {
+        return availableSpotsCount;
     }
 
     public String getProviderName() {
@@ -70,8 +64,8 @@ public class ParkingDetailResponse {
         this.providerAddress = providerAddress;
     }
 
-    public void setNumberSpots(Long numberSpots) {
-        this.numberSpots = numberSpots;
+    public void setAvailableSpotsCount(Long availableSpotsCount) {
+        this.availableSpotsCount = availableSpotsCount;
     }
 
     public String getAddress() {

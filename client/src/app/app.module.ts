@@ -1,9 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {
-    MAT_LABEL_GLOBAL_OPTIONS,
     MatAutocompleteModule,
     MatButtonModule,
     MatDividerModule,
@@ -41,9 +40,9 @@ import {IndexComponent} from './index/index.component';
 import {ParkingListFilterComponent} from './index/parking-list-filter/parking-list-filter.component';
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
+import {JwtModule} from '@auth0/angular-jwt';
 
 import {InterceptorService} from "./interceptor.service";
-import {JwtModule} from "@auth0/angular-jwt";
 import {AgmCoreModule} from '@agm/core';
 import {LoginService} from './auth/login/login.service';
 import {RegistrationService} from './auth/registration/registration.service';
@@ -54,9 +53,10 @@ import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/rad
 import {MatSliderModule} from '@angular/material/slider';
 import {PriceRangeFieldComponent} from './index/parking-list-filter/price-range-field/price-range-field.component';
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PagerService} from './_services/pager.service';
 import {MatRadioModule} from '@angular/material/radio';
+import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -88,7 +88,8 @@ export function tokenGetter() {
         LocationFieldComponent,
         RadiusFieldComponent,
         PriceRangeFieldComponent,
-        UpdateProviderComponent
+        UpdateProviderComponent,
+        DeleteConfirmationDialogComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -121,6 +122,7 @@ export function tokenGetter() {
         MatProgressSpinnerModule,
         MatRadioModule
     ],
+    entryComponents: [DeleteConfirmationDialogComponent],
     providers: [
         /*{
             provide: HTTP_INTERCEPTORS,

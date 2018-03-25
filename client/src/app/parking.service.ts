@@ -1,26 +1,26 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 
 import {Parking} from './model/view/parking';
-import {ParkingItem} from './model/view/parking-item';
 import {Spot} from './model/view/spot';
 import {environment} from '../environments/environment';
 
 @Injectable()
 export class ParkingService {
 
-    private parkingUrl = environment.apiUrl + '/parkings/';
+    private parkingNearbyUrl = environment.apiUrl + '/parkings-nearby/';
     private parkingDetailUrl = environment.apiUrl + '/parkingdetail/';
 
     constructor(private http: HttpClient) {
     }
 
-    getParkings(latitude: number, longitude: number): Observable<HttpResponse<ParkingItem[] | any>> {
-        return this.http.get<HttpResponse<ParkingItem[] | any>>(this.parkingUrl, {
+    getParkingsNearby(latitude: number, longitude: number, radius: number): Observable<HttpResponse<Parking[]>> {
+        return this.http.get<Parking[]>(this.parkingNearbyUrl, {
             params: {
                 latitude: latitude.toString(),
                 longitude: longitude.toString(),
+                radius: radius.toString(),
             },
             observe: 'response'
         });

@@ -12,9 +12,9 @@ export class RadiusFieldComponent implements OnInit {
     @ViewChild('slider')
     private slider: MatSlider;
 
-    private readonly valueSubject = new Subject<number | null>();
+    private readonly valueChangesSubject = new Subject<number>();
 
-    public readonly value = this.valueSubject.asObservable();
+    public readonly valueChanges = this.valueChangesSubject.asObservable();
 
     constructor(private changeDetector: ChangeDetectorRef) {
     }
@@ -24,13 +24,21 @@ export class RadiusFieldComponent implements OnInit {
         this.refreshComponentView();
     }
 
-    public onChange(): void {
-        this.valueSubject.next(this.slider.value);
+    public get value(): number {
+        return this.slider.value;
     }
 
     private refreshComponentView(): void {
         this.changeDetector.detectChanges();
         setTimeout(() => this.changeDetector.detectChanges(), 1);
+    }
+
+    public get max(): number {
+        return this.slider.max;
+    }
+
+    public onChange(): void {
+        this.valueChangesSubject.next(this.slider.value);
     }
 
 }

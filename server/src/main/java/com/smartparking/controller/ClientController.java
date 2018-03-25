@@ -5,10 +5,7 @@ import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.request.ClientRequest;
-import com.smartparking.model.response.ClientDetailResponse;
-import com.smartparking.model.response.ClientItemResponse;
-import com.smartparking.model.response.ProviderDetailResponse;
-import com.smartparking.model.response.ProviderItemResponse;
+import com.smartparking.model.response.*;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +99,7 @@ public class ClientController {
 
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String saveUser(@RequestBody RegistrationClientRequest regClient) {
+    public InfoResponse saveUser(@RequestBody RegistrationClientRequest regClient) {
         Client client = new Client();
         client.setEmail(regClient.getEmail());
         client.setPassword(bcryptEncoder.encode(regClient.getPassword()));
@@ -110,7 +107,7 @@ public class ClientController {
         client.setLastName(regClient.getLastname());
         client.setRole(String.valueOf(Role.DRIVER));
         clientService.save(client);
-        return "registration successful";
+        return new InfoResponse("Registration succsessful");
     }
 
 

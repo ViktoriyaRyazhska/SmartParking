@@ -34,8 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${cross_origin_url}")
     private String url;
 
-    private final int MAX_AGE = 3600;
-
     @Autowired
     private UserDetailsService userService;
 
@@ -62,12 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/token/*", "/signup").permitAll()
-                .anyRequest().permitAll();
+                .antMatchers("index", "/token/*", "/signup").permitAll()
+                .anyRequest().authenticated();
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    protected void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 

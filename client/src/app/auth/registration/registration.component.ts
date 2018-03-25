@@ -69,9 +69,10 @@ export class RegistrationComponent implements OnInit {
   register = () => {
       this.registrationData = this.registrationForm.value;
       this.registrationService.register(this.registrationData).subscribe(data =>{
-          console.log(data);
           this.router.navigate(['/']);
-
-      }, error2 => {console.log("error")})
+          alert('You are successful registered')
+      }, error2 => {
+          this.router.navigate(['/']);
+      alert("Can`t register you now please try later")})
   }
 }
