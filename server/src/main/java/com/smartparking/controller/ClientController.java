@@ -1,8 +1,6 @@
 package com.smartparking.controller;
 
-import com.smartparking.model.request.RegistrationClientRequest;
 import com.smartparking.entity.Client;
-import com.smartparking.entity.Role;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.model.response.*;
@@ -106,19 +104,4 @@ public class ClientController {
         }
         return providerItemResponses;
     }
-
-
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public InfoResponse saveUser(@RequestBody RegistrationClientRequest regClient) {
-        Client client = new Client();
-        client.setEmail(regClient.getEmail());
-        client.setPassword(bcryptEncoder.encode(regClient.getPassword()));
-        client.setFirstName(regClient.getFirstname());
-        client.setLastName(regClient.getLastname());
-        client.setRole(String.valueOf(Role.DRIVER));
-        clientService.save(client);
-        return new InfoResponse("Registration succsessful");
-    }
-
-
 }

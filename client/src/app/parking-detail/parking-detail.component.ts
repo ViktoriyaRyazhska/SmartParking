@@ -22,6 +22,7 @@ export class ParkingDetailComponent implements OnInit {
    max: number;
    value:number;
    thirtySecInterval: number = 30000;
+   favoriteNameInputHide: boolean = true;
    
 
   constructor(

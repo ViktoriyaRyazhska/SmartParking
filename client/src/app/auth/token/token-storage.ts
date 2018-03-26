@@ -5,7 +5,7 @@ const TOKEN_KEY = 'access_token';
 const helper = new JwtHelperService();
 
 @Injectable()
-export class TokenStorage {
+export class TokenStorage{
 
     constructor() {
     }
@@ -34,6 +34,10 @@ export class TokenStorage {
 
     public static decodeToken(): any {
         return helper.decodeToken(TokenStorage.getToken());
+    }
+
+    public static refresh(): string {
+        return null;
     }
 
     public static hasToken(): boolean {

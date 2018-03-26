@@ -1,15 +1,17 @@
 package com.smartparking.model.request;
 
-public class RegistrationClientRequest {
+import com.smartparking.exceptions.security.*;
+
+public class RegistrationRequest {
     private String firstname;
     private String lastname;
     private String email;
     private String password;
     private String confirmPassword;
 
-    public RegistrationClientRequest(){}
+    public RegistrationRequest(){}
 
-    public RegistrationClientRequest(String firstname, String lastname, String email, String password, String confirmPassword) {
+    public RegistrationRequest(String firstname, String lastname, String email, String password, String confirmPassword) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -17,40 +19,42 @@ public class RegistrationClientRequest {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstname(){
+        return this.firstname;
     }
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastname(){
+        return this.lastname;
     }
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail(){
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassword() throws PasswordValidationEx, NonMatchingPasswordsEx {
+        if(this.password == null || this.confirmPassword == null){
+            throw new PasswordValidationEx();
+        }
+        if(!this.password.equals(this.confirmPassword)) {
+            throw new NonMatchingPasswordsEx();
+        }
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
     }
 
     public void setConfirmPassword(String confirmPassword) {

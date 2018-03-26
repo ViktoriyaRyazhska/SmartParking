@@ -1,9 +1,11 @@
 package com.smartparking.security.tokens;
 
-import com.smartparking.entity.Client;
+import com.smartparking.security.user.SpringSecurityUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -13,15 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtTokenUtilImpl implements TokenUtil{
-    private static final int MILLISECONDS_TO_SECONDS = 1000;
+public class JwtTokenUtilImpl implements TokenUtil {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtilImpl.class);
     private static final String CLAIM_AUTHORITIES_KEY = "authorities";
     private static final String CLAIM_USERNAME_KEY = "username";
+
     @Value("${app.jwt.secret}")
     private String SECRET_KEY;
-
-    @Value ("${current_url}")
-    private String current_url;
 
     @Value("${app.jwt.expiration_time}")
     private Long expiration;
@@ -37,6 +37,7 @@ public class JwtTokenUtilImpl implements TokenUtil{
         try {
             created = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getExpiration();
         } catch (NullPointerException e) {
+            LOGGER.warn("Can`t get expiration time");
             created = null;
         }
         return created;
@@ -57,11 +58,9 @@ public class JwtTokenUtilImpl implements TokenUtil{
     }
 
     @Override
-    public String generateToken(Client client) {
-        return Jwts.builder().setClaims(generateClaims(client))
-                .setSubject(String.valueOf(client.getId()))
-                .setIssuer(current_url)
-                .setIssuedAt(new Date())
+    public String generateToken(SpringSecurityUser user) {
+        return Jwts.builder().setClaims(generateClaims(user))
+                .setSubject(String.valueOf(user.getId()))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .setExpiration(generateExpirationDate())
                 .compact();
@@ -74,10 +73,10 @@ public class JwtTokenUtilImpl implements TokenUtil{
     }
 
     @Override
-    public Map<String, Object> generateClaims(Client client) {
+    public Map<String, Object> generateClaims(SpringSecurityUser user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_AUTHORITIES_KEY, client.getAuthorities());
-        claims.put(CLAIM_USERNAME_KEY, client.getEmail());
+        claims.put(CLAIM_AUTHORITIES_KEY, user.getAuthorities());
+        claims.put(CLAIM_USERNAME_KEY, user.getUsername());
         return claims;
     }
 
