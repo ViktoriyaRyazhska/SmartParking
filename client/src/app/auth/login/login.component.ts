@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginData} from "./login-data";
 import {Router} from "@angular/router";
-import {ResponseToken} from "./response-token";
+import {Token} from "../token/token";
 import {LoginService} from "./login.service";
-import {TokenStorage} from "./token-storage";
+import {TokenStorage} from "../token/token-storage";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
     hide: boolean = true;
     loginForm: FormGroup;
     loginData: LoginData;
-    error: boolean;
 
     emailControl: FormControl = new FormControl('', [
         Validators.required,
@@ -43,13 +42,11 @@ export class LoginComponent implements OnInit {
     login = () => {
         this.loginData = this.loginForm.value;
         this.loginService.signIn(this.loginData)
-            .subscribe((response:ResponseToken)=>{
-                    this.error=false;
-                    TokenStorage.saveToken(response.token);
+            .subscribe((token: Token)=>{
+                    TokenStorage.saveToken(token.token);
                     this.router.navigate(['/']);
                     alert('You are successfully authorized')
                 }, error2 => {
-                    this.error = true;
                 this.router.navigate(['/']);
                     alert('Can`t authorizate you now');
                 }
