@@ -1,26 +1,26 @@
 package com.smartparking.model.request;
 
-public class LoginClientRequest {
+public class LoginRequest {
     private String email;
     private String password;
 
-    public LoginClientRequest(){}
+    public LoginRequest(){}
 
-    public LoginClientRequest(String email, String password) {
+    public LoginRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail(){
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassword(){
+        return this.password;
     }
 
     public void setPassword(String password) {
