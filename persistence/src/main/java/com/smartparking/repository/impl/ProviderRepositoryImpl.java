@@ -18,7 +18,7 @@ import java.util.List;
 public class ProviderRepositoryImpl implements ProviderFilterRepository {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public List<Provider> findAllByFilter(ProviderFilter providerFilter) {
