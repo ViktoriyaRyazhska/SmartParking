@@ -2,7 +2,6 @@ package com.smartparking.service;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Provider;
-import com.smartparking.entity.Role;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.repository.ClientRepository;
 import org.springframework.data.domain.Pageable;
@@ -20,5 +19,7 @@ public interface ClientService extends Service<Client, Long, ClientRepository> {
     void updateFromRequest(Long id, ClientRequest clientRequest);
 
     Provider findProviderById(Long id);
+
+    List<Client> findClientsByRole(String input);
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "client")
-public class Client extends AbstractIdentifiableEntity implements UserDetails {
+public class Client extends AbstractIdentifiableEntity{
 
     @NotNull
     @Column(name = "first_name", nullable = false)
@@ -40,39 +40,6 @@ public class Client extends AbstractIdentifiableEntity implements UserDetails {
     @ManyToOne(fetch = FetchType.LAZY)
     private Provider provider;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role.name()));
-        return authorities;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
     public String getPassword() {
         return password;
     }

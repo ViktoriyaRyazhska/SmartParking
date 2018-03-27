@@ -3,11 +3,8 @@ import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {ActivatedRoute} from "@angular/router";
 import {PagerService} from "../../_services/pager.service";
-import 'rxjs/add/operator/map'
-import {Observable} from "rxjs/Observable";
 
 @Component({
-    moduleId: module.id,
     selector: 'app-client-list',
     templateUrl: './client-list.component.html',
     styleUrls: ['./client-list.component.css']
@@ -22,17 +19,15 @@ export class ClientListComponent implements OnInit {
     // paged items
     pagedClientItems: Client[];
 
+    allClients: number;
+
     constructor(private clientService: ClientService,
                 private route: ActivatedRoute,
                 private pagerService: PagerService) {
     }
 
     ngOnInit() {
-        const input = (this.route.snapshot.paramMap.get('input'));
-        if (input != null) {
-            this.findClientsFromBackEnd(input);
-        } else
-        this.findLimitNumberOfClients();
+        this.findAllClients();
     }
 
     setPage(page: number) {
@@ -47,7 +42,10 @@ export class ClientListComponent implements OnInit {
             // get current page of items
             this.pagedClientItems = this.clients.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
-        else this.pagedClientItems = this.clients;
+        else {
+            this.pagedClientItems = this.clients;
+        }
+        this.allClients = this.clients.length;
     }
 
     findAllClients(): void {
@@ -67,16 +65,23 @@ export class ClientListComponent implements OnInit {
     }
 
     findClientsFromBackEnd(searchInput: string): void {
-        this.clientService.getClientsByAnyMatch(searchInput)
-            .subscribe(clients => {
-                this.clients = clients;
-                this.setPage(1);
-            });
+        if (this.inputInSearchFieldIsNull(searchInput)) {
+            this.findAllClients();
+        } else {
+            this.clientService.getClientsByAnyMatch(searchInput)
+                .subscribe(clients => {
+                    this.clients = clients;
+                    this.setPage(1);
+                });
+        }
+    }
 
+    inputInSearchFieldIsNull(searchInput: string): boolean {
+        return searchInput == "";
     }
 
     findDrivers(): void {
-        this.clientService.getClientsByAnyMatch("0")
+        this.clientService.getClientsByRole("0")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
@@ -84,7 +89,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findProviderManagers(): void {
-        this.clientService.getClientsByAnyMatch("1")
+        this.clientService.getClientsByRole("1")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);
@@ -92,7 +97,7 @@ export class ClientListComponent implements OnInit {
     }
 
     findSuperusers(): void {
-        this.clientService.getClientsByAnyMatch("2")
+        this.clientService.getClientsByRole("2")
             .subscribe(clients => {
                 this.clients = clients;
                 this.setPage(1);

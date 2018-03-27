@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Client} from '../model/view/client';
-import {ClientsProviderRequest} from './clients-provider-request';
 import {Role} from './role';
 import {ROLES} from './mock-roles';
 import {Provider} from '../model/view/provider';
@@ -28,6 +27,10 @@ export class ClientService {
         return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
     }
 
+    getClientsByRole(input: string): Observable<Client[]> {
+        return this.http.get<Client[]>(this.clientsUrl + '/findbyrole/' + input);
+    }
+
     getClientDetail(id: number): Observable<Client> {
         return this.http.get<Client>(this.clientsUrl + '/' + id);
     }
@@ -47,5 +50,6 @@ export class ClientService {
     getRoles(): Role[] {
         return ROLES;
     }
+
 
 }

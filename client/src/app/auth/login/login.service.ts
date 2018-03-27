@@ -7,7 +7,7 @@ import {environment} from '../../../environments/environment';
 @Injectable()
 export class LoginService {
 
-    private loginUrl = environment.apiUrl + '/token/generate-token';
+    private loginUrl = environment.apiUrl + '/generate-token';
 
     constructor(private http: HttpClient) {
     }

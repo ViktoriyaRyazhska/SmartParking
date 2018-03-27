@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {TokenStorage} from '../auth/login/token-storage';
+import {TokenStorage} from '../auth/token/token-storage';
 
 @Component({
   selector: 'app-navbar-header',

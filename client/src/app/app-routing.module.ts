@@ -17,6 +17,7 @@ import {AddProviderComponent} from './superuser-configuration/providers/add-prov
 import {ClientEditComponent} from './clients/client-edit/client-edit.component';
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
+import {ClientListComponent} from "./clients/client-list/client-list.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -43,8 +44,7 @@ const routes: Routes = [
     {path: 'configuration/provider/add', component: AddProviderComponent},
     {path: 'configuration/provider/update/:id', component: UpdateProviderComponent},
     {path: 'registration', component: RegistrationComponent},
-    {path: 'configuration/providers/:id', component: ProviderDetailComponent},
-    {path: 'configuration/clients/findclients/:input', component: ClientsComponent}
+    {path: 'configuration/providers/:id', component: ProviderDetailComponent}
 ];
 
 @NgModule({

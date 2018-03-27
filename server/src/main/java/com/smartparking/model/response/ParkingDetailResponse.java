@@ -8,6 +8,10 @@ public class ParkingDetailResponse {
 
     private Long id;
 
+    private Double latitude;
+
+    private Double longitude;
+
     private String address;
 
     private BigDecimal price;
@@ -76,6 +80,22 @@ public class ParkingDetailResponse {
         this.address = address;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
     /*
          *This method don`t set numberSpots and numberAvailableSpots values please set its after using this method
          */
@@ -90,6 +110,10 @@ public class ParkingDetailResponse {
                         "/" + parking.getBuilding());
 
         parkingDetailResponse.setPrice(parking.getPrice());
+
+        parkingDetailResponse.setLongitude(parking.getLongitude());
+
+        parkingDetailResponse.setLatitude(parking.getLatitude());
 
         parkingDetailResponse.setProviderName(parking.getProvider().getName());
 

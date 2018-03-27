@@ -1,16 +1,24 @@
 package com.smartparking.realtimeserver.element;
 
-import java.time.Instant;
+import com.smartparking.entity.Event;
+import com.smartparking.entity.EventMarker;
+import com.smartparking.realtimeserver.controller.MainController;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class InRequest {
     private Long spotId;
-    private String token;
-    private Instant currentTime;
+    @Autowired
+    MainController mainController;
+    private String parkingToken;
+    private int currentEvent;
 
-    public InRequest(Long spotId, String token, Instant currentTime) {
+    public InRequest() {
+    }
+
+    public InRequest(Long spotId, String parkingToken, int currentEvent) {
         this.spotId = spotId;
-        this.token = token;
-        this.currentTime = currentTime;
+        this.parkingToken = parkingToken;
+        this.currentEvent = currentEvent;
     }
 
     public Long getSpotId() {
@@ -21,19 +29,45 @@ public class InRequest {
         this.spotId = spotId;
     }
 
-    public String getToken() {
-        return token;
+    public String getParkingToken() {
+        return parkingToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setParkingToken(String parkingToken) {
+        this.parkingToken = parkingToken;
     }
 
-    public Instant getCurrentTime() {
-        return currentTime;
+    public int getCurrentEvent() {
+        return currentEvent;
     }
 
-    public void setCurrentTime(Instant currentTime) {
-        this.currentTime = currentTime;
+    public void setCurrentEvent(int currentEvent) {
+        this.currentEvent = currentEvent;
+    }
+
+    @Override
+    public String toString() {
+        return "InRequest{" +
+                "spotId=" + spotId +
+                ", parkingToken='" + parkingToken + '\'' +
+                ", currentEvent=" + currentEvent +
+                '}';
+    }
+
+    public Event toEvent() {
+        Event event = new Event();
+
+        if (currentEvent == 0) {
+            event.setEventMarker(EventMarker.ARRIVED);
+        } else if (currentEvent == 1) {
+            event.setEventMarker(EventMarker.DEPARTUDED);
+        } else if (currentEvent == 2) {
+            event.setEventMarker(EventMarker.BLOCK);
+        } else {
+            return null;
+        }
+
+        event.setCurrentEventTime();
+        return event;
     }
 }
