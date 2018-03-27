@@ -6,7 +6,9 @@ import com.smartparking.model.request.ProviderRequest;
 import com.smartparking.model.request.ProviderStatisticRequest;
 import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.model.response.ProviderItemResponse;
+import com.smartparking.model.response.ProviderResponse;
 import com.smartparking.service.ProviderService;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO 1. Rewrite on Java 8.
+// TODO 2. Remove any logoc from controller.
+// TODO 3. Changed logic of blocking providers(relocate in edit form).
+
 @RestController
 public class ProviderController {
 
@@ -26,47 +32,42 @@ public class ProviderController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProviderController.class);
 
+
+    //TODO Change RequestParam to RequestBody(?)
     @GetMapping("providers")
     List<ProviderItemResponse> findAll(@RequestParam String active,
                                        @RequestParam String companyName) {
         ProviderFilter providerFilter = new ProviderFilter();
         providerFilter.setActive(active);
         providerFilter.setCompanyName(companyName);
-        LOGGER.info("Filtering by " + providerFilter.getActive() + " state and " + providerFilter.getCompanyName() +
+        LOGGER.debug("Filtering by " + providerFilter.getActive() + " state and " + providerFilter.getCompanyName() +
                 " company name.");
         List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
         for (Provider provider : providers) {
             providerResponses.add(ProviderItemResponse.of(provider));
         }
-        LOGGER.info("Filtered providers response - " + providerResponses);
+        LOGGER.debug("Filtered providers response - " + providerResponses);
         return providerResponses;
     }
 
     @GetMapping("providers/{id}")
-    ResponseEntity<ProviderDetailResponse> find(@PathVariable Long id) {
-        LOGGER.info("Searching the provider with id " + id);
-        Provider provider = providerService.findById(id);
-        if (provider != null) {
-            ProviderDetailResponse response = ProviderDetailResponse.of(provider);
-            LOGGER.info("Provider was found.");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            LOGGER.info("Provider wasn't found.");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
+    ResponseEntity<?> find(@PathVariable Long id) {
+        LOGGER.debug("Searching the provider with id " + id);
+        return providerService.findByIdResponse(id)
+                .map(provider -> new ResponseEntity<Object>(provider, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<Object>("Such provider wasn't found!", HttpStatus.BAD_REQUEST));
     }
 
     @GetMapping("providers/changeState/{id}")
-    ResponseEntity<ProviderDetailResponse> changeState(@PathVariable Long id) {
+    ResponseEntity<?> changeState(@PathVariable Long id) {
         LOGGER.info("Finding provider by ID - " + id + " to change state.");
         if (providerService.findById(id) != null) {
-            LOGGER.info("Provider was found and state was changed!");
-            return new ResponseEntity<ProviderDetailResponse>(ProviderDetailResponse.of(providerService.changeState(id)), HttpStatus.OK);
+            LOGGER.debug("Provider was found and state was changed!");
+            return new ResponseEntity<>(ProviderDetailResponse.of(providerService.changeState(id)), HttpStatus.OK);
         } else {
-            LOGGER.info("Provider wasn't found!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            LOGGER.debug("Provider wasn't found!");
+            return new ResponseEntity<>("Such provider doesn't exist", HttpStatus.BAD_REQUEST);
         }
     }
 
