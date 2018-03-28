@@ -1,9 +1,9 @@
 package com.smartparking.controller;
 
+import com.smartparking.element.InRequest;
 import com.smartparking.entity.Event;
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
-import com.smartparking.realtimeserver.element.InRequest;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.slf4j.Logger;

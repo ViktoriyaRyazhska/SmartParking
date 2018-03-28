@@ -1,8 +1,8 @@
 package com.smartparking.element;
 
+import com.smartparking.controller.MainController;
 import com.smartparking.entity.Event;
 import com.smartparking.entity.EventMarker;
-import com.smartparking.realtimeserver.controller.MainController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class InRequest {
