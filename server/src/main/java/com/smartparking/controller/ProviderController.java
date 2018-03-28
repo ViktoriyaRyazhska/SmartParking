@@ -3,12 +3,8 @@ package com.smartparking.controller;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
-import com.smartparking.model.request.ProviderStatisticRequest;
-import com.smartparking.model.response.ProviderDetailResponse;
 import com.smartparking.model.response.ProviderItemResponse;
-import com.smartparking.model.response.ProviderResponse;
 import com.smartparking.service.ProviderService;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-//TODO 1. Rewrite on Java 8.
-// TODO 2. Remove any logoc from controller.
-// TODO 3. Changed logic of blocking providers(relocate in edit form).
 
 @RestController
 public class ProviderController {
@@ -32,21 +24,13 @@ public class ProviderController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProviderController.class);
 
-
-    //TODO Change RequestParam to RequestBody(?)
-    @GetMapping("providers")
-    List<ProviderItemResponse> findAll(@RequestParam String active,
-                                       @RequestParam String companyName) {
-        ProviderFilter providerFilter = new ProviderFilter();
-        providerFilter.setActive(active);
-        providerFilter.setCompanyName(companyName);
+    @PostMapping("providers")
+    List<ProviderItemResponse> findAll(@RequestBody ProviderFilter providerFilter) {
         LOGGER.debug("Filtering by " + providerFilter.getActive() + " state and " + providerFilter.getCompanyName() +
                 " company name.");
         List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
-        for (Provider provider : providers) {
-            providerResponses.add(ProviderItemResponse.of(provider));
-        }
+        providers.forEach(provider -> providerResponses.add(ProviderItemResponse.of(provider)));
         LOGGER.debug("Filtered providers response - " + providerResponses);
         return providerResponses;
     }
@@ -61,8 +45,14 @@ public class ProviderController {
 
     @PostMapping("/providers/save")
     ResponseEntity<?> save(@RequestBody ProviderRequest providerRequest) {
-        System.out.println(providerRequest.getId());
+        LOGGER.debug("Received providerRequest with params: " + providerRequest.getId() + " " +
+                providerRequest.getName() + " " +
+                providerRequest.getCity() + " " +
+                providerRequest.getStreet() + " " +
+                providerRequest.getBuilding() + " " +
+                providerRequest.getActive());
         providerService.save(providerRequest.toProvider());
+        LOGGER.debug("Provider was saved.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
