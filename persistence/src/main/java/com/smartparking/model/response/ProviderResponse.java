@@ -70,4 +70,17 @@ public class ProviderResponse {
     public void setParkingIds(List<Long> parkingIds) {
         this.parkingIds = parkingIds;
     }
+
+    public static ProviderResponse toProviderResponse(Provider provider) {
+        ProviderResponse response = new ProviderResponse();
+        response.setId(provider.getId());
+        response.setName(provider.getName());
+        response.setCity(provider.getCity());
+        response.setStreet(provider.getStreet());
+        response.setBuilding(provider.getBuilding());
+        response.setActive(provider.getActive());
+        response.setParkingIds(provider.getParkings()
+                .stream().map(Parking::getId).collect(Collectors.toList()));
+        return response;
+    }
 }
