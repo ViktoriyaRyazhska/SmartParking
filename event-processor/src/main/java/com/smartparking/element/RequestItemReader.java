@@ -1,7 +1,7 @@
-package com.smartparking.realtimeserver.element;
+package com.smartparking.element;
 
+import com.smartparking.controller.MainController;
 import com.smartparking.entity.Event;
-import com.smartparking.realtimeserver.controller.MainController;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 

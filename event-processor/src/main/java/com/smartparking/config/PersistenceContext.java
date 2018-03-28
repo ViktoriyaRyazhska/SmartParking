@@ -1,4 +1,4 @@
-//package com.smartparking.config;
+//package com.smartparking.realtimeserver.config;
 //
 //import com.zaxxer.hikari.HikariConfig;
 //import com.zaxxer.hikari.HikariDataSource;

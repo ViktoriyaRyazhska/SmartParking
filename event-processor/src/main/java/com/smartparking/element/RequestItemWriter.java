@@ -1,4 +1,4 @@
-package com.smartparking.realtimeserver.element;
+package com.smartparking.element;
 
 import com.smartparking.entity.Event;
 import com.smartparking.service.EventService;

@@ -1,11 +1,12 @@
-//package com.smartparking.config;
+//package com.smartparking.realtimeserver.config;
 //
 //import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 //
 //public class Intitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 //    @Override
 //    protected Class<?>[] getRootConfigClasses() {
-//        return new Class<?>[]{WebConfig.class, PersistenceContext.class, SecurityConfig.class};
+//        return new Class<?>[]{WebConfig.class, PersistenceContext.class, BatchConfiguration.class, JpaConfig.class};
+////        return new Class<?>[]{WebConfig.class, PersistenceContext.class};
 //    }
 //
 //    @Override

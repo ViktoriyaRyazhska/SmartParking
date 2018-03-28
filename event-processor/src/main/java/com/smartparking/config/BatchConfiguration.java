@@ -1,10 +1,10 @@
-package com.smartparking.realtimeserver.config;
+package com.smartparking.config;
 
 
+import com.smartparking.element.RequestItemProcessor;
+import com.smartparking.element.RequestItemReader;
+import com.smartparking.element.RequestItemWriter;
 import com.smartparking.entity.Event;
-import com.smartparking.realtimeserver.element.RequestItemProcessor;
-import com.smartparking.realtimeserver.element.RequestItemReader;
-import com.smartparking.realtimeserver.element.RequestItemWriter;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -25,7 +25,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.PlatformTransactionManager;
 
 
 @Configuration
@@ -38,8 +37,8 @@ public class BatchConfiguration {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
 
-    @Autowired
-    private PlatformTransactionManager transactionManager;
+//    @Autowired
+//    private PlatformTransactionManager transactionManager;
 
     @Autowired
     JobRepository jobRepository;
@@ -94,7 +93,7 @@ public class BatchConfiguration {
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
-                .transactionManager(transactionManager)
+//                .transactionManager(transactionManager)
                 .allowStartIfComplete(true)
                 .build();
     }
