@@ -48,5 +48,5 @@ export class AddProviderComponent implements OnInit {
         });
         ;
     }
-    
+
 }

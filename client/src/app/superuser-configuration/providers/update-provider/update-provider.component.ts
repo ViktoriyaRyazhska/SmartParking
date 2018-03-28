@@ -28,6 +28,7 @@ export class UpdateProviderComponent implements OnInit {
     buildingControl: FormControl = new FormControl('', [
         Validators.required, Validators.pattern('^\\d+[a-zA-Z]{0,1}$')
     ]);
+    activeControl: FormControl = new FormControl('', [Validators.required]);
 
     constructor(private providerService: ProviderService,
                 private formBuilder: FormBuilder,
@@ -40,21 +41,21 @@ export class UpdateProviderComponent implements OnInit {
             name: this.nameControl,
             city: this.cityControl,
             street: this.streetControl,
-            building: this.buildingControl
+            building: this.buildingControl,
+            active: this.activeControl
         });
     }
 
     getProvider() {
         const id = parseInt(this.route.snapshot.paramMap.get('id'));
-        console.log(id);
         this.providerService.getDetail(id).subscribe(provider => this.provider = provider);
     }
 
     updateProvider(): void {
         this.providerRequest = this.providerForm.value;
-        const id = this.route.snapshot.paramMap.get('id');
-        this.providerService.update(id, this.providerRequest).subscribe(data => {
-            alert("Provider was updated successfully!");
+        this.providerRequest.id = parseInt(this.route.snapshot.paramMap.get('id'));
+        this.providerService.save(this.providerRequest).subscribe(data => {
+            alert('Provider was updated successfully!');
         });
     }
 }

@@ -5,13 +5,12 @@ import {Provider} from '../../model/view/provider';
 import {Observable} from 'rxjs/Observable';
 import {ProviderRequest} from './add-provider/provider-request';
 import {ProviderListFilterParameters} from '../../model/filter/provider-list-filter-parameters';
-import {ProviderStatisticRequest} from './provider-list/ProviderStatisticRequest';
-import { environment } from '../../../environments/environment';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class ProviderService {
 
-    private providerUrl = environment.apiUrl+'/providers';
+    private providerUrl = environment.apiUrl + '/providers';
 
     constructor(private http: HttpClient) {
     }
@@ -29,18 +28,15 @@ export class ProviderService {
     }
 
     save(providerRequest: ProviderRequest) {
-        return this.http.post(this.providerUrl + '/add', providerRequest);
+        return this.http.post(this.providerUrl + '/save', providerRequest);
     }
 
-    update(id: string, providerRequest: ProviderRequest) {
-        return this.http.post(this.providerUrl + '/update/' + id, providerRequest);
-    }
+    /* update(id: string, providerRequest: ProviderRequest) {
+         return this.http.post(this.providerUrl + '/update/' + id, providerRequest);
+     }*/
 
-    changeState(id: number): Observable<Provider> {
-        return this.http.get<Provider>(this.providerUrl + '/changeState/' + id);
-    }
+    /*  changeState(id: number): Observable<Provider> {
+          return this.http.get<Provider>(this.providerUrl + '/changeState/' + id);
+      }*/
 
-    getAmount(): Observable<ProviderStatisticRequest> {
-        return this.http.get<ProviderStatisticRequest>(this.providerUrl + '/statistic');
-    }
 }
