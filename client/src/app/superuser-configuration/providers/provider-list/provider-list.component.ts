@@ -26,7 +26,6 @@ export class ProviderListComponent implements OnInit {
 
     ngOnInit() {
         this.getProviders();
-        this.getAmount();
     }
 
     getProviders(): void {

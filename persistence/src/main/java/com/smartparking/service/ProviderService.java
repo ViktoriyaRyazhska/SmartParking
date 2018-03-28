@@ -4,6 +4,7 @@ import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
 import com.smartparking.model.request.ProviderStatisticRequest;
+import com.smartparking.model.response.ProviderResponse;
 import com.smartparking.repository.ProviderRepository;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface ProviderService extends Service<Provider, Long, ProviderReposit
     Optional<Provider> findByParkingId(Long parkingId);
 
     ProviderStatisticRequest getStatistic();
+
+    Optional<ProviderResponse> findByIdResponse(Long id);
 }
