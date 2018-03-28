@@ -61,13 +61,9 @@ public class ProviderController {
 
     @PostMapping("/providers/save")
     ResponseEntity<?> save(@RequestBody ProviderRequest providerRequest) {
+        System.out.println(providerRequest.getId());
         providerService.save(providerRequest.toProvider());
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("providers/statistic")
-    ProviderStatisticRequest statistic() {
-        return providerService.getStatistic();
     }
 
 }
