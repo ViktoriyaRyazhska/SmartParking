@@ -14,10 +14,21 @@ export class InterceptorService implements HttpInterceptor{
   constructor(private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-        request = request.clone({
-            headers: request.headers.append('Authorization', `Bearer ${TokenStorage.getToken()}`)
-        });
+      if(TokenStorage.getToken() != null) {
+          request = request.clone({
+              headers: request.headers.append('Authorization', `Bearer ${TokenStorage.getToken()}`)
+          });
+          return next.handle(request).do((event: HttpEvent<any>) => {
+              if (event instanceof HttpResponse) {
+              }
+          }, (err: any) => {
+              if (err instanceof HttpErrorResponse) {
+                  if (err.status === 401) {
+                      this.router.navigate(['/login'])
+                  }
+              }
+          });
+      }
         return next.handle(request).do((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
             }

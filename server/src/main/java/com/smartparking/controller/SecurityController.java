@@ -75,12 +75,14 @@ public class SecurityController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity saveUser(@RequestBody RegistrationRequest regReq) {
+        LOGGER.info("Start registration");
         try {
             userService.saveClientFromRegistrationRequest(regReq);
         } catch (AuthorizationEx e) {
             LOGGER.warn("Invalid input data");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input data");
         }
+        LOGGER.info("Registered successfully");
         return ResponseEntity.ok("Successful registration");
     }
 }

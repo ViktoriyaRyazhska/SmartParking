@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RegistrationData} from "./registration-data";
 import {RegistrationService} from "./registration.service";
 import {Router} from "@angular/router";
+import {TokenService} from "../token/token.service";
 
 export class PasswordValidation {
 
@@ -69,10 +70,11 @@ export class RegistrationComponent implements OnInit {
   register = () => {
       this.registrationData = this.registrationForm.value;
       this.registrationService.register(this.registrationData).subscribe(data =>{
+          alert('Success');
           this.router.navigate(['/']);
-          alert('You are successful registered')
-      }, error2 => {
+      }, error => {
+          alert('Fail');
           this.router.navigate(['/']);
-      alert("Can`t register you now please try later")})
+          })
   }
 }
