@@ -16,11 +16,7 @@ export class ProviderService {
     }
 
     getAll(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
-        var params = {
-            active: providerFilter.active,
-            companyName: providerFilter.companyName
-        };
-        return this.http.get<Provider[]>(this.providerUrl, {params: params});
+        return this.http.post<Provider[]>(this.providerUrl, providerFilter);
     }
 
     getDetail(id: number): Observable<Provider> {
@@ -30,13 +26,5 @@ export class ProviderService {
     save(providerRequest: ProviderRequest) {
         return this.http.post(this.providerUrl + '/save', providerRequest);
     }
-
-    /* update(id: string, providerRequest: ProviderRequest) {
-         return this.http.post(this.providerUrl + '/update/' + id, providerRequest);
-     }*/
-
-    /*  changeState(id: number): Observable<Provider> {
-          return this.http.get<Provider>(this.providerUrl + '/changeState/' + id);
-      }*/
 
 }
