@@ -1,11 +1,25 @@
 package com.smartparking.model.request;
 
+import com.smartparking.entity.Provider;
+
 public class ProviderRequest {
     private Long id;
     private String name;
     private String city;
     private String street;
     private String building;
+    private boolean active;
+
+    public Provider toProvider() {
+        Provider provider = new Provider();
+        provider.setId(id);
+        provider.setName(name);
+        provider.setCity(city);
+        provider.setStreet(street);
+        provider.setBuilding(building);
+        provider.setActive(active);
+        return provider;
+    }
 
     public Long getId() {
         return id;
@@ -46,4 +60,13 @@ public class ProviderRequest {
     public void setBuilding(String building) {
         this.building = building;
     }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 }
