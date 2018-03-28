@@ -5,8 +5,8 @@ import {
 } from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/do';
-import {TokenStorage} from "./auth/login/token-storage";
-import {NavigationExtras, Router} from "@angular/router";
+import {TokenStorage} from "./auth/token/token-storage";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor{

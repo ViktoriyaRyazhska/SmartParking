@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {
     MatAutocompleteModule,
@@ -46,7 +46,7 @@ import {InterceptorService} from "./interceptor.service";
 import {AgmCoreModule} from '@agm/core';
 import {LoginService} from './auth/login/login.service';
 import {RegistrationService} from './auth/registration/registration.service';
-import {TokenStorage} from './auth/login/token-storage';
+import {TokenStorage} from './auth/token/token-storage';
 import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
 import {IpLocationService} from './service/ip-location.service';
 import {RadiusFieldComponent} from './index/parking-list-filter/radius-field/radius-field.component';
@@ -58,9 +58,9 @@ import {PagerService} from './_services/pager.service';
 import {MatRadioModule} from '@angular/material/radio';
 import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
-export function tokenGetter() {
+/*export function tokenGetter() {
     return localStorage.getItem('access_token');
-}
+}*/
 
 @NgModule({
     declarations: [
@@ -96,13 +96,13 @@ export function tokenGetter() {
             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
             libraries: ['places']
         }),
-        JwtModule.forRoot({
+        /*JwtModule.forRoot({
             config: {
                 tokenGetter: tokenGetter,
                 whitelistedDomains: ['localhost:8080'],
                 blacklistedRoutes: []
             }
-        }),
+        }),*/
         HttpClientModule,
         BrowserModule,
         RouterModule,
@@ -124,11 +124,11 @@ export function tokenGetter() {
     ],
     entryComponents: [DeleteConfirmationDialogComponent],
     providers: [
-        /*{
+        {
             provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true
-        }*/
+        }
         ,
         ParkingService,
         ManagerParkingService,

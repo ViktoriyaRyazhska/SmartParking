@@ -1,14 +1,24 @@
-<ngb-alert type="dark" [dismissible]="false" id="cont">
-    <div>
-        <h3>{{client.firstName}} {{client.lastName}}</h3>
-        <p><b><i>ID:</i></b> {{client.id}}</p>
-        <p [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'red' : 'green'}"><b><i>Role: </i></b>{{client.providerName}}
-            {{client.role}}</p>
-    </div>
-    <div>
-        <button mat-raised-button routerLink='{{client.id}}' color="primary" class="mt-1 full-width">More info
-        </button>
-        <button mat-raised-button routerLink='edit/{{client.id}}' color="primary" class="mt-1 full-width">Edit
-        </button>
-    </div>
-</ngb-alert>
+<div id="clientItem">
+    <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
+        <mat-card-header>
+            <div style="min-width: 70%;">
+                <div>
+                    <mat-card-title>{{client.firstName}} {{client.lastName}}
+                    </mat-card-title>
+                    <mat-card-subtitle
+                            [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'orange' : 'green'}">
+                        {{client.role}}
+                    </mat-card-subtitle>
+                </div>
+            </div>
+            <div style="width: 100%"></div>
+        </mat-card-header>
+
+        <mat-card-actions align="right">
+            <button mat-button routerLink='{{client.id}}' color="primary">MORE INFO</button>
+            <button mat-button routerLink='edit/{{client.id}}' color="warn">
+                EDIT
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

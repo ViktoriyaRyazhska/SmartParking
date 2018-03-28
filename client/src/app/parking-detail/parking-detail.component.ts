@@ -21,7 +21,8 @@ export class ParkingDetailComponent implements OnInit {
    fullnessBarMessage: String;
    max: number;
    value:number;
-    fiveSecInterval: number = 5000;
+   thirtySecInterval: number = 30000;
+   favoriteNameInputHide: boolean = true;
    
 
   constructor(
@@ -30,7 +31,14 @@ export class ParkingDetailComponent implements OnInit {
     private location: Location
   ) { }
 
-    S
+  ngOnInit() {
+    this.getParking().subscribe(parking => {
+       this.fullnessBarCount();
+    });
+    this.getSpots();
+    this.getAvailableSpots();
+    setInterval(this.refresh(), this.thirtySecInterval);
+  }
 
   refresh(): void{
     this.getParking().subscribe(parking => {
@@ -77,12 +85,4 @@ export class ParkingDetailComponent implements OnInit {
       .subscribe(spots => this.freeSpots = spots);
   }
 
-    ngOnInit() {
-        this.getParking().subscribe(parking => {
-            this.fullnessBarCount();
-        });
-        this.getSpots();
-        this.getAvailableSpots();
-        setInterval(this.refresh(), this.fiveSecInterval);
-    }
 }

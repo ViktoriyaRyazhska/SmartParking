@@ -1,22 +1,19 @@
 package com.smartparking.realtimeserver.controller;
 
 import com.smartparking.entity.Event;
-import com.smartparking.entity.EventMarker;
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.realtimeserver.element.InRequest;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class MainController {
+    private Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
     private Map<Long, String> tokens;
     private List<Event> events = new LinkedList<>();
@@ -73,53 +71,26 @@ public class MainController {
 
 
     @RequestMapping(value = "spot/update", method = RequestMethod.POST)
-    public ResponseEntity processingInRequests(@RequestParam String id,
-                                               @RequestParam String parkingToken,
-                                               @RequestParam String currentEvent) {
-
-        System.out.println(id);
-        System.out.println(parkingToken);
-        System.out.println(currentEvent);
-
-        Long spotId = null;
-        EventMarker eventMarker = null;
-        if (id != null && currentEvent != null) {
-            try {
-                spotId = Long.valueOf(id);
-            } catch (IllegalArgumentException e) {
-                return new ResponseEntity(HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-
-        if (currentEvent.equals("0")) {
-            eventMarker = EventMarker.ARRIVED;
-        } else if (currentEvent.equals("1")) {
-            eventMarker = EventMarker.DEPARTUDED;
-        } else {
-            eventMarker = EventMarker.BLOCK;
-        }
-
-        if (tokens.containsValue(parkingToken)) {
-            if (!spots.get(spotId).getParking().getToken().equals(parkingToken)) {
-                return new ResponseEntity(HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-
-        System.out.println(id);
-        System.out.println(parkingToken);
-        System.out.println(spots.get(spotId).getId());
-
-        Spot spot = spots.get(spotId);
-        if (spot != null && tokens.containsValue(parkingToken)) {
-            events.add(new Event(spot, LocalDateTime.now().toInstant(ZoneOffset.UTC), eventMarker));
+    public ResponseEntity processingInRequests(@RequestBody InRequest inRequest) {
+        Event event = inRequest.toEvent();
+        if (event != null && tokenIsValid(inRequest, event)) {
+            events.add(event);
             return new ResponseEntity(HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
+
+    }
+
+    private boolean tokenIsValid(InRequest inRequest, Event event) {
+        Spot spot = spots.get(inRequest.getSpotId());
+        if (spot != null && tokens.containsValue(inRequest.getParkingToken())) {
+            event.setSpot(spot);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public List<Event> getEvents() {

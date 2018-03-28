@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
-import {ClientsProviderRequest} from "../clients-provider-request";
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {Provider} from "../../model/view/provider";
 
 @Component({

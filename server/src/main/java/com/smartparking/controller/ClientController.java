@@ -1,8 +1,6 @@
 package com.smartparking.controller;
 
-import com.smartparking.model.request.RegistrationClientRequest;
 import com.smartparking.entity.Client;
-import com.smartparking.entity.Role;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.model.response.*;
@@ -17,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @RestController
 public class ClientController {
 
@@ -59,12 +58,12 @@ public class ClientController {
 
     @PostMapping("/clients/update/{id}")
     ResponseEntity updateClient(@PathVariable Long id, @RequestBody ClientRequest clientRequest) {
-        if (clientRequest.getFirstName() != "" && clientRequest.getLastName() != "" &&
-                clientRequest.getEmail() != "" && clientRequest.getRole() != "") {
+        if (!clientRequest.getFirstName().equals("") && !clientRequest.getLastName().equals("") &&
+                !clientRequest.getEmail().equals("")) {
             clientService.updateFromRequest(id, clientRequest);
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NO_CONTENT.valueOf("Bad data input."));
+            return new ResponseEntity<>("Empty data input.", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -86,6 +85,16 @@ public class ClientController {
         } else return getAllClients();
     }
 
+    @GetMapping("clients/findbyrole/{input}")
+    List<ClientItemResponse> getClientsByRole(@PathVariable String input) {
+        List<Client> clients = clientService.findClientsByRole(input);
+        List<ClientItemResponse> clientItemResponses = new ArrayList<>();
+        for (Client client : clients) {
+            clientItemResponses.add(ClientItemResponse.of(client));
+        }
+        return clientItemResponses;
+    }
+
     @GetMapping("clients/getproviders")
     List<ProviderItemResponse> getAllProviders() {
         List<Provider> providers = providerService.findAll();
@@ -95,19 +104,4 @@ public class ClientController {
         }
         return providerItemResponses;
     }
-
-
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public InfoResponse saveUser(@RequestBody RegistrationClientRequest regClient) {
-        Client client = new Client();
-        client.setEmail(regClient.getEmail());
-        client.setPassword(bcryptEncoder.encode(regClient.getPassword()));
-        client.setFirstName(regClient.getFirstname());
-        client.setLastName(regClient.getLastname());
-        client.setRole(String.valueOf(Role.DRIVER));
-        clientService.save(client);
-        return new InfoResponse("Registration succsessful");
-    }
-
-
 }
