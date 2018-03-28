@@ -59,17 +59,12 @@
         <mat-divider style="border-color: purple;"></mat-divider>
         <mat-card class="card">
             <form class="example-form" [formGroup]="providerFilterForm" (ngSubmit)="getProviders()">
-                <mat-form-field class="offset-1 example-full-width">
-                    <input matInput placeholder="Company name" formControlName="companyName">
-                </mat-form-field>
-                <div class="col-md-4">
-                    <hr class="hr-red"/>
-                </div>
                 <div class="row">
-                    <div class="offset-1 col-md-2">
-                        <div class="radio">
-                            <label><input formControlName="active" type="radio" value="true"> Active</label>
-                        </div>
+                    <mat-form-field class="col-md-3">
+                        <input matInput placeholder="Company name" formControlName="companyName">
+                    </mat-form-field>
+                    <div class="col-md-2">
+                        <label><input formControlName="active" type="radio" value="true"> Active</label>
                     </div>
                     <div class="col-md-2">
                         <div class="radio">
@@ -81,7 +76,7 @@
                             <label><input formControlName="active" type="radio" value="all"> All</label>
                         </div>
                     </div>
-                    <div class="offset-1 col-md-3">
+                    <div class="col-md-3">
                         <h5>Found 4 matches.</h5>
                         <div *ngIf="providers">
                             <h5>Found {{providers.length}} matches.</h5>

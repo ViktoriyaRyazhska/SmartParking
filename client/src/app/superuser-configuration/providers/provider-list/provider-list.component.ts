@@ -3,7 +3,6 @@ import {Provider} from '../../../model/view/provider';
 import {ProviderService} from '../provider.service';
 import {ProviderListFilterParameters} from '../../../model/filter/provider-list-filter-parameters';
 import {FormControl, FormGroup,} from '@angular/forms';
-import {ProviderStatisticRequest} from './ProviderStatisticRequest';
 
 @Component({
     selector: 'app-provider-list',
@@ -16,8 +15,6 @@ export class ProviderListComponent implements OnInit {
         active: new FormControl('all', []),
         companyName: new FormControl('', [])
     });
-
-    providerStatistic: ProviderStatisticRequest;
 
     providerFilter: ProviderListFilterParameters;
 
@@ -34,8 +31,4 @@ export class ProviderListComponent implements OnInit {
             .subscribe(providers => this.providers = providers);
     }
 
-    getAmount(): void {
-        this.providerService.getAmount()
-            .subscribe(providerStatistic => this.providerStatistic = providerStatistic);
-    }
 }
