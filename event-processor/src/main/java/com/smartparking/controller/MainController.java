@@ -1,4 +1,4 @@
-package com.smartparking.realtimeserver.controller;
+package com.smartparking.controller;
 
 import com.smartparking.entity.Event;
 import com.smartparking.entity.Parking;
