@@ -59,38 +59,9 @@ public class ProviderController {
                 .orElseGet(() -> new ResponseEntity<Object>("Such provider wasn't found!", HttpStatus.BAD_REQUEST));
     }
 
-    @GetMapping("providers/changeState/{id}")
-    ResponseEntity<?> changeState(@PathVariable Long id) {
-        LOGGER.info("Finding provider by ID - " + id + " to change state.");
-        if (providerService.findById(id) != null) {
-            LOGGER.debug("Provider was found and state was changed!");
-            return new ResponseEntity<>(ProviderDetailResponse.of(providerService.changeState(id)), HttpStatus.OK);
-        } else {
-            LOGGER.debug("Provider wasn't found!");
-            return new ResponseEntity<>("Such provider doesn't exist", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/providers/add")
+    @PostMapping("/providers/save")
     ResponseEntity<?> save(@RequestBody ProviderRequest providerRequest) {
-        if (!(providerRequest.getName().equals("") && providerRequest.getCity().equals("")
-                && providerRequest.getStreet().equals("")
-                && providerRequest.getBuilding().equals(""))) {
-            providerService.saveFromRequest(providerRequest);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Bad data input.", HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @PostMapping("/providers/update/{id}")
-    ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProviderRequest providerRequest) {
-        Provider provider = providerService.findById(id);
-        provider.setName(providerRequest.getName());
-        provider.setCity(providerRequest.getCity());
-        provider.setStreet(providerRequest.getStreet());
-        provider.setBuilding(providerRequest.getBuilding());
-        providerService.save(provider);
+        providerService.save(providerRequest.toProvider());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
