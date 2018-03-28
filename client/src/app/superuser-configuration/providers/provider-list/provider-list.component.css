@@ -56,3 +56,12 @@
 app-parking-list {
     height: 100%;
 }
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+}
+

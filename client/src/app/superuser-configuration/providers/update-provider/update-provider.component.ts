@@ -4,6 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {Provider} from '../../../model/view/provider';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProviderRequest} from '../add-provider/provider-request';
+import {HttpResponse} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-update-provider',
@@ -31,6 +33,7 @@ export class UpdateProviderComponent implements OnInit {
     activeControl: FormControl = new FormControl('', [Validators.required]);
 
     constructor(private providerService: ProviderService,
+                private snackBar: MatSnackBar,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute) {
     }
@@ -54,8 +57,10 @@ export class UpdateProviderComponent implements OnInit {
     updateProvider(): void {
         this.providerRequest = this.providerForm.value;
         this.providerRequest.id = parseInt(this.route.snapshot.paramMap.get('id'));
-        this.providerService.save(this.providerRequest).subscribe(data => {
-            alert('Provider was updated successfully!');
+        this.providerService.save(this.providerRequest).subscribe((response: HttpResponse<any>) => {
+            this.snackBar.open('Provider updated sucsessfully.', null, {
+                duration: 2000
+            });
         });
     }
 }
