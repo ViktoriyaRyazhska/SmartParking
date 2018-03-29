@@ -58,6 +58,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import {ClientProfileComponent} from './client-profile/client-profile.component';
 import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add-configm-dialog/favorites-add-configm-dialog.component';
+import { ParkingMapComponent } from './index/parking-map/parking-map.component';
 
 /*export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -90,8 +91,8 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
         RadiusFieldComponent,
         PriceRangeFieldComponent,
         UpdateProviderComponent,
-        DeleteConfirmationDialogComponent,
         ClientProfileComponent,
+        ParkingMapComponent,
         DeleteConfirmationDialogComponent,
         FavoritesAddConfigmDialogComponent
     ],
