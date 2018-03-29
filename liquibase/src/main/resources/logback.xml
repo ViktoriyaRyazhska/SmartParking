@@ -10,10 +10,9 @@
     </appender>
 
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/jdbc.log</file>
         <prudent>true</prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>jdbc-%d{yyyy-MM-dd}.log </fileNamePattern>
+            <fileNamePattern>liquibase/log/%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
         <encoder>
             <Pattern>
@@ -22,11 +21,8 @@
         </encoder>
     </appender>
 
-
-
     <root level="INFO">
         <appender-ref ref="console"/>
         <appender-ref ref="file"/>
     </root>
-
 </configuration>
