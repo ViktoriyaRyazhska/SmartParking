@@ -2,7 +2,6 @@ package com.smartparking.repository;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Provider;
-import com.smartparking.entity.Role;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

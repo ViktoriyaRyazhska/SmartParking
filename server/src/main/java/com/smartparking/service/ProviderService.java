@@ -3,7 +3,6 @@ package com.smartparking.service;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
-import com.smartparking.model.request.ProviderStatisticRequest;
 import com.smartparking.model.response.ProviderResponse;
 import com.smartparking.repository.ProviderRepository;
 

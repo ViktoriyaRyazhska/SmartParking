@@ -1,8 +1,6 @@
 package com.smartparking.dto;
 
 
-import com.smartparking.entity.Parking;
-
 import java.math.BigDecimal;
 import java.util.List;
 

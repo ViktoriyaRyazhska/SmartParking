@@ -1,12 +1,9 @@
 package com.smartparking.service.impl;
 
 
-import com.smartparking.entity.Parking;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.filter.ProviderFilter;
 import com.smartparking.model.request.ProviderRequest;
-import com.smartparking.model.request.ProviderStatisticRequest;
-import com.smartparking.model.response.ParkingResponse;
 import com.smartparking.model.response.ProviderResponse;
 import com.smartparking.repository.ProviderFilterRepository;
 import com.smartparking.repository.ProviderRepository;
@@ -18,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProviderServiceImpl extends AbstractService<Provider, Long, ProviderRepository> implements ProviderService {
