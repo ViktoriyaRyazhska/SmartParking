@@ -25,14 +25,14 @@ public class ProviderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProviderController.class);
 
     @PostMapping("providers")
-    List<ProviderItemResponse> findAll(@RequestBody ProviderFilter providerFilter) {
+    ResponseEntity<List<ProviderItemResponse>> findAll(@RequestBody ProviderFilter providerFilter) {
         LOGGER.debug("Filtering by " + providerFilter.getActive() + " state and " + providerFilter.getCompanyName() +
                 " company name.");
         List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
         providers.forEach(provider -> providerResponses.add(ProviderItemResponse.of(provider)));
         LOGGER.debug("Filtered providers response - " + providerResponses);
-        return providerResponses;
+        return new ResponseEntity<>(providerResponses, HttpStatus.OK);
     }
 
     @GetMapping("providers/{id}")
