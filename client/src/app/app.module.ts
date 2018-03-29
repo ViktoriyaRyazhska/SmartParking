@@ -97,9 +97,12 @@ import { ParkingMapComponent } from './index/parking-map/parking-map.component';
         FavoritesAddConfigmDialogComponent
     ],
     imports: [
-        AgmCoreModule.forRoot({
+       /* AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
             libraries: ['places']
+        }),*/
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU'
         }),
         /*JwtModule.forRoot({
             config: {
