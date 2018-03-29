@@ -28,19 +28,24 @@ public class LiquibaseApplication {
 
     public static void main(String[] args) {
         LOGGER.info("Creating a new database and filling it with data.");
+        Options options = Options.ofArgs(args);
         try {
             registerDriver();
-            createDatabase();
+
+            createDatabase(options);
             initializeDatabase();
         } catch (SQLException | ClassNotFoundException | LiquibaseException exception) {
             LOGGER.error("You have done exception.", exception);
         }
     }
 
-    private static void createDatabase() throws SQLException {
+    private static void createDatabase(Options options) throws SQLException {
         Connection connection = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD);
         Statement statement = connection.createStatement();
-        statement.execute("CREATE DATABASE " + DATABASE_NAME + ";");
+        if (options.isDropIfExists()) {
+            statement.execute("DROP DATABASE IF EXISTS " + DATABASE_NAME + ";");
+        }
+        statement.execute("CREATE DATABASE IF NOT EXISTS " + DATABASE_NAME + ";");
         statement.close();
         connection.close();
     }
@@ -56,5 +61,22 @@ public class LiquibaseApplication {
 
     private static void registerDriver() throws ClassNotFoundException {
         Class.forName(JDBC_DRIVER);
+    }
+
+    private static class Options {
+        private final boolean dropIfExists;
+
+        private Options(boolean dropIfExists) {
+            this.dropIfExists = dropIfExists;
+        }
+
+        public static Options ofArgs(String[] args) {
+            boolean dropIfExists = args.length > 0 && args[0].trim().equalsIgnoreCase("drop-if-exists");
+            return new Options(dropIfExists);
+        }
+
+        public boolean isDropIfExists() {
+            return dropIfExists;
+        }
     }
 }
