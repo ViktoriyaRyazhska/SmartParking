@@ -31,7 +31,7 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
 
     @Override
     public Client findOne(String email) {
-        return clientRepository.findClientByEmail(email).get();
+        return clientRepository.findClientByEmail(email);
     }
 
     @Override
