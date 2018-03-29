@@ -45,10 +45,10 @@ public class RegistrationRequest {
 
     public String getPassword() throws PasswordValidationEx, NonMatchingPasswordsEx {
         if(this.password == null || this.confirmPassword == null){
-            throw new PasswordValidationEx();
+            throw new PasswordValidationEx("Fields password and confirm password can`t be null");
         }
         if(!this.password.equals(this.confirmPassword)) {
-            throw new NonMatchingPasswordsEx();
+            throw new NonMatchingPasswordsEx("Passwords doesn`t match");
         }
         return this.password;
     }

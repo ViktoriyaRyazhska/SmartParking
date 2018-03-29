@@ -1,17 +1,18 @@
 package com.smartparking.security.utils;
 
-import com.smartparking.exceptions.security.EmailValidationEx;
-import com.smartparking.exceptions.security.FirstnameValidationEx;
-import com.smartparking.exceptions.security.LastnameValidationEx;
-import com.smartparking.exceptions.security.PasswordValidationEx;
+import com.smartparking.exceptions.security.*;
+import com.smartparking.repository.ClientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ValidatorImpl implements Validator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidatorImpl.class);
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Value("${auth.email.regex}")
     private String regex;
@@ -36,10 +37,25 @@ public class ValidatorImpl implements Validator {
     private int lastnameMax;
 
     @Override
-    public String validateEmail(String email) throws EmailValidationEx {
+    public String validateEmailOnRegistration(String email) throws EmailValidationEx, DuplicateEmailEx {
         if(email == null || !email.matches(regex) || email.length() < emailMin || email.length() > emailMax) {
             LOGGER.warn("Invalid email");
-            throw new EmailValidationEx();
+            throw new EmailValidationEx("Entered e-mail adress is not valid");
+        }
+        if(clientRepository.findClientByEmail(email).isPresent()) {
+            throw new DuplicateEmailEx("User with this e-mail alredy exists");
+        }
+        return email;
+    }
+
+    @Override
+    public String validateEmailOnLogin(String email) throws EmailValidationEx, NonExistantEmailEx {
+        if(email == null || !email.matches(regex) || email.length() < emailMin || email.length() > emailMax) {
+            LOGGER.warn("Invalid email");
+            throw new EmailValidationEx("Entered e-mail adress is not valid");
+        }
+        if(!clientRepository.findClientByEmail(email).isPresent()) {
+            throw new NonExistantEmailEx("User with this e-mail doesn`t exists");
         }
         return email;
     }
@@ -48,7 +64,7 @@ public class ValidatorImpl implements Validator {
     public String validatePassword(String password) throws PasswordValidationEx {
         if(password == null || password.length() < passwordMin || password.length() > passwordMax){
             LOGGER.warn("Invalid password");
-            throw new PasswordValidationEx();
+            throw new PasswordValidationEx("Password is invalid");
         }
         return password;
     }
@@ -57,7 +73,7 @@ public class ValidatorImpl implements Validator {
     public String validateFirstname(String firstname) throws FirstnameValidationEx {
         if(firstname == null || firstname.length() < firstnameMin || firstname.length() > firstnameMax){
             LOGGER.warn("Invalid firstname");
-            throw new FirstnameValidationEx();
+            throw new FirstnameValidationEx("Firstname is invalid");
         }
         return firstname;
     }
@@ -66,8 +82,9 @@ public class ValidatorImpl implements Validator {
     public String validateLastname(String lastname) throws LastnameValidationEx {
         if(lastname == null || lastname.length() < lastnameMin || lastname.length() > lastnameMax){
             LOGGER.warn("Invalid lastname");
-            throw new LastnameValidationEx();
+            throw new LastnameValidationEx("Lastname is invlaid");
         }
         return lastname;
     }
+
 }

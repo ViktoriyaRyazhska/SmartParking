@@ -4,6 +4,7 @@ import com.smartparking.exceptions.security.AuthorizationEx;
 import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.request.LoginRequest;
+import com.smartparking.model.response.InfoResponse;
 import com.smartparking.security.user.SpringSecurityUserService;
 import com.smartparking.security.tokens.TokenUtil;
 import com.smartparking.security.user.SpringSecurityUser;
@@ -49,11 +50,11 @@ public class SecurityController {
         final String email;
         final String password;
         try {
-            email = validator.validateEmail(loginRequest.getEmail());
+            email = validator.validateEmailOnLogin(loginRequest.getEmail());
             password = validator.validatePassword(loginRequest.getPassword());
         } catch (AuthorizationEx e) {
-            LOGGER.warn("Invalid input data. Email or password is missed.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input data. Email or password is missed.");
+            LOGGER.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
         LOGGER.info("Start authorization process");
         LOGGER.info("Search user with username " + email);
@@ -69,8 +70,8 @@ public class SecurityController {
             final String token = tokenUtil.generateToken((SpringSecurityUser) user);
             return ResponseEntity.ok(new AuthTokenResponse(token));
         }
-        LOGGER.info("Email or password is incorrect.");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email or password is incorrect.");
+        LOGGER.info("Password is incorrect.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Password is incorrect"));
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -79,10 +80,10 @@ public class SecurityController {
         try {
             userService.saveClientFromRegistrationRequest(regReq);
         } catch (AuthorizationEx e) {
-            LOGGER.warn("Invalid input data");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input data");
+            LOGGER.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
         LOGGER.info("Registered successfully");
-        return ResponseEntity.ok("Successful registration");
+        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully registered"));
     }
 }

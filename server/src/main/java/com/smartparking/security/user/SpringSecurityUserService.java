@@ -9,6 +9,7 @@ import com.smartparking.security.utils.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Qualifier("MyUserDetails")
 public class SpringSecurityUserService implements UserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringSecurityUserService.class);
@@ -51,9 +53,9 @@ public class SpringSecurityUserService implements UserDetailsService {
         return Optional.of(springSecurityUser);
     }
 
-    public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, NonMatchingPasswordsEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx {
+    public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, NonMatchingPasswordsEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx, DuplicateEmailEx {
         Client client = new Client();
-        client.setEmail(validator.validateEmail(registrationRequest.getEmail()));
+        client.setEmail(validator.validateEmailOnRegistration(registrationRequest.getEmail()));
         client.setPassword(bcryptEncoder.encode(validator.validatePassword(registrationRequest.getPassword())));
         client.setFirstName(validator.validateFirstname(registrationRequest.getFirstname()));
         client.setLastName(validator.validateLastname(registrationRequest.getLastname()));
