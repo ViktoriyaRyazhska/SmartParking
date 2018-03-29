@@ -42,7 +42,7 @@ public class ValidatorImpl implements Validator {
             LOGGER.warn("Invalid email");
             throw new EmailValidationEx("Entered e-mail adress is not valid");
         }
-        if(clientRepository.findClientByEmail(email).isPresent()) {
+        if(clientRepository.findClientByEmail(email) != null) {
             throw new DuplicateEmailEx("User with this e-mail alredy exists");
         }
         return email;
@@ -54,7 +54,7 @@ public class ValidatorImpl implements Validator {
             LOGGER.warn("Invalid email");
             throw new EmailValidationEx("Entered e-mail adress is not valid");
         }
-        if(!clientRepository.findClientByEmail(email).isPresent()) {
+        if(clientRepository.findClientByEmail(email) == null) {
             throw new NonExistantEmailEx("User with this e-mail doesn`t exists");
         }
         return email;
