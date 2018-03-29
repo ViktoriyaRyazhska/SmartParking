@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
 
-    constructor(private router: Router) {
+    constructor() {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,11 +23,9 @@ export class InterceptorService implements HttpInterceptor {
         return next.handle(request).do((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
             }
-        }, (err: any) => {
-            if (err instanceof HttpErrorResponse) {
-                if (err.status === 401) {
-                    this.router.navigate(['/login']);
-                }
+        }, (error: any) => {
+            if (error instanceof HttpErrorResponse) {
+
             }
         });
     }

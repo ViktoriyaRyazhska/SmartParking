@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {RegistrationData} from './registration-data';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../environments/environment';
+import {InfoResponse} from "../info-response";
 
 @Injectable()
 export class RegistrationService {

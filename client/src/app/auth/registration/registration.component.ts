@@ -5,6 +5,8 @@ import {RegistrationData} from "./registration-data";
 import {RegistrationService} from "./registration.service";
 import {Router} from "@angular/router";
 import {TokenService} from "../token/token.service";
+import {InfoResponse} from "../info-response";
+import {HttpErrorResponse} from "@angular/common/http";
 
 export class PasswordValidation {
 
@@ -69,12 +71,13 @@ export class RegistrationComponent implements OnInit {
 
   register = () => {
       this.registrationData = this.registrationForm.value;
-      this.registrationService.register(this.registrationData).subscribe(data =>{
-          alert('Success');
+      this.registrationService.register(this.registrationData).subscribe((info: InfoResponse) =>{
+          alert(info.response);
           this.router.navigate(['/']);
-      }, error => {
-          alert('Fail');
-          this.router.navigate(['/']);
-          })
+      }, (error) => {
+          if(error instanceof HttpErrorResponse) {
+              alert(error.error.response);
+          }
+          });
   }
 }

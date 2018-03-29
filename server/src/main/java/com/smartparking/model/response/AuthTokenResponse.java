@@ -1,7 +1,5 @@
 package com.smartparking.model.response;
 
-import com.smartparking.entity.Role;
-
 public class AuthTokenResponse {
     private String token;
 
