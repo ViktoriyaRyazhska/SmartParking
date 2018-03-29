@@ -1,6 +1,6 @@
-package com.smartparking.dto;
+package com.smartparking.model.response;
 
-public class SpotDto {
+public class SpotResponse {
 
     private Long id;
 

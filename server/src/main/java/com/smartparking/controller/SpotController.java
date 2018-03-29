@@ -1,7 +1,7 @@
 package com.smartparking.controller;
 
-import com.smartparking.dto.SpotDto;
 import com.smartparking.entity.Spot;
+import com.smartparking.model.response.SpotResponse;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,33 +14,37 @@ import java.util.List;
 @RestController
 public class SpotController {
 
+    private final SpotService spotService;
+
     @Autowired
-    SpotService spotService;
+    public SpotController(SpotService spotService) {
+        this.spotService = spotService;
+    }
 
     @RequestMapping("parkingdetail/{id}/spots")
-    List<SpotDto> findAllSpotsDto (@PathVariable Long id){
+    List<SpotResponse> findAllSpotsDto(@PathVariable Long id) {
         List<Spot> allSpots = spotService.findAllSpotsByParkingId(id);
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
-        List<SpotDto> spotDtoList = new ArrayList<>();
+        List<SpotResponse> spotResponseList = new ArrayList<>();
         for (Spot spot : allSpots) {
-            SpotDto spotDto = new SpotDto();
-            spotDto.setId(spot.getId());
-            spotDto.setIsFree(freeSpots.contains(spot));
-            spotDtoList.add(spotDto);
+            SpotResponse spotResponse = new SpotResponse();
+            spotResponse.setId(spot.getId());
+            spotResponse.setIsFree(freeSpots.contains(spot));
+            spotResponseList.add(spotResponse);
         }
-        return spotDtoList;
+        return spotResponseList;
     }
 
     @RequestMapping("parkingdetail/{id}/freespots")
-    List<SpotDto> findAvailableSpotsDto (@PathVariable Long id){
+    List<SpotResponse> findAvailableSpotsDto(@PathVariable Long id) {
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
-        List<SpotDto> spotDtoList = new ArrayList<>();
+        List<SpotResponse> spotResponseList = new ArrayList<>();
         for (Spot spot : freeSpots) {
-            SpotDto spotDto = new SpotDto();
-            spotDto.setId(spot.getId());
-            spotDto.setIsFree(true);
-            spotDtoList.add(spotDto);
+            SpotResponse spotResponse = new SpotResponse();
+            spotResponse.setId(spot.getId());
+            spotResponse.setIsFree(true);
+            spotResponseList.add(spotResponse);
         }
-        return spotDtoList;
+        return spotResponseList;
     }
 }
