@@ -1,4 +1,4 @@
-package com.smartparking.exceptions.security;
+package com.smartparking.security.exception;
 
 public class DuplicateEmailEx extends AuthorizationEx{
     public DuplicateEmailEx() {

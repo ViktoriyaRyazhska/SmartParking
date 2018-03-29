@@ -1,7 +1,6 @@
 package com.smartparking.security.utils;
 
-import com.smartparking.exceptions.security.*;
-import org.springframework.beans.factory.annotation.Value;
+import com.smartparking.security.exception.*;
 import org.springframework.stereotype.Component;
 
 @Component

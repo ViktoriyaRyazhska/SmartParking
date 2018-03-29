@@ -2,7 +2,7 @@ package com.smartparking.security.user;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
-import com.smartparking.exceptions.security.*;
+import com.smartparking.security.exception.*;
 import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.repository.ClientRepository;
 import com.smartparking.security.utils.Validator;

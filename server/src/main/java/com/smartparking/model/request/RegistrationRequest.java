@@ -1,6 +1,7 @@
 package com.smartparking.model.request;
 
-import com.smartparking.exceptions.security.*;
+import com.smartparking.security.exception.NonMatchingPasswordsEx;
+import com.smartparking.security.exception.PasswordValidationEx;
 
 public class RegistrationRequest {
     private String firstname;

@@ -1,6 +1,6 @@
 package com.smartparking.security.utils;
 
-import com.smartparking.exceptions.security.*;
+import com.smartparking.security.exception.*;
 import com.smartparking.repository.ClientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

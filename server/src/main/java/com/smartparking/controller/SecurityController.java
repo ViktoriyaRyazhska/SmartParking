@@ -1,6 +1,6 @@
 package com.smartparking.controller;
 
-import com.smartparking.exceptions.security.AuthorizationEx;
+import com.smartparking.security.exception.AuthorizationEx;
 import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.request.LoginRequest;
