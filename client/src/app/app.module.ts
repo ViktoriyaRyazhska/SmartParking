@@ -91,7 +91,7 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
         PriceRangeFieldComponent,
         UpdateProviderComponent,
         DeleteConfirmationDialogComponent,
-        ClientProfileComponent
+        ClientProfileComponent,
         DeleteConfirmationDialogComponent,
         FavoritesAddConfigmDialogComponent
     ],
