@@ -7,23 +7,24 @@
         </a>
     </h3>
     <span class="example-spacer"></span>
-    <span *ngIf="hasToke()">
+    <span *ngIf="getRole() === 'PROVIDER_MANAGER' || getRole() === 'SUPERUSER'">
     <button [routerLink]="['/profile']" mat-icon-button>
     <mat-icon>&#xE853;</mat-icon>
     </button>
     </span>
     <span *ngIf="hasToke()">
+
         <button [routerLink]="['/configuration']" mat-icon-button>
             <mat-icon>settings</mat-icon>
         </button>
     </span>
-    <span *ngIf="!hasToke()">
+    <span *ngIf="!hasToken()">
     <button mat-raised-button class="ml-3" color="primary" [routerLink]="['/login']" style="font-size:18px;">
         SignIn/SignUp
         <i class="material-icons">&#xE853;</i>
     </button>
     </span>
-    <span *ngIf="hasToke()">
+    <span *ngIf="hasToken()">
         <button mat-raised-button class="ml-3" color="primary" (click)="logOut()">
         Logout
         <i class="material-icons">&#xE853;</i>

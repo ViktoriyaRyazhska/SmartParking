@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import {TokenStorage} from '../auth/token/token-storage';
 
 @Component({
@@ -16,12 +15,16 @@ export class AppNavbarHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  hasToke(): boolean{
+  getRole(): string {
+    return TokenStorage.getRole();
+  }
+
+  hasToken(): boolean{
     return TokenStorage.hasToken();
   }
 
   logOut() {
-    TokenStorage.signOut();
+      TokenStorage.signOut();
   }
 
 

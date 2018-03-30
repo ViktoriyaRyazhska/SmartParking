@@ -5,7 +5,6 @@ import {Router} from "@angular/router";
 import {Token} from "../token/token";
 import {LoginService} from "./login.service";
 import {TokenStorage} from "../token/token-storage";
-import {InfoResponse} from "../info-response";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
@@ -45,8 +44,8 @@ export class LoginComponent implements OnInit {
         this.loginData = this.loginForm.value;
         this.loginService.signIn(this.loginData)
             .subscribe((token: Token)=>{
-                TokenStorage.saveToken(token.token);
-                alert('You are successfully authorized')
+                 TokenStorage.saveToken(token.token);
+                alert('You are successfully authorized');
                 this.router.navigate(['/']);
                 }, (error) => {
                 if(error instanceof HttpErrorResponse)
