@@ -5,9 +5,9 @@ import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.request.LoginRequest;
 import com.smartparking.model.response.InfoResponse;
-import com.smartparking.security.user.SpringSecurityUserService;
+import com.smartparking.service.impl.SpringSecurityUserService;
 import com.smartparking.security.tokens.TokenUtil;
-import com.smartparking.security.user.SpringSecurityUser;
+import com.smartparking.entity.SpringSecurityUser;
 import com.smartparking.security.utils.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/auth")
 public class SecurityController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityController.class);
     @Autowired

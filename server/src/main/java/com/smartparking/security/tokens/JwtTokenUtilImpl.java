@@ -1,6 +1,6 @@
 package com.smartparking.security.tokens;
 
-import com.smartparking.security.user.SpringSecurityUser;
+import com.smartparking.entity.SpringSecurityUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

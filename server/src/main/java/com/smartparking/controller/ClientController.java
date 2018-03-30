@@ -2,11 +2,13 @@ package com.smartparking.controller;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Provider;
+import com.smartparking.entity.Role;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.model.response.*;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/clients")
 public class ClientController {
 
     @Autowired
@@ -28,7 +31,7 @@ public class ClientController {
     @Autowired
     ProviderService providerService;
 
-    @GetMapping("clients")
+    @GetMapping("")
     List<ClientItemResponse> getAllClients() {
         List<Client> clients = clientService.findAll();
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
@@ -39,7 +42,7 @@ public class ClientController {
     }
 
 
-    @GetMapping("clients/clientslimit")
+    @GetMapping("/clientslimit")
     List<ClientItemResponse> getLimitNumberOfClients() {
         List<Client> clients = clientService.findLimitNumberOfClients(new PageRequest(0, 50));
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
@@ -50,13 +53,13 @@ public class ClientController {
     }
 
 
-    @GetMapping("/clients/{id}")
+    @GetMapping("/{id}")
     ClientDetailResponse getClientDetails(@PathVariable Long id) {
         Client client = clientService.findById(id);
         return ClientDetailResponse.of(client);
     }
 
-    @PostMapping("/clients/update/{id}")
+    @PostMapping("/update/{id}")
     ResponseEntity updateClient(@PathVariable Long id, @RequestBody ClientRequest clientRequest) {
         if (!clientRequest.getFirstName().equals("") && !clientRequest.getLastName().equals("") &&
                 !clientRequest.getEmail().equals("")) {
@@ -67,13 +70,13 @@ public class ClientController {
         }
     }
 
-    @GetMapping("clients/findprovider/{id}")
+    @GetMapping("/findprovider/{id}")
     ProviderDetailResponse getProviderById(@PathVariable Long id) {
         Provider provider = providerService.findProviderByClientId(id);
         return ProviderDetailResponse.of(provider);
     }
 
-    @GetMapping("clients/findclients/{input}")
+    @GetMapping("/findclients/{input}")
     List<ClientItemResponse> getClientsByAnyMatch(@PathVariable String input) {
         if (input != "") {
             List<Client> clients = clientService.findClientsByAnyMatch(input);
@@ -85,7 +88,7 @@ public class ClientController {
         } else return getAllClients();
     }
 
-    @GetMapping("clients/findbyrole/{input}")
+    @GetMapping("/findbyrole/{input}")
     List<ClientItemResponse> getClientsByRole(@PathVariable String input) {
         List<Client> clients = clientService.findClientsByRole(input);
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
@@ -95,7 +98,7 @@ public class ClientController {
         return clientItemResponses;
     }
 
-    @GetMapping("clients/getproviders")
+    @GetMapping("/getproviders")
     List<ProviderItemResponse> getAllProviders() {
         List<Provider> providers = providerService.findAll();
         List<ProviderItemResponse> providerItemResponses = new ArrayList<>();

@@ -8,7 +8,7 @@ import {InfoResponse} from "../info-response";
 @Injectable()
 export class RegistrationService {
 
-    private registrationUrl = environment.apiUrl + '/signup';
+    private registrationUrl = environment.apiUrl + '/auth/signup';
 
     constructor(private http: HttpClient) {
     }

@@ -1,6 +1,6 @@
 package com.smartparking.security.tokens;
 
-import com.smartparking.security.user.SpringSecurityUser;
+import com.smartparking.entity.SpringSecurityUser;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;

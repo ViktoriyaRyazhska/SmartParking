@@ -1,4 +1,4 @@
-package com.smartparking.security.user;
+package com.smartparking.entity;
 
 import com.smartparking.entity.Role;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,10 +1,11 @@
-package com.smartparking.security.user;
+package com.smartparking.service.impl;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
 import com.smartparking.security.exception.*;
 import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.repository.ClientRepository;
+import com.smartparking.entity.SpringSecurityUser;
 import com.smartparking.security.utils.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class SpringSecurityUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Optional<SpringSecurityUser> user = clientToSpringSecurityUser(clientRepository.findClientByEmail(username));
+        final Optional<SpringSecurityUser> user = clientToSpringSecurityUser(Optional.of(clientRepository.findClientByEmail(username)));
         final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
         user.ifPresent(detailsChecker :: check);
         return user.orElseThrow(() -> new UsernameNotFoundException("user not found."));
