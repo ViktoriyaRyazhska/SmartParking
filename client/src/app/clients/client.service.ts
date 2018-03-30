@@ -11,6 +11,7 @@ import {environment} from '../../environments/environment';
 export class ClientService {
 
     private clientsUrl = environment.apiUrl + '/clients';
+    private clientProfile = environment.apiUrl + '/profile';
 
     constructor(private http: HttpClient) {
     }
@@ -49,6 +50,10 @@ export class ClientService {
 
     getRoles(): Role[] {
         return ROLES;
+    }
+
+    getClientProfile(): Observable<Client> {
+        return this.http.get<Client>(this.clientProfile);
     }
 
 

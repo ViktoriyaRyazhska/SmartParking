@@ -24,11 +24,11 @@ export class ClientProfileComponent implements OnInit {
 
 
     ngOnInit() {
-//      this.getClientById(TokenStorage.getUserId());
+        this.getClientProfile();
     }
 
-    getClientById(id: number): void {
-        this.clientService.getClientDetail(id)
+    getClientProfile(): void {
+        this.clientService.getClientProfile()
             .subscribe(client => this.client = client);
     }
 
