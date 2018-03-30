@@ -40,7 +40,6 @@ import {IndexComponent} from './index/index.component';
 import {ParkingListFilterComponent} from './index/parking-list-filter/parking-list-filter.component';
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
-import {JwtModule} from '@auth0/angular-jwt';
 
 import {InterceptorService} from "./interceptor.service";
 import {AgmCoreModule} from '@agm/core';
@@ -57,6 +56,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PagerService} from './_services/pager.service';
 import {MatRadioModule} from '@angular/material/radio';
 import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import {ClientProfileComponent} from './client-profile/client-profile.component';
 
 /*export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -89,7 +89,8 @@ import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/
         RadiusFieldComponent,
         PriceRangeFieldComponent,
         UpdateProviderComponent,
-        DeleteConfirmationDialogComponent
+        DeleteConfirmationDialogComponent,
+        ClientProfileComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
