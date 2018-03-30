@@ -1,11 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {MatDialog, MatSnackBar} from '@angular/material';
 
 import {Parking} from '../model/view/parking';
 import {ParkingService} from "../parking.service";
 import {Spot} from '../model/view/spot';
 import {Observable} from 'rxjs/Observable';
+import {
+    FavoriteAddData,
+    FavoritesAddConfigmDialogComponent
+} from './favorites-add-configm-dialog/favorites-add-configm-dialog.component';
+import {Favorite} from '../model/view/favorite';
 
 @Component({
   selector: 'app-parking-detail',
@@ -15,6 +21,7 @@ import {Observable} from 'rxjs/Observable';
 export class ParkingDetailComponent implements OnInit {
 
    parking: Parking;
+    favorite: Favorite;
    spots: Spot[];
    freeSpots: Spot[];
    type: String;
@@ -26,9 +33,11 @@ export class ParkingDetailComponent implements OnInit {
    
 
   constructor(
-    private route: ActivatedRoute,
-    private parkingService: ParkingService,
-    private location: Location
+      private route: ActivatedRoute,
+      private parkingService: ParkingService,
+      private location: Location,
+      private snackBar: MatSnackBar,
+      private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -84,5 +93,19 @@ export class ParkingDetailComponent implements OnInit {
     this.parkingService.getAvailableSpotsByParkingId(id)
       .subscribe(spots => this.freeSpots = spots);
   }
+
+    onParkingAddToFavoritesClick(): void {
+        let dialogRef = this.dialog.open(FavoritesAddConfigmDialogComponent, {
+            data: new FavoriteAddData()
+        });
+
+        dialogRef.afterClosed().subscribe(data => {
+            if (data.confirmed) {
+
+                // this.managerParkingService.deleteParking(parking)
+                //     .subscribe(response => this.onDeleteResponse(parking, response));
+            }
+        });
+    }
 
 }

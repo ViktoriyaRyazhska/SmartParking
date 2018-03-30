@@ -57,6 +57,7 @@ import {PagerService} from './_services/pager.service';
 import {MatRadioModule} from '@angular/material/radio';
 import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import {ClientProfileComponent} from './client-profile/client-profile.component';
+import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add-configm-dialog/favorites-add-configm-dialog.component';
 
 /*export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -91,6 +92,8 @@ import {ClientProfileComponent} from './client-profile/client-profile.component'
         UpdateProviderComponent,
         DeleteConfirmationDialogComponent,
         ClientProfileComponent
+        DeleteConfirmationDialogComponent,
+        FavoritesAddConfigmDialogComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -123,7 +126,7 @@ import {ClientProfileComponent} from './client-profile/client-profile.component'
         MatProgressSpinnerModule,
         MatRadioModule
     ],
-    entryComponents: [DeleteConfirmationDialogComponent],
+    entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
