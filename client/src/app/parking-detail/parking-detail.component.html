@@ -33,9 +33,9 @@
                     <span> {{parking.latitude}}, {{parking.longitude}}</span>
                 </mat-list-item>
                 <mat-divider></mat-divider>
-                <mat-list-item>
+                <mat-list-item *ngIf="hasToken()">
                     <div class="col-4">
-                        <span style="font-size:18px;"><b><i>Add to favorites</i></b></span>
+                        <span style="font-size:18px;" ><b><i>Add to favorites</i></b></span>
                         <button mat-icon-button color="warn" (click)="onParkingAddToFavoritesClick()">
                         <mat-icon>star_rate</mat-icon>
                     </button>

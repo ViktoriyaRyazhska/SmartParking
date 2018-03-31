@@ -4,6 +4,7 @@ export class Parking {
     city: string;
     street: string;
     building: string;
+    address:string;
     latitude: number;
     longitude: number;
     token: string;

@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http'
 import {Parking} from './model/view/parking';
 import {Spot} from './model/view/spot';
 import {environment} from '../environments/environment';
+import { Favorite } from './model/view/favorite';
 
 @Injectable()
 export class ParkingService {
@@ -36,6 +37,16 @@ export class ParkingService {
 
     getAvailableSpotsByParkingId(id: number): Observable<Spot[]> {
         return this.http.get<Spot[]>(this.parkingDetailUrl + id + '/freespots');
+    }
+
+    // saveParking(parking: Parking): Observable<HttpResponse<any>> {
+    //     return this.http.post<HttpResponse<any>>(
+    //         this.parkingConfigureUrl + '/parking/save', parking, {observe: 'response'});
+    // }
+
+    saveToFavorite(id: number, favorite: Favorite): Observable<HttpResponse<any>>{
+        return this.http.post<HttpResponse<any>>(
+            this.parkingDetailUrl + id + '/savetofavorites', favorite, {observe: 'response'});
     }
 
 }
