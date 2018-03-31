@@ -51,7 +51,7 @@ const routes: Routes = [
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'profile', component: ClientProfileComponent},
     {path: 'profile/edit', component: ClientProfileEditComponent},
-    {path: 'profile/edit/password', component: ClientProfileEditPasswordComponent}
+    {path: 'profile/edit/password', component: ClientProfileEditPasswordComponent},
     {path: 'profile', component: ClientProfileComponent},
     {path: 'statistic', component: StatisticComponent},
     {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},

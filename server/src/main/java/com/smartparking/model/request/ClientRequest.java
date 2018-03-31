@@ -9,4 +9,5 @@ public class ClientRequest {
     private String lastName;
     private String email;
     private String role;
+    private String image;
 }
