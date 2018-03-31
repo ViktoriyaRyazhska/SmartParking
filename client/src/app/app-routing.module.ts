@@ -18,6 +18,7 @@ import {ClientEditComponent} from './clients/client-edit/client-edit.component';
 import {UpdateProviderComponent} from './superuser-configuration/providers/update-provider/update-provider.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 import {ClientProfileComponent} from "./client-profile/client-profile.component";
+import {StatisticComponent} from "./statistic/statistic.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -45,7 +46,8 @@ const routes: Routes = [
     {path: 'configuration/provider/update/:id', component: UpdateProviderComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
-    {path: 'profile', component: ClientProfileComponent}
+    {path: 'profile', component: ClientProfileComponent},
+    {path: 'statistic', component: StatisticComponent}
 ];
 
 @NgModule({

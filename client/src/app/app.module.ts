@@ -59,6 +59,7 @@ import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/
 import {ClientProfileComponent} from './client-profile/client-profile.component';
 import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add-configm-dialog/favorites-add-configm-dialog.component';
 import { ParkingMapComponent } from './index/parking-map/parking-map.component';
+import { StatisticComponent } from './statistic/statistic.component';
 
 /*export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -94,7 +95,8 @@ import { ParkingMapComponent } from './index/parking-map/parking-map.component';
         ClientProfileComponent,
         ParkingMapComponent,
         DeleteConfirmationDialogComponent,
-        FavoritesAddConfigmDialogComponent
+        FavoritesAddConfigmDialogComponent,
+        StatisticComponent
     ],
     imports: [
        /* AgmCoreModule.forRoot({
