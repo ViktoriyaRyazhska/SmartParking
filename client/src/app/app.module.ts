@@ -59,6 +59,10 @@ import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/
 import {ClientProfileComponent} from './client-profile/client-profile.component';
 import {ClientProfileEditComponent} from './client-profile/client-profile-edit/client-profile-edit.component';
 import {ClientProfileEditPasswordComponent} from './client-profile/client-profile-edit-password/client-profile-edit-password.component';
+import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add-configm-dialog/favorites-add-configm-dialog.component';
+import {ParkingMapComponent} from './index/parking-map/parking-map.component';
+import {StatisticComponent} from './statistic/statistic.component';
+import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
 
 /*export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -91,15 +95,22 @@ import {ClientProfileEditPasswordComponent} from './client-profile/client-profil
         RadiusFieldComponent,
         PriceRangeFieldComponent,
         UpdateProviderComponent,
+        ParkingMapComponent,
         DeleteConfirmationDialogComponent,
         ClientProfileComponent,
         ClientProfileEditComponent,
-        ClientProfileEditPasswordComponent
+        ClientProfileEditPasswordComponent,
+        FavoritesAddConfigmDialogComponent,
+        StatisticComponent,
+        ParkingStatisticComponent
     ],
     imports: [
+        /* AgmCoreModule.forRoot({
+             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
+             libraries: ['places']
+         }),*/
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
-            libraries: ['places']
+            apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU'
         }),
         /*JwtModule.forRoot({
             config: {
@@ -127,7 +138,7 @@ import {ClientProfileEditPasswordComponent} from './client-profile/client-profil
         MatProgressSpinnerModule,
         MatRadioModule
     ],
-    entryComponents: [DeleteConfirmationDialogComponent],
+    entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,

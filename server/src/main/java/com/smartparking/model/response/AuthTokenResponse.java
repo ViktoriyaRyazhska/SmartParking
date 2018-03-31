@@ -1,19 +1,12 @@
 package com.smartparking.model.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthTokenResponse {
     private String token;
-
-    public AuthTokenResponse() {}
-
-    public AuthTokenResponse(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

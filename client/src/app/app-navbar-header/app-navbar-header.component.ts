@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TokenStorage} from '../auth/token/token-storage';
 
 @Component({
@@ -8,25 +8,24 @@ import {TokenStorage} from '../auth/token/token-storage';
 })
 export class AppNavbarHeaderComponent implements OnInit {
 
-    navTitle = 'SmartParking';
+  navTitle = 'SmartParking';
 
-    constructor() {
-    }
+  constructor() { }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
-    getRole(): string {
-        return TokenStorage.getRole();
-    }
+  getRole(): string {
+    return TokenStorage.getRole();
+  }
 
-    hasToken(): boolean {
-        return TokenStorage.hasToken();
-    }
+  hasToken(): boolean{
+    return TokenStorage.hasToken();
+  }
 
-    logOut() {
-        TokenStorage.signOut();
-    }
+  logOut() {
+      TokenStorage.signOut();
+  }
 
 
 }

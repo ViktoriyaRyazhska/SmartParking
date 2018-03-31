@@ -2,12 +2,15 @@ package com.smartparking.model.response;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Favorite;
+import lombok.Data;
 
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 public class ClientDetailResponse {
+
     private Long id;
     private Long providersId;
     private String firstName;
@@ -24,11 +27,11 @@ public class ClientDetailResponse {
         response.setId(client.getId());
 
         if (client.getProvider() == null) {
-            response.setProvidersId(0l);
-            response.setProvider("no provider");
+            response.setProvidersId(0L);
+            response.setProviderName("no provider");
         } else {
             response.setProvidersId(client.getProvider().getId());
-            response.setProvider(client.getProvider().getName());
+            response.setProviderName(client.getProvider().getName());
         }
 
         response.setFirstName(client.getFirstName());
@@ -47,85 +50,5 @@ public class ClientDetailResponse {
         }
 
         return response;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getProvider() {
-        return providerName;
-    }
-
-    public void setProvider(String provider) {
-        this.providerName = provider;
-    }
-
-    public List<Long> getFavoritesId() {
-        return favoritesId;
-    }
-
-    public void setFavoritesId(List<Long> favoritesId) {
-        this.favoritesId = favoritesId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public List<String> getFavoritesNames() {
-        return favoritesNames;
-    }
-
-    public void setFavoritesNames(List<String> favoritesNames) {
-        this.favoritesNames = favoritesNames;
-    }
-
-    public Long getProvidersId() {
-        return providersId;
-    }
-
-    public void setProvidersId(Long providersId) {
-        this.providersId = providersId;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

@@ -3,6 +3,7 @@ package com.smartparking.service.impl;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
 import com.smartparking.entity.SpringSecurityUser;
+import com.smartparking.entity.SpringSecurityUser;
 import com.smartparking.model.request.PasswordRequest;
 import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.repository.ClientRepository;
@@ -39,20 +40,20 @@ public class SpringSecurityUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Optional<SpringSecurityUser> user = clientToSpringSecurityUser(Optional.of(clientRepository.findClientByEmail(username)));
+        final Optional<UserDetails> user = clientToSpringSecurityUser(clientRepository.findClientByEmail(username));
         final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
-        user.ifPresent(detailsChecker::check);
+        user.ifPresent(detailsChecker :: check);
         return user.orElseThrow(() -> new UsernameNotFoundException("user not found."));
     }
 
-    private Optional<SpringSecurityUser> clientToSpringSecurityUser(Optional<Client> client) {
+    private Optional<UserDetails> clientToSpringSecurityUser(Client client) {
         SpringSecurityUser springSecurityUser = new SpringSecurityUser();
-        springSecurityUser.setId(client.get().getId());
-        springSecurityUser.setUsername(client.get().getEmail());
-        springSecurityUser.setPassword(client.get().getPassword());
-        springSecurityUser.setFirstname(client.get().getFirstName());
-        springSecurityUser.setLastname(client.get().getLastName());
-        springSecurityUser.setRole(client.get().getRole());
+        springSecurityUser.setId(client.getId());
+        springSecurityUser.setUsername(client.getEmail());
+        springSecurityUser.setPassword(client.getPassword());
+        springSecurityUser.setFirstname(client.getFirstName());
+        springSecurityUser.setLastname(client.getLastName());
+        springSecurityUser.setRole(client.getRole());
         return Optional.of(springSecurityUser);
     }
 
@@ -60,9 +61,9 @@ public class SpringSecurityUserService implements UserDetailsService {
         Client client = new Client();
         client.setEmail(validator.validateEmailOnRegistration(registrationRequest.getEmail()));
         client.setPassword(bcryptEncoder.encode(validator.validatePassword(registrationRequest.getPassword())));
-        client.setFirstName(validator.validateFirstname(registrationRequest.getFirstname()));
-        client.setLastName(validator.validateLastname(registrationRequest.getLastname()));
-        client.setRole(Role.DRIVER.toString());
+        client.setFirstName(validator.validateFirstname(registrationRequest.getFirstName()));
+        client.setLastName(validator.validateLastname(registrationRequest.getLastName()));
+        client.setRole(Role.DRIVER);
         clientRepository.save(client);
     }
 

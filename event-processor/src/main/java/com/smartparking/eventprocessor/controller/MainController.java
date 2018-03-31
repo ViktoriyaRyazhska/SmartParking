@@ -1,9 +1,9 @@
-package com.smartparking.controller;
+package com.smartparking.eventprocessor.controller;
 
-import com.smartparking.element.InRequest;
 import com.smartparking.entity.Event;
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.eventprocessor.element.InRequest;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.slf4j.Logger;
@@ -32,9 +32,6 @@ public class MainController {
 
     @Autowired
     private SpotService spotService;
-
-
-
 
     @PostConstruct
     public void init() {

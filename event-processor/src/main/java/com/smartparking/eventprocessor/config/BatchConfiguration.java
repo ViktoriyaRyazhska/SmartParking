@@ -1,10 +1,10 @@
-package com.smartparking.config;
+package com.smartparking.eventprocessor.config;
 
 
-import com.smartparking.element.RequestItemProcessor;
-import com.smartparking.element.RequestItemReader;
-import com.smartparking.element.RequestItemWriter;
 import com.smartparking.entity.Event;
+import com.smartparking.eventprocessor.element.RequestItemProcessor;
+import com.smartparking.eventprocessor.element.RequestItemReader;
+import com.smartparking.eventprocessor.element.RequestItemWriter;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;

@@ -4,6 +4,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 const TOKEN_KEY = 'access_token';
 const helper = new JwtHelperService();
 
+
 @Injectable()
 export class TokenStorage{
 
@@ -25,7 +26,7 @@ export class TokenStorage{
     }
 
     public static getRole(): string {
-        if (!TokenStorage.hasToken()) {
+        if(!TokenStorage.hasToken()) {
             return '';
         }
         return TokenStorage.decodeToken().authorities[0].authority;
@@ -35,16 +36,16 @@ export class TokenStorage{
         return TokenStorage.decodeToken().username;
     }
 
-    public static hasToken(): boolean {
-        return TokenStorage.getToken() != null;
+    private static decodeToken(): any {
+        console.log(helper.decodeToken(TokenStorage.getToken()));
+        return helper.decodeToken(TokenStorage.getToken());
     }
 
     public static refresh(): string {
         return null;
     }
 
-    private static decodeToken(): any {
-        console.log(helper.decodeToken(TokenStorage.getToken()));
-        return helper.decodeToken(TokenStorage.getToken());
+    public static hasToken(): boolean {
+        return TokenStorage.getToken() != null;
     }
 }

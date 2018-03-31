@@ -20,6 +20,8 @@ import {ManagerParkingListComponent} from './manager/manager-parking-list/manage
 import {ClientProfileComponent} from "./client-profile/client-profile.component";
 import {ClientProfileEditComponent} from "./client-profile/client-profile-edit/client-profile-edit.component";
 import {ClientProfileEditPasswordComponent} from "./client-profile/client-profile-edit-password/client-profile-edit-password.component";
+import {StatisticComponent} from "./statistic/statistic.component";
+import {ParkingStatisticComponent} from "./statistic/parking-statistic/parking-statistic.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -50,6 +52,9 @@ const routes: Routes = [
     {path: 'profile', component: ClientProfileComponent},
     {path: 'profile/edit', component: ClientProfileEditComponent},
     {path: 'profile/edit/password', component: ClientProfileEditPasswordComponent}
+    {path: 'profile', component: ClientProfileComponent},
+    {path: 'statistic', component: StatisticComponent},
+    {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
 ];
 
 @NgModule({

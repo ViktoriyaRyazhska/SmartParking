@@ -1,10 +1,15 @@
 package com.smartparking.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "favorite")
+@Getter
+@Setter
 public class Favorite extends AbstractIdentifiableEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -16,28 +21,4 @@ public class Favorite extends AbstractIdentifiableEntity {
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Parking getParking() {
-        return parking;
-    }
-
-    public void setParking(Parking parking) {
-        this.parking = parking;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -19,23 +19,28 @@ import java.util.List;
 @RestController
 public class ProviderController {
 
-    @Autowired
-    private ProviderService providerService;
+    private final ProviderService providerService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProviderController.class);
 
+    @Autowired
+    public ProviderController(ProviderService providerService) {
+        this.providerService = providerService;
+    }
+
     @PostMapping("providers")
-    List<ProviderItemResponse> findAll(@RequestBody ProviderFilter providerFilter) {
+    ResponseEntity<List<ProviderItemResponse>> findAll(@RequestBody ProviderFilter providerFilter) {
         LOGGER.debug("Filtering by " + providerFilter.getActive() + " state and " + providerFilter.getCompanyName() +
                 " company name.");
         List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
         providers.forEach(provider -> providerResponses.add(ProviderItemResponse.of(provider)));
         LOGGER.debug("Filtered providers response - " + providerResponses);
-        return providerResponses;
+        return new ResponseEntity<>(providerResponses, HttpStatus.OK);
     }
 
     @GetMapping("providers/{id}")
+    @SuppressWarnings("Convert2Diamond")
     ResponseEntity<?> find(@PathVariable Long id) {
         LOGGER.debug("Searching the provider with id " + id);
         return providerService.findByIdResponse(id)
@@ -50,7 +55,7 @@ public class ProviderController {
                 providerRequest.getCity() + " " +
                 providerRequest.getStreet() + " " +
                 providerRequest.getBuilding() + " " +
-                providerRequest.getActive());
+                providerRequest.isActive());
         providerService.save(providerRequest.toProvider());
         LOGGER.debug("Provider was saved.");
         return new ResponseEntity<>(HttpStatus.OK);

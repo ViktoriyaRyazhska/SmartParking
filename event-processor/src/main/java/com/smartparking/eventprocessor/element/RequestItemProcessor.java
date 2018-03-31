@@ -1,7 +1,7 @@
-package com.smartparking.element;
+package com.smartparking.eventprocessor.element;
 
-import com.smartparking.controller.MainController;
 import com.smartparking.entity.Event;
+import com.smartparking.eventprocessor.controller.MainController;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 

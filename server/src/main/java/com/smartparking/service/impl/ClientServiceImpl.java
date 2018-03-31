@@ -2,6 +2,7 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Provider;
+import com.smartparking.entity.Role;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.repository.ClientRepository;
 import com.smartparking.service.AbstractService;
@@ -40,7 +41,7 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
 
         Provider provider = findProviderById(clientRequest.getProvidersId());
         client.setProvider(provider);
-        client.setRole(clientRequest.getRole());
+        client.setRole(Role.valueOf(clientRequest.getRole()));
 
         client.setFirstName(clientRequest.getFirstName());
         client.setLastName(clientRequest.getLastName());
