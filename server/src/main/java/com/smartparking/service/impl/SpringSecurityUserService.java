@@ -26,18 +26,14 @@ public class SpringSecurityUserService implements UserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringSecurityUserService.class);
 
-    private final Validator validator;
-
-    private final ClientRepository clientRepository;
-
-    private final PasswordEncoder bcryptEncoder;
+    @Autowired
+    private Validator validator;
 
     @Autowired
-    public SpringSecurityUserService(Validator validator, ClientRepository clientRepository, PasswordEncoder bcryptEncoder) {
-        this.validator = validator;
-        this.clientRepository = clientRepository;
-        this.bcryptEncoder = bcryptEncoder;
-    }
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -58,7 +54,7 @@ public class SpringSecurityUserService implements UserDetailsService {
         return Optional.of(springSecurityUser);
     }
 
-    public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx, DuplicateEmailEx {
+    public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, NonMatchingPasswordsEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx, DuplicateEmailEx {
         Client client = new Client();
         client.setEmail(validator.validateEmailOnRegistration(registrationRequest.getEmail()));
         client.setPassword(bcryptEncoder.encode(validator.validatePassword(registrationRequest.getPassword())));

@@ -19,12 +19,11 @@ import java.util.Optional;
 @Service
 public class ProviderServiceImpl extends AbstractService<Provider, Long, ProviderRepository> implements ProviderService {
 
-    private final ProviderFilterRepository providerFilterRepository;
-
     @Autowired
-    protected ProviderServiceImpl(ProviderRepository repository, ProviderFilterRepository providerFilterRepository) {
+    private ProviderFilterRepository providerFilterRepository;
+
+    protected ProviderServiceImpl(@Autowired ProviderRepository repository) {
         super(repository);
-        this.providerFilterRepository = providerFilterRepository;
     }
 
     @Override
