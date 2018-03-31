@@ -1,15 +1,15 @@
 package com.smartparking.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "spot")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Spot extends AbstractIdentifiableEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

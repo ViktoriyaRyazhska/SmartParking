@@ -1,7 +1,7 @@
 package com.smartparking.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "provider")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Provider extends AbstractIdentifiableEntity {
 
     @NotNull

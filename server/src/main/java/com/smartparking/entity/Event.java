@@ -1,7 +1,7 @@
 package com.smartparking.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,16 +12,13 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "event")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Event extends AbstractIdentifiableEntity {
 
     @NotNull
     @Column(name = "event_marker", nullable = false)
     private EventType eventType;
-
-    public Event() {
-    }
 
     @NotNull
     @ManyToOne(optional = false)
