@@ -5,7 +5,7 @@
 
 <changeSet author="Oleksiy" id="201803201835" dbms="MYSQL">
     <sql>
-        CREATE TABLE IF NOT EXISTS Provider
+        CREATE TABLE IF NOT EXISTS provider
         (
         id bigint(20) NOT NULL AUTO_INCREMENT,
         active bit(1) NOT NULL,

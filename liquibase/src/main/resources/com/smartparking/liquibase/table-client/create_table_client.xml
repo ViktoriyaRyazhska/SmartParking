@@ -5,7 +5,7 @@
 
     <changeSet author="Oleksiy" id="201803201839" dbms="MYSQL">
         <sql>
-            CREATE TABLE IF NOT EXISTS Client
+            CREATE TABLE IF NOT EXISTS client
             (
             id bigint(20) NOT NULL  AUTO_INCREMENT,
             email varchar(255)NOT NULL UNIQUE,
