@@ -19,6 +19,7 @@ import {UpdateProviderComponent} from './superuser-configuration/providers/updat
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 import {ClientProfileComponent} from "./client-profile/client-profile.component";
 import {StatisticComponent} from "./statistic/statistic.component";
+import {ParkingStatisticComponent} from "./statistic/parking-statistic/parking-statistic.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -47,7 +48,8 @@ const routes: Routes = [
     {path: 'registration', component: RegistrationComponent},
     {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'profile', component: ClientProfileComponent},
-    {path: 'statistic', component: StatisticComponent}
+    {path: 'statistic', component: StatisticComponent},
+    {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
 ];
 
 @NgModule({

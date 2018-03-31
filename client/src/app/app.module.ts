@@ -58,8 +58,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import {ClientProfileComponent} from './client-profile/client-profile.component';
 import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add-configm-dialog/favorites-add-configm-dialog.component';
-import { ParkingMapComponent } from './index/parking-map/parking-map.component';
-import { StatisticComponent } from './statistic/statistic.component';
+import {ParkingMapComponent} from './index/parking-map/parking-map.component';
+import {StatisticComponent} from './statistic/statistic.component';
+import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
 
 /*export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -96,13 +97,14 @@ import { StatisticComponent } from './statistic/statistic.component';
         ParkingMapComponent,
         DeleteConfirmationDialogComponent,
         FavoritesAddConfigmDialogComponent,
-        StatisticComponent
+        StatisticComponent,
+        ParkingStatisticComponent
     ],
     imports: [
-       /* AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
-            libraries: ['places']
-        }),*/
+        /* AgmCoreModule.forRoot({
+             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
+             libraries: ['places']
+         }),*/
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU'
         }),
