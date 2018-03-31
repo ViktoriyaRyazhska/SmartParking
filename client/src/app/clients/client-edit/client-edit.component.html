@@ -17,8 +17,8 @@
             <input type="email" name="email" [(ngModel)]="client.email" class="form-control" readonly>
         </div>
 
-        <div class="row" *ngIf="client.provider!='no provider' && client.role!='SUPERUSER' && client.role!='DRIVER'">
-            <h6>Current provider: {{client.provider}}</h6>
+        <div class="row" *ngIf="client.providerName!='no provider' && client.role!='SUPERUSER' && client.role!='DRIVER'">
+            <h6>Current provider: {{client.providerName}}</h6>
         </div>
 
         <div class="row">

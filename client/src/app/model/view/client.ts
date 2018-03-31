@@ -7,7 +7,7 @@ export class Client {
     lastName: string;
     email: string;
     favoritesNames: string[];
-    provider: string;
+    providerName: string;
     providersId: number;
     role: string;
 }
