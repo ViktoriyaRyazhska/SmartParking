@@ -19,11 +19,12 @@ import java.util.Optional;
 @Service
 public class ProviderServiceImpl extends AbstractService<Provider, Long, ProviderRepository> implements ProviderService {
 
-    @Autowired
-    private ProviderFilterRepository providerFilterRepository;
+    private final ProviderFilterRepository providerFilterRepository;
 
-    protected ProviderServiceImpl(@Autowired ProviderRepository repository) {
+    @Autowired
+    protected ProviderServiceImpl(ProviderRepository repository, ProviderFilterRepository providerFilterRepository) {
         super(repository);
+        this.providerFilterRepository = providerFilterRepository;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ProviderServiceImpl extends AbstractService<Provider, Long, Provide
 
     @Override
     public Optional<ProviderResponse> findByIdResponse(Long id) {
-        return getRepository().findById(id).map(ProviderResponse::toProviderResponse);
+        return getRepository().findById(id).map(ProviderResponse::of);
     }
 
     @Override

@@ -19,10 +19,14 @@ import java.util.List;
 @RestController
 public class ProviderController {
 
-    @Autowired
-    private ProviderService providerService;
+    private final ProviderService providerService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProviderController.class);
+
+    @Autowired
+    public ProviderController(ProviderService providerService) {
+        this.providerService = providerService;
+    }
 
     @PostMapping("providers")
     ResponseEntity<List<ProviderItemResponse>> findAll(@RequestBody ProviderFilter providerFilter) {
@@ -36,6 +40,7 @@ public class ProviderController {
     }
 
     @GetMapping("providers/{id}")
+    @SuppressWarnings("Convert2Diamond")
     ResponseEntity<?> find(@PathVariable Long id) {
         LOGGER.debug("Searching the provider with id " + id);
         return providerService.findByIdResponse(id)
@@ -50,7 +55,7 @@ public class ProviderController {
                 providerRequest.getCity() + " " +
                 providerRequest.getStreet() + " " +
                 providerRequest.getBuilding() + " " +
-                providerRequest.getActive());
+                providerRequest.isActive());
         providerService.save(providerRequest.toProvider());
         LOGGER.debug("Provider was saved.");
         return new ResponseEntity<>(HttpStatus.OK);

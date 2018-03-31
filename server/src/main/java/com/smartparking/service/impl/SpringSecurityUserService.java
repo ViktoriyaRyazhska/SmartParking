@@ -2,10 +2,10 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
-import com.smartparking.security.exception.*;
+import com.smartparking.entity.SpringSecurityUser;
 import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.repository.ClientRepository;
-import com.smartparking.entity.SpringSecurityUser;
+import com.smartparking.security.exception.*;
 import com.smartparking.security.utils.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +26,18 @@ public class SpringSecurityUserService implements UserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringSecurityUserService.class);
 
-    @Autowired
-    private Validator validator;
+    private final Validator validator;
+
+    private final ClientRepository clientRepository;
+
+    private final PasswordEncoder bcryptEncoder;
 
     @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private PasswordEncoder bcryptEncoder;
+    public SpringSecurityUserService(Validator validator, ClientRepository clientRepository, PasswordEncoder bcryptEncoder) {
+        this.validator = validator;
+        this.clientRepository = clientRepository;
+        this.bcryptEncoder = bcryptEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -54,12 +58,12 @@ public class SpringSecurityUserService implements UserDetailsService {
         return Optional.of(springSecurityUser);
     }
 
-    public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, NonMatchingPasswordsEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx, DuplicateEmailEx {
+    public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx, DuplicateEmailEx {
         Client client = new Client();
         client.setEmail(validator.validateEmailOnRegistration(registrationRequest.getEmail()));
         client.setPassword(bcryptEncoder.encode(validator.validatePassword(registrationRequest.getPassword())));
-        client.setFirstName(validator.validateFirstname(registrationRequest.getFirstname()));
-        client.setLastName(validator.validateLastname(registrationRequest.getLastname()));
+        client.setFirstName(validator.validateFirstname(registrationRequest.getFirstName()));
+        client.setLastName(validator.validateLastname(registrationRequest.getLastName()));
         client.setRole(Role.DRIVER);
         clientRepository.save(client);
     }
