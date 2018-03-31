@@ -3,6 +3,7 @@ package com.smartparking.model.response;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Favorite;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ public class ClientDetailResponse {
     private String email;
     private String providerName;
     private String role;
+    private String image;
     private List<Long> favoritesId;
     private List<String> favoritesNames;
 
@@ -40,6 +42,10 @@ public class ClientDetailResponse {
         response.setFavoritesNames(client.getFavorites()
                 .stream().map(Favorite::getName)
                 .collect(Collectors.toList()));
+        if (client.getImage() != null) {
+            response.setImage(Base64.getEncoder().encodeToString(client.getImage()));
+        }
+
         return response;
     }
 
@@ -113,5 +119,13 @@ public class ClientDetailResponse {
 
     public void setProvidersId(Long providersId) {
         this.providersId = providersId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

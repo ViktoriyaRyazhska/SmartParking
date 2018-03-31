@@ -5,7 +5,7 @@
 
     <changeSet author="Oleksiy" id="201803202114" dbms="MYSQL">
         <sql>
-            CREATE TABLE IF NOT EXISTS Spot
+            CREATE TABLE IF NOT EXISTS spot
             (
             id bigint(20) NOT NULL  AUTO_INCREMENT,
             parking_id  bigint(20) NOT NULL,

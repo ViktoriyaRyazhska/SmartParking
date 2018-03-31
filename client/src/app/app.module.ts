@@ -57,6 +57,8 @@ import {PagerService} from './_services/pager.service';
 import {MatRadioModule} from '@angular/material/radio';
 import {DeleteConfirmationDialogComponent} from './manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import {ClientProfileComponent} from './client-profile/client-profile.component';
+import {ClientProfileEditComponent} from './client-profile/client-profile-edit/client-profile-edit.component';
+import {ClientProfileEditPasswordComponent} from './client-profile/client-profile-edit-password/client-profile-edit-password.component';
 
 /*export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -90,7 +92,9 @@ import {ClientProfileComponent} from './client-profile/client-profile.component'
         PriceRangeFieldComponent,
         UpdateProviderComponent,
         DeleteConfirmationDialogComponent,
-        ClientProfileComponent
+        ClientProfileComponent,
+        ClientProfileEditComponent,
+        ClientProfileEditPasswordComponent
     ],
     imports: [
         AgmCoreModule.forRoot({

@@ -5,7 +5,7 @@
 
     <changeSet author="Oleksiy" id="201803210735" dbms="MYSQL">
         <sql>
-            CREATE TABLE IF NOT EXISTS Event
+            CREATE TABLE IF NOT EXISTS event
             (
             id bigint(20) NOT NULL  AUTO_INCREMENT,
             event_marker int(11)NOT NULL,

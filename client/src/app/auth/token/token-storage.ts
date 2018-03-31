@@ -25,26 +25,26 @@ export class TokenStorage{
     }
 
     public static getRole(): string {
-        return TokenStorage.decodeToken().authorities.authority;
+        if (!TokenStorage.hasToken()) {
+            return '';
+        }
+        return TokenStorage.decodeToken().authorities[0].authority;
     }
 
     public static getUsername(): string {
         return TokenStorage.decodeToken().username;
     }
 
-    public static decodeToken(): any {
-        return helper.decodeToken(TokenStorage.getToken());
+    public static hasToken(): boolean {
+        return TokenStorage.getToken() != null;
     }
 
     public static refresh(): string {
         return null;
     }
 
-    public static hasToken(): boolean {
-        if (this.getToken() != null) {
-            return true;
-        } else {
-            return false;
-        }
+    private static decodeToken(): any {
+        console.log(helper.decodeToken(TokenStorage.getToken()));
+        return helper.decodeToken(TokenStorage.getToken());
     }
 }

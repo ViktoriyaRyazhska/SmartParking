@@ -16,5 +16,5 @@
     <include file="com/smartparking/liquibase/table-favorite/insert_into_table_favorite.xml"/>
     <include file="com/smartparking/liquibase/table-event/insert_into_table_event.xml"/>
     <include file="com/smartparking/liquibase/function/create_function_location_distance.xml"/>
-
+    <include file="com/smartparking/liquibase/table-client/alter_table_client_added_column_image.xml"/>
 </databaseChangeLog>

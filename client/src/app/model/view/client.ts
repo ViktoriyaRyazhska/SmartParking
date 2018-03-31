@@ -1,6 +1,3 @@
-import {Provider} from './provider';
-import {Favorite} from "./favorite";
-
 export class Client {
     id: string;
     firstName: string;
@@ -10,4 +7,5 @@ export class Client {
     provider: string;
     providersId: number;
     role: string;
+    image: string;
 }

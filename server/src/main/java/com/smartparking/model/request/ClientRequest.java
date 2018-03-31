@@ -6,6 +6,7 @@ public class ClientRequest {
     private String lastName;
     private String email;
     private String role;
+    private String image;
 
     public String getFirstName() {
         return firstName;
@@ -45,5 +46,13 @@ public class ClientRequest {
 
     public void setProvidersId(Long providersId) {
         this.providersId = providersId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

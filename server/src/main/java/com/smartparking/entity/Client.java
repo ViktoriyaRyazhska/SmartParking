@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "client")
-public class Client extends AbstractIdentifiableEntity{
+public class Client extends AbstractIdentifiableEntity {
 
     @NotNull
     @Column(name = "first_name", nullable = false)
@@ -27,6 +27,9 @@ public class Client extends AbstractIdentifiableEntity{
     @NotNull
     @Column(name = "role", nullable = false)
     private Role role;
+
+    @Column(name = "image")
+    private byte[] image;
 
     @OneToMany(mappedBy = "client")
     private List<Favorite> favorites;
@@ -72,6 +75,14 @@ public class Client extends AbstractIdentifiableEntity{
 
     public void setRole(String role) {
         this.role = Role.valueOf(role);
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public List<Favorite> getFavorites() {

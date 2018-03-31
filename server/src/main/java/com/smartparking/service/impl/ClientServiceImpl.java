@@ -7,13 +7,12 @@ import com.smartparking.repository.ClientRepository;
 import com.smartparking.service.AbstractService;
 import com.smartparking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.transaction.Transactional;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -46,6 +45,9 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
         client.setFirstName(clientRequest.getFirstName());
         client.setLastName(clientRequest.getLastName());
         client.setEmail(clientRequest.getEmail());
+        if (clientRequest.getImage() != null) {
+            client.setImage(Base64.getDecoder().decode(clientRequest.getImage()));
+        }
         getRepository().save(client);
     }
 

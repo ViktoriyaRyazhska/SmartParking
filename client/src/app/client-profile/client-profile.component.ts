@@ -32,18 +32,7 @@ export class ClientProfileComponent implements OnInit {
             .subscribe(client => this.client = client);
     }
 
-
-    seeProviderDetails() {
-        this.showProviderDetails = !this.showProviderDetails;
+    goToProfileEdit() {
+        this.router.navigate(['profile/edit']);
     }
-
-
-    goToClientEditForm() {
-        this.router.navigate(['configuration/clients/edit/', this.client.id]);
-    }
-
-    goToProvidersDetails() {
-        this.router.navigate(['configuration/providers/', this.client.providersId]);
-    }
-
 }
