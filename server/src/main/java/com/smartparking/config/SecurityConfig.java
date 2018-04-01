@@ -60,11 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**", "/parkingdetail/**", "/parkings-nearby/**").permitAll()
+                .antMatchers("/auth/**", "/parkingdetail/**", "/parkings-nearby/**", "/home", "/home/**").permitAll()
                 .antMatchers("/profile", "/profile/**").hasAnyAuthority(Role.DRIVER.toString())
                 .antMatchers("/clients", "/clients/**", "/manager-configuration/**", "/providers", "/providers/**", "/profile", "/profile/**").hasAnyAuthority(Role.PROVIDER_MANAGER.toString(), Role.SUPERUSER.toString())
                 .antMatchers().hasAnyAuthority(Role.SUPERUSER.toString())
-                .anyRequest().denyAll();
+                .anyRequest().permitAll();
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 

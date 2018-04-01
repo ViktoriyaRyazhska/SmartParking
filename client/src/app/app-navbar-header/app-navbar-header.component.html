@@ -12,12 +12,12 @@
             <i class="material-icons">&#xE8E5;</i>
         </button>
     </span>
-    <span *ngIf="getRole() === 'PROVIDER_MANAGER' || getRole() === 'SUPERUSER'">
+    <span *ngIf="hasToken()">
     <button [routerLink]="['/profile']" mat-icon-button>
     <mat-icon>&#xE853;</mat-icon>
     </button>
     </span>
-    <span *ngIf="hasToken()">
+    <span *ngIf="getRole() === 'PROVIDER_MANAGER' || getRole() === 'SUPERUSER'">
 
         <button [routerLink]="['/configuration']" mat-icon-button>
             <mat-icon>settings</mat-icon>

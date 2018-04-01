@@ -77,7 +77,7 @@ export class LocationFieldComponent implements OnInit {
     }
 
     ngOnDestroy(): void {
-        this.controlChangesSubscription.unsubscribe();
+//        this.controlChangesSubscription.unsubscribe();
         window.navigator.geolocation.clearWatch(this.geolocationDescriptor);
     }
 
