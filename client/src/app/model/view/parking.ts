@@ -15,6 +15,8 @@ export class Parking {
     spotsCount: number;
     availableSpotsCount: number;
     distance: number;
+    isFavorite: Boolean;
+    favoriteName: string;
 
     public static copyOf(parking: Parking): Parking {
         return Object.assign(new Parking(), parking);

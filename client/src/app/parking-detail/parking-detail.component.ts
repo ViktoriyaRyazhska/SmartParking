@@ -61,6 +61,7 @@ export class ParkingDetailComponent implements OnInit {
   }
 
   fullnessBarCount(): void {
+    console.log('isFavorite ->'+this.parking.isFavorite);
       this.max = this.parking.spotsCount;
       this.value = this.parking.spotsCount - this.parking.availableSpotsCount;
     if (this.value < (this.max * 0.6)) {
@@ -117,9 +118,10 @@ export class ParkingDetailComponent implements OnInit {
                     duration: 2000
                 });
             });
-               
+            this.ngOnInit();
             }
         });
+        
     }
 
     getRole(): string {
