@@ -29,9 +29,9 @@ export class IndexComponent implements OnInit {
     constructor(private parkingService: ParkingService,
                 private changeDetector: ChangeDetectorRef) {
     }
-
+    //TODO Розкоментити
     ngOnInit() {
-        this.filter.radiusChanges.subscribe(() => this.filterParkings());
+   /*     this.filter.radiusChanges.subscribe(() => this.filterParkings());
         this.filter.priceRangeChanges.subscribe(() => this.filterParkings());
 
         this.filter.locationChanges.subscribe(location => {
@@ -44,7 +44,7 @@ export class IndexComponent implements OnInit {
                 console.log(error);
                 this.showErrorProgressBar();
             });
-        });
+        });*/
     }
 
     private showLoadingProgressBar() {
