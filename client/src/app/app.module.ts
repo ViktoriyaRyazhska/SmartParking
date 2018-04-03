@@ -64,10 +64,9 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
 import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
-import {SpotstatisticComponent } from './spotstatistic/spotstatistic.component';
-         
-import { StatisticsService } from './statistic/statistics.service';
+import {SpotstatisticComponent} from './spotstatistic/spotstatistic.component';
 
+import {StatisticsService} from './statistic/statistics.service';
 
 
 @NgModule({
@@ -108,13 +107,10 @@ import { StatisticsService } from './statistic/statistics.service';
         SpotstatisticComponent
     ],
     imports: [
-        /* AgmCoreModule.forRoot({
-             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
+         AgmCoreModule.forRoot({
+             apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU',
              libraries: ['places']
-         }),*/
-        AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU'
-        }),
+         }),
         LeafletModule.forRoot(),
         HttpClientModule,
         BrowserModule,
