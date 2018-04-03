@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -41,7 +42,7 @@ import {ParkingListFilterComponent} from './index/parking-list-filter/parking-li
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
-import {InterceptorService} from "./interceptor.service";
+import {InterceptorService} from './interceptor.service';
 import {AgmCoreModule} from '@agm/core';
 import {LoginService} from './auth/login/login.service';
 import {RegistrationService} from './auth/registration/registration.service';
@@ -108,6 +109,7 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU'
         }),
+        LeafletModule.forRoot(),
         HttpClientModule,
         BrowserModule,
         RouterModule,
