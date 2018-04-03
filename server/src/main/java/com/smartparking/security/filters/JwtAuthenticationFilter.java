@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     @Qualifier("MyUserDetails")
     private UserDetailsService userDetailsService;
+
     @Autowired
     private TokenUtil tokenUtil;
 
@@ -53,11 +55,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 LOGGER.warn("Claims jws string is or empty or only whitespace");
             } catch (ExpiredJwtException e) {
                 LOGGER.warn("The token is expired and not valid anymore");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().println(tokenUtil.refreshToken(e));
             } catch(SignatureException e){
                 LOGGER.warn("JWS signature validation fails");
             }
         } else {
             LOGGER.warn("Couldn't find authorization header, it will be ignored");
+            filterChain.doFilter(request, response);
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             LOGGER.info("Try to autorize");
@@ -70,9 +75,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 LOGGER.info("Authenticated user " + username + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                filterChain.doFilter(request, response);
             }
         }
-        filterChain.doFilter(request, response);
-
     }
 }
