@@ -33,7 +33,7 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 
 
 15) npm install --save @types/googlemaps
-
+ 
 16) npm install --save @types/leaflet
 
 17) npm install --save @asymmetrik/ngx-leaflet
