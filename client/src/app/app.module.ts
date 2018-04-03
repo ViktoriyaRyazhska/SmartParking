@@ -64,6 +64,8 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
 import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
+import { StatisticsService } from './statistic/statistics.service';
+
 
 @NgModule({
     declarations: [
@@ -145,7 +147,9 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
         RegistrationService,
         IpLocationService,
         PagerService,
-        TokenStorage
+        TokenStorage,
+        PagerService,
+        StatisticsService
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
