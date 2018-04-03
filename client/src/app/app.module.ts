@@ -109,12 +109,9 @@ import {BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         SpotstatisticComponent
     ],
     imports: [
-        /* AgmCoreModule.forRoot({
-             apiKey: 'AIzaSyDLIMvbPlry-zu4nLaSaYeAKW7Xjgum74I',
-             libraries: ['places']
-         }),*/
-        AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU'
+           AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU',
+            libraries: ['places']
         }),
         LeafletModule.forRoot(),
         HttpClientModule,
