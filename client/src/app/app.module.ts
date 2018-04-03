@@ -64,10 +64,6 @@ import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
 
-/*export function tokenGetter() {
-    return localStorage.getItem('access_token');
-}*/
-
 @NgModule({
     declarations: [
         IndexComponent,
@@ -112,13 +108,6 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU'
         }),
-        /*JwtModule.forRoot({
-            config: {
-                tokenGetter: tokenGetter,
-                whitelistedDomains: ['localhost:8080'],
-                blacklistedRoutes: []
-            }
-        }),*/
         HttpClientModule,
         BrowserModule,
         RouterModule,
@@ -152,9 +141,9 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
         ClientService,
         LoginService,
         RegistrationService,
-        TokenStorage,
         IpLocationService,
-        PagerService
+        PagerService,
+        TokenStorage
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
