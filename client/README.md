@@ -25,9 +25,8 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 
 12) npm install http-status-codes --save
 
-To display calendar  in spot statistic  you must install:
-
-13.npm install ngx-bootstrap --save
+      
+13.npm install ngx-bootstrap --save  To display calendar  in spot statistic  you must install it.
 
 
 14.npm install bootstrap@3 --save
