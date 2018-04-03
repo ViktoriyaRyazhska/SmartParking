@@ -13,7 +13,7 @@
 
     <changeSet author="Oleksiy" id="201803211613" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(2);
+            INSERT INTO spot (parking_id) values(1);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -21,7 +21,7 @@
 
     <changeSet author="Oleksiy" id="201803211614" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(3);
+            INSERT INTO spot (parking_id) values(1);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -29,14 +29,14 @@
 
     <changeSet author="Oleksiy" id="201803211615" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(4);
+            INSERT INTO spot (parking_id) values(1);
         </sql>
-      <comment>Inserting into table spot</comment>
+        <comment>Inserting into table spot</comment>
     </changeSet>
 
     <changeSet author="Oleksiy" id="201803221519" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(1);
+            INSERT INTO spot (parking_id) values(2);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -52,7 +52,7 @@
 
     <changeSet author="Oleksiy" id="201803222022" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(3);
+            INSERT INTO spot (parking_id) values(2);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -60,7 +60,7 @@
 
     <changeSet author="Oleksiy" id="201803222023" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(4);
+            INSERT INTO spot (parking_id) values(2);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -68,7 +68,7 @@
 
     <changeSet author="Oleksiy" id="201803222024" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(1);
+            INSERT INTO spot (parking_id) values(3);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -76,7 +76,7 @@
 
     <changeSet author="Oleksiy" id="201803222025" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(2);
+            INSERT INTO spot (parking_id) values(3);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -92,14 +92,14 @@
 
     <changeSet author="Oleksiy" id="201803222027" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(4);
+            INSERT INTO spot (parking_id) values(3);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
 
     <changeSet author="Oleksiy" id="201803222028" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(1);
+            INSERT INTO spot (parking_id) values(4);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -107,7 +107,7 @@
 
     <changeSet author="Oleksiy" id="201803222029" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(2);
+            INSERT INTO spot (parking_id) values(4);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
@@ -115,7 +115,7 @@
 
     <changeSet author="Oleksiy" id="201803222030" dbms="MYSQL">
         <sql>
-            INSERT INTO spot (parking_id) values(3);
+            INSERT INTO spot (parking_id) values(4);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>
