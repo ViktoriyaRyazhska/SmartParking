@@ -2,7 +2,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -65,8 +66,8 @@ import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
 import {SpotstatisticComponent } from './spotstatistic/spotstatistic.component';
-         
 import { StatisticsService } from './statistic/statistics.service';
+import {BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 
@@ -133,7 +134,8 @@ import { StatisticsService } from './statistic/statistics.service';
         MatButtonModule,
         MatSliderModule,
         MatProgressSpinnerModule,
-        MatRadioModule
+        MatRadioModule,
+        BsDatepickerModule.forRoot()
     ],
     entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent],
     providers: [
