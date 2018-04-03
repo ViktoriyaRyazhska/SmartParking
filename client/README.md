@@ -26,17 +26,17 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 12) npm install http-status-codes --save
 
       
-13.npm install ngx-bootstrap --save  To display calendar  in spot statistic  you must install it.
+12.npm install ngx-bootstrap --save  To display calendar  in spot statistic  you must install it.
 
 
-14.npm install bootstrap@3 --save
+13.npm install bootstrap@3 --save
 
 
-15) npm install --save @types/googlemaps
+14) npm install --save @types/googlemaps
  
-16) npm install --save @types/leaflet
+15) npm install --save @types/leaflet
 
-17) npm install --save @asymmetrik/ngx-leaflet
+16) npm install --save @asymmetrik/ngx-leaflet
 
 
 If u don`t understand please follow this guide https://medium.com/codingthesmartway-com-blog/building-an-angular-5-project-with-bootstrap-4-and-firebase-4504ff7717c1(without installing the firebase)
