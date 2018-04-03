@@ -1,29 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ParkingService} from '../../parking.service';
 import {Parking} from '../../model/view/parking';
-import { latLng, tileLayer } from 'leaflet';
+import {icon, latLng, marker, polyline, tileLayer} from 'leaflet';
+import {ParkingListFilterComponent} from '../parking-list-filter/parking-list-filter.component';
 
 @Component({
     selector: 'app-parking-map',
     templateUrl: './parking-map.component.html',
     styleUrls: ['./parking-map.component.css']
 })
+
 export class ParkingMapComponent implements OnInit {
     title: string = 'My first AGM project';
     lat: number;
     lng: number;
+
+    @ViewChild('filter') private filter: ParkingListFilterComponent;
+
     parkings: Parking[];
-    options = {
-        layers: [
-            tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                maxZoom: 20,
-                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                detectRetina: true
-            })
-        ],
-        zoom: 7,
-        center: latLng([ 46.879966, -121.726909 ])
-    };
 
     constructor(private parkingService: ParkingService) {
     }
@@ -36,24 +30,24 @@ export class ParkingMapComponent implements OnInit {
     findMe() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position => {
-                this.showPosition(position);
+                this.getPosition(position);
             }));
         }
     }
 
-    private showPosition(position: Position) {
+    private getPosition(position: Position) {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-        this.parkingCoord();
+        this.parkingCoordinates();
     }
 
-    parkingCoord() {
-        this.parkingService.getParkingsNearby(this.lat, this.lng, 30000)
+    parkingCoordinates() {
+        this.parkingService.getParkingsNearby(this.lat, this.lng, 10000)
             .subscribe((response) => {
                 this.parkings = response.body;
             }, error => {
                 console.log(error);
             });
-        console.log(this.parkings)
+        console.log(this.parkings);
     }
 }
