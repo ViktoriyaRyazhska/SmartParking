@@ -27,10 +27,10 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 
 To display calendar  in spot statistic  you must install:
 
-13)npm install ngx-bootstrap --save
+13.npm install ngx-bootstrap --save
 
 
-14)npm install bootstrap@3 --save
+14.npm install bootstrap@3 --save
 
 
 15) npm install --save @types/googlemaps
