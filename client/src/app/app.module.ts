@@ -64,7 +64,10 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
 import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
+import {SpotstatisticComponent } from './spotstatistic/spotstatistic.component';
+         
 import { StatisticsService } from './statistic/statistics.service';
+
 
 
 @NgModule({
@@ -101,7 +104,8 @@ import { StatisticsService } from './statistic/statistics.service';
         ClientProfileEditPasswordComponent,
         FavoritesAddConfigmDialogComponent,
         StatisticComponent,
-        ParkingStatisticComponent
+        ParkingStatisticComponent,
+        SpotstatisticComponent
     ],
     imports: [
         /* AgmCoreModule.forRoot({

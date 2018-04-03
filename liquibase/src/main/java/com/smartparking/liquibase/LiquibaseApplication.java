@@ -23,7 +23,7 @@ public class LiquibaseApplication {
     private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/";
     private static final String DATABASE_NAME = "smartparking";
     private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "abcde1234567890";
     private static final String CHANGE_LOG_FILE = "com/smartparking/liquibase/changelog-master.xml";
 
     public static void main(String[] args) {
