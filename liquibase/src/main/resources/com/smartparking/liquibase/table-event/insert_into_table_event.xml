@@ -3,9 +3,25 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
+    <changeSet author="Oleksiy" id="201803311326" dbms="MYSQL">
+        <sql>
+            INSERT INTO event (event_marker,spot_id,timestamp) values(0,1,'2014-09-08 16:51:04.777');
+        </sql>
+        <comment>Inserting into table event</comment>
+    </changeSet>
+
+
     <changeSet author="Oleksiy" id="201803211524" dbms="MYSQL">
         <sql>
             INSERT INTO event (event_marker,spot_id,timestamp) values(1,1,'2014-09-08 17:51:04.777');
+        </sql>
+        <comment>Inserting into table event</comment>
+    </changeSet>
+
+
+    <changeSet author="Oleksiy" id="201803311327" dbms="MYSQL">
+        <sql>
+            INSERT INTO event (event_marker,spot_id,timestamp) values(0,2,'2017-09-08 13:49:04.777');
         </sql>
         <comment>Inserting into table event</comment>
     </changeSet>
@@ -18,9 +34,41 @@
     </changeSet>
 
 
+    <changeSet author="Oleksiy" id="201803311328" dbms="MYSQL">
+        <sql>
+            INSERT INTO event (event_marker,spot_id,timestamp) values(0,3,'2016-09-08 10:30:04.777');
+        </sql>
+        <comment>Inserting into table event</comment>
+    </changeSet>
+
+
     <changeSet author="Oleksiy" id="201803211617" dbms="MYSQL">
         <sql>
+            INSERT INTO event (event_marker,spot_id,timestamp) values(1,3,'2016-09-08 12:51:04.777');
+        </sql>
+        <comment>Inserting into table event</comment>
+    </changeSet>
+
+
+    <changeSet author="Oleksiy" id="201803311329" dbms="MYSQL">
+        <sql>
+            INSERT INTO event (event_marker,spot_id,timestamp) values(0,3,'2016-09-08 14:20:04.777');
+        </sql>
+        <comment>Inserting into table event</comment>
+    </changeSet>
+
+
+    <changeSet author="Oleksiy" id="201803311617" dbms="MYSQL">
+        <sql>
             INSERT INTO event (event_marker,spot_id,timestamp) values(1,3,'2016-09-08 17:51:04.777');
+        </sql>
+        <comment>Inserting into table event</comment>
+    </changeSet>
+
+
+    <changeSet author="Oleksiy" id="201803311330" dbms="MYSQL">
+        <sql>
+            INSERT INTO event (event_marker,spot_id,timestamp) values(0,4,'2015-09-08 15:11:04.777');
         </sql>
         <comment>Inserting into table event</comment>
     </changeSet>

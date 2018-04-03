@@ -87,8 +87,8 @@ public class SecurityController {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
-        LOGGER.info("Registered successfully");
-        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully registered"));
+        LOGGER.info("Registered successfull");
+        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfull registered"));
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)

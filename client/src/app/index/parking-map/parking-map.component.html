@@ -7,13 +7,19 @@
     <span>Longitude: {{lat}}</span>
     <span>Longitude: {{lng}}</span>
 </div>
+<!--
 <button (click)="findMe()">Refresh</button>
 <div class="offset-2 col-md-8">
     <agm-map [latitude]="lat" [longitude]="lng">
         <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-       <!-- <span *ngFor="let parking of parkings">
+       &lt;!&ndash; <span *ngFor="let parking of parkings">
             <agm-marker [latitude]="parking.latitude" [longitude]="parking.longitude"></agm-marker>
-        </span>-->
-
+        </span>&ndash;&gt;
     </agm-map>
+    lol ={{parkings}}
+
+</div>-->
+<div class="map"
+     leaflet
+     [leafletOptions]="options">
 </div>

@@ -2,15 +2,20 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Spot;
 import com.smartparking.repository.SpotRepository;
+import com.smartparking.repository.SpotStatisticRepository;
 import com.smartparking.service.AbstractService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository> implements SpotService {
+
+    @Autowired
+    private SpotStatisticRepository spotStatisticRepository;
 
     protected SpotServiceImpl(@Autowired SpotRepository spotRepository) {
         super(spotRepository);
@@ -35,5 +40,10 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     @Override
     public List<Spot> findAllSpotsByParkingId(Long id) {
         return repository.findAllByParkingId(id);
+    }
+
+    @Override
+    public Map<Long, Double> getSpotStatistic(long id) {
+        return spotStatisticRepository.getSpotStatistic(id);
     }
 }

@@ -1,0 +1,23 @@
+<mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
+  <mat-card-header>
+
+<table class="table table-hover">
+  <thead>
+      <tr class="text-center">
+          <th scope="col">Spot number #</th>
+          <th scope="col">Hours have been taken</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let spotstatistic of statistic" class="text-center">
+          <th scope="row">{{spotstatistic.id}}</th>
+          <th scope="row">{{spotstatistic.numberOfHours}}</th>
+
+        
+          
+      </tr>
+  </tbody>
+</table>
+</mat-card-header> 
+</mat-card> 
+
