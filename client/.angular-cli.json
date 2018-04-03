@@ -8,11 +8,6 @@
       "root": "src",
       "outDir": "../server/src/main/resources/static",
       "assets": [
-        {
-          "glob": "**/*",
-          "input": "../node_modules/leaflet/dist/images",
-          "output": "leaflet/"
-        },
         "assets",
         "favicon.ico"
       ],
