@@ -17,11 +17,8 @@ export class InterceptorService implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let token = TokenStorage.getToken();
-        if (request.url.startsWith('http://localhost:8080/') && (token)) {
-            request = request.clone({
-                headers: request.headers.append('Authorization', `Bearer ${token}`)
-            });
+        if (request.url.startsWith('http://localhost:8080/') && (TokenStorage.getToken())) {
+            request = InterceptorService.addAuthHeaderToRequest(request);
         }
         return next.handle(request).do((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
@@ -29,9 +26,15 @@ export class InterceptorService implements HttpInterceptor {
         }, (error: any) => {
             if (error instanceof HttpErrorResponse) {
                 if(error.status === 401) {
-                    TokenStorage.saveToken(error.error)
+                    TokenStorage.saveToken(error.error);
                 }
             }
+        });
+    }
+
+    private static addAuthHeaderToRequest(request: HttpRequest<any>): HttpRequest<any> {
+        return request.clone({
+            headers: request.headers.append('Authorization', `Bearer ${TokenStorage.getToken()}`)
         });
     }
 }

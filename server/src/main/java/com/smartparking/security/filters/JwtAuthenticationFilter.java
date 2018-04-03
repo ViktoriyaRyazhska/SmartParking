@@ -55,28 +55,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 LOGGER.warn("Claims jws string is or empty or only whitespace");
             } catch (ExpiredJwtException e) {
                 LOGGER.warn("The token is expired and not valid anymore");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().println(tokenUtil.refreshToken(e));
+                /*response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().println(tokenUtil.refreshToken(e));*/
             } catch(SignatureException e){
                 LOGGER.warn("JWS signature validation fails");
             }
         } else {
             LOGGER.warn("Couldn't find authorization header, it will be ignored");
-            filterChain.doFilter(request, response);
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            LOGGER.info("Try to autorize");
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            LOGGER.info("Username from details = " + userDetails.getUsername());
-            LOGGER.info("Authority from details = " + userDetails.getAuthorities());
 
             if (tokenUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 LOGGER.info("Authenticated user " + username + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                filterChain.doFilter(request, response);
             }
         }
+        filterChain.doFilter(request, response);
     }
 }
