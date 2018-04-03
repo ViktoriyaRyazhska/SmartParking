@@ -11,11 +11,8 @@ import {ParkingListFilterComponent} from '../parking-list-filter/parking-list-fi
 })
 
 export class ParkingMapComponent implements OnInit {
-    title: string = 'My first AGM project';
     lat: number;
     lng: number;
-
-    @ViewChild('filter') private filter: ParkingListFilterComponent;
 
     parkings: Parking[];
 
@@ -48,6 +45,5 @@ export class ParkingMapComponent implements OnInit {
             }, error => {
                 console.log(error);
             });
-        console.log(this.parkings);
     }
 }
