@@ -127,6 +127,20 @@
                         <mat-action-row>
                             <div class="full-width"></div>
                             <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Password
+                            </mat-panel-title>
+                            <!--<mat-icon>store</mat-icon>-->
+                        </mat-expansion-panel-header>
+                        <app-client-profile-edit-password></app-client-profile-edit-password>
+                        <mat-action-row>
+                            <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
                         </mat-action-row>
                     </mat-expansion-panel>
 
@@ -141,8 +155,6 @@
                 <!--</div>-->
             </form>
             <button mat-button type="button" color="primary" (click)="goToProfile()">Back to profile</button>
-            <button mat-button type="button" color="primary" (click)="goToPasswordEdit()">Go to edit password</button>
-
         </mat-card-content>
     </mat-card>
 
