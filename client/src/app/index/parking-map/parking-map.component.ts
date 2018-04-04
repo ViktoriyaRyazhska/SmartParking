@@ -13,8 +13,8 @@ import {ParkingListFilterComponent} from '../parking-list-filter/parking-list-fi
 export class ParkingMapComponent implements OnInit {
     lat: number;
     lng: number;
-
     parkings: Parking[];
+
 
     constructor(private parkingService: ParkingService) {
     }
