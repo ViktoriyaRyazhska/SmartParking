@@ -2,11 +2,18 @@
          [longitude]="lng"
          [fullscreenControl]="true">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-    <span *ngFor="let parking of parkings">
-            <agm-marker [latitude]="parking.latitude" [longitude]="parking.longitude">
-
-            </agm-marker>
-    </span>
+    <div *ngFor="let parking of parkings">
+        <agm-marker [latitude]="parking.latitude" [longitude]="parking.longitude">
+            <agm-info-window [disableAutoPan]="false">
+               <ul>
+                   <li><b>Address:</b> {{parking.city}} / {{parking.street}} / {{parking.building}} </li>
+                   <li><b>Distance:</b> {{parking.distance}}</li>
+                   <li><b>Spots:</b> {{parking.spotsCount}}</li>
+                   <li><b>Spots available:</b> {{parking.availableSpotsCount}}</li>
+               </ul>
+            </agm-info-window>
+        </agm-marker>
+    </div>
 </agm-map>
 
 

@@ -35,15 +35,15 @@ export class ParkingMapComponent implements OnInit {
     private getPosition(position: Position) {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-        this.parkingCoordinates();
+        console.log(this.lat, this.lng);
     }
 
-    parkingCoordinates() {
-        this.parkingService.getParkingsNearby(this.lat, this.lng, 10000)
-            .subscribe((response) => {
-                this.parkings = response.body;
-            }, error => {
-                console.log(error);
-            });
-    }
+    /*  parkingCoordinates() {
+          this.parkingService.getParkingsNearby(this.lat, this.lng, 10000)
+              .subscribe((response) => {
+                  this.parkings = response.body;
+              }, error => {
+                  console.log(error);
+              });
+      }*/
 }
