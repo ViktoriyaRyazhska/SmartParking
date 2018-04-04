@@ -1,12 +1,14 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Spot;
+import com.smartparking.model.request.ClientRequest;
 import com.smartparking.model.response.SpotResponse;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.service.SpotService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -70,6 +72,26 @@ public class SpotController {
 
         return spotStatisticResponseList;
     }
+
+
+    @RequestMapping("spotstatistic/{id}")
+    List<SpotStatisticResponse> getSpotStatisticByDateRange (@PathVariable Long id,@RequestBody ClientRequest clientRequest) {
+        List<SpotStatisticResponse> spotStatisticResponseList = new ArrayList<>();
+
+        /*Map<Long, Double > spotStatistic = spotService.getSpotStatistic(id);
+        for(Map.Entry<Long, Double> entry : spotStatistic.entrySet()) {
+            Long key = entry.getKey();
+            Double value = entry.getValue();
+            SpotStatisticResponse spotStatisticResponse = new SpotStatisticResponse();
+            spotStatisticResponse.setId(key);
+            spotStatisticResponse.setNumberOfHours(value);
+            spotStatisticResponseList.add(spotStatisticResponse);
+
+        }*/
+
+        return spotStatisticResponseList;
+    }
+
 
 
 }
