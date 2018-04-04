@@ -2,8 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-
+import {AgmDirectionModule} from 'agm-direction';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -65,10 +64,9 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
 import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
-import {SpotstatisticComponent } from './spotstatistic/spotstatistic.component';
-import { StatisticsService } from './statistic/statistics.service';
-import {BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import {SpotstatisticComponent} from './spotstatistic/spotstatistic.component';
+import {StatisticsService} from './statistic/statistics.service';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -109,11 +107,11 @@ import {BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         SpotstatisticComponent
     ],
     imports: [
-           AgmCoreModule.forRoot({
+        AgmCoreModule.forRoot({
             apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU',
             libraries: ['places']
         }),
-        LeafletModule.forRoot(),
+        AgmDirectionModule,
         HttpClientModule,
         BrowserModule,
         RouterModule,

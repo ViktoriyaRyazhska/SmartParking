@@ -38,6 +38,8 @@ WARGING!!! We don`t add dependences of angular to gitRepository , so u need to i
 
 16) npm install --save @asymmetrik/ngx-leaflet
 
+17) npm install --save agm-direction
+
 
 If u don`t understand please follow this guide https://medium.com/codingthesmartway-com-blog/building-an-angular-5-project-with-bootstrap-4-and-firebase-4504ff7717c1(without installing the firebase)
 
