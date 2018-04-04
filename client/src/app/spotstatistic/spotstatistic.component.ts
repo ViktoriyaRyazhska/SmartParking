@@ -45,10 +45,10 @@ export class SpotstatisticComponent implements OnInit {
   this.maxDate = new Date();
    }
 
-    setDateRange(firstName, lastName) {
+    setDateRange(beginDate, endDate) {
     this.dateRange = {
-      beginDate: firstName,
-      endDate: lastName
+      beginDate: beginDate,
+      endDate: endDate
     }
   }
 
