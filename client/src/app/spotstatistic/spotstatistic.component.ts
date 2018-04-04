@@ -39,16 +39,18 @@ export class SpotstatisticComponent implements OnInit {
  constructor(
    private route: ActivatedRoute,
    private parkingService: ParkingService,
+   
   ) { 
   this.minDate = new Date();
   this.maxDate = new Date();
- 
+   }
 
-  
-
- }
-
- 
+    setDateRange(firstName, lastName) {
+    this.dateRange = {
+      beginDate: firstName,
+      endDate: lastName
+    }
+  }
 
 
  ngOnInit() {
@@ -71,6 +73,7 @@ export class SpotstatisticComponent implements OnInit {
 
 
  addItem() {
+   
    if(this.minDate > this.maxDate)
    {
     this.tempDate = this.minDate;
@@ -79,12 +82,10 @@ export class SpotstatisticComponent implements OnInit {
    }
   this.minMonth = this.minDate.getMonth()+1;
   this.maxMonth = this.maxDate.getMonth()+1;
-  
-  //this.dateRange.setBeginDate(this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear());
-  this.dateRange.beginDate=this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
-  this.dateRange.endDate=this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
-  //this.goals.push(this.dateRange.getBeginDate());
-  this.goals.push(this.dateRange.endDate);
+ this.setDateRange(this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear(),this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear());
+ this.dateRange.beginDate=this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
+ this.goals.push(this.dateRange.beginDate);  
+ this.goals.push(this.dateRange.endDate);
   
  
 }
