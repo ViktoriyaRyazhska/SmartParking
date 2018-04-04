@@ -11,10 +11,10 @@ import {ParkingListFilterComponent} from '../parking-list-filter/parking-list-fi
 })
 
 export class ParkingMapComponent implements OnInit {
-    lat: number;
-    lng: number;
+     lat: number;
+     lng: number;
     parkings: Parking[];
-
+    dir = undefined;
 
     constructor(private parkingService: ParkingService) {
     }
@@ -22,7 +22,6 @@ export class ParkingMapComponent implements OnInit {
     ngOnInit() {
         this.findMe();
     }
-
 
     findMe() {
         if (navigator.geolocation) {
@@ -38,6 +37,13 @@ export class ParkingMapComponent implements OnInit {
         console.log(this.lat, this.lng);
     }
 
+    getDirection(lat, lng) {
+        this.dir = {
+            origin: {lat: this.lat, lng: this.lng},
+            destination: {lat: lat, lng: lng}
+        };
+    }
+
     /*  parkingCoordinates() {
           this.parkingService.getParkingsNearby(this.lat, this.lng, 10000)
               .subscribe((response) => {
@@ -46,4 +52,5 @@ export class ParkingMapComponent implements OnInit {
                   console.log(error);
               });
       }*/
+
 }

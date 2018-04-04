@@ -12,8 +12,10 @@
                     <li><b>Spots:</b> {{parking.spotsCount}}</li>
                     <li><b>Spots available:</b> {{parking.availableSpotsCount}}</li>
                 </ul>
+                <button type="button" (click)="getDirection(parking.latitude, parking.longitude)">Get</button>
             </agm-info-window>
         </agm-marker>
+        <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
     </div>
 </agm-map>
 
