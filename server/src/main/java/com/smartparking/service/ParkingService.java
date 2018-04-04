@@ -18,4 +18,8 @@ public interface ParkingService extends Service<Parking, Long, ParkingRepository
     Boolean isFavorite(String email, Long parkingId);
 
     String findFavoriteNameByEmailAndParkingId(String email, Long parkingId);
+
+    List<Parking> findParkingsByCity(String input);
+
+    List<String> findParkingStreetByAnyMatch(String input);
 }

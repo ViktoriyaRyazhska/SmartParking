@@ -113,4 +113,14 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
         response.setDistance(tuple.get("distance", Double.class));
         return response;
     }
+
+    @Override
+    public List<Parking> findParkingsByCity(String input) {
+        return getRepository().findParkingsByCity(input);
+    }
+
+    @Override
+    public List<String> findParkingStreetByAnyMatch(String input) {
+        return getRepository().findParkingStreetByAnyMatch(input);
+    }
 }

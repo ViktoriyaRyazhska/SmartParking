@@ -1,5 +1,6 @@
 package com.smartparking.service.impl;
 
+import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
 import com.smartparking.repository.SpotRepository;
 import com.smartparking.repository.SpotStatisticRepository;
@@ -40,6 +41,11 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     @Override
     public List<Spot> findAllSpotsByParkingId(Long id) {
         return repository.findAllByParkingId(id);
+    }
+
+    @Override
+    public List<Parking> findMostPopularParkingsByStreet(String input) {
+        return repository.findMostPopularParkingsByStreet(input);
     }
 
     @Override
