@@ -83,7 +83,7 @@ export class SpotstatisticComponent implements OnInit {
   //this.dateRange.setBeginDate(this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear());
   this.dateRange.beginDate=this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
   this.dateRange.endDate=this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
-  this.goals.push(this.dateRange.getBeginDate());
+  //this.goals.push(this.dateRange.getBeginDate());
   this.goals.push(this.dateRange.endDate);
   
  
