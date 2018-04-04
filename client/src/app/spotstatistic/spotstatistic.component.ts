@@ -8,6 +8,7 @@ import {ParkingService} from "../parking.service";
 import {Spot} from '../model/view/spot';
 import {SpotStatistic} from '../model/view/spotstatistic';
 import {Observable} from 'rxjs/Observable';
+import {NgbdDatepickerPopup} from '../datepicker-popup';
 
 
 
@@ -29,13 +30,22 @@ export class SpotstatisticComponent implements OnInit {
   value:number;
   thirtySecInterval: number = 30000;
   favoriteNameInputHide: boolean = true;
+  goals = [];
+  minDate: Date;
+  maxDate: Date;
   
 
  constructor(
    private route: ActivatedRoute,
    private parkingService: ParkingService,
    private location: Location
- ) { }
+ ) { 
+  this.minDate = new Date();
+  this.maxDate = new Date();
+
+  
+
+ }
 
  ngOnInit() {
    
@@ -55,4 +65,11 @@ export class SpotstatisticComponent implements OnInit {
      .subscribe(statistic => this.statistic = statistic);
  }
 
+
+ addItem() {
+  this.goals.push(this.minDate.getDay()+"/"+this.minDate.getMonth()+"/"+this.minDate.getFullYear());
+  this.goals.push(this.maxDate.getDay()+"/"+this.maxDate.getMonth()+"/"+this.maxDate.getFullYear());
 }
+
+}
+

@@ -23,13 +23,33 @@
 
 <div class="row">
 
+        <div class="col-xs-12 col-12 col-md-4 form-group">
+                <label>Set min data</label>
+                <input type="text" class="form-control" placeholder="Datepicker" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConf1" [(ngModel)]="minDate">                    
+              </div>
+
+              <div class="col-xs-12 col-12 col-md-4 form-group">
+                    <label>Set max data</label>
+                    <input type="text" class="form-control" placeholder="Datepicker" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConf2" [(ngModel)]="maxDate">                                 
+              </div>
+
+
+
+
     <div class="col-xs-12 col-12 col-md-4 form-group">
-      <label>Choose the  range of date  which  you want to display a statistic</label>
-        <input type="text"
-             placeholder="Daterangepicker"
-             class="form-control"
-             bsDaterangepicker>
+        <div>
+      <label>Display statistic of spots</label>
     </div>
+    <div>
+     <button class="btn btn-success" (click)="addItem()">Display</button>
+    </div>  
+    </div>
+    
   </div>
+
+
+  <p class="life-container" *ngFor="let goal of goals">
+    {{ goal }}
+  </p>
   
 
