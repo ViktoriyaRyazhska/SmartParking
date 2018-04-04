@@ -8,7 +8,7 @@ import {ParkingService} from "../parking.service";
 import {Spot} from '../model/view/spot';
 import {SpotStatistic} from '../model/view/spotstatistic';
 import {Observable} from 'rxjs/Observable';
-import {NgbdDatepickerPopup} from '../datepicker-popup';
+
 
 
 
@@ -24,15 +24,16 @@ export class SpotstatisticComponent implements OnInit {
  
   statistic: SpotStatistic[];
 
-  type: String;
-  fullnessBarMessage: String;
-  max: number;
-  value:number;
+ 
   thirtySecInterval: number = 30000;
   favoriteNameInputHide: boolean = true;
   goals = [];
   minDate: Date;
   maxDate: Date;
+  tempDate: Date;
+  minMonth: number;
+  maxMonth: number;
+
   
 
  constructor(
@@ -42,6 +43,7 @@ export class SpotstatisticComponent implements OnInit {
  ) { 
   this.minDate = new Date();
   this.maxDate = new Date();
+ 
 
   
 
@@ -67,9 +69,19 @@ export class SpotstatisticComponent implements OnInit {
 
 
  addItem() {
-  this.goals.push(this.minDate.getDay()+"/"+this.minDate.getMonth()+"/"+this.minDate.getFullYear());
-  this.goals.push(this.maxDate.getDay()+"/"+this.maxDate.getMonth()+"/"+this.maxDate.getFullYear());
+   if(this.minDate > this.maxDate)
+   {
+    this.tempDate = this.minDate;
+    this.minDate = this.maxDate;
+    this.maxDate = this.tempDate;
+   }
+  this.minMonth = this.minDate.getMonth()+1;
+  this.goals.push(this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear());
+  this.maxMonth = this.maxDate.getMonth()+1;
+  this.goals.push(this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear());
+ 
 }
 
 }
+
 
