@@ -74,7 +74,7 @@ public class SpotController {
     }
 
 
-    @RequestMapping("spotstatistic/{id}")
+    @RequestMapping("spotstatistic/byDate/{id}")
     List<SpotStatisticResponse> getSpotStatisticByDateRange (@PathVariable Long id,@RequestBody ClientRequest clientRequest) {
         List<SpotStatisticResponse> spotStatisticResponseList = new ArrayList<>();
 
