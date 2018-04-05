@@ -11,8 +11,8 @@ import {ParkingListFilterComponent} from '../parking-list-filter/parking-list-fi
 })
 
 export class ParkingMapComponent implements OnInit {
-     lat: number;
-     lng: number;
+    lat: number;
+    lng: number;
     parkings: Parking[];
     dir = undefined;
 
@@ -23,9 +23,10 @@ export class ParkingMapComponent implements OnInit {
         this.findMe();
     }
 
+    //TODO watchposition`
     findMe() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position => {
+            navigator.geolocation.watchPosition((position => {
                 this.getPosition(position);
             }));
         }
@@ -42,6 +43,11 @@ export class ParkingMapComponent implements OnInit {
             origin: {lat: this.lat, lng: this.lng},
             destination: {lat: lat, lng: lng}
         };
+    }
+
+    round(floatNumber: number): number {
+
+        return Math.floor(floatNumber) / 1000;
     }
 
     /*  parkingCoordinates() {

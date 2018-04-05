@@ -108,7 +108,7 @@ import {AuthService} from "./auth/auth.service";
     ],
     imports: [
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU',
+            apiKey: 'AIzaSyAufS5bcmpO5UiWxG_MpcSOrIiRNzbUJus',
             libraries: ['places']
         }),
         AgmDirectionModule,
