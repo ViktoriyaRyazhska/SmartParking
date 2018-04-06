@@ -2,9 +2,11 @@ package com.smartparking.controller;
 
 import com.smartparking.entity.Spot;
 import com.smartparking.model.request.ClientRequest;
+import com.smartparking.model.request.DateRangeRequest;
 import com.smartparking.model.response.SpotResponse;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.service.SpotService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class SpotController {
 
     private final SpotService spotService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpotController.class);
 
 
 
@@ -56,10 +59,37 @@ public class SpotController {
     }
 
     @RequestMapping("spotstatistic/{id}")
-    List<SpotStatisticResponse> getSpotStatistic (@PathVariable Long id) {
+    List<SpotStatisticResponse> getSpotStatistic (@PathVariable Long id/*, @RequestBody DateRangeRequest request*/) {
+
+
+        List<SpotStatisticResponse> spotStatisticResponseList = new ArrayList<>();
+       /* if(request ==  null) {
+            LOGGER.info("==================================request  is null  method is working!!!!=================================");*/
+
+            Map<Long, Double> spotStatistic = spotService.getSpotStatistic(id);
+            for (Map.Entry<Long, Double> entry : spotStatistic.entrySet()) {
+                Long key = entry.getKey();
+                Double value = entry.getValue();
+                SpotStatisticResponse spotStatisticResponse = new SpotStatisticResponse();
+                spotStatisticResponse.setId(key);
+                spotStatisticResponse.setNumberOfHours(value);
+                spotStatisticResponseList.add(spotStatisticResponse);
+            }
+
+          /*  }
+        } else
+            LOGGER.info("=================================="+request.getBeginDate()+"=================================");
+        LOGGER.info("=================================="+request.getEndDate()+"=================================");*/
+        LOGGER.info(spotStatisticResponseList.toString());
+        return spotStatisticResponseList;
+    }
+
+
+    /*@RequestMapping("spotstatistic/byDate/{id}")
+    List<SpotStatisticResponse> getSpotStatisticByDateRange (@PathVariable Long id,@RequestBody ClientRequest clientRequest) {
         List<SpotStatisticResponse> spotStatisticResponseList = new ArrayList<>();
 
-        Map<Long, Double > spotStatistic = spotService.getSpotStatistic(id);
+        /*Map<Long, Double > spotStatistic = spotService.getSpotStatistic(id);
         for(Map.Entry<Long, Double> entry : spotStatistic.entrySet()) {
             Long key = entry.getKey();
             Double value = entry.getValue();
@@ -73,25 +103,6 @@ public class SpotController {
         return spotStatisticResponseList;
     }
 
-
-    @RequestMapping("spotstatistic/byDate/{id}")
-    List<SpotStatisticResponse> getSpotStatisticByDateRange (@PathVariable Long id,@RequestBody ClientRequest clientRequest) {
-        List<SpotStatisticResponse> spotStatisticResponseList = new ArrayList<>();
-
-        /*Map<Long, Double > spotStatistic = spotService.getSpotStatistic(id);
-        for(Map.Entry<Long, Double> entry : spotStatistic.entrySet()) {
-            Long key = entry.getKey();
-            Double value = entry.getValue();
-            SpotStatisticResponse spotStatisticResponse = new SpotStatisticResponse();
-            spotStatisticResponse.setId(key);
-            spotStatisticResponse.setNumberOfHours(value);
-            spotStatisticResponseList.add(spotStatisticResponse);
-
-        }*/
-
-        return spotStatisticResponseList;
-    }
-
-
+*/
 
 }

@@ -7,6 +7,7 @@ import {Spot} from './model/view/spot';
 import {environment} from '../environments/environment';
 import { Favorite } from './model/view/favorite';
 import {SpotStatistic} from './model/view/spotstatistic';
+import {DateRange} from './model/view/daterange';
 
 
 @Injectable()
@@ -56,7 +57,12 @@ export class ParkingService {
 
 
     getSpotStatistic(id: number): Observable<SpotStatistic[]> {
-        return this.http.get<SpotStatistic[]>(this.spotstatistic + id);
+           return this.http.get<SpotStatistic[]>(this.spotstatistic + id);
+    }
+
+
+    getDateRange(id: number, dateRange: DateRange) {
+        return this.http.post(this.spotstatistic+'bydaterange/' +  id, dateRange);
     }
 
 

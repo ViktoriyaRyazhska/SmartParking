@@ -72,6 +72,17 @@ export class SpotstatisticComponent implements OnInit {
  }
 
 
+
+ getDateRange(): void {
+  const id = parseInt(this.route.snapshot.paramMap.get('id'));
+     this.parkingService.getDateRange(id,this.dateRange)
+          .subscribe(data => {
+              alert('DateRange was setted successfully.');
+          });
+  }
+
+
+
  addItem() {
    
    if(this.minDate > this.maxDate)
@@ -86,6 +97,7 @@ export class SpotstatisticComponent implements OnInit {
  this.dateRange.beginDate=this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
  this.goals.push(this.dateRange.beginDate);  
  this.goals.push(this.dateRange.endDate);
+ this.getDateRange();
   
  
 }
