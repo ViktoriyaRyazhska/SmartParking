@@ -39,7 +39,8 @@ export class ParkingDetailComponent implements OnInit {
       private parkingService: ParkingService,
       private location: Location,
       private snackBar: MatSnackBar,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private tokenStorage: TokenStorage
   ) { }
 
   ngOnInit() {
@@ -125,15 +126,15 @@ export class ParkingDetailComponent implements OnInit {
     }
 
     getRole(): string {
-      return TokenStorage.getRole();
+      return this.tokenStorage.getRole();
     }
   
     hasToken(): boolean{
-      return TokenStorage.hasToken();
+      return this.tokenStorage.hasToken();
     }
   
     logOut() {
-        TokenStorage.signOut();
+        this.tokenStorage.signOut();
     }
   
 

@@ -4,6 +4,7 @@ import {Token} from "./token";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {environment} from "../../../environments/environment";
+import {getToken} from "codelyzer/angular/styles/cssLexer";
 
 const TOKEN_KEY = 'access_token';
 const helper = new JwtHelperService();
@@ -12,40 +13,52 @@ const helper = new JwtHelperService();
 @Injectable()
 export class TokenStorage {
 
+    private token = window.localStorage.getItem(TOKEN_KEY);
+
     constructor() {
     }
 
-    public static signOut() {
+    public signOut() {
         window.localStorage.removeItem(TOKEN_KEY);
         window.localStorage.clear();
+        this.token = null;
     }
 
-    public static saveToken(token: string) {
+    public saveToken(token: string) {
+        console.log('Save token ' + token);
         window.localStorage.removeItem(TOKEN_KEY);
         window.localStorage.setItem(TOKEN_KEY, token);
+        this.token = window.localStorage.getItem(TOKEN_KEY);
+        console.log('Get saved token ' + this.token);
     }
 
-    public static getToken(): string {
-        return window.localStorage.getItem(TOKEN_KEY);
+    public getToken(): string {
+        return this.token;
     }
 
-    public static getRole(): string {
-        if(!TokenStorage.hasToken()) {
+    public isExpired(): boolean {
+        if(this.token == null) {
+            return false;
+        }
+        return helper.isTokenExpired(this.token);
+    }
+
+    public getRole(): string {
+        if(!this.hasToken()) {
             return '';
         }
-        return TokenStorage.decodeToken().authorities[0].authority;
+        return this.decodeToken().authorities[0].authority;
     }
 
-
-    public static getUsername(): string {
-        return TokenStorage.decodeToken().username;
+    public getUsername(): string {
+        return this.decodeToken().username;
     }
 
-    private static decodeToken(): any {
-        return helper.decodeToken(TokenStorage.getToken());
+    private decodeToken(): any {
+        return helper.decodeToken(this.token);
     }
 
-    public static hasToken(): boolean {
-        return TokenStorage.getToken() != null;
+    public hasToken(): boolean {
+        return this.token != null;
     }
 }

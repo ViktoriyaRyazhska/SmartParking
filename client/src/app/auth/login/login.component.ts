@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private loginService: LoginService,
-                private router: Router
+                private router: Router,
+                private tokenStorage: TokenStorage
     ) {}
 
     ngOnInit() {
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.loginData = this.loginForm.value;
         this.loginService.signIn(this.loginData)
             .subscribe((token: Token)=>{
-                TokenStorage.saveToken(token.token);
+                this.tokenStorage.saveToken(token.token);
                 alert('You are successfully authorized');
                 this.router.navigate(['/']);
                 }, (error) => {

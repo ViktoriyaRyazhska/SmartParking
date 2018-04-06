@@ -15,5 +15,4 @@ export class LoginService {
     signIn(loginData: LoginData): Observable<any> {
         return this.http.post(this.loginUrl, loginData);
     }
-
 }

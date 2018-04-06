@@ -8,33 +8,26 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import {TokenStorage} from './auth/token/token-storage';
 import {Token} from "./auth/token/token";
-import {environment} from "../environments/environment";
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
 
-    constructor() {
-    }
+    constructor(private tokenStorage: TokenStorage) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (request.url.startsWith('http://localhost:8080/') && (TokenStorage.getToken())) {
-            request = InterceptorService.addAuthHeaderToRequest(request);
+        console.log('Go into interceptor 2');
+        let token = this.tokenStorage.getToken();
+        console.log('Token ' + token);
+        if (request.url.startsWith('http://localhost:8080/') && token) {
+            request = this.addAuthHeaderToRequest(request);
         }
-        return next.handle(request).do((event: HttpEvent<any>) => {
-            if (event instanceof HttpResponse) {
-            }
-        }, (error: any) => {
-            if (error instanceof HttpErrorResponse) {
-                if(error.status === 401) {
-                    TokenStorage.saveToken(error.error);
-                }
-            }
-        });
+        console.log('Exit from interceptor 2');
+        return next.handle(request);
     }
 
-    private static addAuthHeaderToRequest(request: HttpRequest<any>): HttpRequest<any> {
+    private addAuthHeaderToRequest(request: HttpRequest<any>): HttpRequest<any> {
         return request.clone({
-            headers: request.headers.append('Authorization', `Bearer ${TokenStorage.getToken()}`)
+            headers: request.headers.append('Authorization', `Bearer ${this.tokenStorage.getToken()}`)
         });
     }
 }

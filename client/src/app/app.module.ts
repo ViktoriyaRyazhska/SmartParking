@@ -67,6 +67,7 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
 import {SpotstatisticComponent} from './spotstatistic/spotstatistic.component';
 import {StatisticsService} from './statistic/statistics.service';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {ExpirationCheckerService} from "./expiration-checker.service";
 
 
 @NgModule({
@@ -136,10 +137,14 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
+            useClass: ExpirationCheckerService,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true
-        }
-        ,
+        },
         ParkingService,
         ManagerParkingService,
         ProviderService,
