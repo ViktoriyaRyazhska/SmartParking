@@ -1,9 +1,11 @@
 package com.smartparking.eventprocessor.service;
 
 import com.smartparking.eventprocessor.controller.exception.FailureException;
+import com.smartparking.eventprocessor.model.view.Event;
 import com.smartparking.eventprocessor.model.view.Spot;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 public interface ServerService {
@@ -15,4 +17,6 @@ public interface ServerService {
     boolean isAuthenticated();
 
     Map<Long, Spot> getSpots() throws IOException, FailureException;
+
+    void sendEvents(Collection<? extends Event> events) throws IOException, FailureException;
 }

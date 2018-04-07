@@ -5,6 +5,7 @@ import com.smartparking.eventprocessor.controller.exception.FailureException;
 import com.smartparking.eventprocessor.model.request.LoginRequest;
 import com.smartparking.eventprocessor.model.response.AuthTokenResponse;
 import com.smartparking.eventprocessor.model.response.ParkingWithSpotsResponse;
+import com.smartparking.eventprocessor.model.view.Event;
 import com.smartparking.eventprocessor.model.view.Parking;
 import com.smartparking.eventprocessor.model.view.Spot;
 import com.smartparking.eventprocessor.service.HttpClientService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -62,5 +64,16 @@ public class ServerServiceImpl implements ServerService {
             Parking parking = new Parking(p.getId(), p.getToken());
             return p.getSpots().stream().map(s -> new Spot(s.getId(), parking));
         }).collect(Collectors.toMap(Spot::getId, s -> s));
+    }
+
+    @Override
+    public void sendEvents(Collection<? extends Event> events) throws IOException, FailureException {
+        authenticateIfNeeded();
+        List<ParkingWithSpotsResponse> response =
+                httpClientService.getList("/events/save", null, token, ParkingWithSpotsResponse.class);
+        /*return response.stream().flatMap(p -> {
+            Parking parking = new Parking(p.getId(), p.getToken());
+            return p.getSpots().stream().map(s -> new Spot(s.getId(), parking));
+        }).collect(Collectors.toMap(Spot::getId, s -> s));*/
     }
 }

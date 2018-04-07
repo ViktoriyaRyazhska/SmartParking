@@ -1,7 +1,7 @@
 package com.smartparking.service.impl;
 
 import com.smartparking.entity.Event;
-import com.smartparking.model.request.EventRequest;
+import com.smartparking.model.request.ProcessedEventRequest;
 import com.smartparking.repository.EventRepository;
 import com.smartparking.service.AbstractService;
 import com.smartparking.service.EventService;
@@ -26,9 +26,9 @@ public class EventServiceImpl extends AbstractService<Event, Long, EventReposito
 
     @Override
     @Transactional
-    public void saveAllRequests(Collection<EventRequest> eventRequests) {
-        repository.saveAll(eventRequests.stream()
-                .map(EventRequest::toEvent)
+    public void saveAllRequests(Collection<ProcessedEventRequest> processedEventRequests) {
+        repository.saveAll(processedEventRequests.stream()
+                .map(ProcessedEventRequest::toEvent)
                 .collect(Collectors.toList()));
     }
 }

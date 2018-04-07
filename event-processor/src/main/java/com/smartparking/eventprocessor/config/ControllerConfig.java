@@ -21,6 +21,6 @@ public class ControllerConfig {
     public ResponseEntity<?> handleException(Exception exception) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(exception.getMessage()));
+                .body(new ErrorResponse(exception.toString()));
     }
 }

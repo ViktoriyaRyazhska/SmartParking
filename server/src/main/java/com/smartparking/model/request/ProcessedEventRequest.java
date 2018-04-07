@@ -4,22 +4,21 @@ import com.smartparking.entity.Event;
 import com.smartparking.entity.EventType;
 import com.smartparking.entity.Spot;
 import lombok.Data;
-import lombok.val;
 
 import java.time.Instant;
 import java.util.Objects;
 
 @Data
-public class EventRequest {
+public class ProcessedEventRequest {
 
     private Long spotId;
-    private Integer eventType;
+    private String eventType;
     private Long timestamp;
 
     public Event toEvent() {
-        val spot = new Spot(this.spotId);
-        val eventType = EventType.valueOf(this.eventType);
-        val timestamp = Instant.ofEpochMilli(Objects.requireNonNull(this.timestamp, "timestamp"));
+        Spot spot = new Spot(this.spotId);
+        EventType eventType = EventType.valueOf(this.eventType);
+        Instant timestamp = Instant.ofEpochMilli(Objects.requireNonNull(this.timestamp, "timestamp"));
         return new Event(spot, eventType, timestamp);
     }
 }

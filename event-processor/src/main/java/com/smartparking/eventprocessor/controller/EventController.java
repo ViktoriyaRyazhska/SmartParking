@@ -9,9 +9,8 @@ import com.smartparking.eventprocessor.service.EventBatchService;
 import com.smartparking.eventprocessor.service.ServerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
@@ -61,20 +60,8 @@ public class EventController {
         }
     }*/
 
-    @RequestMapping(value = "spot/update", method = RequestMethod.POST)
+    @PostMapping(value = "spot/update")
     public void processingInRequests(@RequestBody EventRequest eventRequest) {
-        EventType eventType;
-        try {
-            eventType = EventType.valueOf(eventRequest.getEventType());
-        } catch (IllegalArgumentException ex) {
-            throw new BadRequestException("Invalid eventType.", ex);
-        }
-        Instant timestamp;
-        try {
-            timestamp = Instant.ofEpochMilli(Long.parseLong(eventRequest.getTimestamp()));
-        } catch (NumberFormatException ex) {
-            throw new BadRequestException("Invalid timestamp.", ex);
-        }
         Spot spot = spots.get(eventRequest.getSpotId());
         if (spot == null) {
             throw new BadRequestException("Spot with id '" + eventRequest.getSpotId() + "' does not exists.");
@@ -82,6 +69,8 @@ public class EventController {
         if (!spot.getParking().getToken().equals(eventRequest.getParkingToken())) {
             throw new BadRequestException("Parking token does not valid.");
         }
+        Instant timestamp = Instant.ofEpochMilli(eventRequest.getTimestamp());
+        EventType eventType = eventRequest.getEventType();
         eventBatchService.push(new Event(spot, eventType, timestamp));
     }
 }

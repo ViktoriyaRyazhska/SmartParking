@@ -1,6 +1,5 @@
 package com.smartparking.eventprocessor.model.request;
 
-import com.smartparking.eventprocessor.model.view.EventType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventRequest {
+public class ProcessedEventRequest {
     private Long spotId;
-    private String parkingToken;
-    private EventType eventType;
+    private String eventType;
     private Long timestamp;
 }
