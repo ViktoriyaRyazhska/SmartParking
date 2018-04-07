@@ -1,37 +1,13 @@
 package com.smartparking.eventprocessor.controller;
 
-import com.smartparking.entity.Event;
-import com.smartparking.entity.Parking;
-import com.smartparking.entity.Spot;
-import com.smartparking.eventprocessor.element.InRequest;
-import com.smartparking.service.ParkingService;
-import com.smartparking.service.SpotService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MainController {
-    private Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+public class EventController {
+
+    /*private Logger LOGGER = LoggerFactory.getLogger(EventController.class);
 
     private Map<Long, String> tokens;
-    private List<Event> events = new LinkedList<>();
-    private Map<Long, Spot> spots;
-
-    @Autowired
-    private ParkingService parkingService;
-
-    @Autowired
-    private SpotService spotService;
 
     @PostConstruct
     public void init() {
@@ -64,13 +40,10 @@ public class MainController {
         }
     }
 
-
-
-
     @RequestMapping(value = "spot/update", method = RequestMethod.POST)
-    public ResponseEntity processingInRequests(@RequestBody InRequest inRequest) {
-        Event event = inRequest.toEvent();
-        if (event != null && tokenIsValid(inRequest, event)) {
+    public ResponseEntity processingInRequests(@RequestBody EventRequest eventRequest) {
+        Event event = eventRequest.toEvent();
+        if (event != null && tokenIsValid(eventRequest, event)) {
             events.add(event);
             return new ResponseEntity(HttpStatus.OK);
         } else {
@@ -79,9 +52,9 @@ public class MainController {
 
     }
 
-    private boolean tokenIsValid(InRequest inRequest, Event event) {
-        Spot spot = spots.get(inRequest.getSpotId());
-        if (spot != null && tokens.containsValue(inRequest.getParkingToken())) {
+    private boolean tokenIsValid(EventRequest eventRequest, Event event) {
+        Spot spot = spots.get(eventRequest.getSpotId());
+        if (spot != null && tokens.containsValue(eventRequest.getParkingToken())) {
             event.setSpot(spot);
             return true;
         } else {
@@ -96,6 +69,6 @@ public class MainController {
 
     public Map<Long, Spot> getSpots() {
         return spots;
-    }
+    }*/
 
 }
