@@ -3,7 +3,7 @@ package com.smartparking.model.response;
 import lombok.Data;
 
 @Data
-public class SpotResponse {
+public class SpotStatusResponse {
     private Long id;
     private Boolean isFree;
 }
