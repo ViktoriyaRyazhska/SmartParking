@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**", "/parkingdetail/**", "/parkings-nearby/**", "/statistic/**","/spotstatistic/**").permitAll()
                 .antMatchers("/profile", "/profile/**").hasAnyAuthority(Role.DRIVER.toString())
                 .antMatchers("/clients", "/clients/**", "/manager-configuration/**", "/providers", "/providers/**", "/profile", "/profile/**").hasAnyAuthority(Role.PROVIDER_MANAGER.toString(), Role.SUPERUSER.toString())
-                .antMatchers().hasAnyAuthority(Role.SUPERUSER.toString())
+                .antMatchers("/parking-tokens", "/spots").hasAnyAuthority(Role.SUPERUSER.toString())
                 .anyRequest().permitAll();
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }

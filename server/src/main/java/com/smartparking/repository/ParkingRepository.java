@@ -28,4 +28,7 @@ public interface ParkingRepository extends JpaRepository<Parking, Long> {
 
     @Query("SELECT distinct p.city from Parking p where p.city like ?1%")
     List<String> findParkingCitiesByAnyMatch(String input);
+
+    @Query("SELECT parking.id, parking.token FROM Parking parking")
+    List<Tuple> findAllTokens();
 }

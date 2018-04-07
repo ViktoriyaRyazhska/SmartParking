@@ -2,9 +2,14 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.model.response.ParkingResponse;
+import com.smartparking.model.response.ParkingTokenResponse;
 import com.smartparking.repository.FavoriteRepository;
 import com.smartparking.repository.ParkingRepository;
-import com.smartparking.service.*;
+import com.smartparking.service.AbstractService;
+import com.smartparking.service.FavoriteService;
+import com.smartparking.service.ParkingService;
+import com.smartparking.service.ProviderService;
+import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +64,13 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     }
 
     @Override
+    public List<ParkingTokenResponse> findAllTokensResponse() {
+        return getRepository().findAllTokens().stream()
+                .map(this::tupleToParkingTokenResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Boolean isFavorite(String email, Long parkingId) {
         return favoriteRepository.findByClientEmailAndParkingId(email, parkingId)
                 .isPresent();
@@ -97,6 +109,13 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
         response.setFavoritesCount((long) parking.getFavorites().size());
         response.setSpotsCount((long) parking.getSpots().size());
         response.setAvailableSpotsCount(spotService.countAvailableSpotsByParkingId(parking.getId()));
+        return response;
+    }
+
+    private ParkingTokenResponse tupleToParkingTokenResponse(Tuple tuple) {
+        ParkingTokenResponse response = new ParkingTokenResponse();
+        response.setParkingId(tuple.get(0, Long.class));
+        response.setToken(tuple.get(1, String.class));
         return response;
     }
 
