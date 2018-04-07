@@ -32,22 +32,20 @@ public class ClientController {
     ProviderService providerService;
 
     @GetMapping("")
-    List<ClientItemResponse> getAllClients() {
+    ResponseEntity<List<ClientItemResponse>> getAllClients() {
         List<Client> clients = clientService.findAll();
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
         clients.forEach(client -> clientItemResponses.add(ClientItemResponse.of(client)));
-        return clientItemResponses;
+        return new ResponseEntity<>(clientItemResponses, HttpStatus.OK);
     }
 
-
     @GetMapping("/clientslimit")
-    List<ClientItemResponse> getLimitNumberOfClients() {
+    ResponseEntity<List<ClientItemResponse>> getLimitNumberOfClients() {
         List<Client> clients = clientService.findLimitNumberOfClients(PageRequest.of(0, 50));
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
         clients.forEach(client -> clientItemResponses.add(ClientItemResponse.of(client)));
-        return clientItemResponses;
+        return new ResponseEntity<>(clientItemResponses, HttpStatus.OK);
     }
-
 
     @GetMapping("/{id}")
     ClientDetailResponse getClientDetails(@PathVariable Long id) {
@@ -72,28 +70,28 @@ public class ClientController {
     }
 
     @GetMapping("/findclients/{input}")
-    List<ClientItemResponse> getClientsByAnyMatch(@PathVariable String input) {
+    ResponseEntity<List<ClientItemResponse>> getClientsByAnyMatch(@PathVariable String input) {
         if (input != "") {
             List<Client> clients = clientService.findClientsByAnyMatch(input);
             List<ClientItemResponse> clientItemResponses = new ArrayList<>();
             clients.forEach(client -> clientItemResponses.add(ClientItemResponse.of(client)));
-            return clientItemResponses;
+            return new ResponseEntity<>(clientItemResponses, HttpStatus.OK);
         } else return getAllClients();
     }
 
     @GetMapping("/findbyrole/{input}")
-    List<ClientItemResponse> getClientsByRole(@PathVariable String input) {
+    ResponseEntity<List<ClientItemResponse>> getClientsByRole(@PathVariable String input) {
         List<Client> clients = clientService.findClientsByRole(input);
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
         clients.forEach(client -> clientItemResponses.add(ClientItemResponse.of(client)));
-        return clientItemResponses;
+        return new ResponseEntity<>(clientItemResponses, HttpStatus.OK);
     }
 
     @GetMapping("/getproviders")
-    List<ProviderItemResponse> getAllProviders() {
+    ResponseEntity<List<ProviderItemResponse>> getAllProviders() {
         List<Provider> providers = providerService.findAll();
         List<ProviderItemResponse> providerItemResponses = new ArrayList<>();
         providers.forEach(provider -> providerItemResponses.add(ProviderItemResponse.of(provider)));
-        return providerItemResponses;
+        return new ResponseEntity<>(providerItemResponses, HttpStatus.OK);
     }
 }

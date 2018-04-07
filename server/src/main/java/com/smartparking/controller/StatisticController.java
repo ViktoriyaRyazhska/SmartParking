@@ -5,6 +5,8 @@ import com.smartparking.model.response.ParkingItemResponse;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,33 +23,37 @@ public class StatisticController {
     SpotService spotService;
 
     @GetMapping("/allparkings")
-    List<ParkingItemResponse> getAllParkings() {
+    ResponseEntity<List<ParkingItemResponse>> getAllParkings() {
         List<Parking> parkings = parkingService.findAll();
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
         parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
-        return parkingItemResponses;
+        return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
     @GetMapping("/findparkings/{input}")
-    List<ParkingItemResponse> getLimitNumberOfClients(@PathVariable String input) {
+    ResponseEntity<List<ParkingItemResponse>> getParkinigsByCity(@PathVariable String input) {
         List<Parking> parkings = parkingService.findParkingsByCity(input);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
         parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
-        return parkingItemResponses;
+        return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
     @GetMapping("/findbestparkingsbystreet/{input}")
-    List<ParkingItemResponse> findMostPopularParkingsByStreet(@PathVariable String input) {
+    ResponseEntity<List<ParkingItemResponse>> findMostPopularParkingsByStreet(@PathVariable String input) {
         List<Parking> parkings = spotService.findMostPopularParkingsByStreet(input);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
         parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
-        return parkingItemResponses;
+        return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
     @GetMapping("/findparkingstreets/{input}")
-    List<String> findParkingsStreet(@PathVariable String input) {
-        List<String> parkingsStreet = parkingService.findParkingStreetByAnyMatch(input);
-        return parkingsStreet;
+    ResponseEntity<List<String>> findParkingsStreet(@PathVariable String input) {
+        return new ResponseEntity<>(parkingService.findParkingStreetByAnyMatch(input), HttpStatus.OK);
+    }
+
+    @GetMapping("/findparkingscities/{input}")
+    ResponseEntity<List<String>> findParkingsCities(@PathVariable String input) {
+        return new ResponseEntity<>(parkingService.findParkingCitiesByAnyMatch(input), HttpStatus.OK);
     }
 
 }

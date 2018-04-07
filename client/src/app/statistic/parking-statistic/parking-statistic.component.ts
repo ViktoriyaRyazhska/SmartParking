@@ -3,7 +3,6 @@ import {Parking} from "../../model/view/parking";
 import {StatisticsService} from "../statistics.service";
 import {ParkingsInfo} from "../parkingsinfo";
 import {ActivatedRoute} from "@angular/router";
-import {Subject} from "rxjs/Subject";
 
 @Component({
     selector: 'app-parking-statistic',
@@ -13,13 +12,16 @@ import {Subject} from "rxjs/Subject";
 export class ParkingStatisticComponent implements OnInit {
 
     parkings: ParkingsInfo[];
-    parkingsStreets: String[];
+    parkingsStreets: string[];
+    parkingsCities: string[];
+    selectedCity = 'Lviv';
+    selectedStreet: string;
 
     constructor(private statisticService: StatisticsService, private router: ActivatedRoute) {
     }
 
     ngOnInit() {
-
+        // this.findAllParkings();
     }
 
     findAllParkings(): void {
@@ -37,6 +39,7 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     findBestParkingsByStreet(value: string) {
+        this.selectedStreet = value;
         this.statisticService.getBestParkingsByStreet(value)
             .subscribe(parkings => {
                 this.parkings = parkings;
@@ -45,9 +48,25 @@ export class ParkingStatisticComponent implements OnInit {
 
     findParkingsStreets(value: string) {
         this.statisticService.getParkingsStreet(value)
-            .subscribe(parkingsStreet => {
-                this.parkingsStreets = parkingsStreet;
+            .subscribe(parkingsStreets => {
+                this.parkingsStreets = parkingsStreets;
             });
     }
+
+    findParkingsCities(value: string) {
+        this.statisticService.getParkingsCities(value)
+            .subscribe(parkingsCities => {
+                this.parkingsCities = parkingsCities;
+            });
+    }
+
+    selectCity(value: string) {
+        this.selectedCity = value;
+    }
+
+    selectStreet(value: string) {
+        this.selectedStreet = value;
+    }
+
 
 }

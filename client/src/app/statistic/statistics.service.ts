@@ -24,8 +24,12 @@ export class StatisticsService {
         return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/findbestparkingsbystreet/' + input);
     }
 
-    getParkingsStreet(input: string): Observable<String[]> {
-        return this.http.get<String[]>(this.statisticUrl + '/findparkingstreets/' + input);
+    getParkingsStreet(input: string): Observable<string[]> {
+        return this.http.get<string[]>(this.statisticUrl + '/findparkingstreets/' + input);
+    }
+
+    getParkingsCities(input: string): Observable<string[]> {
+        return this.http.get<string[]>(this.statisticUrl + '/findparkingscities/' + input);
     }
 
 }

@@ -23,7 +23,7 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
     List<Spot> findAllByParkingId(Long id);
 
     @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where p.street=?1"
-            + " group by s.id order by count(s.id) desc")
+            + " group by p order by count(s.id) desc")
     List<Parking> findMostPopularParkingsByStreet(String input);
 
 }

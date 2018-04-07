@@ -13,7 +13,6 @@
                             <div>
                                 <mat-card-title>{{parking.city}}, {{parking.street}} street</mat-card-title>
                                 <mat-card-subtitle>{{parking.providerName}}</mat-card-subtitle>
-
                             </div>
                         </div>
                         <div style="width: 100%"></div>
@@ -31,31 +30,36 @@
     </div>
 </div>
 <div class="row">
-    <div class="filter offset-1 col-md-10">
+    <div class="filter offset-1 col-md-10" id = "cont">
         <mat-divider style="border-color: purple;"></mat-divider>
         <mat-card class="card">
-
+            <h6 [(ngModel)]="selectedStreet" ngDefaultControl>Find the most popular parking by the street: <span>{{selectedStreet}}</span></h6>
             <div class="row">
+
+                <!--<mat-form-field class="col-md-3">-->
+                    <!--<input matInput placeholder="search" #citySearchBox id="city-box"-->
+                           <!--(keyup)="findParkingsCities(citySearchBox.value)" [matAutocomplete]="auto1">-->
+                    <!--<mat-autocomplete #auto1="matAutocomplete">-->
+                        <!--<mat-option *ngFor="let parkingsCity of parkingsCities">-->
+                            <!--<a (click)="selectCity(parkingsCity)">-->
+                                <!--{{parkingsCity}}-->
+                            <!--</a>-->
+                        <!--</mat-option>-->
+                    <!--</mat-autocomplete>-->
+                <!--</mat-form-field>-->
+
                 <mat-form-field class="col-md-3">
-                    <input matInput placeholder="search" #searchBox id="search-box"
-                           (keyup)="findParkingsStreets(searchBox.value)">
-                    <ul class="search-result">
-                        <li *ngFor="let parkingsStreet of parkingsStreets">
-                            <!--The $ is a convention that indicates heroes$ is an Observable, not an array.-->
+                    <input matInput placeholder="find street" #streetSearchBox id="street-box"
+                           (keyup)="findParkingsStreets(streetSearchBox.value)" [matAutocomplete]="auto2">
+                    <mat-autocomplete #auto2="matAutocomplete">
+                        <mat-option *ngFor="let parkingsStreet of parkingsStreets">
                             <a (click)="findBestParkingsByStreet(parkingsStreet)">
                                 {{parkingsStreet}}
                             </a>
-                        </li>
-                    </ul>
+                        </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
             </div>
-            <div class="row">
-                <div class="offset-5 col-6">
-                    <button mat-raised-button color="primary" class="mt-5">Search</button>
-                </div>
-            </div>
-
-
         </mat-card>
     </div>
 </div>
