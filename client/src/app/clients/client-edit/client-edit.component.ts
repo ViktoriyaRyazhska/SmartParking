@@ -55,7 +55,7 @@ export class ClientEditComponent implements OnInit {
             alert('pleace, select provider')
         } else {
             if (this.selectedRole == 'DRIVER' || this.selectedRole == 'SUPERUSER') {
-                this.client.providersId = 0;
+                this.client.providersId = null;
             }
             this.clientService.updateClient(this.id, this.client)
                 .subscribe(data => {
