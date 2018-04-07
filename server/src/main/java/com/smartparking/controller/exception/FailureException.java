@@ -3,7 +3,7 @@ package com.smartparking.controller.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-public class HttpStatusException extends RuntimeException {
+public class FailureException extends RuntimeException {
 
     @Getter
     private final HttpStatus status;
@@ -11,17 +11,17 @@ public class HttpStatusException extends RuntimeException {
     @Getter
     private final Object body;
 
-    public HttpStatusException(HttpStatus status) {
+    public FailureException(HttpStatus status) {
         this(status, null);
     }
 
-    public HttpStatusException(HttpStatus status, Object body) {
+    public FailureException(HttpStatus status, Object body) {
         super(messageFromParameters(status, body));
         this.status = status;
         this.body = body;
     }
 
-    public HttpStatusException(HttpStatus status, Object body, Throwable cause) {
+    public FailureException(HttpStatus status, Object body, Throwable cause) {
         super(messageFromParameters(status, body), cause);
         this.status = status;
         this.body = body;
