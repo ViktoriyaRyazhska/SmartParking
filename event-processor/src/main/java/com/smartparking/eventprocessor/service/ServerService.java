@@ -1,5 +1,8 @@
 package com.smartparking.eventprocessor.service;
 
+import com.smartparking.eventprocessor.controller.exception.FailureException;
+import com.smartparking.eventprocessor.model.view.Spot;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -11,5 +14,5 @@ public interface ServerService {
 
     boolean isAuthenticated();
 
-    Map<Long, String> getParkingTokens() throws IOException;
+    Map<Long, Spot> getSpots() throws IOException, FailureException;
 }

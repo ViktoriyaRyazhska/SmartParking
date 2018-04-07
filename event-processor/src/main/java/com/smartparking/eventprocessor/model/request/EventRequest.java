@@ -11,4 +11,5 @@ public class EventRequest {
     private Long spotId;
     private String parkingToken;
     private String eventType;
+    private String timestamp;
 }

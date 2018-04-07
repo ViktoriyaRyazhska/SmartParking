@@ -1,8 +1,10 @@
 package com.smartparking.service.impl;
 
 import com.smartparking.entity.Parking;
+import com.smartparking.entity.Spot;
 import com.smartparking.model.response.ParkingResponse;
-import com.smartparking.model.response.ParkingTokenResponse;
+import com.smartparking.model.response.ParkingWithSpotsResponse;
+import com.smartparking.model.response.SpotResponse;
 import com.smartparking.repository.FavoriteRepository;
 import com.smartparking.repository.ParkingRepository;
 import com.smartparking.service.AbstractService;
@@ -16,7 +18,10 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Tuple;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,10 +69,21 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     }
 
     @Override
-    public List<ParkingTokenResponse> findAllTokensResponse() {
-        return getRepository().findAllTokens().stream()
-                .map(this::tupleToParkingTokenResponse)
-                .collect(Collectors.toList());
+    public List<ParkingWithSpotsResponse> findAllWithSpotsResponse() {
+        Map<Long, ParkingWithSpotsResponse> responses = new HashMap<>();
+        for (Spot spot : spotService.findAll()) {
+            Long parkingId = spot.getParking().getId();
+            ParkingWithSpotsResponse parkingResponse = responses.get(parkingId);
+            if (parkingResponse == null) {
+                parkingResponse = new ParkingWithSpotsResponse();
+                parkingResponse.setId(parkingId);
+                parkingResponse.setToken(spot.getParking().getToken());
+                parkingResponse.setSpots(new ArrayList<>());
+                responses.put(parkingId, parkingResponse);
+            }
+            parkingResponse.getSpots().add(new SpotResponse(spot.getId()));
+        }
+        return new ArrayList<>(responses.values());
     }
 
     @Override
@@ -112,9 +128,9 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
         return response;
     }
 
-    private ParkingTokenResponse tupleToParkingTokenResponse(Tuple tuple) {
-        ParkingTokenResponse response = new ParkingTokenResponse();
-        response.setParkingId(tuple.get(0, Long.class));
+    private ParkingWithSpotsResponse tupleToParkingTokenResponse(Tuple tuple) {
+        ParkingWithSpotsResponse response = new ParkingWithSpotsResponse();
+        response.setId(tuple.get(0, Long.class));
         response.setToken(tuple.get(1, String.class));
         return response;
     }

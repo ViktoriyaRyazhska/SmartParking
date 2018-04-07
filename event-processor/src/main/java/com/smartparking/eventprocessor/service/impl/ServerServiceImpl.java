@@ -1,9 +1,12 @@
 package com.smartparking.eventprocessor.service.impl;
 
 import com.smartparking.eventprocessor.config.properties.HttpClientProperties;
+import com.smartparking.eventprocessor.controller.exception.FailureException;
 import com.smartparking.eventprocessor.model.request.LoginRequest;
 import com.smartparking.eventprocessor.model.response.AuthTokenResponse;
-import com.smartparking.eventprocessor.model.response.ParkingTokenResponse;
+import com.smartparking.eventprocessor.model.response.ParkingWithSpotsResponse;
+import com.smartparking.eventprocessor.model.view.Parking;
+import com.smartparking.eventprocessor.model.view.Spot;
 import com.smartparking.eventprocessor.service.HttpClientService;
 import com.smartparking.eventprocessor.service.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ public class ServerServiceImpl implements ServerService {
     private volatile String token;
 
     @Override
-    public void authenticate() throws IOException {
+    public void authenticate() throws IOException, FailureException {
         LoginRequest request = new LoginRequest();
         request.setEmail(httpClientProperties.getEmail());
         request.setPassword(httpClientProperties.getPassword());
@@ -51,11 +54,13 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public Map<Long, String> getParkingTokens() throws IOException {
+    public Map<Long, Spot> getSpots() throws IOException, FailureException {
         authenticateIfNeeded();
-        List<ParkingTokenResponse> response =
-                httpClientService.getList("/parking-tokens", null, token, ParkingTokenResponse.class);
-        return response.stream().collect(Collectors.toMap(
-                ParkingTokenResponse::getParkingId, ParkingTokenResponse::getToken));
+        List<ParkingWithSpotsResponse> response =
+                httpClientService.getList("/parkings-with-spots", null, token, ParkingWithSpotsResponse.class);
+        return response.stream().flatMap(p -> {
+            Parking parking = new Parking(p.getId(), p.getToken());
+            return p.getSpots().stream().map(s -> new Spot(s.getId(), parking));
+        }).collect(Collectors.toMap(Spot::getId, s -> s));
     }
 }

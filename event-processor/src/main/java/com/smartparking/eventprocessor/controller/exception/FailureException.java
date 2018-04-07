@@ -1,4 +1,4 @@
-package com.smartparking.eventprocessor.service.exception;
+package com.smartparking.eventprocessor.controller.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

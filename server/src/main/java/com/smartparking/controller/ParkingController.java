@@ -5,7 +5,7 @@ import com.smartparking.entity.Parking;
 import com.smartparking.model.request.ParkingRequest;
 import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.model.response.ParkingResponse;
-import com.smartparking.model.response.ParkingTokenResponse;
+import com.smartparking.model.response.ParkingWithSpotsResponse;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,8 +99,8 @@ public class ParkingController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/parking-tokens")
-    List<ParkingTokenResponse> parkingTokens() {
-        return parkingService.findAllTokensResponse();
+    @GetMapping("/parkings-with-spots")
+    List<ParkingWithSpotsResponse> parkingTokens() {
+        return parkingService.findAllWithSpotsResponse();
     }
 }
