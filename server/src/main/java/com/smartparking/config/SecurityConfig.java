@@ -61,8 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/**", "/parkingdetail/**", "/parkings-nearby/**", "/statistic/**","/spotstatistic/**").permitAll()
-                .antMatchers("/profile", "/profile/**").hasAnyAuthority(Role.DRIVER.toString())
-                .antMatchers("/clients", "/clients/**", "/manager-configuration/**", "/providers", "/providers/**", "/profile", "/profile/**").hasAnyAuthority(Role.PROVIDER_MANAGER.toString(), Role.SUPERUSER.toString())
+                .antMatchers("/profile", "/profile/**").hasAnyAuthority(Role.DRIVER.toString(), Role.PROVIDER_MANAGER.toString(), Role.SUPERUSER.toString())
+                .antMatchers("/clients", "/clients/**", "/manager-configuration/**", "/providers", "/providers/**").hasAnyAuthority(Role.PROVIDER_MANAGER.toString(), Role.SUPERUSER.toString())
                 .antMatchers().hasAnyAuthority(Role.SUPERUSER.toString())
                 .anyRequest().permitAll();
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
