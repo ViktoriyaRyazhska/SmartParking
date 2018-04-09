@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ControllerConfig {
+public class ControllerConfiguration {
 
     @ExceptionHandler(FailureException.class)
     public ResponseEntity<?> handleException(FailureException exception) {

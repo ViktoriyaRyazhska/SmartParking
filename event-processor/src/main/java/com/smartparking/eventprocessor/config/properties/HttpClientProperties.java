@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties("httpclient")
+@ConfigurationProperties("eventprocessor.httpclient")
 public class HttpClientProperties {
     private String host;
     private String email;

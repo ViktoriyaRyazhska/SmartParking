@@ -36,6 +36,7 @@ public class EventBatchServiceImpl implements EventBatchService {
     public void send(Collection<? extends Event> events) {
         try {
             serverService.sendEvents(events);
+            //TODO
         } catch (IOException | FailureException e) {
             log.error("Events can`t be sent to Server.", e);
         }

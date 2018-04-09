@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.Map;
 
@@ -33,8 +32,12 @@ public class EventController {
     private Map<Long, Spot> spots;
 
     @PostConstruct
-    public void init() throws IOException {
-        spots = serverService.getSpots();
+    public void init() {
+        /*try {
+            spots = serverService.getSpots();
+        } catch (IOException e) {
+            log.error("Cannot connect to Server.", e);
+        }*/
     }
 
     /*@RequestMapping("parking/update")

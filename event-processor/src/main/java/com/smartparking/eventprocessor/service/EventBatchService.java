@@ -5,6 +5,7 @@ import com.smartparking.eventprocessor.model.view.Event;
 import java.util.Collection;
 
 public interface EventBatchService {
+
     Event poll();
 
     void push(Event event);

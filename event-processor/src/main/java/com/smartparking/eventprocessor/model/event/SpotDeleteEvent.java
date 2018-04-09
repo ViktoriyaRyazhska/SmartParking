@@ -1,0 +1,13 @@
+package com.smartparking.eventprocessor.model.event;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SpotDeleteEvent {
+    private Long spotId;
+    private String parkingId;
+}

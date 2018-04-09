@@ -2,7 +2,6 @@ package com.smartparking.eventprocessor.config;
 
 import com.smartparking.eventprocessor.model.view.Event;
 import com.smartparking.eventprocessor.service.EventBatchService;
-import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.Step;
@@ -19,6 +18,7 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
 import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -29,7 +29,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 @EnableScheduling
 @EnableBatchProcessing
-public class BatchConfig extends DefaultBatchConfigurer {
+public class BatchConfiguration extends DefaultBatchConfigurer {
 
     @Autowired
     private JobLauncher jobLauncher;
