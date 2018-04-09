@@ -38,22 +38,32 @@ public class StatisticController {
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
-    @GetMapping("/findbestparkingsbystreet/{input}")
-    ResponseEntity<List<ParkingItemResponse>> findMostPopularParkingsByStreet(@PathVariable String input) {
-        List<Parking> parkings = spotService.findMostPopularParkingsByStreet(input);
-        List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
-        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
-        return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
-    }
 
-    @GetMapping("/findparkingstreets/{input}")
-    ResponseEntity<List<String>> findParkingsStreet(@PathVariable String input) {
-        return new ResponseEntity<>(parkingService.findParkingStreetByAnyMatch(input), HttpStatus.OK);
+    @GetMapping("/findparkingstreets")
+    ResponseEntity<List<String>> findParkingsStreet(@RequestParam("city") String city,
+                                                    @RequestParam("street") String street) {
+        return new ResponseEntity<>(parkingService.findParkingStreetByAnyMatch(city, street), HttpStatus.OK);
     }
 
     @GetMapping("/findparkingscities/{input}")
-    ResponseEntity<List<String>> findParkingsCities(@PathVariable String input) {
+    ResponseEntity<List<String>> findParkingsCitiesByAnyMatching(@PathVariable String input) {
         return new ResponseEntity<>(parkingService.findParkingCitiesByAnyMatch(input), HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllparkingscities")
+    ResponseEntity<List<String>> findAllParkingsCities() {
+        return new ResponseEntity<>(parkingService.findAllParkingCities(), HttpStatus.OK);
+    }
+
+    @RequestMapping("/findbestparkingsbystreetandcity")
+    public ResponseEntity<List<ParkingItemResponse>> bestParkingsByCityAndStreet(@RequestParam("city") String city,
+                                                                                 @RequestParam("street") String street) {
+        System.out.println(city);
+        System.out.println(street);
+        List<Parking> parkings = spotService.findBestParkingsByCityAndStreet(city, street);
+        List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
+        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
+        return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
 }
