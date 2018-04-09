@@ -37,7 +37,7 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
     @Override
     @Transactional
     public void updateFromRequest(Long id, ClientRequest clientRequest) {
-        Client client = findById(id);
+        Client client = findById(id).orElse(null);
 
         Provider provider = findProviderById(clientRequest.getProvidersId());
         client.setProvider(provider);

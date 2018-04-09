@@ -3,6 +3,7 @@ package com.smartparking.config;
 import com.smartparking.config.constants.RabbitConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -30,11 +31,11 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(@Autowired ConnectionFactory connectionFactory,
-                                         @Autowired MessageConverter jsonMessageConverter) {
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter);
-        return rabbitTemplate;
+    public AmqpTemplate amqpTemplate(@Autowired ConnectionFactory connectionFactory,
+                                     @Autowired MessageConverter jsonMessageConverter) {
+        final RabbitTemplate amqpTemplate = new RabbitTemplate(connectionFactory);
+        amqpTemplate.setMessageConverter(jsonMessageConverter);
+        return amqpTemplate;
     }
 
     @Bean

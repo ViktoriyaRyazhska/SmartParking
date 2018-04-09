@@ -30,7 +30,7 @@ public class FavoriteController {
 
     @PostMapping("parkingdetail/{id}/savetofavorites")
     ResponseEntity<?> saveToFavorites(@RequestBody FavoriteRequest favoriteRequest, @PathVariable Long id) {
-        Parking parking = parkingService.findById(id);
+        Parking parking = parkingService.findById(id).orElse(null);
         Client client = clientService.findOne(
                 SecurityContextHolder.getContext().getAuthentication().getName());
         Boolean isFavorite = parkingService.isFavorite(client.getEmail(), id);

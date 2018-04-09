@@ -2,6 +2,7 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.model.request.ParkingNearbyRequest;
 import com.smartparking.model.response.ParkingResponse;
 import com.smartparking.model.response.ParkingWithSpotsResponse;
 import com.smartparking.model.response.SpotResponse;
@@ -12,6 +13,7 @@ import com.smartparking.service.FavoriteService;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.ProviderService;
 import com.smartparking.service.SpotService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,26 +48,25 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     }
 
     @Override
-    public List<ParkingResponse> findAllNearbyResponse(Double latitude, Double longitude, Double radius) {
-        Objects.requireNonNull(latitude, "latitude");
-        Objects.requireNonNull(longitude, "longitude");
-        Objects.requireNonNull(radius, "radius");
-        if (radius < 0) {
+    public List<ParkingResponse> findAllNearbyResponse(@NonNull ParkingNearbyRequest request) {
+        if (request.getRadius() < 0) {
             throw new IllegalArgumentException("Radius can`t be less then zero.");
         }
-        return getRepository().findAllNearby(latitude, longitude, radius).stream().map(tuple -> {
-            ParkingResponse response = tupleToParkingResponse(tuple);
+        return getRepository().findAllNearby(request.getLatitude(), request.getLongitude(), request.getRadius()).stream()
+                .map(tuple -> {
+                    ParkingResponse response = tupleToParkingResponse(tuple);
 
-            response.setFavoritesCount(favoriteService.getCountByClientId(response.getId()));
-            response.setSpotsCount(spotService.countAllSpotsByParkingId(response.getId()));
-            response.setAvailableSpotsCount(spotService.countAvailableSpotsByParkingId(response.getId()));
+                    response.setFavoritesCount(favoriteService.getCountByClientId(response.getId()));
+                    response.setSpotsCount(spotService.countAllSpotsByParkingId(response.getId()));
+                    response.setAvailableSpotsCount(spotService.countAvailableSpotsByParkingId(response.getId()));
 
-            providerService.findByParkingId(response.getId()).ifPresent(provider -> {
-                response.setProviderId(provider.getId());
-                response.setProviderName(provider.getName());
-            });
-            return response;
-        }).collect(Collectors.toList());
+                    providerService.findByParkingId(response.getId()).ifPresent(provider -> {
+                        response.setProviderId(provider.getId());
+                        response.setProviderName(provider.getName());
+                    });
+                    return response;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
