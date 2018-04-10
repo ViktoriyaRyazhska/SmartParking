@@ -34,13 +34,15 @@
         <mat-divider style="border-color: purple;"></mat-divider>
         <mat-card class="card">
             <h6 [(ngModel)]="selectedStreet" [(ngModel)]="selectedCity" ngDefaultControl>Find the most popular parking
-                in <span>{{selectedCity}}</span> on the street: <span *ngIf="selectedStreet ==null">--not selected--</span><span>{{selectedStreet}}</span> for the last <span>{{selectedNumberOfDays}}</span></h6>
+                in <span>{{selectedCity}}</span> on the street: <span
+                        *ngIf="selectedStreet ==null">--not selected--</span><span>{{selectedStreet}}</span> for the
+                last <span>{{selectedNumberOfDays}}</span></h6>
             <div class="row">
 
                 <mat-form-field>
                     <mat-select [(value)]="selectedCity" placeholder="change city">
                         <mat-option *ngFor="let parkingsCity of parkingsCities" [value]="parkingsCity"
-                                    (click)="theCityWasSelected()">
+                                    (click)="clearCurrentStreet()">
                             {{ parkingsCity }}
                         </mat-option>
                     </mat-select>
@@ -48,13 +50,12 @@
 
                 <mat-form-field class="col-md-3">
                     <input matInput placeholder="find street" #streetSearchBox id="street-box"
-                           (keyup)="findParkingsStreets(streetSearchBox.value)"
+                           (keyup)="findParkingsStreetsFromInput(streetSearchBox.value)"
                            [matAutocomplete]="auto2">
                     <mat-autocomplete #auto2="matAutocomplete">
                         <mat-option *ngFor="let parkingsStreet of parkingsStreets"
-                                    [value]="selectedStreet"
-                                    (click)="theStreetWasSelected(parkingsStreet)"
-                                    (click)="findBestParkingsByStreet(parkingsStreet)">
+                                    (click)="selectStreet(parkingsStreet)"
+                                    (click)="findBestParkings()">
                             {{parkingsStreet}}
                         </mat-option>
                     </mat-autocomplete>
@@ -63,7 +64,7 @@
                 <mat-form-field>
                     <mat-select [(value)]="selectedNumberOfDays" placeholder="for the last days">
                         <mat-option *ngFor="let day of days" [value]="day"
-                                    (click)="calculateDate()"
+                                    (click)="findBestParkings()"
                         >
                             {{ day }}
                         </mat-option>

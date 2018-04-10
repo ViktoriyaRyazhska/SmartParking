@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository> implements SpotService {
@@ -48,8 +45,8 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
-    public List<Parking> findBestParkingsByCityAndStreet(String city, String street, Instant date) {
-        return repository.findBestParkingsByCityAndStreet(city, street, date);
+    public List<Parking> findBestParkings(String city, String street, Instant date) {
+        return repository.findBestParkings(city, street, date);
     }
 
     @Override
