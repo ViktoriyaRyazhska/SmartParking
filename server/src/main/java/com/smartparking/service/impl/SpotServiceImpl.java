@@ -2,6 +2,7 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.repository.SpotRepository;
 import com.smartparking.repository.SpotStatisticRepository;
 import com.smartparking.service.AbstractService;
@@ -49,7 +50,7 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
-    public Map<Long, Double> getSpotStatistic(long id, long startDate, long endDate) {
+    public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
         return spotStatisticRepository.getSpotStatistic(id,startDate, endDate);
     }
 }

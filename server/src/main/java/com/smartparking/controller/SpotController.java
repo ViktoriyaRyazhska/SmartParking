@@ -67,18 +67,7 @@ public class SpotController {
             @RequestParam("start_time") String startTime,
             @RequestParam("end_time") String endTime) {
 
-
-        List<SpotStatisticResponse> spotStatisticResponseList = new ArrayList<>();
-        Map<Long, Double> spotStatistic = spotService.getSpotStatistic(id,Long.parseLong(startTime),Long.parseLong(endTime));
-        for (Map.Entry<Long, Double> entry : spotStatistic.entrySet()) {
-            Long key = entry.getKey();
-            Double value = entry.getValue();
-            SpotStatisticResponse spotStatisticResponse = new SpotStatisticResponse();
-            spotStatisticResponse.setId(key);
-            spotStatisticResponse.setNumberOfHours(value);
-            spotStatisticResponseList.add(spotStatisticResponse);
-        }
-      //  LOGGER.info(spotStatisticResponseList.toString());
+        List<SpotStatisticResponse> spotStatisticResponseList = spotService.getSpotStatistic(id,Long.parseLong(startTime),Long.parseLong(endTime));
         return new ResponseEntity<>(spotStatisticResponseList, HttpStatus.OK);
     }
 
