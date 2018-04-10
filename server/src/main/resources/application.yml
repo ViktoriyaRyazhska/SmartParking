@@ -15,6 +15,23 @@ spring:
         persistence:
           validation:
             mode: none
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: smartparking.api@gmail.com
+    password: pullpush
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    smpt:
+      ssl:
+        enable: true
+
+
+
 
 url: http://localhost:8080
 
