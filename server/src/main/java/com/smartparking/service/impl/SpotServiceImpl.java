@@ -44,8 +44,8 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
-    public List<Parking> findMostPopularParkingsByStreet(String input) {
-        return repository.findMostPopularParkingsByStreet(input);
+    public List<Parking> findBestParkingsByCityAndStreet(String city, String street) {
+        return repository.findBestParkingsByCityAndStreet(city, street);
     }
 
     @Override

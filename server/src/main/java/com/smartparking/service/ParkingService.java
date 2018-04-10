@@ -25,7 +25,10 @@ public interface ParkingService extends Service<Parking, Long, ParkingRepository
 
     List<Parking> findParkingsByCity(String input);
 
-    List<String> findParkingStreetByAnyMatch(String input);
+    List<String> findParkingStreetByAnyMatch(String city, String street);
 
     List<String> findParkingCitiesByAnyMatch(String input);
+
+    List<String> findAllParkingCities();
+
 }

@@ -1,46 +1,50 @@
 import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Token} from "./token";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
-import {environment} from "../../../environments/environment";
-import {getToken} from "codelyzer/angular/styles/cssLexer";
+import {TokenPair} from "./token-pair";
 
-const TOKEN_KEY = 'access_token';
+const ACCESS_TOKEN_KEY = 'access_token';
+const REFRESH_TOKEN_KEY = 'refresh_token';
 const helper = new JwtHelperService();
 
 
 @Injectable()
 export class TokenStorage {
 
-    private token = window.localStorage.getItem(TOKEN_KEY);
+    private accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
+    private refreshToken = window.localStorage.getItem(REFRESH_TOKEN_KEY);
 
     constructor() {
     }
 
     public signOut() {
-        window.localStorage.removeItem(TOKEN_KEY);
+        window.localStorage.removeItem(ACCESS_TOKEN_KEY);
+        window.localStorage.removeItem(REFRESH_TOKEN_KEY);
         window.localStorage.clear();
-        this.token = null;
+        this.accessToken = null;
+        this.refreshToken = null;
     }
 
-    public saveToken(token: string) {
-        console.log('Save token ' + token);
-        window.localStorage.removeItem(TOKEN_KEY);
-        window.localStorage.setItem(TOKEN_KEY, token);
-        this.token = window.localStorage.getItem(TOKEN_KEY);
-        console.log('Get saved token ' + this.token);
+    public saveToken(token: TokenPair) {
+        this.signOut();
+        window.localStorage.setItem(ACCESS_TOKEN_KEY, token.accessToken);
+        window.localStorage.setItem(REFRESH_TOKEN_KEY, token.refreshToken);
+        this.accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
+        this.refreshToken = window.localStorage.getItem(REFRESH_TOKEN_KEY);
     }
 
-    public getToken(): string {
-        return this.token;
+    public getAccessToken(): string {
+        return this.accessToken;
+    }
+
+    public getRefreshToken(): string {
+        return this.refreshToken;
     }
 
     public isExpired(): boolean {
-        if(this.token == null) {
+        if(this.accessToken == null) {
             return false;
         }
-        return helper.isTokenExpired(this.token);
+        return helper.isTokenExpired(this.accessToken);
     }
 
     public getRole(): string {
@@ -55,10 +59,10 @@ export class TokenStorage {
     }
 
     private decodeToken(): any {
-        return helper.decodeToken(this.token);
+        return helper.decodeToken(this.accessToken);
     }
 
     public hasToken(): boolean {
-        return this.token != null;
+        return this.refreshToken != null;
     }
 }

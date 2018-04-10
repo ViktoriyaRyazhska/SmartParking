@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginData} from "./login-data";
 import {Router} from "@angular/router";
-import {Token} from "../token/token";
-import {LoginService} from "./login.service";
+import {TokenPair} from "../token/token-pair";
 import {TokenStorage} from "../token/token-storage";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-login',
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     ]);
 
     constructor(private formBuilder: FormBuilder,
-                private loginService: LoginService,
+                private authService: AuthService,
                 private router: Router,
                 private tokenStorage: TokenStorage
     ) {}
@@ -43,9 +43,9 @@ export class LoginComponent implements OnInit {
 
     login = () => {
         this.loginData = this.loginForm.value;
-        this.loginService.signIn(this.loginData)
-            .subscribe((token: Token)=>{
-                this.tokenStorage.saveToken(token.token);
+        this.authService.signIn(this.loginData)
+            .subscribe((token: TokenPair)=>{
+                this.tokenStorage.saveToken(token);
                 alert('You are successfully authorized');
                 this.router.navigate(['/']);
                 }, (error) => {

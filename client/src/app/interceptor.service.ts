@@ -7,7 +7,7 @@ import {
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import {TokenStorage} from './auth/token/token-storage';
-import {Token} from "./auth/token/token";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
@@ -16,9 +16,7 @@ export class InterceptorService implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('Go into interceptor 2');
-        let token = this.tokenStorage.getToken();
-        console.log('Token ' + token);
-        if (request.url.startsWith('http://localhost:8080/') && token) {
+        if (request.url.startsWith('http://localhost:8080/') && this.tokenStorage.getAccessToken()) {
             request = this.addAuthHeaderToRequest(request);
         }
         console.log('Exit from interceptor 2');
@@ -27,7 +25,7 @@ export class InterceptorService implements HttpInterceptor {
 
     private addAuthHeaderToRequest(request: HttpRequest<any>): HttpRequest<any> {
         return request.clone({
-            headers: request.headers.append('Authorization', `Bearer ${this.tokenStorage.getToken()}`)
+            headers: request.headers.append('Access-token', this.tokenStorage.getAccessToken())
         });
     }
 }

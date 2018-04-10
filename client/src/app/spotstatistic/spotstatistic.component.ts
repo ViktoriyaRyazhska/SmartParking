@@ -6,8 +6,6 @@ import {ParkingService} from "../parking.service";
 import {Spot} from '../model/view/spot';
 import {SpotStatistic} from '../model/view/spotstatistic';
 import {Observable} from 'rxjs/Observable';
-import { DateRange } from '../model/view/daterange';
-
 
 
 
@@ -32,7 +30,9 @@ export class SpotstatisticComponent implements OnInit {
   tempDate: Date;
   minMonth: number;
   maxMonth: number;
-  dateRange:DateRange;
+  start_date:string;
+  end_date:string;
+ 
 
   
 
@@ -42,15 +42,13 @@ export class SpotstatisticComponent implements OnInit {
    
   ) { 
   this.minDate = new Date();
+  this.minDate.setDate(this.minDate.getDate()-7);
   this.maxDate = new Date();
+  this.minMonth = this.minDate.getMonth()+1;
+  this.maxMonth = this.maxDate.getMonth()+1;
+  this.start_date = this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
+  this.end_date = this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
    }
-
-    setDateRange(beginDate, endDate) {
-    this.dateRange = {
-      beginDate: beginDate,
-      endDate: endDate
-    }
-  }
 
 
  ngOnInit() {
@@ -65,21 +63,15 @@ export class SpotstatisticComponent implements OnInit {
  }
 
 
+
+
  getSpotStatistic(): void{
-   const id = parseInt(this.route.snapshot.paramMap.get('id'));
-   this.parkingService.getSpotStatistic(id)
-     .subscribe(statistic => this.statistic = statistic);
- }
-
-
-
- getDateRange(): void {
   const id = parseInt(this.route.snapshot.paramMap.get('id'));
-     this.parkingService.getDateRange(id,this.dateRange)
-          .subscribe(data => {
-              alert('DateRange was setted successfully.');
-          });
-  }
+  this.parkingService.getSpotStatistic(id,
+    this.start_date,this.end_date)
+    .subscribe(statistic => this.statistic = statistic);
+}
+
 
 
 
@@ -91,16 +83,10 @@ export class SpotstatisticComponent implements OnInit {
     this.minDate = this.maxDate;
     this.maxDate = this.tempDate;
    }
-  this.minMonth = this.minDate.getMonth()+1;
-  this.maxMonth = this.maxDate.getMonth()+1;
- this.setDateRange(this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear(),this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear());
- this.dateRange.beginDate=this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
- this.goals.push(this.dateRange.beginDate);  
- this.goals.push(this.dateRange.endDate);
- this.getDateRange();
-  
  
-}
+ this.goals.push(this.start_date);  
+ this.goals.push(this.end_date);
+ }
 
 }
 
