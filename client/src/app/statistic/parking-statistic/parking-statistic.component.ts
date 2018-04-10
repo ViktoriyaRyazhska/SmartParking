@@ -21,50 +21,43 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.findAllParkingsCities();
     }
 
-    findAllParkings(): void {
-        this.statisticService.getAllParkings()
+    findBestParkingsByStreet(inputStreet: string) {
+        this.statisticService.getBestParkingsByCityAndStreet(this.selectedCity, inputStreet)
             .subscribe(parkings => {
                 this.parkings = parkings;
             });
     }
 
-    findMostPopularProvidersByStreet(value: string) {
-        this.statisticService.getAllParkingsByCity(value)
-            .subscribe(parkings => {
-                this.parkings = parkings;
-            });
-    }
-
-    findBestParkingsByStreet(value: string) {
-        this.selectedStreet = value;
-        this.statisticService.getBestParkingsByStreet(value)
-            .subscribe(parkings => {
-                this.parkings = parkings;
-            });
-    }
-
-    findParkingsStreets(value: string) {
-        this.statisticService.getParkingsStreet(value)
+    findParkingsStreets(input: string) {
+        this.statisticService.getParkingsStreet(this.selectedCity, input)
             .subscribe(parkingsStreets => {
                 this.parkingsStreets = parkingsStreets;
             });
     }
 
-    findParkingsCities(value: string) {
-        this.statisticService.getParkingsCities(value)
+    findAllParkingsCities() {
+        this.statisticService.getAllParkingsCities()
             .subscribe(parkingsCities => {
                 this.parkingsCities = parkingsCities;
             });
     }
 
-    selectCity(value: string) {
-        this.selectedCity = value;
+    findParkingsCities(value: string) {
+        this.statisticService.getParkingsCitiesByAnyMatching(value)
+            .subscribe(parkingsCities => {
+                this.parkingsCities = parkingsCities;
+            });
     }
 
-    selectStreet(value: string) {
-        this.selectedStreet = value;
+    theCityWasSelected() {
+        this.selectedStreet = "";
+    }
+
+    theStreetWasSelected(street: string) {
+        this.selectedStreet = street;
     }
 
 

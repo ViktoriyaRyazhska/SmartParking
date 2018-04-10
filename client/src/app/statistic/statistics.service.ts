@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {ParkingsInfo} from "./parkingsinfo";
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
@@ -12,24 +12,30 @@ export class StatisticsService {
     constructor(private http: HttpClient) {
     }
 
-    getAllParkings(): Observable<ParkingsInfo[]> {
-        return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/allparkings');
+    getParkingsStreet(city: string, street: string): Observable<string[]> {
+        return this.http.get<string[]>(this.statisticUrl + '/findparkingstreets', {
+            params: {
+                city: city,
+                street: street
+            }
+        });
     }
 
-    getAllParkingsByCity(input: string): Observable<ParkingsInfo[]> {
-        return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/findparkings/' + input);
-    }
-
-    getBestParkingsByStreet(input: string): Observable<ParkingsInfo[]> {
-        return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/findbestparkingsbystreet/' + input);
-    }
-
-    getParkingsStreet(input: string): Observable<string[]> {
-        return this.http.get<string[]>(this.statisticUrl + '/findparkingstreets/' + input);
-    }
-
-    getParkingsCities(input: string): Observable<string[]> {
+    getParkingsCitiesByAnyMatching(input: string): Observable<string[]> {
         return this.http.get<string[]>(this.statisticUrl + '/findparkingscities/' + input);
+    }
+
+    getAllParkingsCities(): Observable<string[]> {
+        return this.http.get<string[]>(this.statisticUrl + '/findAllparkingscities');
+    }
+
+    getBestParkingsByCityAndStreet(city: string, street: string): Observable<ParkingsInfo[]> {
+        return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/findbestparkingsbystreetandcity', {
+            params: {
+                city: city,
+                street: street
+            }
+        });
     }
 
 }

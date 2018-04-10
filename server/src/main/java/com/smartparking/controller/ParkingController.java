@@ -28,11 +28,12 @@ public class ParkingController {
     @Autowired
     ParkingService addressService;
 
+
     @RequestMapping("parkings-nearby")
     public ResponseEntity<?> parkingsNearby(@RequestParam("latitude") Double latitude,
                                             @RequestParam("longitude") Double longitude,
                                             @RequestParam("radius") Double radius) {
-        if (radius < 0) {
+                if (radius < 0) {
             return new ResponseEntity<>("Radius must be positive or zero.", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(parkingService.findAllNearbyResponse(latitude, longitude, radius), HttpStatus.OK);

@@ -120,12 +120,17 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     }
 
     @Override
-    public List<String> findParkingStreetByAnyMatch(String input) {
-        return getRepository().findParkingStreetByAnyMatch(input);
+    public List<String> findParkingStreetByAnyMatch(String city, String street) {
+        return getRepository().findParkingStreetByAnyMatch(city, street);
     }
 
     @Override
-    public List<String> findParkingCitiesByAnyMatch(String input) {
-        return getRepository().findParkingCitiesByAnyMatch(input);
+    public List<String> findParkingCitiesByAnyMatch(String city) {
+        return getRepository().findParkingCitiesByAnyMatch(city);
+    }
+
+    @Override
+    public List<String> findAllParkingCities() {
+        return getRepository().findAllParkingCities();
     }
 }

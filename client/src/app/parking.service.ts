@@ -7,7 +7,6 @@ import {Spot} from './model/view/spot';
 import {environment} from '../environments/environment';
 import { Favorite } from './model/view/favorite';
 import {SpotStatistic} from './model/view/spotstatistic';
-import {DateRange} from './model/view/daterange';
 
 
 @Injectable()
@@ -44,10 +43,8 @@ export class ParkingService {
         return this.http.get<Spot[]>(this.parkingDetailUrl + id + '/freespots');
     }
 
-    // saveParking(parking: Parking): Observable<HttpResponse<any>> {
-    //     return this.http.post<HttpResponse<any>>(
-    //         this.parkingConfigureUrl + '/parking/save', parking, {observe: 'response'});
-    // }
+  
+
 
     saveToFavorite(id: number, favorite: Favorite): Observable<HttpResponse<any>>{
         return this.http.post<HttpResponse<any>>(
@@ -56,17 +53,16 @@ export class ParkingService {
 
 
 
-    getSpotStatistic(id: number): Observable<SpotStatistic[]> {
-           return this.http.get<SpotStatistic[]>(this.spotstatistic + id);
+
+    getSpotStatistic(id: number, start_time:string, end_time:string): Observable<SpotStatistic[]> {
+           return this.http.get<SpotStatistic[]>(this.spotstatistic + id, {
+            params: {
+                start_time: start_time,
+                end_time: end_time
+            }
+        });
     }
-
-
-    getDateRange(id: number, dateRange: DateRange) {
-        return this.http.post(this.spotstatistic+'bydaterange/' +  id, dateRange);
-    }
-
-
-
+      
 
 
 }
