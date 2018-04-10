@@ -2,7 +2,7 @@
 export class SpotStatistic{
     id: number;
     numberOfHours: number;
-    numberOfEvent: number;
+    numberOfEvents: number;
 
     
 
@@ -11,7 +11,7 @@ export class SpotStatistic{
    }
 
    public getNumberOfEvent(): number{
-    return  this.numberOfEvent;
+    return  this.numberOfEvents;
    }
 
 }

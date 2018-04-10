@@ -33,9 +33,11 @@ export class SpotstatisticComponent implements OnInit {
  
    start_date:string;
    end_date:string;
-  chart = [];
+  hoursChart = [];
+  eventsChart = [];
  numbers: number[];
  hours: number[];
+ events: number[];
 
 
   
@@ -78,25 +80,29 @@ export class SpotstatisticComponent implements OnInit {
   this.numbers= []
   this.statistic.forEach( (element) => {
     console.log(element.id);
-    console.log(element.numberOfHours);
-    this.numbers.push(element.id);
+      this.numbers.push(element.id);
       
   });
   this.hours= []
   this.statistic.forEach( (element) => {
-    console.log(element.id);
-    console.log(element.numberOfHours);
+     console.log(element.numberOfHours);
      this.hours.push(element.numberOfHours);
      });
   this.hours.push(0);  
+  this.events= []
+  this.statistic.forEach( (element) => {
+      console.log(element.numberOfEvents);
+     this.events.push(element.numberOfEvents);
+     });
+  this.events.push(0);  
 
 
  }
 
-drawGraphic(): void {
+drawHourGraphic(): void {
  
 
- this.chart = new Chart('canvas', {
+ this.hoursChart = new Chart('canvas', {
   type: 'bar',
   data: {
     labels: this.numbers,
@@ -129,8 +135,50 @@ drawGraphic(): void {
 
 this.numbers = null;
 this.hours = null;
+this.events = null;
 
 }
+
+
+drawEventGraphic(): void {
+ 
+
+  this.eventsChart = new Chart('canvas', {
+   type: 'bar',
+   data: {
+     labels: this.numbers,
+     datasets: [
+       { 
+         data: this.events,
+         borderColor: "#3cba9f",
+         fill: false
+         }
+     ]
+   },
+   options: {
+     legend: {
+       display: false
+     },
+     title: {
+       display: true,
+       text: 'Which spots are most popular'
+     },
+     scales: {
+       xAxes: [{
+         display: true
+       }],
+       yAxes: [{
+         display: true
+       }],
+     }
+   }
+ });  
+ 
+ this.numbers = null;
+ this.hours = null;
+ this.events = null;
+ 
+ }
 
  getSpotStatistic(): void{
   const id = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -161,10 +209,17 @@ this.hours = null;
  }
 
 
- showGraphic()
+ showHoursGraphic()
  {
   this.fillArraysToGraphic();
-  this.drawGraphic();
+  this.drawHourGraphic();
+ }
+
+
+ showEventsGraphic()
+ {
+  this.fillArraysToGraphic();
+  this.drawEventGraphic();
  }
 
 
