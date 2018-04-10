@@ -1,7 +1,10 @@
-<agm-map [latitude]="lat"
-         [longitude]="lng"
-         [fullscreenControl]="true">
-        <agm-marker [latitude]="lat" [longitude]="lng" [draggable]="true"></agm-marker>
+<!--<app-parking-list-filter-location-field #locationField></app-parking-list-filter-location-field>-->
+<agm-map [latitude]="49.83826"
+         [longitude]="24.02324"
+         [fullscreenControl]="true"
+         [zoom]="10">
+
+    <agm-marker [latitude]="lat" [longitude]="lng" [draggable]="true"></agm-marker>
     <div *ngFor="let parking of parkings">
         <agm-marker [latitude]="parking.latitude" [longitude]="parking.longitude"
                     [iconUrl]="'/assets/images/icon_parking_info_40x38.png'">
@@ -12,7 +15,9 @@
                     <li><b>Spots:</b> {{parking.spotsCount}}</li>
                     <li><b>Spots available:</b> {{parking.availableSpotsCount}}</li>
                 </ul>
-                <button type="button" (click)="getDirection(parking.latitude, parking.longitude)">Get</button>
+                <button mat-button class="btn btn-success" (click)="getDirection(parking.latitude, parking.longitude)">
+                    Start route!
+                </button>
             </agm-info-window>
         </agm-marker>
         <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
