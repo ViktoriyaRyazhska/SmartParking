@@ -5,5 +5,7 @@ import com.smartparking.repository.FavoriteRepository;
 
 public interface FavoriteService extends Service<Favorite, Long, FavoriteRepository> {
 
-    public Long getCountByClientId(Long id);
+    Long getCountByClientId(Long id);
+
+    Favorite findFavoriteByClientEmailAndParkingId(String email, Long parkingId);
 }

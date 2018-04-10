@@ -51,6 +51,12 @@ export class ParkingService {
             this.parkingDetailUrl + id + '/savetofavorites', favorite, {observe: 'response'});
     }
 
+    deleteFromFavorite(id: number): Observable<HttpResponse<any>>{
+        return this.http.post<HttpResponse<any>>(
+            this.parkingDetailUrl + id + '/deletefromfavorites', {observe: 'response'}
+        );
+    }
+
 
 
 

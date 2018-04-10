@@ -14,4 +14,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
     @Query("SELECT DISTINCT f.name FROM Favorite f JOIN f.client c JOIN f.parking p WHERE c.email=?1 AND p.id=?2")
     Optional<String> findByClientEmailAndParkingId(String email, Long parkingId);
+
+    @Query("SELECT DISTINCT f FROM Favorite f JOIN f.client c JOIN f.parking p WHERE c.email=?1 AND p.id=?2")
+    Favorite findFavoriteByClientEmailAndParkingId(String email, Long parkingId);
 }

@@ -42,9 +42,9 @@
                 </div>
                 <div class="col-10" *ngIf="parking.isFavorite">
                     <span style="font-size:18px;" ><b>Parking is in your favorites as:</b> <b><i>{{parking.favoriteName}}</i></b></span>
-                    <!-- <button mat-icon-button color="warn" (click)="onParkingAddToFavoritesClick()">
-                    <mat-icon>star_rate</mat-icon>
-                </button> -->
+                    <button mat-icon-button color="warn" (click)="onParkingDeleteClick()">
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
             </div>
                 
                 </mat-list-item>

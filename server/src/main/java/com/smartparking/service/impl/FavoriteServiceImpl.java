@@ -16,6 +16,11 @@ public class FavoriteServiceImpl extends AbstractService<Favorite, Long, Favorit
 
     @Override
     public Long getCountByClientId(Long id) {
-        return getRepository().getCountByClientId(id);
+        return repository.getCountByClientId(id);
+    }
+
+    @Override
+    public Favorite findFavoriteByClientEmailAndParkingId(String email, Long parkingId) {
+        return getRepository().findFavoriteByClientEmailAndParkingId(email, parkingId);
     }
 }
