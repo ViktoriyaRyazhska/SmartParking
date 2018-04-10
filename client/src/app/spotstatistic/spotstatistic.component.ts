@@ -155,9 +155,16 @@ this.hours = null;
    }
    
   this.getSpotStatistic();
-  this.fillArraysToGraphic();
-    this.drawGraphic();
+  
+    
    
+ }
+
+
+ showGraphic()
+ {
+  this.fillArraysToGraphic();
+  this.drawGraphic();
  }
 
 
