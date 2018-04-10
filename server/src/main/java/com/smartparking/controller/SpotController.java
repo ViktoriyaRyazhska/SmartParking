@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,11 +66,10 @@ public class SpotController {
             @PathVariable Long id,
             @RequestParam("start_time") String startTime,
             @RequestParam("end_time") String endTime) {
-        LOGGER.info("------------------------------ResponseEntity<List<SpotStatisticResponse>> getSpotStatistic------------------------------");
-        LOGGER.info("------------------------------"+startTime+"------------------------------");
-        LOGGER.info("------------------------------"+endTime+"------------------------------");
+
+
         List<SpotStatisticResponse> spotStatisticResponseList = new ArrayList<>();
-        Map<Long, Double> spotStatistic = spotService.getSpotStatistic(id);
+        Map<Long, Double> spotStatistic = spotService.getSpotStatistic(id,Long.parseLong(startTime),Long.parseLong(endTime));
         for (Map.Entry<Long, Double> entry : spotStatistic.entrySet()) {
             Long key = entry.getKey();
             Double value = entry.getValue();
@@ -78,7 +78,7 @@ public class SpotController {
             spotStatisticResponse.setNumberOfHours(value);
             spotStatisticResponseList.add(spotStatisticResponse);
         }
-        LOGGER.info(spotStatisticResponseList.toString());
+      //  LOGGER.info(spotStatisticResponseList.toString());
         return new ResponseEntity<>(spotStatisticResponseList, HttpStatus.OK);
     }
 

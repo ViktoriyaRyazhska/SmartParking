@@ -30,8 +30,8 @@ export class SpotstatisticComponent implements OnInit {
   tempDate: Date;
   minMonth: number;
   maxMonth: number;
-  start_date:string;
-  end_date:string;
+   start_date:string;
+   end_date:string;
  
 
   
@@ -67,8 +67,10 @@ export class SpotstatisticComponent implements OnInit {
 
  getSpotStatistic(): void{
   const id = parseInt(this.route.snapshot.paramMap.get('id'));
+  
+  this.minDate.getMilliseconds();
   this.parkingService.getSpotStatistic(id,
-    this.start_date,this.end_date)
+    this.minDate.getTime().toString(), this.maxDate.getTime().toString())
     .subscribe(statistic => this.statistic = statistic);
 }
 
@@ -84,8 +86,9 @@ export class SpotstatisticComponent implements OnInit {
     this.maxDate = this.tempDate;
    }
  
- this.goals.push(this.start_date);  
- this.goals.push(this.end_date);
+  this.getSpotStatistic();
+   setInterval(this.refresh(), this.thirtySecInterval);
+ 
  }
 
 }

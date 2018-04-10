@@ -17,7 +17,7 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
 
     List<Spot> findAllSpotsByParkingId(Long id);
 
-    Map<Long, Double> getSpotStatistic(long id);
+    Map<Long, Double> getSpotStatistic(long id,long startDate, long endDate);
 
     List<Parking> findBestParkingsByCityAndStreet(String city, String street);
 

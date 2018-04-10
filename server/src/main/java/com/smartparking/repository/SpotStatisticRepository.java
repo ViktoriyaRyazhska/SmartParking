@@ -8,6 +8,6 @@ import java.util.Map;
 public interface SpotStatisticRepository {
 
 
-    Map<Long, Double> getSpotStatistic(long id);
+    Map<Long, Double> getSpotStatistic(long id,long startDate, long endDate);
 
 }

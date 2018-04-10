@@ -49,7 +49,7 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
-    public Map<Long, Double> getSpotStatistic(long id) {
-        return spotStatisticRepository.getSpotStatistic(id);
+    public Map<Long, Double> getSpotStatistic(long id, long startDate, long endDate) {
+        return spotStatisticRepository.getSpotStatistic(id,startDate, endDate);
     }
 }
