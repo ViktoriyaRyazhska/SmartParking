@@ -45,4 +45,10 @@ public abstract class AbstractService<T, ID, R extends JpaRepository<T, ID>> imp
     public T getOne(ID id) {
         return repository.getOne(id);
     }
+
+    @Override
+    @Transactional
+    public List<T> saveAll(Iterable<T> iterable) {
+        return repository.saveAll(iterable);
+    }
 }

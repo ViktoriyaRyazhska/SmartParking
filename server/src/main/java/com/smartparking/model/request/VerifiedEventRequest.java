@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Data
-public class ProcessedEventRequest {
+public class VerifiedEventRequest {
 
     private Long spotId;
     private String eventType;

@@ -1,20 +1,21 @@
 package com.smartparking.eventprocessor.model.view;
 
+import com.smartparking.eventprocessor.model.request.EventRequest;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.Instant;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-public class Event {
-    private Spot spot;
+public abstract class Event {
+    private Long spotId;
     private EventType eventType;
     private Instant timestamp;
+
+    public Event(EventRequest request) {
+        this(request.getSpotId(), request.getEventType(), Instant.ofEpochMilli(request.getTimestamp()));
+    }
 }

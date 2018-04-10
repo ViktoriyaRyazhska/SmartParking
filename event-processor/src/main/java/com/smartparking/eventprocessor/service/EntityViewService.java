@@ -2,13 +2,13 @@ package com.smartparking.eventprocessor.service;
 
 import com.smartparking.eventprocessor.model.view.Spot;
 
-import java.util.Optional;
+import java.io.IOException;
 
 public interface EntityViewService {
 
-    void initialize();
+    void update() throws IOException;
 
-    Optional<Spot> getSpot(Long spotId);
+    Spot getSpot(Long spotId);
 
     boolean containsSpot(Long spotId);
 
@@ -16,11 +16,13 @@ public interface EntityViewService {
 
     void addSpot(Long spotId, Long parkingId);
 
-    void deleteSpot(Long spotId, Long parkingId);
+    void deleteSpot(Long spotId);
 
     void deleteParking(Long parkingId);
 
     void addParking(Long parkingId, String token);
 
     void updateParkingToken(Long parkingId, String parkingToken);
+
+    boolean isInitialized();
 }

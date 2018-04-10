@@ -1,7 +1,6 @@
 package com.smartparking.eventprocessor.config;
 
 import com.smartparking.eventprocessor.config.constants.RabbitConstants;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -15,7 +14,6 @@ import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Slf4j
 @EnableRabbit
 @Configuration
 public class RabbitConfiguration {
@@ -39,6 +37,16 @@ public class RabbitConfiguration {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
+    }
+
+    @Bean
+    public Queue spotDeleteQueue() {
+        return new Queue(RabbitConstants.SPOT_DELETE_QUEUE);
+    }
+
+    @Bean
+    public Queue spotAddQueue() {
+        return new Queue(RabbitConstants.SPOT_ADD_QUEUE);
     }
 
     @Bean

@@ -12,23 +12,26 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ParkingListener {
+public class ParkingEventListener {
 
     @Autowired
     private EntityViewService entityViewService;
 
     @RabbitListener(queues = RabbitConstants.PARKING_DELETE_QUEUE)
-    public void onParkingDelete(ParkingDeleteEvent event) {
-        log.info("onParkingDelete: " + event);
+    public void consumeDelete(ParkingDeleteEvent event) {
+        entityViewService.deleteParking(event.getParkingId());
+        log.info("Parking deleted: " + event.getParkingId());
     }
 
     @RabbitListener(queues = RabbitConstants.PARKING_ADD_QUEUE)
-    public void onParkingAdd(ParkingAddEvent event) {
-        log.info("onParkingDelete: " + event);
+    public void consumeAdd(ParkingAddEvent event) {
+        entityViewService.addParking(event.getParkingId(), event.getParkingToken());
+        log.info("Parking added: " + event.getParkingId());
     }
 
     @RabbitListener(queues = RabbitConstants.PARKING_TOKEN_CHANGE_QUEUE)
-    public void onParkingTokenChange(ParkingTokenChangeEvent event) {
-        log.info("onParkingDelete: " + event);
+    public void consumeTokenChange(ParkingTokenChangeEvent event) {
+        entityViewService.updateParkingToken(event.getParkingId(), event.getParkingToken());
+        log.info("Parking token changed: " + event.getParkingId());
     }
 }

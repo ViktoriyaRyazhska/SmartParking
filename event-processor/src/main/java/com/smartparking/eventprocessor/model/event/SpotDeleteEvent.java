@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SpotDeleteEvent {
     private Long spotId;
-    private String parkingId;
 }

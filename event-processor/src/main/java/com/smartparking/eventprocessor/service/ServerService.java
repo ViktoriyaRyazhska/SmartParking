@@ -1,12 +1,12 @@
 package com.smartparking.eventprocessor.service;
 
 import com.smartparking.eventprocessor.controller.exception.FailureException;
-import com.smartparking.eventprocessor.model.view.Event;
 import com.smartparking.eventprocessor.model.view.Spot;
+import com.smartparking.eventprocessor.model.view.VerifiedEvent;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 
 public interface ServerService {
 
@@ -16,7 +16,17 @@ public interface ServerService {
 
     boolean isAuthenticated();
 
-    Map<Long, Spot> getSpots() throws IOException, FailureException;
+    List<Spot> getSpots() throws IOException, FailureException;
 
-    void sendEvents(Collection<? extends Event> events) throws IOException, FailureException;
+    void sendVerifiedEvents(Collection<? extends VerifiedEvent> events) throws IOException;
+
+    ServerStatus getServerStatus();
+
+    default boolean isServerAvailable() {
+        return getServerStatus() == ServerStatus.AVAILABLE;
+    }
+
+    enum ServerStatus {
+        AVAILABLE, UNAVAILABLE
+    }
 }

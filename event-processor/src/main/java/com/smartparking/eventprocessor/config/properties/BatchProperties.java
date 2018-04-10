@@ -6,9 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties("eventprocessor.httpclient")
-public class HttpClientProperties {
-    private String serverUrl;
-    private String email;
-    private String password;
+@ConfigurationProperties("eventprocessor.batch")
+public class BatchProperties {
+    private int chunkSize = 1000;
 }

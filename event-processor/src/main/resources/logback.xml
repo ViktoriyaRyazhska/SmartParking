@@ -21,10 +21,10 @@
         </encoder>
     </appender>
 
-
     <root level="INFO">
         <appender-ref ref="console"/>
         <appender-ref ref="file"/>
     </root>
 
+    <logger name="org.springframework.batch" level="WARN"/>
 </configuration>

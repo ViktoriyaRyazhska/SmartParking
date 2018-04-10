@@ -1,15 +1,15 @@
 package com.smartparking.eventprocessor.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.springframework.http.HttpStatus;
+
 import java.io.IOException;
-import java.util.List;
 
 public interface HttpClientService {
 
-    <S> S post(String path, Object request, String token, Class<S> successClass) throws IOException;
+    <S> S postAndReceiveBody(String path, Object request, String token, TypeReference<S> successTypeReference) throws IOException;
 
-    <S> S get(String path, Object request, String token, Class<S> successClass) throws IOException;
+    HttpStatus postAndReceiveStatus(String path, Object request, String token) throws IOException;
 
-    <S> List<S> postList(String path, Object request, String token, Class<S> successClass) throws IOException;
-
-    <S> List<S> getList(String path, Object request, String token, Class<S> successClass) throws IOException;
+    <S> S getAndReceiveBody(String path, Object request, String token, TypeReference<S> successTypeReference) throws IOException;
 }

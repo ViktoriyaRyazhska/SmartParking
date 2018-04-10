@@ -1,7 +1,11 @@
 package com.smartparking.eventprocessor.config;
 
-import com.smartparking.eventprocessor.model.view.Event;
+import com.smartparking.eventprocessor.config.properties.BatchProperties;
+import com.smartparking.eventprocessor.model.view.UnverifiedEvent;
+import com.smartparking.eventprocessor.model.view.VerifiedEvent;
 import com.smartparking.eventprocessor.service.EventBatchService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.Step;
@@ -10,74 +14,78 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
-import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.PlatformTransactionManager;
 
-
+@Slf4j
 @Configuration
 @EnableScheduling
 @EnableBatchProcessing
 public class BatchConfiguration extends DefaultBatchConfigurer {
 
     @Autowired
-    private JobLauncher jobLauncher;
+    StepBuilderFactory stepBuilderFactory;
+    @Autowired
+    JobBuilderFactory jobBuilderFactory;
+    @Autowired
+    private BatchProperties batchProperties;
+    @Autowired
+    private EventBatchService eventBatchService;
 
     @Autowired
-    private Job job;
+    private JobLauncher jobLauncher;
+    @Autowired
+    private Job verifiedEventJob;
 
-    @Scheduled(cron = "*/10 * * * * *")
-    public void perform() {
+    @Autowired
+    private Job unverifiedEventJob;
+
+    @Scheduled(fixedRate = 1000)
+    public void launchVerifiedEventJob() {
         try {
-            jobLauncher.run(job, new JobParameters());
+            jobLauncher.run(verifiedEventJob, new JobParameters());
         } catch (JobExecutionAlreadyRunningException | JobRestartException
                 | JobInstanceAlreadyCompleteException | JobParametersInvalidException ex) {
-            throw new IllegalStateException("Unexpected exception when executing a job.", ex);
+            log.error("Unexpected exception when executing a job. ", ex);
+        }
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void launchUnverifiedEventJob() {
+        try {
+            //TODO BUG
+            jobLauncher.run(unverifiedEventJob, new JobParameters());
+        } catch (JobExecutionAlreadyRunningException | JobRestartException
+                | JobInstanceAlreadyCompleteException | JobParametersInvalidException ex) {
+            log.error("Unexpected exception when executing a job. ", ex);
         }
     }
 
     @Bean
-    public Job job(@Autowired StepBuilderFactory stepBuilderFactory,
-                   @Autowired JobBuilderFactory jobBuilderFactory,
-                   @Autowired EventBatchService eventBatchService) {
-        Step step = stepBuilderFactory.get("step")
-                .<Event, Event>chunk(3)
-                .reader(eventBatchService::poll)
-                .writer(eventBatchService::send)
+    public Job verifiedEventJob() {
+        Step step = stepBuilderFactory.get("verifiedEventStep")
+                .<VerifiedEvent, VerifiedEvent>chunk(batchProperties.getChunkSize())
+                .reader(eventBatchService::pollVerified)
+                .writer(eventBatchService::sendVerified)
                 .allowStartIfComplete(true)
                 .build();
-        return jobBuilderFactory.get("job").start(step).build();
+        return jobBuilderFactory.get("verifiedEventJob").start(step).build();
     }
 
     @Bean
-    JobLauncher jobLauncher(JobRepository jobRepository) {
-        SimpleJobLauncher launcher = new SimpleJobLauncher();
-        launcher.setJobRepository(jobRepository);
-        return launcher;
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        return new ResourcelessTransactionManager();
-    }
-
-    @Bean
-    JobRepository jobRepository(@Autowired PlatformTransactionManager transactionManager) {
-        try {
-            return new MapJobRepositoryFactoryBean(transactionManager).getObject();
-        } catch (Exception ex) {
-            throw new IllegalStateException("Cannot create 'jobRepository' bean.", ex);
-        }
+    public Job unverifiedEventJob() {
+        Step step = stepBuilderFactory.get("unverifiedEventStep")
+                .<UnverifiedEvent, UnverifiedEvent>chunk(batchProperties.getChunkSize())
+                .reader(eventBatchService::pollUnverified)
+                .writer(eventBatchService::sendUnverified)
+                .allowStartIfComplete(true)
+                .build();
+        return jobBuilderFactory.get("unverifiedEventJob").start(step).build();
     }
 }
