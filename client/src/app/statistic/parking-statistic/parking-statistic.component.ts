@@ -21,7 +21,6 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.findAllParkings();
     }
 
     findAllParkings(): void {
