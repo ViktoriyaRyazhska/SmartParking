@@ -5,6 +5,9 @@ import com.smartparking.entity.Spot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface SpotRepository extends JpaRepository<Spot, Long> {
@@ -22,8 +25,8 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
 
     List<Spot> findAllByParkingId(Long id);
 
-    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where p.city=?1 and p.street=?2"
+    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where p.city=?1 and p.street=?2 and e.timestamp < ?3"
             + " group by p order by count(s.id) desc")
-    List<Parking> findBestParkingsByCityAndStreet(String city, String street);
+    List<Parking> findBestParkingsByCityAndStreet(String city, String street, Instant date);
 
 }

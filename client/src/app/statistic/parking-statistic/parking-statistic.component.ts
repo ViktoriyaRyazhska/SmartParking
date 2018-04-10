@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Parking} from "../../model/view/parking";
 import {StatisticsService} from "../statistics.service";
 import {ParkingsInfo} from "../parkingsinfo";
 import {ActivatedRoute} from "@angular/router";
+import {FormControl} from "@angular/forms";
+import {moment} from "ngx-bootstrap/chronos/test/chain";
 
 @Component({
     selector: 'app-parking-statistic',
@@ -16,6 +17,9 @@ export class ParkingStatisticComponent implements OnInit {
     parkingsCities: string[];
     selectedCity = 'Lviv';
     selectedStreet: string;
+    selectedNumberOfDays = 7;
+    days = [7, 14, 30, 365];
+    calculatedDate = new Date();
 
     constructor(private statisticService: StatisticsService, private router: ActivatedRoute) {
     }
@@ -25,10 +29,12 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     findBestParkingsByStreet(inputStreet: string) {
-        this.statisticService.getBestParkingsByCityAndStreet(this.selectedCity, inputStreet)
+
+        this.statisticService.getBestParkingsByCityAndStreet(this.selectedCity, inputStreet, this.calculatedDate.getTime())
             .subscribe(parkings => {
                 this.parkings = parkings;
             });
+        this.refreshDate();
     }
 
     findParkingsStreets(input: string) {
@@ -58,6 +64,14 @@ export class ParkingStatisticComponent implements OnInit {
 
     theStreetWasSelected(street: string) {
         this.selectedStreet = street;
+    }
+
+    calculateDate() {
+        this.calculatedDate.setDate(new Date().getDate() - this.selectedNumberOfDays);
+    }
+
+    refreshDate() {
+        this.calculatedDate = new Date();
     }
 
 

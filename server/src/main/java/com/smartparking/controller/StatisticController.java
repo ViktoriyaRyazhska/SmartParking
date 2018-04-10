@@ -9,8 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/statistic")
@@ -57,10 +61,16 @@ public class StatisticController {
 
     @RequestMapping("/findbestparkingsbystreetandcity")
     public ResponseEntity<List<ParkingItemResponse>> bestParkingsByCityAndStreet(@RequestParam("city") String city,
-                                                                                 @RequestParam("street") String street) {
-        System.out.println(city);
-        System.out.println(street);
-        List<Parking> parkings = spotService.findBestParkingsByCityAndStreet(city, street);
+                                                                                 @RequestParam("street") String street,
+                                                                                 @RequestParam("date") String date) {
+
+        LocalDateTime localDateTime =
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(date)),
+                        TimeZone.getDefault().toZoneId());
+
+        Instant instant = localDateTime.toInstant(ZoneOffset.UTC);
+
+        List<Parking> parkings = spotService.findBestParkingsByCityAndStreet(city, street, instant);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
         parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);

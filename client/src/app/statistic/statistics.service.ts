@@ -29,11 +29,12 @@ export class StatisticsService {
         return this.http.get<string[]>(this.statisticUrl + '/findAllparkingscities');
     }
 
-    getBestParkingsByCityAndStreet(city: string, street: string): Observable<ParkingsInfo[]> {
+    getBestParkingsByCityAndStreet(city: string, street: string, date: number): Observable<ParkingsInfo[]> {
         return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/findbestparkingsbystreetandcity', {
             params: {
                 city: city,
-                street: street
+                street: street,
+                date: date.toString()
             }
         });
     }

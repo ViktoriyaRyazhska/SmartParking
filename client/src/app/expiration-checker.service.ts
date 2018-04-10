@@ -1,43 +1,40 @@
 import { Injectable } from '@angular/core';
 import {
     HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor,
-    HttpRequest, HttpResponse
+    HttpRequest
 } from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {TokenStorage} from "./auth/token/token-storage";
-import {TokenPair} from "./auth/token/token-pair";
-import {Router} from "@angular/router";
+import {environment} from "../environments/environment";
+import {Token} from "./auth/token/token";
 
 @Injectable()
 export class ExpirationCheckerService implements HttpInterceptor{
+    private refreshUrl = environment.apiUrl + '/auth/refreshDate';
 
   constructor(private http: HttpClient,
-              private router: Router,
               private tokenStorage: TokenStorage) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       console.log('Go into interceptor 1');
       if(this.tokenStorage.isExpired()) {
-          req = req.clone({
-              headers: req.headers.append('Refresh-token', this.tokenStorage.getRefreshToken())
-          });
+          let temp = new Token(this.tokenStorage.getToken());
+          console.log('Token is expired ' + temp.token);
+          this.tokenStorage.signOut();
+          console.log('Signed out ' + this.tokenStorage.getToken());
+          this.refreshToken(temp);
       }
       console.log('Exit from interceptor 1');
-      return next.handle(req).do(response => {
-          if(response instanceof HttpResponse) {
-              if(response.headers.get('Access-token') != null && response.headers.get('Refresh-token') != null) {
-                  this.tokenStorage.saveToken(new TokenPair(response.headers.get('Access-token'), response.headers.get('Refresh-token')));
-              }
-          }
-          return response;
-      },
-          error => {
-              if(error instanceof HttpErrorResponse) {
-                  if(error.status == 401){
-                      this.tokenStorage.signOut();
-                      this.router.navigate(['/']);
-                  }
-              }
-          });
+      return next.handle(req);
+    }
+
+    private refreshToken(token: Token){
+      console.log('Try to refreshDate');
+      console.log('Current token' + token.token);
+      this.http.post(this.refreshUrl, token).subscribe((token: Token) => {
+          console.log('Resieved token ' + token.token);
+          this.tokenStorage.saveToken(token.token);
+      });
+      console.log('Token saved ' + this.tokenStorage.getToken());
     }
 }
