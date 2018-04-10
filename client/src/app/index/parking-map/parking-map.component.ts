@@ -1,8 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ParkingService} from '../../parking.service';
 import {Parking} from '../../model/view/parking';
-import {icon, latLng, marker, polyline, tileLayer} from 'leaflet';
-import {ParkingListFilterComponent} from '../parking-list-filter/parking-list-filter.component';
 
 @Component({
     selector: 'app-parking-map',
@@ -16,26 +13,11 @@ export class ParkingMapComponent implements OnInit {
     parkings: Parking[];
     dir = undefined;
 
-    constructor(private parkingService: ParkingService) {
+    constructor() {
     }
 
     ngOnInit() {
-        this.findMe();
-    }
 
-    //TODO watchposition`
-    findMe() {
-        if (navigator.geolocation) {
-            navigator.geolocation.watchPosition((position => {
-                this.getPosition(position);
-            }));
-        }
-    }
-
-    private getPosition(position: Position) {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        console.log(this.lat, this.lng);
     }
 
     getDirection(lat, lng) {
@@ -46,17 +28,6 @@ export class ParkingMapComponent implements OnInit {
     }
 
     round(floatNumber: number): number {
-
         return Math.floor(floatNumber) / 1000;
     }
-
-    /*  parkingCoordinates() {
-          this.parkingService.getParkingsNearby(this.lat, this.lng, 10000)
-              .subscribe((response) => {
-                  this.parkings = response.body;
-              }, error => {
-                  console.log(error);
-              });
-      }*/
-
 }

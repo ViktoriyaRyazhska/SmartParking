@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ParkingListFilterComponent} from './parking-list-filter/parking-list-filter.component';
 import {ParkingService} from '../parking.service';
+import {ParkingListComponent} from './parking-list/parking-list.component';
 import {MatProgressBar} from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -14,7 +15,7 @@ import {ParkingMapComponent} from './parking-map/parking-map.component';
 })
 export class IndexComponent implements OnInit {
 
-    @ViewChild('parkingList') private parkingList: ParkingMapComponent;
+    @ViewChild('parkingMap') private parkingMap: ParkingMapComponent;
 
     @ViewChild('filter') private filter: ParkingListFilterComponent;
 
@@ -36,6 +37,8 @@ export class IndexComponent implements OnInit {
 
         this.filter.locationChanges.subscribe(location => {
             this.showLoadingProgressBar();
+            this.parkingMap.lat = location.latitude;
+            this.parkingMap.lng = location.longitude;
             this.parkingService.getParkingsNearby(location.latitude, location.longitude, this.filter.radiusMax * 1000).subscribe((response) => {
                 this.hideProgressBar();
                 this.parkings = response.body;
@@ -64,7 +67,7 @@ export class IndexComponent implements OnInit {
     }
 
     private filterParkings() {
-        this.parkingList.parkings = this.parkings.filter(parking => {
+        this.parkingMap.parkings = this.parkings.filter(parking => {
             let filter = this.filter.value;
             return parking.distance <= filter.radius * 1000
                 && ((filter.priceRange.min) ? parking.price >= filter.priceRange.min : true)
@@ -77,4 +80,5 @@ export class IndexComponent implements OnInit {
         this.changeDetector.detectChanges();
         setTimeout(() => this.changeDetector.detectChanges(), 1);
     }
+
 }
