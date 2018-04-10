@@ -14,6 +14,7 @@
                     <li><b>Spots:</b> {{parking.spotsCount}}</li>
                     <li><b>Spots available:</b> {{parking.availableSpotsCount}}</li>
                 </ul>
+                <button mat-button routerLink='/parkingdetail/{{parking.id}}' color="primary">Get detail</button>
                 <button mat-button class="btn btn-success" (click)="getDirection(parking.latitude, parking.longitude)">
                     Start route!
                 </button>
