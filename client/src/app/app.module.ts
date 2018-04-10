@@ -44,8 +44,6 @@ import {ManagerParkingListComponent} from './manager/manager-parking-list/manage
 
 import {InterceptorService} from './interceptor.service';
 import {AgmCoreModule} from '@agm/core';
-import {LoginService} from './auth/login/login.service';
-import {RegistrationService} from './auth/registration/registration.service';
 import {TokenStorage} from './auth/token/token-storage';
 import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
 import {IpLocationService} from './service/ip-location.service';
@@ -68,6 +66,7 @@ import {SpotstatisticComponent} from './spotstatistic/spotstatistic.component';
 import {StatisticsService} from './statistic/statistics.service';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {ExpirationCheckerService} from "./expiration-checker.service";
+import {AuthService} from "./auth/auth.service";
 
 
 @NgModule({
@@ -149,13 +148,12 @@ import {ExpirationCheckerService} from "./expiration-checker.service";
         ManagerParkingService,
         ProviderService,
         ClientService,
-        LoginService,
-        RegistrationService,
         IpLocationService,
         PagerService,
         TokenStorage,
         PagerService,
-        StatisticsService
+        StatisticsService,
+        AuthService
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

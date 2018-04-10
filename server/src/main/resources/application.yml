@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartparking?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 5
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none
+
+url: http://localhost:8080
+
+#Authorization data validation
+validation:
+  email:
+   regex: ^[\w!#$%&’*+/=?`{|}~^-]+(?:\.[\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$
+   min: 3
+   max: 255
+  password:
+    min: 6
+    max: 16
+  firstname:
+    min: 1
+    max: 255
+  lastname:
+    min: 1
+    max: 255
+
+
+
+#Security configuration
+cross_origin:
+  client: http://localhost:4200
+jwt:
+  accessTokenHeader: Access-token
+  tokenSecret: youShallNotPass
+  accessTokenExpiration: 1800000
+  refreshTokenHeader: Refresh-token
+  refreshTokenExpiration: 3600000
+
+
+
+
+
+
+
+

@@ -30,7 +30,7 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${cross_origin_url}")
+    @Value("${cross_origin.client}")
     private String url;
 
     @Autowired
@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowedOrigins(Arrays.asList(url));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Credentials", "Content-Type",
-                "Access-Control-Allow-Headers", "X-Requested-With", "Origin", "Accept", "Authorization"));
+                "Access-Control-Allow-Headers", "X-Requested-With", "Origin", "Accept", "Access-token", "Refresh-token"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

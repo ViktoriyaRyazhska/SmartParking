@@ -5,6 +5,7 @@ import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.request.LoginRequest;
 import com.smartparking.model.response.InfoResponse;
+import com.smartparking.security.tokens.TokenPair;
 import com.smartparking.service.impl.SpringSecurityUserService;
 import com.smartparking.security.tokens.TokenUtil;
 import com.smartparking.entity.SpringSecurityUser;
@@ -71,8 +72,10 @@ public class SecurityController {
                     new UsernamePasswordAuthenticationToken(email, password)
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            final String token = tokenUtil.generateToken((SpringSecurityUser) user);
-            return ResponseEntity.ok(new AuthTokenResponse(token));
+            final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
+            System.out.println("Access token " + tokenPair.getAccessToken());
+            System.out.println("Refresh token " + tokenPair.getRefreshToken());
+            return ResponseEntity.ok(new AuthTokenResponse(tokenPair.getAccessToken(), tokenPair.getRefreshToken()));
         }
         LOGGER.info("Password is incorrect.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Password is incorrect"));
@@ -91,7 +94,7 @@ public class SecurityController {
         return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfull registered"));
     }
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/refresh", method = RequestMethod.POST)
     public ResponseEntity refresh(@RequestBody AuthTokenResponse authToken) {
         LOGGER.info("Go into refresh block");
         try {
@@ -105,5 +108,5 @@ public class SecurityController {
             LOGGER.warn("JWS signature validation fails");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error"));
-    }
+    }*/
 }

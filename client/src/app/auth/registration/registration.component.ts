@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RegistrationData} from "./registration-data";
-import {RegistrationService} from "./registration.service";
 import {Router} from "@angular/router";
 import {InfoResponse} from "../info-response";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AuthService} from "../auth.service";
 
 export class PasswordValidation {
 
@@ -29,6 +29,7 @@ export class RegistrationComponent implements OnInit {
     hide: boolean = true;
     registrationForm: FormGroup;
     registrationData: RegistrationData;
+
     emailControl: FormControl = new FormControl('', [
         Validators.required,
         Validators.email,
@@ -52,7 +53,7 @@ export class RegistrationComponent implements OnInit {
         Validators.maxLength(16),
     ]);
   constructor(private formBuilder: FormBuilder,
-              private registrationService: RegistrationService,
+              private authService: AuthService,
               private router: Router
   ) { }
 
@@ -70,7 +71,7 @@ export class RegistrationComponent implements OnInit {
 
   register = () => {
       this.registrationData = this.registrationForm.value;
-      this.registrationService.register(this.registrationData).subscribe((info: InfoResponse) =>{
+      this.authService.register(this.registrationData).subscribe((info: InfoResponse) =>{
           alert(info.response);
           this.router.navigate(['/']);
       }, (error) => {
