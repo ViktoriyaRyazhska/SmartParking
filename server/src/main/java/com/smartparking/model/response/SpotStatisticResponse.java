@@ -10,11 +10,11 @@ public class SpotStatisticResponse {
 
 
 
-    /*public SpotStatisticResponse(long id, double numberOfHours, long numberOfEvent) {
+    public SpotStatisticResponse(long id, double numberOfHours, long numberOfEvent) {
         this.id = id;
         this.numberOfHours = numberOfHours;
         this.numberOfEvent = numberOfEvent;
-    }*/
+    }
 
     @Override
     public String toString() {

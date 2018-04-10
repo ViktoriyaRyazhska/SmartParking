@@ -6,12 +6,14 @@
       <tr class="text-center">
           <th scope="col">Spot number #</th>
           <th scope="col">Hours have been taken</th>
+          <th scope="col">Popularity(How many times was busy)</th>
       </tr>
   </thead>
   <tbody>
       <tr *ngFor="let spotstatistic of statistic" class="text-center">
           <th scope="row">{{spotstatistic.id}}</th>
           <th scope="row">{{spotstatistic.numberOfHours}}</th>
+          <th scope="row">{{spotstatistic.numberOfEvent}}</th>
 
         
           
