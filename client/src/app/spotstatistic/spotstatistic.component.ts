@@ -6,6 +6,7 @@ import {ParkingService} from "../parking.service";
 import {Spot} from '../model/view/spot';
 import {SpotStatistic} from '../model/view/spotstatistic';
 import {Observable} from 'rxjs/Observable';
+import {Chart} from 'chart.js';
 
 
 
@@ -22,17 +23,20 @@ export class SpotstatisticComponent implements OnInit {
   statistic: SpotStatistic[];
 
  
-  thirtySecInterval: number = 30000;
+  thirtySecInterval: number = 3000;
   favoriteNameInputHide: boolean = true;
-  goals = [];
   minDate: Date;
   maxDate: Date;
   tempDate: Date;
   minMonth: number;
   maxMonth: number;
+ 
    start_date:string;
    end_date:string;
- 
+  chart = [];
+ numbers: number[];
+ hours: number[];
+
 
   
 
@@ -48,22 +52,85 @@ export class SpotstatisticComponent implements OnInit {
   this.maxMonth = this.maxDate.getMonth()+1;
   this.start_date = this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
   this.end_date = this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
-   }
+  
+    }
+
+   
 
 
  ngOnInit() {
    
     
    this.getSpotStatistic();
+  this.fillArraysToGraphic();
    setInterval(this.refresh(), this.thirtySecInterval);
+  // this.drawGraphic();
  }
 
- refresh(): void{
+ refresh(): void {
       this.getSpotStatistic();
+      
  }
 
 
+ fillArraysToGraphic(): void
+ {
+  this.numbers= []
+  this.statistic.forEach( (element) => {
+    console.log(element.id);
+    console.log(element.numberOfHours);
+    this.numbers.push(element.id);
+      
+  });
+  this.hours= []
+  this.statistic.forEach( (element) => {
+    console.log(element.id);
+    console.log(element.numberOfHours);
+     this.hours.push(element.numberOfHours);
+     });
+  this.hours.push(0);  
 
+
+ }
+
+drawGraphic(): void {
+ 
+
+ this.chart = new Chart('canvas', {
+  type: 'bar',
+  data: {
+    labels: this.numbers,
+    datasets: [
+      { 
+        data: this.hours,
+        borderColor: "#3cba9f",
+        fill: false
+        }
+    ]
+  },
+  options: {
+    legend: {
+      display: false
+    },
+    title: {
+      display: true,
+      text: 'How many hours spots of this parking have been taken'
+    },
+    scales: {
+      xAxes: [{
+        display: true
+      }],
+      yAxes: [{
+        display: true
+      }],
+    }
+  }
+});  
+
+this.numbers = null;
+this.hours = null;
+
+}
 
  getSpotStatistic(): void{
   const id = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -72,6 +139,7 @@ export class SpotstatisticComponent implements OnInit {
   this.parkingService.getSpotStatistic(id,
     this.minDate.getTime().toString(), this.maxDate.getTime().toString())
     .subscribe(statistic => this.statistic = statistic);
+    
 }
 
 
@@ -85,11 +153,14 @@ export class SpotstatisticComponent implements OnInit {
     this.minDate = this.maxDate;
     this.maxDate = this.tempDate;
    }
- 
+   
   this.getSpotStatistic();
-   setInterval(this.refresh(), this.thirtySecInterval);
- 
+  this.fillArraysToGraphic();
+    this.drawGraphic();
+   
  }
+
+
 
 }
 
