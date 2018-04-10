@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventRequest {
+public class UnverifiedEventRequest {
     private Long spotId;
     private String parkingToken;
     private EventType eventType;

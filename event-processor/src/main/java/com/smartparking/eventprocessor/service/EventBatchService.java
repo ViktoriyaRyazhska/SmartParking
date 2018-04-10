@@ -1,21 +1,14 @@
 package com.smartparking.eventprocessor.service;
 
-import com.smartparking.eventprocessor.model.view.UnverifiedEvent;
-import com.smartparking.eventprocessor.model.view.VerifiedEvent;
+import com.smartparking.eventprocessor.model.view.Event;
 
 import java.util.Collection;
 
 public interface EventBatchService {
 
-    VerifiedEvent pollVerified();
+    Event poll();
 
-    UnverifiedEvent pollUnverified();
+    void push(Event event);
 
-    void pushVerified(VerifiedEvent event);
-
-    void pushUnverified(UnverifiedEvent event);
-
-    void sendVerified(Collection<? extends VerifiedEvent> events);
-
-    void sendUnverified(Collection<? extends UnverifiedEvent> events);
+    void send(Collection<? extends Event> events);
 }

@@ -1,6 +1,6 @@
 package com.smartparking.eventprocessor.model.view;
 
-import com.smartparking.eventprocessor.model.request.EventRequest;
+import com.smartparking.eventprocessor.model.request.UnverifiedEventRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ public class UnverifiedEvent extends Event {
 
     private String parkingToken;
 
-    public UnverifiedEvent(EventRequest request) {
+    public UnverifiedEvent(UnverifiedEventRequest request) {
         super(request);
         this.parkingToken = request.getParkingToken();
     }

@@ -40,8 +40,8 @@ public class HttpClientServiceImpl implements HttpClientService {
 
     @Override
     public HttpStatus postAndReceiveStatus(String path, Object request, String token) throws IOException {
-        HttpGet httpGet = prepareHttpGet(path, token);
-        HttpResponse response = client.execute(httpGet);
+        HttpPost httpPost = prepareHttpPost(path, request, token);
+        HttpResponse response = client.execute(httpPost);
         return responseToStatus(response);
     }
 

@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties("eventprocessor.batch")
-public class BatchProperties {
+public class EventBatchProperties {
     private int chunkSize = 1000;
 }

@@ -53,32 +53,39 @@ public class EntityViewServiceImpl implements EntityViewService {
 
     @Override
     public synchronized void addSpot(Long spotId, Long parkingId) {
-        spots.computeIfAbsent(spotId, id -> {
-            Parking parking = parkings.get(parkingId);
-            if (parking == null) {
-                throw new IllegalStateException(
-                        "EntityViewService dos not contains parking with id=" + parkingId + ". Add parking first.");
-            }
-            return new Spot(id, parking);
-        });
+        if (spots.containsKey(spotId)) {
+            throw new IllegalStateException("Spot with id=" + spotId + " does not exists.");
+        }
+        Parking parking = parkings.get(parkingId);
+        if (parking == null) {
+            throw new IllegalStateException("Parking with id=" + parkingId + " does not exists.");
+        }
+        spots.put(spotId, new Spot(spotId, parking));
     }
 
     @Override
     public synchronized void deleteSpot(Long spotId) {
-        spots.remove(spotId);
-    }
-
-    @Override
-    public synchronized void deleteParking(Long parkingId) {
-        final Parking parking = parkings.remove(parkingId);
-        if (parking != null) {
-            spots.values().removeIf(s -> s.getParking().getId().equals(parking.getId()));
+        Spot spot = spots.remove(spotId);
+        if (spot == null) {
+            throw new IllegalArgumentException("Parking with id=" + spotId + " does not exists.");
         }
     }
 
     @Override
+    public synchronized void deleteParking(Long parkingId) {
+        Parking parking = parkings.remove(parkingId);
+        if (parking == null) {
+            throw new IllegalArgumentException("Parking with id=" + parkingId + " does not exists.");
+        }
+        spots.values().removeIf(s -> s.getParking().getId().equals(parking.getId()));
+    }
+
+    @Override
     public synchronized void addParking(Long parkingId, String token) {
-        parkings.computeIfAbsent(parkingId, id -> new Parking(id, token));
+        if (parkings.containsKey(parkingId)) {
+            throw new IllegalStateException("Parking with id=" + parkingId + " does not exists.");
+        }
+        parkings.put(parkingId, new Parking(parkingId, token));
     }
 
     @Override

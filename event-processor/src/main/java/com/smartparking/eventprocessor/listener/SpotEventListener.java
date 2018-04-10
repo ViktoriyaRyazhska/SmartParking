@@ -18,13 +18,21 @@ public class SpotEventListener {
 
     @RabbitListener(queues = RabbitConstants.SPOT_ADD_QUEUE)
     public void consumeAdd(SpotAddEvent event) {
-        entityViewService.addSpot(event.getSpotId(), event.getParkingId());
-        log.info("Spot added: " + event.getSpotId());
+        try {
+            entityViewService.addSpot(event.getSpotId(), event.getParkingId());
+            log.info("Spot added from EntityViewService: spotId={}", event.getSpotId());
+        } catch (IllegalStateException ex) {
+            log.error("Spot does not added from EntityViewService: spotId={}, exception={}", event.getSpotId(), ex);
+        }
     }
 
     @RabbitListener(queues = RabbitConstants.SPOT_DELETE_QUEUE)
     public void consumeDelete(SpotDeleteEvent event) {
-        entityViewService.deleteSpot(event.getSpotId());
-        log.info("Spot deleted: " + event.getSpotId());
+        try {
+            entityViewService.deleteSpot(event.getSpotId());
+            log.info("Spot deleted from EntityViewService: spotId={}", event.getSpotId());
+        } catch (IllegalStateException ex) {
+            log.error("Spot does not deleted from EntityViewService: spotId={}, exception={}", event.getSpotId(), ex);
+        }
     }
 }

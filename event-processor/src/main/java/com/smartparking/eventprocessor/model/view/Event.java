@@ -1,6 +1,6 @@
 package com.smartparking.eventprocessor.model.view;
 
-import com.smartparking.eventprocessor.model.request.EventRequest;
+import com.smartparking.eventprocessor.model.request.UnverifiedEventRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public abstract class Event {
     private EventType eventType;
     private Instant timestamp;
 
-    public Event(EventRequest request) {
+    public Event(UnverifiedEventRequest request) {
         this(request.getSpotId(), request.getEventType(), Instant.ofEpochMilli(request.getTimestamp()));
     }
 }

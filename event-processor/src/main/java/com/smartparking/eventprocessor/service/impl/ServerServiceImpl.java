@@ -3,11 +3,12 @@ package com.smartparking.eventprocessor.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.smartparking.eventprocessor.config.properties.HttpClientProperties;
 import com.smartparking.eventprocessor.model.request.LoginRequest;
+import com.smartparking.eventprocessor.model.request.VerifiedEventRequest;
 import com.smartparking.eventprocessor.model.response.AuthTokenResponse;
 import com.smartparking.eventprocessor.model.response.ParkingWithSpotsResponse;
+import com.smartparking.eventprocessor.model.view.Event;
 import com.smartparking.eventprocessor.model.view.Parking;
 import com.smartparking.eventprocessor.model.view.Spot;
-import com.smartparking.eventprocessor.model.view.VerifiedEvent;
 import com.smartparking.eventprocessor.service.HttpClientService;
 import com.smartparking.eventprocessor.service.ServerService;
 import lombok.Getter;
@@ -41,7 +42,7 @@ public class ServerServiceImpl implements ServerService {
             request.setPassword(httpClientProperties.getPassword());
             AuthTokenResponse response = httpClientService.postAndReceiveBody(
                     "/auth/generate-token", request, null, new TypeReference<AuthTokenResponse>() {});
-            token = response.getToken();
+            token = response.getAccessToken();
             serverStatus = ServerStatus.AVAILABLE;
         } catch (IOException ex) {
             serverStatus = ServerStatus.UNAVAILABLE;
@@ -85,10 +86,13 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public void sendVerifiedEvents(Collection<? extends VerifiedEvent> events) throws IOException {
+    public void sendEvents(Collection<? extends Event> events) throws IOException {
         try {
             authenticateIfNeeded();
-            httpClientService.postAndReceiveStatus("/events/save", events, token);
+            List<VerifiedEventRequest> requests = events.stream()
+                    .map(VerifiedEventRequest::new)
+                    .collect(Collectors.toList());
+            httpClientService.postAndReceiveStatus("/events/save", requests, token);
             serverStatus = ServerStatus.AVAILABLE;
         } catch (IOException ex) {
             serverStatus = ServerStatus.UNAVAILABLE;

@@ -1,6 +1,6 @@
 package com.smartparking.eventprocessor.model.view;
 
-import com.smartparking.eventprocessor.model.request.EventRequest;
+import com.smartparking.eventprocessor.model.request.UnverifiedEventRequest;
 import lombok.Data;
 import lombok.ToString;
 
@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class VerifiedEvent extends Event {
 
-    public VerifiedEvent(EventRequest request) {
+    public VerifiedEvent(UnverifiedEventRequest request) {
         super(request);
     }
 

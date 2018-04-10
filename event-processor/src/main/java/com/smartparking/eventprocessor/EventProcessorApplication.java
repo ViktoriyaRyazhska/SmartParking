@@ -25,6 +25,7 @@ public class EventProcessorApplication {
         Thread thread = new Thread(() -> {
             try {
                 entityViewService.update();
+                log.error("EntityViewService updated successfully.");
             } catch (IOException e) {
                 log.error("EntityViewService updating failed: " + e.toString());
             }

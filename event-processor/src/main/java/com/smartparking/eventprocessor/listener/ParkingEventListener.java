@@ -19,19 +19,35 @@ public class ParkingEventListener {
 
     @RabbitListener(queues = RabbitConstants.PARKING_DELETE_QUEUE)
     public void consumeDelete(ParkingDeleteEvent event) {
-        entityViewService.deleteParking(event.getParkingId());
-        log.info("Parking deleted: " + event.getParkingId());
+        try {
+            entityViewService.deleteParking(event.getParkingId());
+            log.info("Parking deleted from EntityViewService: parkingId={}", event.getParkingId());
+        } catch (IllegalStateException ex) {
+            log.error("Parking does not deleted from EntityViewService: parkingId={}, exception={}",
+                    event.getParkingId(), ex);
+        }
     }
 
     @RabbitListener(queues = RabbitConstants.PARKING_ADD_QUEUE)
     public void consumeAdd(ParkingAddEvent event) {
-        entityViewService.addParking(event.getParkingId(), event.getParkingToken());
-        log.info("Parking added: " + event.getParkingId());
+        try {
+            entityViewService.addParking(event.getParkingId(), event.getParkingToken());
+            log.info("Parking added into EntityViewService: parkingId={}", event.getParkingId());
+        } catch (IllegalStateException ex) {
+            log.error("Parking does not added into EntityViewService: parkingId={}, exception={}",
+                    event.getParkingId(), ex);
+        }
     }
 
     @RabbitListener(queues = RabbitConstants.PARKING_TOKEN_CHANGE_QUEUE)
     public void consumeTokenChange(ParkingTokenChangeEvent event) {
-        entityViewService.updateParkingToken(event.getParkingId(), event.getParkingToken());
         log.info("Parking token changed: " + event.getParkingId());
+        try {
+            entityViewService.updateParkingToken(event.getParkingId(), event.getParkingToken());
+            log.info("Parking token changed into EntityViewService: parkingId={}", event.getParkingId());
+        } catch (IllegalStateException ex) {
+            log.error("Parking token does not changed into EntityViewService: parkingId={}, exception={}",
+                    event.getParkingId(), ex);
+        }
     }
 }

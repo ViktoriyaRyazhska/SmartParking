@@ -39,13 +39,23 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Queue parkingDeleteQueue() {
-        return new Queue(RabbitConstants.PARKING_DELETE_QUEUE);
+    public Queue spotDeleteQueue() {
+        return new Queue(RabbitConstants.SPOT_DELETE_QUEUE);
+    }
+
+    @Bean
+    public Queue spotAddQueue() {
+        return new Queue(RabbitConstants.SPOT_ADD_QUEUE);
     }
 
     @Bean
     public Queue parkingAddQueue() {
         return new Queue(RabbitConstants.PARKING_ADD_QUEUE);
+    }
+
+    @Bean
+    public Queue parkingDeleteQueue() {
+        return new Queue(RabbitConstants.PARKING_DELETE_QUEUE);
     }
 
     @Bean
