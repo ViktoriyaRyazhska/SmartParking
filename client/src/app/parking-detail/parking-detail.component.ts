@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {MatDialog, MatSnackBar} from '@angular/material';
@@ -14,13 +14,14 @@ import {
     FavoritesAddConfigmDialogComponent
 } from './favorites-add-configm-dialog/favorites-add-configm-dialog.component';
 import {Favorite} from '../model/view/favorite';
+import {DeleteConfirmationDialogComponent} from '../manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-parking-detail',
   templateUrl: './parking-detail.component.html',
   styleUrls: ['./parking-detail.component.css']
 })
-export class ParkingDetailComponent implements OnInit {
+export class ParkingDetailComponent implements OnInit, OnDestroy {
 
    parking: Parking;
    favorite: Favorite;
@@ -30,8 +31,8 @@ export class ParkingDetailComponent implements OnInit {
    fullnessBarMessage: String;
    max: number;
    value:number;
-   thirtySecInterval: number = 30000;
-   favoriteNameInputHide: boolean = true;
+   fiveSecInterval: number = 5000;
+   setIntervalNumber: any;
    
 
   constructor(
@@ -40,7 +41,7 @@ export class ParkingDetailComponent implements OnInit {
       private location: Location,
       private snackBar: MatSnackBar,
       private dialog: MatDialog,
-      private tokenStorage: TokenStorage
+      private tokenStorage: TokenStorage,
   ) { }
 
   ngOnInit() {
@@ -50,8 +51,12 @@ export class ParkingDetailComponent implements OnInit {
     });
     this.getSpots();
     this.getAvailableSpots();
-    setInterval(this.refresh(), this.thirtySecInterval);
+    this.setIntervalNumber = setInterval(() => this.refresh(), this.fiveSecInterval);
   }
+
+    ngOnDestroy(): void {
+      clearInterval(this.setIntervalNumber);
+    }
 
   refresh(): void{
     this.getParking().subscribe(parking => {
@@ -62,7 +67,6 @@ export class ParkingDetailComponent implements OnInit {
   }
 
   fullnessBarCount(): void {
-    console.log('isFavorite ->'+this.parking.isFavorite);
       this.max = this.parking.spotsCount;
       this.value = this.parking.spotsCount - this.parking.availableSpotsCount;
     if (this.value < (this.max * 0.6)) {
