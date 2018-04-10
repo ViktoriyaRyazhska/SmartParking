@@ -6,6 +6,7 @@ import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.request.LoginRequest;
 import com.smartparking.model.response.InfoResponse;
 import com.smartparking.security.tokens.TokenPair;
+import com.smartparking.service.email.EmailService;
 import com.smartparking.service.impl.SpringSecurityUserService;
 import com.smartparking.security.tokens.TokenUtil;
 import com.smartparking.entity.SpringSecurityUser;
@@ -49,6 +50,9 @@ public class SecurityController {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
+    @Autowired
+    EmailService emailService;
+
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
     public ResponseEntity register(@RequestBody LoginRequest loginRequest) throws AuthenticationException {
         LOGGER.info("Start validation process");
@@ -90,6 +94,7 @@ public class SecurityController {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
+        new Thread(() -> emailService.prepareAndSendWelcomeEmail(regReq.getEmail(),regReq.getFirstname())).start();
         LOGGER.info("Registered successfull");
         return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfull registered"));
     }
