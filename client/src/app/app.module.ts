@@ -67,7 +67,7 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
 import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
-import {SpotstatisticComponent} from './spotstatistic/spotstatistic.component';
+import {SpotstatisticComponent} from './statistic/spotstatistic/spotstatistic.component';
 import {StatisticsService} from './statistic/statistics.service';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import { CustomAuthService} from "./auth/custom-auth.service";

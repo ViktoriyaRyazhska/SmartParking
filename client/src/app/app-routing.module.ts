@@ -22,7 +22,7 @@ import {ClientProfileEditComponent} from "./client-profile/client-profile-edit/c
 import {ClientProfileEditPasswordComponent} from "./client-profile/client-profile-edit-password/client-profile-edit-password.component";
 import {StatisticComponent} from "./statistic/statistic.component";
 import {ParkingStatisticComponent} from "./statistic/parking-statistic/parking-statistic.component";
-import {SpotstatisticComponent} from "./spotstatistic/spotstatistic.component";
+import {SpotstatisticComponent} from "./statistic/spotstatistic/spotstatistic.component";
 import {NonFoundComponent} from "./errors/non-found/non-found.component";
 import {InternalServerErrorComponent} from "./errors/internal-server-error/internal-server-error.component";
 import {ForbiddenComponent} from "./errors/forbidden/forbidden.component";

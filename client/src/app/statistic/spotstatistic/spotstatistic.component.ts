@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import {Location} from '@angular/common';
-import {ParkingService} from "../parking.service";
-import {Spot} from '../model/view/spot';
-import {SpotStatistic} from '../model/view/spotstatistic';
+import {ParkingService} from "../../parking.service";
+import {SpotStatistic} from '../../model/view/spotstatistic';
 import {Observable} from 'rxjs/Observable';
 import {Chart} from 'chart.js';
 
@@ -52,8 +51,14 @@ export class SpotstatisticComponent implements OnInit {
   this.maxDate = new Date();
   this.minMonth = this.minDate.getMonth()+1;
   this.maxMonth = this.maxDate.getMonth()+1;
-  this.start_date = this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
-  this.end_date = this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
+  this.route.queryParams.subscribe(params => {
+  this.start_date = params[this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear()];
+  this.end_date = params[this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()];
+});
+  
+   /* this.param1 = params['param1'];
+    this.param2 = params['param2'];*/
+
   
     }
 
@@ -192,7 +197,10 @@ drawEventGraphic(): void {
 
 
  addItem() {
-   
+  this.route.queryParams.subscribe(params => {
+    this.start_date = params['param1'];//"[this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear()]";
+    this.end_date = params['param2'];//[this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()];
+  });
    if(this.minDate > this.maxDate)
    {
     this.tempDate = this.minDate;
