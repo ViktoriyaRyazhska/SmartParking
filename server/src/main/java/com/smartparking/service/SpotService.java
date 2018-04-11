@@ -25,4 +25,6 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
 
     List<Parking> findBestParkings(String city, String street, Instant date);
 
+    List<Parking> findBestParkingsInTheCity(String city, Instant date);
+
 }

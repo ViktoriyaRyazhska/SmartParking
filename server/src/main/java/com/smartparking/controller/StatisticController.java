@@ -45,16 +45,31 @@ public class StatisticController {
                                                                       @RequestParam("street") String street,
                                                                       @RequestParam("date") String date) {
 
-        LocalDateTime localDateTime =
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(date)),
-                        TimeZone.getDefault().toZoneId());
-
-        Instant instant = localDateTime.toInstant(ZoneOffset.UTC);
+        Instant instant = getInstant(date);
 
         List<Parking> parkings = spotService.findBestParkings(city, street, instant);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
         parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
+    }
+
+    @RequestMapping("/findbestparkingsincity")
+    public ResponseEntity<List<ParkingItemResponse>> findBestParkingsInTheCity(@RequestParam("city") String city,
+                                                                               @RequestParam("date") String date) {
+
+        Instant instant = getInstant(date);
+
+        List<Parking> parkings = spotService.findBestParkingsInTheCity(city, instant);
+        List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
+        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
+        return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
+    }
+
+    private Instant getInstant(String date) {
+        LocalDateTime localDateTime =
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(date)),
+                        TimeZone.getDefault().toZoneId());
+        return localDateTime.toInstant(ZoneOffset.UTC);
     }
 
 }

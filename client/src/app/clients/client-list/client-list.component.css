@@ -1,6 +1,5 @@
 .button {
     display: block;
-    margin: 2%;
     color: #54456f;
 }
 
@@ -8,3 +7,14 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.filter {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /*max-height: 15%;*/
+}
+
+
+

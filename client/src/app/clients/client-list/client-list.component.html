@@ -24,7 +24,7 @@
         <ul>
             <app-client-item *ngFor="let client of pagedClientItems" [client]="client">
             </app-client-item>
-            <div class="pagination">
+            <div class="pagination" *ngIf="pagedClientItems!=0">
                 <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                     <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
                         <a class="page-link" (click)="setPage(1)">First</a>

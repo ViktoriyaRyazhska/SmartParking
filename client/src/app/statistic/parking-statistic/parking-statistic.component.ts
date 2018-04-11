@@ -9,12 +9,12 @@ import {Parking} from "../../model/view/parking";
 })
 export class ParkingStatisticComponent implements OnInit {
 
-    parkings: Parking[];
+    parkings: Parking[] = [];
     parkingsStreets: string[];
     parkingsCities: string[];
-    selectedCity = 'Lviv';
-    selectedStreet: string;
-    selectedNumberOfDays = 7;
+    selectedCity: string = 'Lviv';
+    selectedStreet: string = '';
+    selectedNumberOfDays: number = 7;
     days = [7, 14, 30, 365];
     calculatedDate = new Date();
 
@@ -23,11 +23,27 @@ export class ParkingStatisticComponent implements OnInit {
 
     ngOnInit() {
         this.findAllParkingsCities();
+        this.findBestParkingsInTheCity();
     }
 
     findBestParkings() {
         this.calculateDate();
-        this.statisticService.getBestParkingsByCityStreetDate(this.selectedCity, this.selectedStreet, this.calculatedDate.getTime())
+
+        if (this.selectedStreet != '') {
+
+            this.statisticService.getBestParkingsByCityStreetDate(this.selectedCity, this.selectedStreet, this.calculatedDate.getTime())
+                .subscribe(parkings => {
+                    this.parkings = parkings;
+                });
+        } else {
+            this.findBestParkingsInTheCity();
+        }
+        this.refreshDate();
+    }
+
+    findBestParkingsInTheCity() {
+        this.calculateDate();
+        this.statisticService.getBestParkingsInTheCityByDate(this.selectedCity, this.calculatedDate.getTime())
             .subscribe(parkings => {
                 this.parkings = parkings;
             });
@@ -35,10 +51,14 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     findParkingsStreetsFromInput(input: string) {
-        this.statisticService.getParkingsStreetsByAnyMatching(this.selectedCity, input)
-            .subscribe(parkingsStreets => {
-                this.parkingsStreets = parkingsStreets;
-            });
+        if (input != '') {
+            this.statisticService.getParkingsStreetsByAnyMatching(this.selectedCity, input)
+                .subscribe(parkingsStreets => {
+                    this.parkingsStreets = parkingsStreets;
+                });
+        } else {
+            this.selectedStreet = '';
+        }
     }
 
     findAllParkingsCities() {
@@ -56,8 +76,8 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     clearCurrentData() {
-        this.selectedStreet = null;
-        this.parkings = null;
+        this.selectedStreet = '';
+        this.findBestParkingsInTheCity();
     }
 
     selectStreet(street: string) {
@@ -71,6 +91,7 @@ export class ParkingStatisticComponent implements OnInit {
     refreshDate() {
         this.calculatedDate = new Date();
     }
+
 
 
 }

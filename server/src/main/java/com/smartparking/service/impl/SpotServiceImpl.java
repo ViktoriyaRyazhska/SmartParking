@@ -50,7 +50,12 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
+    public List<Parking> findBestParkingsInTheCity(String city, Instant date) {
+        return repository.findBestParkingsInTheCity(city, date);
+    }
+
+    @Override
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
-        return spotStatisticRepository.getSpotStatistic(id,startDate, endDate);
+        return spotStatisticRepository.getSpotStatistic(id, startDate, endDate);
     }
 }

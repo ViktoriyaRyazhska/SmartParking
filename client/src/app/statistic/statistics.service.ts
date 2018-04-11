@@ -39,4 +39,13 @@ export class StatisticsService {
         });
     }
 
+    getBestParkingsInTheCityByDate(city: string, date: number): Observable<Parking[]> {
+        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsincity', {
+            params: {
+                city: city,
+                date: date.toString()
+            }
+        });
+    }
+
 }
