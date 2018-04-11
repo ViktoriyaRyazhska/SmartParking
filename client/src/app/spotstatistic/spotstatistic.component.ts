@@ -102,7 +102,7 @@ export class SpotstatisticComponent implements OnInit {
 drawHourGraphic(): void {
   var densityData = {
     label: 'Spots',
-    data: this.events
+    data: this.hours
   };
  
 
@@ -111,14 +111,7 @@ drawHourGraphic(): void {
   data: {
     labels: this.numbers,
     datasets:[densityData]
-     /*[
-      { 
-        data: this.hours,
-        borderColor: "#3cba9f",
-        fill: false
-        }
-    ]*/
-  },
+     },
   options: {
     legend: {
       display: true
