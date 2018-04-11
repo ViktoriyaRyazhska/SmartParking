@@ -32,14 +32,11 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.filter.radiusChanges.subscribe(() => this.filterParkings());
-        this.filter.priceRangeChanges.subscribe(() => this.filterParkings());
-
-        this.filter.locationChanges.subscribe(location => {
+        this.filter.valueChanges.subscribe(filter => {
             this.showLoadingProgressBar();
-            this.parkingMap.lat = location.latitude;
-            this.parkingMap.lng = location.longitude;
-            this.parkingService.getParkingsNearby(location.latitude, location.longitude, this.filter.radiusMax * 1000).subscribe((response) => {
+            this.parkingMap.lat = filter.location.latitude;
+            this.parkingMap.lng = filter.location.longitude;
+            this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.filter.radiusMax * 1000).subscribe((response) => {
                 this.hideProgressBar();
                 this.parkings = response.body;
                 this.filterParkings();

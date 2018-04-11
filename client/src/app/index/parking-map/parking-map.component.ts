@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Parking} from '../../model/view/parking';
-import {Browser} from 'leaflet';
 
 const MiToKm = 1.60934;
 

@@ -37,30 +37,21 @@ export class ParkingListFilterComponent implements OnInit {
         return this.internalValue;
     }
 
-    public get locationChanges(): Observable<Location> {
-        return this.locationField.valueChanges;
-    }
-
-    public get radiusChanges(): Observable<number | null> {
-        return this.radiusField.valueChanges;
-    }
-
-    public get priceRangeChanges(): Observable<PriceRange> {
-        return this.priceRangeField.valueChanges;
-    }
-
     ngOnInit() {
         this.locationField.valueChanges.subscribe(location => {
             this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value);
+            this.valueChangesSubject.next(this.internalValue);
         });
         this.priceRangeField.valueChanges.subscribe(priceRange => {
             if (this.locationField.value) {
                 this.internalValue = new ParkingListFilter(this.locationField.value, priceRange, this.radiusField.value);
+                this.valueChangesSubject.next(this.internalValue);
             }
         });
         this.radiusField.valueChanges.subscribe(radius => {
             if (this.locationField.value) {
                 this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, radius);
+                this.valueChangesSubject.next(this.internalValue);
             }
         });
     }
