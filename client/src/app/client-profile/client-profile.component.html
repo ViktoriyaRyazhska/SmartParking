@@ -22,24 +22,56 @@
                                     </mat-card-title>
                                     <mat-card-title><span>Email:</span> {{client.email}}</mat-card-title>
                                     <mat-card-title *ngIf="client.favoritesNames.length!=0">
-                                        <span>Favorites parkings: </span>
-                                        <span *ngFor="let favoriteName of client.favoritesNames">{{favoriteName}}, </span>
+                                        <mat-expansion-panel hideToggle="true">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <span>Show favorite parkings</span>
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+                                            <div *ngFor="let favoriteParking of favoritesParkings">
+                                                <div class="row">
+                                                    <div class="col-10"
+                                                         [routerLink]="['/parkingdetail/'+favoriteParking.id]">
+                                                        <!--<button mat-button (click)="goToParkingDetails()">-->
+                                                        <div class="row">
+                                                            <mat-panel-title>
+                                                                Name
+                                                            </mat-panel-title>
+                                                            <mat-panel-description>
+                                                                {{favoriteParking.favoriteName}}
+                                                            </mat-panel-description>
+                                                        </div>
+                                                        <div class="row">
+                                                            <mat-panel-title>
+                                                                Address
+                                                            </mat-panel-title>
+                                                            <mat-panel-description>
+                                                                {{favoriteParking.address}}
+                                                            </mat-panel-description>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <button mat-icon-button color="warn"
+                                                                (click)="onParkingDeleteClick(favoriteParking.id)">
+                                                            <mat-icon>delete_forever</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <mat-action-row></mat-action-row>
+                                            </div>
+
+                                        </mat-expansion-panel>
                                     </mat-card-title>
                                 </div>
-                            </div>
+                        </div>
                 </div>
             </div>
+            <mat-action-row>
+                <div class="full-width"></div>
+                <button mat-button (click)="goToProfileEdit()" color="warn">Go to edit form</button>
+            </mat-action-row>
         </div>
-        <mat-card-actions>
-            <div class="row">
-                <div class="col-10">
-                    <div class="w-100"></div>
-                </div>
-                <div class="col-2">
-                        <button mat-button (click)="goToProfileEdit()" color="warn">Go to edit form</button>
-                </div>
-            </div>
-        </mat-card-actions>
     </mat-card>
 </div>
 

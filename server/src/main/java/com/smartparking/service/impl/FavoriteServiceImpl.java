@@ -1,11 +1,16 @@
 package com.smartparking.service.impl;
 
 import com.smartparking.entity.Favorite;
+import com.smartparking.entity.Parking;
+import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.repository.FavoriteRepository;
 import com.smartparking.service.AbstractService;
 import com.smartparking.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FavoriteServiceImpl extends AbstractService<Favorite, Long, FavoriteRepository> implements FavoriteService {
@@ -22,5 +27,17 @@ public class FavoriteServiceImpl extends AbstractService<Favorite, Long, Favorit
     @Override
     public Favorite findFavoriteByClientEmailAndParkingId(String email, Long parkingId) {
         return getRepository().findFavoriteByClientEmailAndParkingId(email, parkingId);
+    }
+
+    @Override
+    public List<ParkingDetailResponse> findFavoritesDetailByClientId(String clientEmail) {
+        List<Parking> parkings = getRepository().findFavoritesDetailByClientId(clientEmail);
+        List<ParkingDetailResponse> parkingDetailResponses = new ArrayList<>();
+        parkings.forEach(parking -> {
+            ParkingDetailResponse p = ParkingDetailResponse.of(parking);
+            p.setIsFavorite(true);
+            parkingDetailResponses.add(p);
+        });
+        return parkingDetailResponses;
     }
 }
