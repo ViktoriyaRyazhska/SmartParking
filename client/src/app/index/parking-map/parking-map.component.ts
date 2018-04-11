@@ -41,6 +41,7 @@ export class ParkingMapComponent implements OnInit {
     }
 
     revertMileToKm(distance: any): number {
+        var distance = distance.toString();
         distance = distance.substr(0, distance.indexOf(' '));
         Number.parseInt(distance);
         distance *= MiToKm;
