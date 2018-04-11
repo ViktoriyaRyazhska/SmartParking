@@ -5,7 +5,7 @@ import {RegistrationData} from "./registration-data";
 import {Router} from "@angular/router";
 import {InfoResponse} from "../info-response";
 import {HttpErrorResponse} from "@angular/common/http";
-import {AuthService} from "../auth.service";
+import {CustomAuthService} from "../custom-auth.service";
 
 export class PasswordValidation {
 
@@ -53,7 +53,7 @@ export class RegistrationComponent implements OnInit {
         Validators.maxLength(16),
     ]);
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
+              private authService: CustomAuthService,
               private router: Router
   ) { }
 

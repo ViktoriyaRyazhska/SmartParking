@@ -6,12 +6,12 @@ import {Observable} from "rxjs/Observable";
 import {LoginData} from "./login/login-data";
 
 @Injectable()
-export class AuthService {
+export class CustomAuthService {
 
   private loginUrl = environment.apiUrl + '/auth/generate-token';
   private registrationUrl = environment.apiUrl + '/auth/signup';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   signIn(loginData: LoginData): Observable<any> {
     return this.http.post(this.loginUrl, loginData);

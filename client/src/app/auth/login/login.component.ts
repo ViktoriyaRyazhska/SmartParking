@@ -5,7 +5,13 @@ import {Router} from "@angular/router";
 import {TokenPair} from "../token/token-pair";
 import {TokenStorage} from "../token/token-storage";
 import {HttpErrorResponse} from "@angular/common/http";
-import {AuthService} from "../auth.service";
+import {CustomAuthService} from "../custom-auth.service";
+import {
+    AuthService,
+    FacebookLoginProvider,
+    GoogleLoginProvider,
+    LinkedinLoginProvider
+} from 'angular5-social-auth';
 
 @Component({
   selector: 'app-login',
@@ -28,9 +34,10 @@ export class LoginComponent implements OnInit {
     ]);
 
     constructor(private formBuilder: FormBuilder,
-                private authService: AuthService,
+                private authService: CustomAuthService,
                 private router: Router,
-                private tokenStorage: TokenStorage
+                private tokenStorage: TokenStorage,
+                private socialAuthService: AuthService
     ) {}
 
     ngOnInit() {
@@ -38,6 +45,23 @@ export class LoginComponent implements OnInit {
             email: this.emailControl,
             password: this.passwordControl
         });
+    }
+
+    public socialSignIn(socialPlatform : string) {
+        let socialPlatformProvider;
+        if(socialPlatform == "facebook"){
+            socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+        }else if(socialPlatform == "google"){
+            socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+        }else if(socialPlatform == "linkedin"){
+            socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+        }
+
+        this.socialAuthService.signIn(socialPlatformProvider).then(
+            (userData) => {
+                console.log(socialPlatform+" sign in data : " , userData);
+            }
+        );
     }
 
 
