@@ -100,23 +100,28 @@ export class SpotstatisticComponent implements OnInit {
  }
 
 drawHourGraphic(): void {
+  var densityData = {
+    label: 'Spots',
+    data: this.events
+  };
  
 
  this.hoursChart = new Chart('canvas', {
   type: 'bar',
   data: {
     labels: this.numbers,
-    datasets: [
+    datasets:[densityData]
+     /*[
       { 
         data: this.hours,
         borderColor: "#3cba9f",
         fill: false
         }
-    ]
+    ]*/
   },
   options: {
     legend: {
-      display: false
+      display: true
     },
     title: {
       display: true,
@@ -141,23 +146,23 @@ this.events = null;
 
 
 drawEventGraphic(): void {
+
+  var densityData = {
+    label: 'Spots',
+    data: this.events
+  };
  
 
   this.eventsChart = new Chart('canvas', {
    type: 'bar',
    data: {
      labels: this.numbers,
-     datasets: [
-       { 
-         data: this.events,
-         borderColor: "#3cba9f",
-         fill: false
-         }
-     ]
+     datasets:[densityData]
    },
    options: {
      legend: {
-       display: false
+       display: true,
+       text: 'Whi'
      },
      title: {
        display: true,
@@ -202,11 +207,9 @@ drawEventGraphic(): void {
     this.maxDate = this.tempDate;
    }
    
-  this.getSpotStatistic();
-  
-    
+  this.getSpotStatistic();   
    
- }
+}
 
 
  showHoursGraphic()
