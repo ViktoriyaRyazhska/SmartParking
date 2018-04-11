@@ -1,4 +1,5 @@
-<h3 class="text-center">The most popular parkings </h3>
+<h3 class="text-center">The most popular parkings in <span>{{selectedCity}}</span> on the street <span
+        *ngIf="selectedStreet ==null">--not selected--</span><span>{{selectedStreet}}</span></h3>
 <div class="parent row">
 
     <div class="col-md-12">
@@ -11,8 +12,9 @@
                         </div>
                         <div style="min-width: 70%;">
                             <div>
-                                <mat-card-title>{{parking.city}}, {{parking.street}} street</mat-card-title>
-                                <mat-card-subtitle>{{parking.providerName}}</mat-card-subtitle>
+                                <mat-card-title>Parking address: {{parking.city}}, {{parking.street}} street / {{parking.building}}
+                                </mat-card-title>
+                                <mat-card-subtitle>Provider name: {{parking.providerName}}</mat-card-subtitle>
                             </div>
                         </div>
                         <div style="width: 100%"></div>
@@ -42,7 +44,7 @@
                 <mat-form-field>
                     <mat-select [(value)]="selectedCity" placeholder="change city">
                         <mat-option *ngFor="let parkingsCity of parkingsCities" [value]="parkingsCity"
-                                    (click)="clearCurrentStreet()">
+                                    (click)="clearCurrentData()">
                             {{ parkingsCity }}
                         </mat-option>
                     </mat-select>
@@ -54,6 +56,7 @@
                            [matAutocomplete]="auto2">
                     <mat-autocomplete #auto2="matAutocomplete">
                         <mat-option *ngFor="let parkingsStreet of parkingsStreets"
+                                    [value]="parkingsStreet"
                                     (click)="selectStreet(parkingsStreet)"
                                     (click)="findBestParkings()">
                             {{parkingsStreet}}

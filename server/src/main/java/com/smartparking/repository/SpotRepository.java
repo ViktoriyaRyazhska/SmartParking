@@ -25,7 +25,7 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
 
     List<Spot> findAllByParkingId(Long id);
 
-    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where p.city=?1 and p.street=?2 and e.timestamp < ?3"
+    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where p.city=?1 and p.street=?2 and e.timestamp > ?3"
             + " group by p order by count(s.id) desc")
     List<Parking> findBestParkings(String city, String street, Instant date);
 

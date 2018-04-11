@@ -58,7 +58,6 @@ const routes: Routes = [
     {path: 'profile/edit/password', component: ClientProfileEditPasswordComponent},
     {path: 'profile', component: ClientProfileComponent},
     {path: 'statistic', component: StatisticComponent},
-    {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
     {path: 'statistic/parkingstatistic/parkingdetail/:id', component: ParkingDetailComponent},
     {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
     {path: 'spotstatistic/:id', component: SpotstatisticComponent},

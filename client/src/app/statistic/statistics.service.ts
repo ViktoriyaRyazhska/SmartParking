@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {ParkingsInfo} from "./parkingsinfo";
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
+import {Parking} from "../model/view/parking";
 
 @Injectable()
 export class StatisticsService {
@@ -29,8 +29,8 @@ export class StatisticsService {
         return this.http.get<string[]>(this.statisticUrl + '/findallparkingscities');
     }
 
-    getBestParkingsByCityStreetDate(city: string, street: string, date: number): Observable<ParkingsInfo[]> {
-        return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/findbestparkings', {
+    getBestParkingsByCityStreetDate(city: string, street: string, date: number): Observable<Parking[]> {
+        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkings', {
             params: {
                 city: city,
                 street: street,

@@ -12,3 +12,14 @@ h6 {
 span {
     color: darkred;
 }
+
+.mat-option {
+    color: darkblue;
+
+}
+
+mat-select {
+    font-size: 0.9em;
+}
+
+

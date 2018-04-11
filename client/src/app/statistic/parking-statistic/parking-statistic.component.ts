@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StatisticsService} from "../statistics.service";
-import {ParkingsInfo} from "../parkingsinfo";
-import {ActivatedRoute} from "@angular/router";
-import {FormControl} from "@angular/forms";
-import {moment} from "ngx-bootstrap/chronos/test/chain";
+import {Parking} from "../../model/view/parking";
 
 @Component({
     selector: 'app-parking-statistic',
@@ -12,7 +9,7 @@ import {moment} from "ngx-bootstrap/chronos/test/chain";
 })
 export class ParkingStatisticComponent implements OnInit {
 
-    parkings: ParkingsInfo[];
+    parkings: Parking[];
     parkingsStreets: string[];
     parkingsCities: string[];
     selectedCity = 'Lviv';
@@ -21,7 +18,7 @@ export class ParkingStatisticComponent implements OnInit {
     days = [7, 14, 30, 365];
     calculatedDate = new Date();
 
-    constructor(private statisticService: StatisticsService, private router: ActivatedRoute) {
+    constructor(private statisticService: StatisticsService) {
     }
 
     ngOnInit() {
@@ -58,8 +55,9 @@ export class ParkingStatisticComponent implements OnInit {
             });
     }
 
-    clearCurrentStreet() {
+    clearCurrentData() {
         this.selectedStreet = null;
+        this.parkings = null;
     }
 
     selectStreet(street: string) {
