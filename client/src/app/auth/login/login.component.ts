@@ -13,6 +13,7 @@ import {
     LinkedinLoginProvider
 } from 'angular5-social-auth';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -59,7 +60,7 @@ export class LoginComponent implements OnInit {
 
         this.socialAuthService.signIn(socialPlatformProvider).then(
             (userData) => {
-                console.log(socialPlatform+" sign in data : " , userData);
+                console.log(socialPlatform + " sign in data : " , userData);
             }
         );
     }
