@@ -15,13 +15,13 @@ export class InterceptorService implements HttpInterceptor {
 
     constructor(private tokenStorage: TokenStorage) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('Go into interceptor 2');
-        if (request.url.startsWith(this.apiUrl) && this.tokenStorage.getAccessToken()) {
-            request = this.addAuthHeaderToRequest(request);
+        if (req.url.startsWith(this.apiUrl) && this.tokenStorage.getAccessToken()) {
+            req = this.addAuthHeaderToRequest(req);
         }
         console.log('Exit from interceptor 2');
-        return next.handle(request);
+        return next.handle(req);
     }
 
     private addAuthHeaderToRequest(request: HttpRequest<any>): HttpRequest<any> {

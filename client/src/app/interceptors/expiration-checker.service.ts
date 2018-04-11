@@ -22,14 +22,12 @@ export class ExpirationCheckerService implements HttpInterceptor{
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('Go into interceptor 1');
         if(this.tokenStorage.isExpired()) {
-            req = req.clone({
-                headers: req.headers.append(this.refreshTokenHeader, this.tokenStorage.getRefreshToken())
-            });
+            req = this.addRefreshTokentToRequest(req);
         }
         console.log('Exit from interceptor 1');
         return next.handle(req).do(response => {
                 if(response instanceof HttpResponse) {
-                    if(response.headers.get(this.accessTokenHeader) != null && response.headers.get(this.refreshTokenHeader) != null) {
+                    if(response.headers.has(this.accessTokenHeader) && response.headers.has(this.refreshTokenHeader)) {
                         this.tokenStorage.saveToken(new TokenPair(response.headers.get(this.accessTokenHeader), response.headers.get(this.refreshTokenHeader)));
                     }
                 }
@@ -43,5 +41,11 @@ export class ExpirationCheckerService implements HttpInterceptor{
                     }
                 }
             });
+    }
+
+    private addRefreshTokentToRequest(request: HttpRequest<any>): HttpRequest<any> {
+        return request.clone({
+            headers: request.headers.append(this.refreshTokenHeader, this.tokenStorage.getRefreshToken())
+        });
     }
 }
