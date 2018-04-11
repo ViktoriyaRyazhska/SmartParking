@@ -5,13 +5,6 @@ import {RegistrationData} from "./registration/registration-data";
 import {Observable} from "rxjs/Observable";
 import {LoginData} from "./login/login-data";
 
-/*const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa(angularClient.clientID + ':' + angularClient.clientSecret)
-    })
-};*/
-
 @Injectable()
 export class AuthService {
 

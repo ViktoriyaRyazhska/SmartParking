@@ -23,6 +23,9 @@ import {ClientProfileEditPasswordComponent} from "./client-profile/client-profil
 import {StatisticComponent} from "./statistic/statistic.component";
 import {ParkingStatisticComponent} from "./statistic/parking-statistic/parking-statistic.component";
 import {SpotstatisticComponent} from "./spotstatistic/spotstatistic.component";
+import {NonFoundComponent} from "./errors/non-found/non-found.component";
+import {InternalServerErrorComponent} from "./errors/internal-server-error/internal-server-error.component";
+import {ForbiddenComponent} from "./errors/forbidden/forbidden.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -58,7 +61,10 @@ const routes: Routes = [
     {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
     {path: 'statistic/parkingstatistic/parkingdetail/:id', component: ParkingDetailComponent},
     {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
-    {path: 'spotstatistic/:id', component: SpotstatisticComponent}
+    {path: 'spotstatistic/:id', component: SpotstatisticComponent},
+    {path: 'non-found', component: NonFoundComponent},
+    {path: 'server-error', component: InternalServerErrorComponent},
+    {path: 'forbidden', component: ForbiddenComponent}
 
 ];
 

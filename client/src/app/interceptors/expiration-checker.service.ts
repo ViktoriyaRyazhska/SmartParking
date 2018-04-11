@@ -4,12 +4,16 @@ import {
     HttpRequest, HttpResponse
 } from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import {TokenStorage} from "./auth/token/token-storage";
-import {TokenPair} from "./auth/token/token-pair";
+import {TokenStorage} from "../auth/token/token-storage";
+import {TokenPair} from "../auth/token/token-pair";
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class ExpirationCheckerService implements HttpInterceptor{
+
+    private accessTokenHeader = environment.accessTokenHeader;
+    private refreshTokenHeader = environment.refreshTokenHeader;
 
     constructor(private http: HttpClient,
                 private router: Router,
@@ -19,14 +23,14 @@ export class ExpirationCheckerService implements HttpInterceptor{
         console.log('Go into interceptor 1');
         if(this.tokenStorage.isExpired()) {
             req = req.clone({
-                headers: req.headers.append('Refresh-token', this.tokenStorage.getRefreshToken())
+                headers: req.headers.append(this.refreshTokenHeader, this.tokenStorage.getRefreshToken())
             });
         }
         console.log('Exit from interceptor 1');
         return next.handle(req).do(response => {
                 if(response instanceof HttpResponse) {
-                    if(response.headers.get('Access-token') != null && response.headers.get('Refresh-token') != null) {
-                        this.tokenStorage.saveToken(new TokenPair(response.headers.get('Access-token'), response.headers.get('Refresh-token')));
+                    if(response.headers.get(this.accessTokenHeader) != null && response.headers.get(this.refreshTokenHeader) != null) {
+                        this.tokenStorage.saveToken(new TokenPair(response.headers.get(this.accessTokenHeader), response.headers.get(this.refreshTokenHeader)));
                     }
                 }
                 return response;

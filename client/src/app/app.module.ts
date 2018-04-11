@@ -42,7 +42,7 @@ import {ParkingListFilterComponent} from './index/parking-list-filter/parking-li
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
-import {InterceptorService} from './interceptor.service';
+import {InterceptorService} from './interceptors/interceptor.service';
 import {AgmCoreModule} from '@agm/core';
 import {TokenStorage} from './auth/token/token-storage';
 import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
@@ -65,8 +65,12 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
 import {SpotstatisticComponent} from './spotstatistic/spotstatistic.component';
 import {StatisticsService} from './statistic/statistics.service';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {ExpirationCheckerService} from "./expiration-checker.service";
+import {ExpirationCheckerService} from "./interceptors/expiration-checker.service";
 import {AuthService} from "./auth/auth.service";
+import { NonFoundComponent } from './errors/non-found/non-found.component';
+import { InternalServerErrorComponent } from './errors/internal-server-error/internal-server-error.component';
+import { ForbiddenComponent } from './errors/forbidden/forbidden.component';
+import {httpInterceptorProviders} from "./interceptors/http-interceptors";
 
 
 @NgModule({
@@ -104,7 +108,10 @@ import {AuthService} from "./auth/auth.service";
         FavoritesAddConfigmDialogComponent,
         StatisticComponent,
         ParkingStatisticComponent,
-        SpotstatisticComponent
+        SpotstatisticComponent,
+        NonFoundComponent,
+        InternalServerErrorComponent,
+        ForbiddenComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -134,16 +141,7 @@ import {AuthService} from "./auth/auth.service";
     ],
     entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ExpirationCheckerService,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: InterceptorService,
-            multi: true
-        },
+        httpInterceptorProviders,
         ParkingService,
         ManagerParkingService,
         ProviderService,

@@ -6,4 +6,7 @@
 export const environment = {
     production: false,
     apiUrl: 'http://localhost:8080',
+    angularUrl: 'http://localhost:4200',
+    accessTokenHeader: 'Access-token',
+    refreshTokenHeader: 'Refresh-token',
 };
