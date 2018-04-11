@@ -38,6 +38,21 @@ public class EmailService {
         }catch (MailException e){
             LOGGER.error("Could not send email to : {} Error = {}",recipient,e.getMessage());
         }
+    }
 
+    public void prepareAndSendConfirmPassEmail(String recipient, String userName, String message){
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setFrom(emailFrom);
+            messageHelper.setTo(recipient);
+            messageHelper.setSubject("Change password confirmation.");
+            String content = emailContentBuilder.buildConfirmPassHtml(userName, message);
+            messageHelper.setText(content, true);
+        };
+        try {
+            mailSender.send(messagePreparator);
+        }catch (MailException e){
+            LOGGER.error("Could not send email to : {} Error = {}",recipient,e.getMessage());
+        }
     }
 }

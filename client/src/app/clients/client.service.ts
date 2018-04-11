@@ -66,6 +66,10 @@ export class ClientService {
         return this.http.post(this.clientProfile + '/update/password', data);
     }
 
+    sendConfirmation(): Observable<any>{
+        return this.http.get(this.clientProfile + '/update/password/confirm');
+    }
+
     getFavoritesParkingsForClient(): Observable<Parking[]> {
         return this.http.get<Parking[]>(this.clientProfile + '/favorites');
     }

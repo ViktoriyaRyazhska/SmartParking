@@ -70,6 +70,7 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
 import {SpotstatisticComponent} from './statistic/spotstatistic/spotstatistic.component';
 import {StatisticsService} from './statistic/statistics.service';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { ClientPasswordChangeConfirmationComponent } from './client-profile/client-password-change-confirmation/client-password-change-confirmation.component';
 import { CustomAuthService} from "./auth/custom-auth.service";
 import { NonFoundComponent } from './errors/non-found/non-found.component';
 import { InternalServerErrorComponent } from './errors/internal-server-error/internal-server-error.component';
@@ -134,7 +135,9 @@ export function getAuthServiceConfigs() {
         SpotstatisticComponent,
         NonFoundComponent,
         InternalServerErrorComponent,
-        ForbiddenComponent
+        ForbiddenComponent,
+        SpotstatisticComponent,
+        ClientPasswordChangeConfirmationComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
