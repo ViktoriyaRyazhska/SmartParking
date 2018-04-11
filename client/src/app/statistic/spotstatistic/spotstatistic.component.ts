@@ -11,6 +11,7 @@ import {Chart} from 'chart.js';
 
 
 
+
 @Component({
   selector: 'app-spotstatistic',
   templateUrl: './spotstatistic.component.html',
@@ -43,7 +44,8 @@ export class SpotstatisticComponent implements OnInit {
 
  constructor(
    private route: ActivatedRoute,
-   private parkingService: ParkingService,
+   private router: Router,
+    private parkingService: ParkingService,
    
   ) { 
   this.minDate = new Date();
@@ -198,8 +200,10 @@ drawEventGraphic(): void {
 
  addItem() {
   this.route.queryParams.subscribe(params => {
-    this.start_date = params['param1'];//"[this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear()]";
-    this.end_date = params['param2'];//[this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()];
+    this.start_date =this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
+    this.end_date = this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
+ //   this.start_date = params['param1'];//"[this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear()]";
+    //this.end_date = params['param2'];//[this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()];
   });
    if(this.minDate > this.maxDate)
    {
@@ -226,6 +230,10 @@ drawEventGraphic(): void {
   this.drawEventGraphic();
  }
 
+ returnToParkingDetail() {
+  const id = parseInt(this.route.snapshot.paramMap.get('id'));
+  this.router.navigate(['parkingdetail/'+id]);
+}
 
 
 }

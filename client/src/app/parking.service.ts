@@ -14,7 +14,7 @@ export class ParkingService {
 
     private parkingNearbyUrl = environment.apiUrl + '/parkings-nearby/';
     private parkingDetailUrl = environment.apiUrl + '/parkingdetail/';
-    private spotstatistic = environment.apiUrl + '/spotstatistic/';
+   // private spotstatistic = environment.apiUrl + '/spotstatistic/';
                                                    
 
     constructor(private http: HttpClient) {
@@ -61,7 +61,7 @@ export class ParkingService {
 
 
     getSpotStatistic(id: number, start_time:string, end_time:string): Observable<SpotStatistic[]> {
-           return this.http.get<SpotStatistic[]>(this.spotstatistic + id, {
+           return this.http.get<SpotStatistic[]>(this.parkingDetailUrl + id+'/spotstatistic', {
             params: {
                 start_time: start_time,
                 end_time: end_time

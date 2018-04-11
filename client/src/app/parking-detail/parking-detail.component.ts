@@ -15,6 +15,7 @@ import {
 } from './favorites-add-configm-dialog/favorites-add-configm-dialog.component';
 import { Favorite } from '../model/view/favorite';
 import { DeleteConfirmationDialogComponent } from '../manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-parking-detail',
@@ -41,6 +42,7 @@ export class ParkingDetailComponent implements OnInit, OnDestroy {
     private location: Location,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private router: Router,
     private tokenStorage: TokenStorage,
   ) { }
 
@@ -157,5 +159,9 @@ export class ParkingDetailComponent implements OnInit, OnDestroy {
     this.tokenStorage.signOut();
   }
 
+  sendToSpotStatistic() {
+    const id = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.router.navigate(['parkingdetail/'+id+'/spotstatistic']);
+  }
 
 }

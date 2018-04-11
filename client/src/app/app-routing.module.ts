@@ -61,9 +61,9 @@ const routes: Routes = [
     {path: 'statistic', component: StatisticComponent},
     {path: 'statistic/parkingstatistic/parkingdetail/:id', component: ParkingDetailComponent},
     {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
-    {path: 'spotstatistic/:id', component: SpotstatisticComponent},
+     {path: 'parkingdetail/:id/spotstatistic', component: SpotstatisticComponent},
     {path: 'update/password/:uuid', component: ClientPasswordChangeConfirmationComponent},
-    {path: 'spotstatistic/:id', component: SpotstatisticComponent},
+   
     {path: 'non-found', component: NonFoundComponent},
     {path: 'server-error', component: InternalServerErrorComponent},
     {path: 'forbidden', component: ForbiddenComponent}
