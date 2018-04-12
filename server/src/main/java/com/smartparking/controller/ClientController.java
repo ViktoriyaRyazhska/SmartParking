@@ -60,7 +60,7 @@ public class ClientController {
 
     @PostMapping("/update/{id}")
     ResponseEntity<?> updateClient(@PathVariable Long id, @RequestBody ClientRequest clientRequest) {
-        if (!clientRequest.getFirstName().equals("") && !clientRequest.getLastName().equals("")) {
+        if (!clientRequest.getFirstName().isEmpty() && !clientRequest.getLastName().isEmpty()) {
             clientService.updateFromRequest(id, clientRequest);
             return new ResponseEntity(HttpStatus.OK);
         } else {
@@ -77,7 +77,7 @@ public class ClientController {
 
     @GetMapping("/findclients/{input}")
     ResponseEntity<?> getClientsByAnyMatch(@PathVariable String input) {
-        if (!input.equals("")) {
+        if (!input.isEmpty()) {
             List<Client> clients = clientService.findClientsByAnyMatch(input);
             List<ClientItemResponse> clientItemResponses = new ArrayList<>();
             clients.forEach(client -> clientItemResponses.add(ClientItemResponse.of(client)));

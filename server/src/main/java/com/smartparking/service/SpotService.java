@@ -6,10 +6,7 @@ import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.repository.SpotRepository;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public interface SpotService extends Service<Spot, Long, SpotRepository> {
 
