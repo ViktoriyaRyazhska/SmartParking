@@ -76,14 +76,7 @@ public class SpringSecurityUserService implements UserDetailsService {
     }
 
     public void saveClientFromSocialSignInRequest(SocialSignInRequest socialSignInRequest) throws EmailValidationEx, DuplicateEmailEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx {
-        String[] nameSurname = null;
-        try {
-            nameSurname = new String(socialSignInRequest.getName().getBytes(), "UTF-8").split(" ");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        LOGGER.info("Firstname = " + nameSurname[0]);
-        LOGGER.info("Lastname = " + nameSurname[1]);
+        String[] nameSurname = socialSignInRequest.getName().split(" ");
         Client client = new Client();
         client.setEmail(validator.validateEmailOnRegistration(
                 constructEmailForSocial(socialSignInRequest.getEmail(), socialSignInRequest.getProvider())));

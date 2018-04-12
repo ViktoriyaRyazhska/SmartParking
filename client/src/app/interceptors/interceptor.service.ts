@@ -16,11 +16,9 @@ export class InterceptorService implements HttpInterceptor {
     constructor(private tokenStorage: TokenStorage) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('Go into interceptor 2');
         if (req.url.startsWith(this.apiUrl) && this.tokenStorage.getAccessToken()) {
             req = this.addAuthHeaderToRequest(req);
         }
-        console.log('Exit from interceptor 2');
         return next.handle(req);
     }
 

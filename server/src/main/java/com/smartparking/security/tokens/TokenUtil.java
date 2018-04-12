@@ -12,5 +12,6 @@ import java.util.Map;
 @Component
 public interface TokenUtil {
     TokenPair generateTokenPair(UserDetails user);
+
     String getUsernameFromToken(String token);
 }

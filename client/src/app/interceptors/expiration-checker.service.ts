@@ -20,11 +20,9 @@ export class ExpirationCheckerService implements HttpInterceptor{
                 private tokenStorage: TokenStorage) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('Go into interceptor 1');
         if(this.tokenStorage.isExpired()) {
             req = this.addRefreshTokentToRequest(req);
         }
-        console.log('Exit from interceptor 1');
         return next.handle(req).do(response => {
                 if(response instanceof HttpResponse) {
                     if(response.headers.has(this.accessTokenHeader) && response.headers.has(this.refreshTokenHeader)) {

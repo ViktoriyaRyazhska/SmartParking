@@ -65,10 +65,9 @@ public class SecurityController {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
-        LOGGER.info("Search user with username " + email);
         final UserDetails user = userService.loadUserByUsername(email);
         LOGGER.info(email + " = " + user);
-        if(user != null && bcryptEncoder.matches(password, user.getPassword())) {
+        if (user != null && bcryptEncoder.matches(password, user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, password)
             );
@@ -82,44 +81,32 @@ public class SecurityController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity saveUser(@RequestBody RegistrationRequest regReq) {
         try {
-            ((SpringSecurityUserService)userService).saveClientFromRegistrationRequest(regReq);
+            ((SpringSecurityUserService) userService).saveClientFromRegistrationRequest(regReq);
         } catch (AuthorizationEx e) {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
-        new Thread(() -> emailService.prepareAndSendWelcomeEmail(regReq.getEmail(),regReq.getFirstname())).start();
-        LOGGER.info("Registered successfull");
+        new Thread(() -> emailService.prepareAndSendWelcomeEmail(regReq.getEmail(), regReq.getFirstname())).start();
         return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfull registered"));
     }
 
     @RequestMapping(value = "/social", method = RequestMethod.POST)
     public ResponseEntity socialSignIn(@RequestBody SocialSignInRequest request) {
-        LOGGER.info("Try to sign in with social");
         UserDetails user = null;
-        LOGGER.info("Now user = " + null);
         String email = ((SpringSecurityUserService) userService).constructEmailForSocial(request.getEmail(), request.getProvider());
-        LOGGER.info("Created email = " + email);
-        while(user == null) {
-            LOGGER.info("Entry into loop");
+        while (user == null) {
             try {
-                LOGGER.info("Loading user");
                 user = userService.loadUserByUsername(email);
-                LOGGER.info("Loaded user = " + user);
             } catch (Exception e) {
-                LOGGER.info("Catch exception = " + e);
                 try {
-                    LOGGER.info("try to save client");
                     ((SpringSecurityUserService) userService).saveClientFromSocialSignInRequest(request);
-                    LOGGER.info("Client saved");
                 } catch (AuthorizationEx ex) {
                     LOGGER.warn(ex.getMessage());
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
                 }
             }
         }
-        LOGGER.info("Try to authorize");
-        if(user != null && bcryptEncoder.matches(request.getId(), user.getPassword())) {
-            LOGGER.info("Start authorization");
+        if (user != null && bcryptEncoder.matches(request.getId(), user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, request.getId())
             );

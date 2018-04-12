@@ -24,8 +24,6 @@ export class CustomAuthService {
   }
 
   signInWithSocial(data: SocialPrincipal): Observable<any> {
-    console.log(data.email);
-    console.log(data.provider);
     return this.http.post(this.socialUrl, data);
   }
 }
