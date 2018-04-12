@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {ParkingsInfo} from "./parkingsinfo";
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
+import {Parking} from "../model/view/parking";
 
 @Injectable()
 export class StatisticsService {
@@ -12,7 +12,7 @@ export class StatisticsService {
     constructor(private http: HttpClient) {
     }
 
-    getParkingsStreet(city: string, street: string): Observable<string[]> {
+    getParkingsStreetsByAnyMatching(city: string, street: string): Observable<string[]> {
         return this.http.get<string[]>(this.statisticUrl + '/findparkingstreets', {
             params: {
                 city: city,
@@ -26,14 +26,24 @@ export class StatisticsService {
     }
 
     getAllParkingsCities(): Observable<string[]> {
-        return this.http.get<string[]>(this.statisticUrl + '/findAllparkingscities');
+        return this.http.get<string[]>(this.statisticUrl + '/findallparkingscities');
     }
 
-    getBestParkingsByCityAndStreet(city: string, street: string): Observable<ParkingsInfo[]> {
-        return this.http.get<ParkingsInfo[]>(this.statisticUrl + '/findbestparkingsbystreetandcity', {
+    getBestParkingsByCityStreetDate(city: string, street: string, date: number): Observable<Parking[]> {
+        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkings', {
             params: {
                 city: city,
-                street: street
+                street: street,
+                date: date.toString()
+            }
+        });
+    }
+
+    getBestParkingsInTheCityByDate(city: string, date: number): Observable<Parking[]> {
+        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsincity', {
+            params: {
+                city: city,
+                date: date.toString()
             }
         });
     }

@@ -11,13 +11,19 @@ import {
     MatProgressSpinnerModule,
     MatSelectModule
 } from '@angular/material';
-
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
 import {AppNavbarHeaderComponent} from './app-navbar-header/app-navbar-header.component';
 import {ParkingListComponent} from './index/parking-list/parking-list.component';
 import {ParkingService} from './parking.service';
 import {ManagerParkingService} from './manager/manager-parking.service';
+import {
+    SocialLoginModule,
+    AuthServiceConfig,
+    GoogleLoginProvider,
+    FacebookLoginProvider,
+    LinkedinLoginProvider
+} from 'angular5-social-auth';
 
 import {AppRoutingModule} from './app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
@@ -42,7 +48,6 @@ import {ParkingListFilterComponent} from './index/parking-list-filter/parking-li
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
-import {InterceptorService} from './interceptor.service';
 import {AgmCoreModule} from '@agm/core';
 import {TokenStorage} from './auth/token/token-storage';
 import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
@@ -62,12 +67,35 @@ import {FavoritesAddConfigmDialogComponent} from './parking-detail/favorites-add
 import {ParkingMapComponent} from './index/parking-map/parking-map.component';
 import {StatisticComponent} from './statistic/statistic.component';
 import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-statistic.component';
-import {SpotstatisticComponent} from './spotstatistic/spotstatistic.component';
+import {SpotstatisticComponent} from './statistic/spotstatistic/spotstatistic.component';
 import {StatisticsService} from './statistic/statistics.service';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {ExpirationCheckerService} from "./expiration-checker.service";
-import {AuthService} from "./auth/auth.service";
+import {ClientPasswordChangeConfirmationComponent} from './client-profile/client-password-change-confirmation/client-password-change-confirmation.component';
+import {CustomAuthService} from './auth/custom-auth.service';
+import {NonFoundComponent} from './errors/non-found/non-found.component';
+import {InternalServerErrorComponent} from './errors/internal-server-error/internal-server-error.component';
+import {ForbiddenComponent} from './errors/forbidden/forbidden.component';
+import {httpInterceptorProviders} from './interceptors/http-interceptors';
 
+export function getAuthServiceConfigs() {
+    let config = new AuthServiceConfig(
+        [
+            {
+                id: FacebookLoginProvider.PROVIDER_ID,
+                provider: new FacebookLoginProvider('372788403197318')
+            },
+            {
+                id: GoogleLoginProvider.PROVIDER_ID,
+                provider: new GoogleLoginProvider('678627060844-6o8k48ni9re5u397309k27a9j35egi76.apps.googleusercontent.com')
+            },
+            {
+                id: LinkedinLoginProvider.PROVIDER_ID,
+                provider: new LinkedinLoginProvider('865znc216bg618')
+            },
+        ]
+    );
+    return config;
+}
 
 @NgModule({
     declarations: [
@@ -104,11 +132,17 @@ import {AuthService} from "./auth/auth.service";
         FavoritesAddConfigmDialogComponent,
         StatisticComponent,
         ParkingStatisticComponent,
-        SpotstatisticComponent
+        SpotstatisticComponent,
+        NonFoundComponent,
+        InternalServerErrorComponent,
+        ForbiddenComponent,
+        SpotstatisticComponent,
+        ClientPasswordChangeConfirmationComponent,
+        ParkingMapComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyB-ceTN3C1MJaUsAjPSKdXzGr11i-Ob7xU',
+            apiKey: 'AIzaSyAufS5bcmpO5UiWxG_MpcSOrIiRNzbUJus',
             libraries: ['places']
         }),
         AgmDirectionModule,
@@ -130,20 +164,16 @@ import {AuthService} from "./auth/auth.service";
         MatSliderModule,
         MatProgressSpinnerModule,
         MatRadioModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        SocialLoginModule
     ],
     entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent],
     providers: [
         {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ExpirationCheckerService,
-            multi: true
+            provide: AuthServiceConfig,
+            useFactory: getAuthServiceConfigs
         },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: InterceptorService,
-            multi: true
-        },
+        httpInterceptorProviders,
         ParkingService,
         ManagerParkingService,
         ProviderService,
@@ -153,7 +183,7 @@ import {AuthService} from "./auth/auth.service";
         TokenStorage,
         PagerService,
         StatisticsService,
-        AuthService
+        CustomAuthService
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

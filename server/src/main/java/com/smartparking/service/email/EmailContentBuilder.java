@@ -16,4 +16,11 @@ public class EmailContentBuilder {
         context.setVariable("message", message);
         return templateEngine.process("welcomeEmail.html", context);
     }
+
+    public String buildConfirmPassHtml(String userName, String message){
+        Context context = new Context();
+        context.setVariable("userName",userName);
+        context.setVariable("message", message);
+        return templateEngine.process("confirmPasswordEmail.html", context);
+    }
 }

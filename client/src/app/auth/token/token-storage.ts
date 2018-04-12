@@ -12,6 +12,7 @@ export class TokenStorage {
 
     private accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
     private refreshToken = window.localStorage.getItem(REFRESH_TOKEN_KEY);
+    private decodedToken;
 
     constructor() {
     }
@@ -22,6 +23,7 @@ export class TokenStorage {
         window.localStorage.clear();
         this.accessToken = null;
         this.refreshToken = null;
+        this.decodedToken = null;
     }
 
     public saveToken(token: TokenPair) {
@@ -30,6 +32,7 @@ export class TokenStorage {
         window.localStorage.setItem(REFRESH_TOKEN_KEY, token.refreshToken);
         this.accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
         this.refreshToken = window.localStorage.getItem(REFRESH_TOKEN_KEY);
+        this.decodedToken = this.decodeToken();
     }
 
     public getAccessToken(): string {

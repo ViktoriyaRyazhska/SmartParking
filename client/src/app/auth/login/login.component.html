@@ -32,6 +32,17 @@
         </div>
         <span class="registration row offset-3">Do not have an account ? <a routerLink="/registration"> Sign up!</a></span>
     </form>
+    <div class = "row text-ceter mt-3">
+        <div class="col-3 ml-auto">
+            <button (click)="socialSignIn('facebook')" style="background-color:#4267b2;" class="btn">Sign in with Facebook</button>
+        </div>
+        <div class="col-3 ml-auto">
+            <button (click)="socialSignIn('google')" style="background-color:#ea4335;" class="btn">Sign in with Google</button>
+        </div>
+        <div class="col-3 ml-auto">
+            <button (click)="socialSignIn('linkedin')" style="background-color:#0077b5" class="btn">Sign in with Linkedin</button>
+        </div>
+    </div>
 </div>
 
 

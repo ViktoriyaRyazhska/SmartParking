@@ -10,8 +10,8 @@ import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository> implements SpotService {
@@ -45,12 +45,17 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
-    public List<Parking> findBestParkingsByCityAndStreet(String city, String street) {
-        return repository.findBestParkingsByCityAndStreet(city, street);
+    public List<Parking> findBestParkings(String city, String street, Instant date) {
+        return repository.findBestParkings(city, street, date);
+    }
+
+    @Override
+    public List<Parking> findBestParkingsInTheCity(String city, Instant date) {
+        return repository.findBestParkingsInTheCity(city, date);
     }
 
     @Override
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
-        return spotStatisticRepository.getSpotStatistic(id,startDate, endDate);
+        return spotStatisticRepository.getSpotStatistic(id, startDate, endDate);
     }
 }

@@ -5,7 +5,16 @@ import {Router} from "@angular/router";
 import {TokenPair} from "../token/token-pair";
 import {TokenStorage} from "../token/token-storage";
 import {HttpErrorResponse} from "@angular/common/http";
-import {AuthService} from "../auth.service";
+import {CustomAuthService} from "../custom-auth.service";
+import {
+    AuthService,
+    FacebookLoginProvider,
+    GoogleLoginProvider,
+    LinkedinLoginProvider
+} from 'angular5-social-auth';
+import {SocialPrincipal} from "./social-principal";
+import {MatSnackBar} from "@angular/material";
+
 
 @Component({
   selector: 'app-login',
@@ -28,9 +37,11 @@ export class LoginComponent implements OnInit {
     ]);
 
     constructor(private formBuilder: FormBuilder,
-                private authService: AuthService,
+                private authService: CustomAuthService,
                 private router: Router,
-                private tokenStorage: TokenStorage
+                private tokenStorage: TokenStorage,
+                private socialAuthService: AuthService,
+                private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
@@ -40,17 +51,55 @@ export class LoginComponent implements OnInit {
         });
     }
 
+    public socialSignIn(socialPlatform : string) {
+        let socialPlatformProvider;
+        if(socialPlatform == "facebook"){
+            socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+        }else if(socialPlatform == "google"){
+            socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+        }else if(socialPlatform == "linkedin"){
+            socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+        }
+
+        this.socialAuthService.signIn(socialPlatformProvider).then(
+            (userData) => {
+                console.log(socialPlatform + " sign in data : " , userData);
+                console.log(userData.email);
+                this.authService.signInWithSocial(new SocialPrincipal(
+                    userData.id,
+                    userData.email,
+                    userData.name,
+                    userData.provider))
+                    .subscribe((token: TokenPair) => {
+                        this.tokenStorage.saveToken(token);
+                        this.snackBar.open('You are successfully authorized', null, {
+                            duration: 4000
+                        });
+                        this.router.navigate(['/']);
+                    }, (error) => {
+                        if(error instanceof HttpErrorResponse)
+                            this.snackBar.open(error.error.response, null, {
+                                duration: 5000
+                            });
+                    })
+            }
+        );
+    }
 
     login = () => {
         this.loginData = this.loginForm.value;
         this.authService.signIn(this.loginData)
             .subscribe((token: TokenPair)=>{
-                this.tokenStorage.saveToken(token);
-                alert('You are successfully authorized');
-                this.router.navigate(['/']);
+                    this.tokenStorage.saveToken(token);
+                    this.snackBar.open('You are successfully authorized', null, {
+                        duration: 4000
+                    });
+                    this.router.navigate(['/']);
                 }, (error) => {
-                if(error instanceof HttpErrorResponse)
-                alert(error.error.response);
+                    if(error instanceof HttpErrorResponse)
+                        this.snackBar.open(error.error.response, null, {
+                            duration: 5000
+                        });
                 }
             );
     };

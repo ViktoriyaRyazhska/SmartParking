@@ -5,8 +5,8 @@ import com.smartparking.entity.Spot;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.repository.SpotRepository;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
 public interface SpotService extends Service<Spot, Long, SpotRepository> {
 
@@ -20,6 +20,8 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
 
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate);
 
-    List<Parking> findBestParkingsByCityAndStreet(String city, String street);
+    List<Parking> findBestParkings(String city, String street, Instant date);
+
+    List<Parking> findBestParkingsInTheCity(String city, Instant date);
 
 }

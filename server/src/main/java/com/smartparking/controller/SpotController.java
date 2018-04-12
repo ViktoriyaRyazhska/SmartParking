@@ -61,7 +61,7 @@ public class SpotController {
 
 
 
-    @RequestMapping("spotstatistic/{id}")
+    @RequestMapping("parkingdetail/{id}/spotstatistic")
     public ResponseEntity<List<SpotStatisticResponse>> getSpotStatistic(
             @PathVariable Long id,
             @RequestParam("start_time") String startTime,

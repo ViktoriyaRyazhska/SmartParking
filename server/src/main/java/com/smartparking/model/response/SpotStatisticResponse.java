@@ -6,14 +6,14 @@ import lombok.Data;
 public class SpotStatisticResponse {
     private long id;
     private double numberOfHours;
-    private long numberOfEvent;
+    private long numberOfEvents;
 
 
 
     public SpotStatisticResponse(long id, double numberOfHours, long numberOfEvent) {
         this.id = id;
         this.numberOfHours = numberOfHours;
-        this.numberOfEvent = numberOfEvent;
+        this.numberOfEvents = numberOfEvent;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class SpotStatisticResponse {
         return "SpotStatisticResponse{" +
                 "id=" + id +
                 ", numberOfHours=" + numberOfHours +
-                ", numberOfEvent=" + numberOfEvent +
+                ", numberOfEvent=" + numberOfEvents +
                 '}';
     }
 }

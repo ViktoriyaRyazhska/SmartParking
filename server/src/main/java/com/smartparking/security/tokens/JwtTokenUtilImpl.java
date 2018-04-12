@@ -28,7 +28,6 @@ public class JwtTokenUtilImpl implements TokenUtil {
     private Long refreshTokenExpiration;
 
 
-
     public String getUsernameFromToken(String token) {
         return (String) getAllClaimsFromToken(token).get(CLAIM_USERNAME_KEY);
     }
@@ -94,15 +93,6 @@ public class JwtTokenUtilImpl implements TokenUtil {
     public TokenPair generateTokenPair(UserDetails user) {
         return new TokenPair(generateAccessToken(user), generateRefreshToken(user));
     }
-
-
-
-
-
-
-
-
-
 
 
 }
