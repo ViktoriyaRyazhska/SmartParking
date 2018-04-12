@@ -201,10 +201,13 @@ drawEventGraphic(): void {
   this.endTime.setMonth(this.route.snapshot.queryParams["end_month"]);
   this.endTime.setFullYear(this.route.snapshot.queryParams["end_year"]);
   console.log('this.minDate ='+this.startTime.toString() );
-  console.log('this.maxDate ='+this.maxDate.toString() );
-   this.parkingService.getSpotStatistic(id,
+  console.log('this.maxDate ='+this.endTime.toString() );
+  this.parkingService.getSpotStatistic(id,
     this.minDate.getTime().toString(), this.maxDate.getTime().toString())
     .subscribe(statistic => this.statistic = statistic);
+  /*  this.parkingService.getSpotStatistic(id,
+      this.startTime.getTime().toString(), this.endTime.getTime().toString())
+      .subscribe(statistic => this.statistic = statistic);*/
     
 }
 
