@@ -1,6 +1,6 @@
 package com.smartparking.publisher;
 
-import com.smartparking.config.constants.RabbitConstants;
+import com.smartparking.config.properties.RabbitProperties;
 import com.smartparking.entity.Parking;
 import com.smartparking.model.event.ParkingAddEvent;
 import com.smartparking.model.event.ParkingDeleteEvent;
@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ParkingEventPublisher {
+
+    @Autowired
+    private RabbitProperties rabbitProperties;
 
     @Autowired
     private ParkingService parkingService;
@@ -39,16 +42,16 @@ public class ParkingEventPublisher {
 
     public void publishAdd(Parking parking) {
         ParkingAddEvent event = new ParkingAddEvent(parking.getId(), parking.getToken());
-        amqpTemplate.convertAndSend(RabbitConstants.PARKING_ADD_QUEUE, event);
+        amqpTemplate.convertAndSend(rabbitProperties.getParkingAddQueueName(), event);
     }
 
     public void publishDelete(Parking parking) {
         ParkingDeleteEvent event = new ParkingDeleteEvent(parking.getId());
-        amqpTemplate.convertAndSend(RabbitConstants.PARKING_DELETE_QUEUE, event);
+        amqpTemplate.convertAndSend(rabbitProperties.getParkingDeleteQueueName(), event);
     }
 
     public void publishTokenChange(Parking parking) {
         ParkingTokenChangeEvent event = new ParkingTokenChangeEvent(parking.getId(), parking.getToken());
-        amqpTemplate.convertAndSend(RabbitConstants.PARKING_TOKEN_CHANGE_QUEUE, event);
+        amqpTemplate.convertAndSend(rabbitProperties.getParkingTokenChangeQueueName(), event);
     }
 }

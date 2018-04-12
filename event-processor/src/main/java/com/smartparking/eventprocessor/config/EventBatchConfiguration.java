@@ -52,7 +52,7 @@ public class EventBatchConfiguration extends DefaultBatchConfigurer {
     private Job eventSendJob;
 
     @Scheduled(cron = "*/1 * * * * *")
-    public void launchVerifiedEventJob() {
+    public void launchEventSendJob() {
         try {
             jobLauncher.run(eventSendJob, new JobParameters());
         } catch (JobExecutionAlreadyRunningException | JobRestartException

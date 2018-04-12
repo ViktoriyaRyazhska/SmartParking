@@ -1,6 +1,5 @@
 package com.smartparking.eventprocessor.listener;
 
-import com.smartparking.eventprocessor.config.constants.RabbitConstants;
 import com.smartparking.eventprocessor.model.event.ParkingAddEvent;
 import com.smartparking.eventprocessor.model.event.ParkingDeleteEvent;
 import com.smartparking.eventprocessor.model.event.ParkingTokenChangeEvent;
@@ -17,7 +16,7 @@ public class ParkingEventListener {
     @Autowired
     private EntityViewService entityViewService;
 
-    @RabbitListener(queues = RabbitConstants.PARKING_DELETE_QUEUE)
+    @RabbitListener(queues = "${eventprocessor.rabbit.parking-delete-queue-name}")
     public void consumeDelete(ParkingDeleteEvent event) {
         try {
             entityViewService.deleteParking(event.getParkingId());
@@ -28,7 +27,7 @@ public class ParkingEventListener {
         }
     }
 
-    @RabbitListener(queues = RabbitConstants.PARKING_ADD_QUEUE)
+    @RabbitListener(queues = "${eventprocessor.rabbit.parking-add-queue-name}")
     public void consumeAdd(ParkingAddEvent event) {
         try {
             entityViewService.addParking(event.getParkingId(), event.getParkingToken());
@@ -39,7 +38,7 @@ public class ParkingEventListener {
         }
     }
 
-    @RabbitListener(queues = RabbitConstants.PARKING_TOKEN_CHANGE_QUEUE)
+    @RabbitListener(queues = "${eventprocessor.rabbit.parking-token-change}")
     public void consumeTokenChange(ParkingTokenChangeEvent event) {
         log.info("Parking token changed: " + event.getParkingId());
         try {

@@ -1,6 +1,6 @@
 package com.smartparking.config;
 
-import com.smartparking.config.constants.RabbitConstants;
+import com.smartparking.config.properties.RabbitProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -19,6 +19,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 @Configuration
 public class RabbitConfiguration {
+
+    @Autowired
+    private RabbitProperties rabbitProperties;
 
     @Bean
     public AmqpAdmin amqpAdmin(@Autowired ConnectionFactory connectionFactory) {
@@ -39,27 +42,27 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Queue spotDeleteQueue() {
-        return new Queue(RabbitConstants.SPOT_DELETE_QUEUE);
+    public Queue spotAddQueue() {
+        return new Queue(rabbitProperties.getParkingAddQueueName());
     }
 
     @Bean
-    public Queue spotAddQueue() {
-        return new Queue(RabbitConstants.SPOT_ADD_QUEUE);
+    public Queue spotDeleteQueue() {
+        return new Queue(rabbitProperties.getSpotDeleteQueueName());
     }
 
     @Bean
     public Queue parkingAddQueue() {
-        return new Queue(RabbitConstants.PARKING_ADD_QUEUE);
+        return new Queue(rabbitProperties.getParkingAddQueueName());
     }
 
     @Bean
     public Queue parkingDeleteQueue() {
-        return new Queue(RabbitConstants.PARKING_DELETE_QUEUE);
+        return new Queue(rabbitProperties.getParkingDeleteQueueName());
     }
 
     @Bean
     public Queue parkingTokenChangeQueue() {
-        return new Queue(RabbitConstants.PARKING_TOKEN_CHANGE_QUEUE);
+        return new Queue(rabbitProperties.getParkingTokenChangeQueueName());
     }
 }

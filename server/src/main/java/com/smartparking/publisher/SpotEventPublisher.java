@@ -1,6 +1,6 @@
 package com.smartparking.publisher;
 
-import com.smartparking.config.constants.RabbitConstants;
+import com.smartparking.config.properties.RabbitProperties;
 import com.smartparking.entity.Spot;
 import com.smartparking.model.event.SpotAddEvent;
 import com.smartparking.model.event.SpotDeleteEvent;
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpotEventPublisher {
+
+    @Autowired
+    private RabbitProperties rabbitProperties;
 
     @Autowired
     private AmqpTemplate amqpTemplate;
@@ -22,11 +25,11 @@ public class SpotEventPublisher {
 
     public void publishAdd(Spot spot) {
         SpotAddEvent event = new SpotAddEvent(spot.getId(), spot.getParking().getId());
-        amqpTemplate.convertAndSend(RabbitConstants.SPOT_ADD_QUEUE, event);
+        amqpTemplate.convertAndSend(rabbitProperties.getSpotAddQueueName(), event);
     }
 
     public void publishDelete(Spot spot) {
         SpotDeleteEvent event = new SpotDeleteEvent(spot.getId());
-        amqpTemplate.convertAndSend(RabbitConstants.SPOT_DELETE_QUEUE, event);
+        amqpTemplate.convertAndSend(rabbitProperties.getSpotDeleteQueueName(), event);
     }
 }

@@ -1,6 +1,5 @@
 package com.smartparking.eventprocessor.listener;
 
-import com.smartparking.eventprocessor.config.constants.RabbitConstants;
 import com.smartparking.eventprocessor.model.event.SpotAddEvent;
 import com.smartparking.eventprocessor.model.event.SpotDeleteEvent;
 import com.smartparking.eventprocessor.service.EntityViewService;
@@ -16,7 +15,7 @@ public class SpotEventListener {
     @Autowired
     private EntityViewService entityViewService;
 
-    @RabbitListener(queues = RabbitConstants.SPOT_ADD_QUEUE)
+    @RabbitListener(queues = "${eventprocessor.rabbit.spot-add-queue-name}")
     public void consumeAdd(SpotAddEvent event) {
         try {
             entityViewService.addSpot(event.getSpotId(), event.getParkingId());
@@ -26,7 +25,7 @@ public class SpotEventListener {
         }
     }
 
-    @RabbitListener(queues = RabbitConstants.SPOT_DELETE_QUEUE)
+    @RabbitListener(queues = "${eventprocessor.rabbit.spot-delete-queue-name}")
     public void consumeDelete(SpotDeleteEvent event) {
         try {
             entityViewService.deleteSpot(event.getSpotId());
