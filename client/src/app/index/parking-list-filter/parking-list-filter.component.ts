@@ -41,11 +41,16 @@ export class ParkingListFilterComponent implements OnInit {
         this.locationField.valueChanges.subscribe(location => {
             this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value);
             this.valueChangesSubject.next(this.internalValue);
+            localStorage.setItem('location', location.toLatLng().toString());
         });
         this.priceRangeField.valueChanges.subscribe(priceRange => {
             if (this.locationField.value) {
                 this.internalValue = new ParkingListFilter(this.locationField.value, priceRange, this.radiusField.value);
                 this.valueChangesSubject.next(this.internalValue);
+                if (priceRange.min != undefined)
+                    localStorage.setItem('minValue', priceRange.min.toString());
+                if (priceRange.max != undefined)
+                    localStorage.setItem('maxValue', priceRange.max.toString());
             }
         });
         this.radiusField.valueChanges.subscribe(radius => {
@@ -53,6 +58,7 @@ export class ParkingListFilterComponent implements OnInit {
                 this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, radius);
                 this.valueChangesSubject.next(this.internalValue);
             }
+            localStorage.setItem('radius', radius.toString());
         });
     }
 

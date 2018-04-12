@@ -31,7 +31,7 @@ export class ProviderListComponent implements OnInit {
             .subscribe(params => {
                 this.providerFilter = new ProviderListFilterParameters();
                 this.providerFilter.active = params['active'];
-                this.providerFilter.companyName= params['companyName'];
+                this.providerFilter.companyName = params['companyName'];
             });
         this.providerService.getAll(this.providerFilter)
             .subscribe(providers => this.providers = providers);
