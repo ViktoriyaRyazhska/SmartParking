@@ -38,7 +38,7 @@ public class ParkingEventListener {
         }
     }
 
-    @RabbitListener(queues = "${eventprocessor.rabbit.parking-token-change}")
+    @RabbitListener(queues = "${eventprocessor.rabbit.parking-token-change-queue-name}")
     public void consumeTokenChange(ParkingTokenChangeEvent event) {
         log.info("Parking token changed: " + event.getParkingId());
         try {

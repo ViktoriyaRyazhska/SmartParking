@@ -12,9 +12,9 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @Slf4j
-@SpringBootApplication
 @EnableWebMvc
 @EnableConfigurationProperties
+@SpringBootApplication
 public class EventProcessorApplication {
 
     @Autowired
