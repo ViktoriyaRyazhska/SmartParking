@@ -11,6 +11,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Event {
+
     private Long spotId;
     private EventType eventType;
     private Instant timestamp;
