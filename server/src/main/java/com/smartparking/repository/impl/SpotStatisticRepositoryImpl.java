@@ -20,6 +20,7 @@ public class SpotStatisticRepositoryImpl implements SpotStatisticRepository {
     @Override
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
         Date startTime = new Date(startDate);
+
         Date endTime = new Date(endDate);
         String sql = "SELECT  spot.id  \n" +
                 ",(sum(CASE WHEN event.eventType = 1 THEN timestamp ELSE 0 END) \n" +

@@ -83,7 +83,7 @@ public class EventBatchConfiguration extends DefaultBatchConfigurer {
         return launcher;
     }
 
-    @Scheduled(cron = "*/1 * * * * *")
+    @Scheduled(cron = "*/5 * * * * *")
     public void launchEventSendJob() {
         try {
             jobLauncher.run(eventSendJob, new JobParameters());

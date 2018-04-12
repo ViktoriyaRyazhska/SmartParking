@@ -25,10 +25,12 @@ export class SpotstatisticComponent implements OnInit {
   statistic: SpotStatistic[];
 
  
-  thirtySecInterval: number = 3000;
+  thirtySecInterval: number = 30000;
   favoriteNameInputHide: boolean = true;
   minDate: Date;
   maxDate: Date;
+  startTime: Date;
+  endTime: Date;
   tempDate: Date;
   minMonth: number;
   maxMonth: number;
@@ -50,19 +52,13 @@ export class SpotstatisticComponent implements OnInit {
     private parkingService: ParkingService,
    
   ) { 
-  this.minDate = new Date();
-  this.minDate.setDate(this.minDate.getDate()-7);
-  this.maxDate = new Date();
-  this.minMonth = this.minDate.getMonth()+1;
-  this.maxMonth = this.maxDate.getMonth()+1;
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate()-7);
+    this.maxDate = new Date();
+    this.minMonth = this.minDate.getMonth()+1;
+    this.maxMonth = this.maxDate.getMonth()+1;
 
-  const id = parseInt(this.route.snapshot.paramMap.get('id'));
-  this.router.navigate(['parkingdetail/'+id+'/spotstatistic'],
-  { 
-  queryParams:  { start_time: this.start_date =this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear(),
-   end_time:this.maxDate.getDate().toString()+this.maxMonth.toString()+this.maxDate.getFullYear()}
-   }
-  );
+
   
     
     }
@@ -71,16 +67,16 @@ export class SpotstatisticComponent implements OnInit {
 
 
  ngOnInit() {
-   
+  
     
    this.getSpotStatistic();
   this.fillArraysToGraphic();
    setInterval(this.refresh(), this.thirtySecInterval);
+
  }
 
  refresh(): void {
-      this.getSpotStatistic();
-      
+        this.getSpotStatistic();     
  }
 
 
@@ -88,20 +84,16 @@ export class SpotstatisticComponent implements OnInit {
  {
   this.numbers= []
   this.statistic.forEach( (element) => {
-    console.log(element.id);
       this.numbers.push(element.id);
-      
-  });
+     });
   this.hours= []
   this.statistic.forEach( (element) => {
-     console.log(element.numberOfHours);
      this.hours.push(element.numberOfHours);
      });
   this.hours.push(0);  
   this.events= []
   this.statistic.forEach( (element) => {
-      console.log(element.numberOfEvents);
-     this.events.push(element.numberOfEvents);
+      this.events.push(element.numberOfEvents);
      });
   this.events.push(0);  
 
@@ -188,13 +180,34 @@ drawEventGraphic(): void {
  }
 
  getSpotStatistic(): void{
-  const id = parseInt(this.route.snapshot.paramMap.get('id'));
-  const str = this.route.snapshot.queryParams["start"];
-  console.log('str ='+str );
-  this.minDate.getMilliseconds();
+  const id = parseInt(this.route.snapshot.paramMap.get('id')); 
+  this.router.navigate(['parkingdetail/'+id+'/spotstatistic'],
+ { 
+   queryParams:  { start_day:this.minDate.getDate(),
+     start_month: this.minDate.getMonth() ,
+     start_year:this.minDate.getFullYear(),
+     end_day:this.maxDate.getDate(),
+     end_month: this.maxDate.getMonth() ,
+     end_year:this.maxDate.getFullYear()
+}
+  }
+ );
+  this.startTime = new Date();
+  this.endTime = new Date();
+  this.startTime.setDate(this.route.snapshot.queryParams["start_day"]);
+  this.startTime.setMonth(this.route.snapshot.queryParams["start_month"]);
+  this.startTime.setFullYear(this.route.snapshot.queryParams["start_year"]);
+  this.endTime.setDate(this.route.snapshot.queryParams["end_day"]);
+  this.endTime.setMonth(this.route.snapshot.queryParams["end_month"]);
+  this.endTime.setFullYear(this.route.snapshot.queryParams["end_year"]);
+  console.log('this.minDate ='+this.startTime.toString() );
+  console.log('this.maxDate ='+this.endTime.toString() );
   this.parkingService.getSpotStatistic(id,
     this.minDate.getTime().toString(), this.maxDate.getTime().toString())
     .subscribe(statistic => this.statistic = statistic);
+  /*  this.parkingService.getSpotStatistic(id,
+      this.startTime.getTime().toString(), this.endTime.getTime().toString())
+      .subscribe(statistic => this.statistic = statistic);*/
     
 }
 
@@ -202,24 +215,17 @@ drawEventGraphic(): void {
 
 
  addItem() {
-  this.route.queryParams.subscribe(params => {
-    this.start_date =this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
-    this.end_date = this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
-   });
-   if(this.minDate > this.maxDate)
+ 
+  if(this.minDate > this.maxDate)
    {
     this.tempDate = this.minDate;
     this.minDate = this.maxDate;
     this.maxDate = this.tempDate;
    }
-  
-   
+
   this.getSpotStatistic(); 
-  const id = parseInt(this.route.snapshot.paramMap.get('id'));  
-  this.router.navigate(['parkingdetail/'+id+'/spotstatistic'],
-  { queryParams:  { start_time: this.start_date =this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear(),
-   end_time:this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()} }
-  );
+ 
+  
  
 }
 
