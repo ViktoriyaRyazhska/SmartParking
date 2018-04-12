@@ -51,14 +51,10 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     findParkingsStreetsFromInput(input: string) {
-        if (input != '') {
-            this.statisticService.getParkingsStreetsByAnyMatching(this.selectedCity, input)
-                .subscribe(parkingsStreets => {
-                    this.parkingsStreets = parkingsStreets;
-                });
-        } else {
-            this.selectedStreet = '';
-        }
+        this.statisticService.getParkingsStreetsByAnyMatching(this.selectedCity, input)
+            .subscribe(parkingsStreets => {
+                this.parkingsStreets = parkingsStreets;
+            });
     }
 
     findAllParkingsCities() {
@@ -75,7 +71,7 @@ export class ParkingStatisticComponent implements OnInit {
             });
     }
 
-    clearCurrentData() {
+    clearStreetAndFindTheBestParkingsInTheCity() {
         this.selectedStreet = '';
         this.findBestParkingsInTheCity();
     }
@@ -91,7 +87,6 @@ export class ParkingStatisticComponent implements OnInit {
     refreshDate() {
         this.calculatedDate = new Date();
     }
-
 
 
 }

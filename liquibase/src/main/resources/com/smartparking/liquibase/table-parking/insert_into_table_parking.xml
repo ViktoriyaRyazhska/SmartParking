@@ -5,14 +5,16 @@
 
     <changeSet author="Oleksiy" id="201803211515" dbms="MYSQL">
         <sql>
-            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.827729,23.951374,50.4,'qwert','Lviv','Horodotska','224',2);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id)
+            values(49.827729,23.951374,50.4,'qwert','Lviv','Horodotska','224',1);
         </sql>
         <comment>Inserting into table parking</comment>
     </changeSet>
 
     <changeSet author="Oleksiy" id="201803211605" dbms="MYSQL">
         <sql>
-            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.831000, 23.968800,45.4,'tgbnm','Lviv','Horodotska','249',1);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.831000,
+            23.968800,45.4,'tgbnm','Lviv','Horodotska','249',2);
         </sql>
         <comment>Inserting into table parking</comment>
     </changeSet>
@@ -20,7 +22,8 @@
 
     <changeSet author="Oleksiy" id="201803211607" dbms="MYSQL">
         <sql>
-            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.822979, 23.974334,10.4,'daer','Lviv','Lubinska','98',3);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.822979,
+            23.974334,10.4,'daer','Lviv','Lubinska','98',3);
         </sql>
         <comment>Inserting into table parking</comment>
     </changeSet>
@@ -28,7 +31,22 @@
 
     <changeSet author="Oleksiy" id="201803211606" dbms="MYSQL">
         <sql>
-            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.807367, 23.982630,30.25,'visc','Lviv','Kulparkivska','135',4);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.807367,
+            23.982630,30.25,'visc','Lviv','Kulparkivska','135',4);
+        </sql>
+        <comment>Inserting into table parking</comment>
+    </changeSet>
+
+    <changeSet author="Andriy" id="201803211705" dbms="MYSQL">
+        <sql>
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(51.807367,
+            29.982630,30.25,'dfdl','Ternopil','Shevchenka','7',1);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(51.307367,
+            29.182630,30.25,'erioj','Ternopil','Franka','10',2);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(59.907367,
+            31.082630,30.25,'jioere','Kyiv','Khreschatyk','23',3);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(59.807367,
+            31.382630,30.25,'ccj4','Kyiv','Vokzalna','7',4);
         </sql>
         <comment>Inserting into table parking</comment>
     </changeSet>

@@ -15,11 +15,20 @@ span {
 
 .mat-option {
     color: darkblue;
-
 }
 
 mat-select {
     font-size: 0.9em;
 }
+
+#city {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/*#city:hover::after {*/
+    /*color: #6610f2;*/
+    /*content: " (by all streets) ";*/
+/*}*/
 
 

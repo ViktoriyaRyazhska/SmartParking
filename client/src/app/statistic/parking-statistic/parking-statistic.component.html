@@ -38,7 +38,7 @@
         <mat-divider style="border-color: purple;"></mat-divider>
         <mat-card class="card">
             <h6 [(ngModel)]="selectedStreet" [(ngModel)]="selectedCity" ngDefaultControl>Find the most popular parking
-                in <span>{{selectedCity}}</span> on the street: <span
+                in <span matTooltip="Click to see the statistic by all streets!" id ="city" (click)="clearStreetAndFindTheBestParkingsInTheCity()">{{selectedCity}}</span> on the street: <span
                         *ngIf="selectedStreet ==''">--not selected--</span><span>{{selectedStreet}}</span> for the
                 last <span>{{selectedNumberOfDays}}</span></h6>
             <div class="row">
@@ -46,7 +46,7 @@
                 <mat-form-field>
                     <mat-select [(value)]="selectedCity" placeholder="change city">
                         <mat-option *ngFor="let parkingsCity of parkingsCities" [value]="parkingsCity"
-                                    (click)="clearCurrentData()">
+                                    (click)="clearStreetAndFindTheBestParkingsInTheCity()">
                             {{ parkingsCity }}
                         </mat-option>
                     </mat-select>
