@@ -27,13 +27,16 @@ export class ProviderListComponent implements OnInit {
     }
 
     getProviders(): void {
-        this.router.queryParams
-            .subscribe(params => {
-                this.providerFilter = new ProviderListFilterParameters();
-                this.providerFilter.active = params['active'];
-                this.providerFilter.companyName = params['companyName'];
-            });
-        this.providerService.getAll(this.providerFilter)
+        if (this.router.queryParams) {
+            console.log("SSSSSSSSSSSSs")
+            this.router.queryParams
+                .subscribe(params => {
+                    this.providerFilter = new ProviderListFilterParameters();
+                    this.providerFilter.active = params['active'];
+                    this.providerFilter.companyName = params['companyName'];
+                });
+        }
+        this.providerService.getAllByFilter(this.providerFilter)
             .subscribe(providers => this.providers = providers);
     }
 

@@ -16,10 +16,21 @@ export class ProviderService {
     constructor(private http: HttpClient) {
     }
 
-    getAll(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
-        let params = {
-            providerFilter: JSON.stringify(providerFilter)
-        };
+    getAllByFilter(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
+        let params;
+        if ((providerFilter.companyName && providerFilter.active) != undefined) {
+            params = {
+                providerFilter: JSON.stringify(providerFilter)
+            };
+        } else {
+            providerFilter.active = '';
+            providerFilter.companyName = '';
+            params = {
+                providerFilter: JSON.stringify(providerFilter)
+            };
+        }
+
+
         return this.http.get<Provider[]>(this.providerUrl, {params: JSON.parse(params.providerFilter)});
     }
 
