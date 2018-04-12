@@ -26,9 +26,15 @@ mat-select {
     cursor: pointer;
 }
 
-/*#city:hover::after {*/
-    /*color: #6610f2;*/
-    /*content: " (by all streets) ";*/
+.pagination {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*.filter {*/
+    /*position: fixed;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*!*max-height: 15%;*!*/
 /*}*/
-
-

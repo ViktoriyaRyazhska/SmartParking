@@ -131,13 +131,10 @@
     <changeSet author="Andriy" id="201803222122" dbms="MYSQL">
         <sql>
             INSERT INTO spot (parking_id) values(7);
-        </sql>
-        <comment>Inserting into table spot</comment>
-    </changeSet>
-
-    <changeSet author="Andriy" id="201803222123" dbms="MYSQL">
-        <sql>
             INSERT INTO spot (parking_id) values(8);
+            INSERT INTO spot (parking_id) values(9);
+            INSERT INTO spot (parking_id) values(10);
+            INSERT INTO spot (parking_id) values(11);
         </sql>
         <comment>Inserting into table spot</comment>
     </changeSet>

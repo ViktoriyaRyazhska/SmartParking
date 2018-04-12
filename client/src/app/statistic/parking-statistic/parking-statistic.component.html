@@ -6,7 +6,7 @@
 
     <div class="col-md-12">
         <ul>
-            <div *ngFor="let parking of parkings">
+            <div *ngFor="let parking of pagedParkingItems">
                 <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
                     <mat-card-header>
                         <div mat-card-avatar class="example-header-image">
@@ -30,6 +30,20 @@
                     </mat-card-actions>
                 </mat-card>
                 <hr/>
+            </div>
+            <div class="pagination" *ngIf="allParkings>5">
+                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a class="page-link" (click)="setPage(1)">First</a>
+                    </li>
+                    <li class="page-item" *ngFor="let page of pager.pages"
+                        [ngClass]="{active:pager.currentPage === page}">
+                        <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+                    </li>
+                </ul>
             </div>
         </ul>
     </div>

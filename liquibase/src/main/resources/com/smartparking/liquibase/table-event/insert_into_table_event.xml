@@ -162,6 +162,9 @@
             INSERT INTO event (event_marker,spot_id,timestamp) values(0,18,'2018-04-01 06:00:04.777');
             INSERT INTO event (event_marker,spot_id,timestamp) values(0,18,'2018-04-01 06:00:04.777');
             INSERT INTO event (event_marker,spot_id,timestamp) values(1,17,'2018-04-01 09:20:04.777');
+            INSERT INTO event (event_marker,spot_id,timestamp) values(1,19,'2018-04-01 09:20:04.777');
+            INSERT INTO event (event_marker,spot_id,timestamp) values(1,20,'2018-04-01 09:20:04.777');
+            INSERT INTO event (event_marker,spot_id,timestamp) values(1,21,'2018-04-01 09:20:04.777');
         </sql>
         <comment>Inserting into table event</comment>
     </changeSet>
