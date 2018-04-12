@@ -12,6 +12,8 @@ import org.springframework.batch.core.configuration.annotation.DefaultBatchConfi
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.explore.JobExplorer;
+import org.springframework.batch.core.explore.support.SimpleJobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -25,7 +27,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Slf4j
 @Configuration
@@ -51,6 +52,37 @@ public class EventBatchConfiguration extends DefaultBatchConfigurer {
     @Autowired
     private Job eventSendJob;
 
+    @Bean
+    public ResourcelessTransactionManager transactionManager() {
+        return new ResourcelessTransactionManager();
+    }
+
+    @Bean
+    public MapJobRepositoryFactoryBean mapJobRepositoryFactory(ResourcelessTransactionManager txManager)
+            throws Exception {
+        MapJobRepositoryFactoryBean factory = new MapJobRepositoryFactoryBean(txManager);
+        factory.afterPropertiesSet();
+        return factory;
+    }
+
+    @Bean
+    public JobRepository jobRepository(MapJobRepositoryFactoryBean factory) throws Exception {
+        return factory.getObject();
+    }
+
+    @Bean
+    public JobExplorer jobExplorer(MapJobRepositoryFactoryBean factory) {
+        return new SimpleJobExplorer(factory.getJobInstanceDao(), factory.getJobExecutionDao(),
+                factory.getStepExecutionDao(), factory.getExecutionContextDao());
+    }
+
+    @Bean
+    public SimpleJobLauncher jobLauncher(JobRepository jobRepository) {
+        SimpleJobLauncher launcher = new SimpleJobLauncher();
+        launcher.setJobRepository(jobRepository);
+        return launcher;
+    }
+
     @Scheduled(cron = "*/1 * * * * *")
     public void launchEventSendJob() {
         try {
@@ -70,22 +102,5 @@ public class EventBatchConfiguration extends DefaultBatchConfigurer {
                 .allowStartIfComplete(true)
                 .build();
         return jobBuilderFactory.get("eventSendJob").flow(step).build().build();
-    }
-
-    @Bean
-    JobLauncher jobLauncher(@Autowired JobRepository jobRepository) {
-        SimpleJobLauncher launcher = new SimpleJobLauncher();
-        launcher.setJobRepository(jobRepository);
-        return launcher;
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        return new ResourcelessTransactionManager();
-    }
-
-    @Bean
-    JobRepository jobRepository(@Autowired PlatformTransactionManager transactionManager) throws Exception {
-        return new MapJobRepositoryFactoryBean(transactionManager).getObject();
     }
 }
