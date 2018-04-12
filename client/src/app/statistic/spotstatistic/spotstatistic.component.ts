@@ -5,7 +5,9 @@ import {Location} from '@angular/common';
 import {ParkingService} from "../../parking.service";
 import {SpotStatistic} from '../../model/view/spotstatistic';
 import {Observable} from 'rxjs/Observable';
+import {HttpClient, HttpErrorResponse, HttpResponse,HttpParams} from '@angular/common/http';
 import {Chart} from 'chart.js';
+
 
 
 
@@ -53,15 +55,16 @@ export class SpotstatisticComponent implements OnInit {
   this.maxDate = new Date();
   this.minMonth = this.minDate.getMonth()+1;
   this.maxMonth = this.maxDate.getMonth()+1;
-  this.route.queryParams.subscribe(params => {
-  this.start_date = params[this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear()];
-  this.end_date = params[this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()];
-});
-  
-   /* this.param1 = params['param1'];
-    this.param2 = params['param2'];*/
 
+  const id = parseInt(this.route.snapshot.paramMap.get('id'));
+  this.router.navigate(['parkingdetail/'+id+'/spotstatistic'],
+  { 
+  queryParams:  { start_time: this.start_date =this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear(),
+   end_time:this.maxDate.getDate().toString()+this.maxMonth.toString()+this.maxDate.getFullYear()}
+   }
+  );
   
+    
     }
 
    
@@ -73,7 +76,6 @@ export class SpotstatisticComponent implements OnInit {
    this.getSpotStatistic();
   this.fillArraysToGraphic();
    setInterval(this.refresh(), this.thirtySecInterval);
-  // this.drawGraphic();
  }
 
  refresh(): void {
@@ -187,7 +189,8 @@ drawEventGraphic(): void {
 
  getSpotStatistic(): void{
   const id = parseInt(this.route.snapshot.paramMap.get('id'));
-  
+  const str = this.route.snapshot.queryParams["start"];
+  console.log('str ='+str );
   this.minDate.getMilliseconds();
   this.parkingService.getSpotStatistic(id,
     this.minDate.getTime().toString(), this.maxDate.getTime().toString())
@@ -202,18 +205,22 @@ drawEventGraphic(): void {
   this.route.queryParams.subscribe(params => {
     this.start_date =this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear();
     this.end_date = this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear();
- //   this.start_date = params['param1'];//"[this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear()]";
-    //this.end_date = params['param2'];//[this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()];
-  });
+   });
    if(this.minDate > this.maxDate)
    {
     this.tempDate = this.minDate;
     this.minDate = this.maxDate;
     this.maxDate = this.tempDate;
    }
+  
    
-  this.getSpotStatistic();   
-   
+  this.getSpotStatistic(); 
+  const id = parseInt(this.route.snapshot.paramMap.get('id'));  
+  this.router.navigate(['parkingdetail/'+id+'/spotstatistic'],
+  { queryParams:  { start_time: this.start_date =this.minDate.getDate()+"/"+ this.minMonth+"/"+this.minDate.getFullYear(),
+   end_time:this.maxDate.getDate()+"/"+this.maxMonth+"/"+this.maxDate.getFullYear()} }
+  );
+ 
 }
 
 
