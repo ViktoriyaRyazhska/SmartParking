@@ -1,5 +1,5 @@
-<agm-map [latitude]="49.83826"
-         [longitude]="24.02324"
+<agm-map [latitude]="lat"
+         [longitude]="lng"
          [fullscreenControl]="true"
          [zoom]="10">
     <agm-direction *ngIf="dir" [drivingOptions]="dir.drivingOptions" [travelMode]="dir.travelMode" [origin]="dir.origin"

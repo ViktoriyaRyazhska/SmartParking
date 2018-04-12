@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {ParkingService} from '../../parking.service';
 
@@ -44,10 +44,6 @@ export class ParkingMapComponent implements OnInit {
             },
             travelMode: 'DRIVING'
         };
-    }
-
-    round(floatNumber: number): number {
-        return Math.floor(floatNumber) / 1000;
     }
 
 }

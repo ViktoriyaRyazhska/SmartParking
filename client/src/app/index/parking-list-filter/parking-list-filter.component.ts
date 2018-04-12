@@ -3,7 +3,6 @@ import {Location, LocationFieldComponent} from './location-field/location-field.
 import {FormGroup} from '@angular/forms';
 import {RadiusFieldComponent} from './radius-field/radius-field.component';
 import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
-import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
 @Component({
@@ -80,15 +79,4 @@ export class ParkingListFilter {
         this.radius = radius;
     }
 
-    public deriveLocation(location: Location): ParkingListFilter {
-        return new ParkingListFilter(location, this.priceRange, this.radius);
-    }
-
-    public derivePriceRange(priceRange: PriceRange): ParkingListFilter {
-        return new ParkingListFilter(this.location, priceRange, this.radius);
-    }
-
-    public deriveRadius(radius: number): ParkingListFilter {
-        return new ParkingListFilter(this.location, this.priceRange, radius);
-    }
 }
