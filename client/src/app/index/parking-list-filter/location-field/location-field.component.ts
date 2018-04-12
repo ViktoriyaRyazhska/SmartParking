@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, ValidatorFn} from '@angular/forms';
+import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormControl, FormControlName, ValidatorFn} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {MapsAPILoader} from '@agm/core';
 import {IpLocation, IpLocationService} from '../../../service/ip-location.service';
 import {Subject} from 'rxjs/Subject';
+import {MatAutocomplete, MatOption, MatSlider} from '@angular/material';
 
 @Component({
     selector: 'app-parking-list-filter-location-field',
@@ -35,7 +36,7 @@ export class LocationFieldComponent implements OnInit {
     private readonly valueChangesSubject = new Subject<Location>();
 
     public readonly valueChanges = this.valueChangesSubject.asObservable();
-
+    public name: string;
     private internalValue: Location;
 
     constructor(private mapsAPILoader: MapsAPILoader,
@@ -53,7 +54,9 @@ export class LocationFieldComponent implements OnInit {
         this.initMapsAPI().then(() => {
             this.requestGeolocation();
         });
+
     }
+    setValue() { this.name = 'Nancy'; }
 
     public onLocationInputBlur(): void {
         if (!this.selectedItem) {
@@ -95,7 +98,7 @@ export class LocationFieldComponent implements OnInit {
                 position => this.onGeolocationSuccess(position),
                 error => this.onGeolocationError(error),
                 <PositionOptions> {
-                    timeout: 1000,
+                    timeout: 10000,
                     enableHighAccuracy: false
                 }
             );

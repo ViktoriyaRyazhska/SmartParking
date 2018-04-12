@@ -92,12 +92,10 @@ export class IndexComponent implements OnInit {
                             var destination = distances.destination_addresses[j];
                             if (distances.rows[0].elements[j].status == 'OK') {
                                 let distance = distances.rows[i].elements[j].distance.text;
-                                console.log(distance);
                                 distance = distance.substr(0, distance.indexOf(' '));
                                 Number.parseInt(distance);
                                 distance *= MiToKm;
                                 parking.distance = Math.floor(distance * 10) / 10;
-                                console.log(parking.distance)
                             } else {
                                 console.log(destination + ' is not reachable by land from ' + origin);
                             }
