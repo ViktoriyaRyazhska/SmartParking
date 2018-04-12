@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {ProviderRequest} from './add-provider/provider-request';
 import {ProviderListFilterParameters} from '../../model/filter/provider-list-filter-parameters';
 import {environment} from '../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class ProviderService {
@@ -16,7 +17,10 @@ export class ProviderService {
     }
 
     getAll(providerFilter: ProviderListFilterParameters): Observable<Provider[]> {
-        return this.http.post<Provider[]>(this.providerUrl, providerFilter);
+        let params = {
+            providerFilter: JSON.stringify(providerFilter)
+        };
+        return this.http.get<Provider[]>(this.providerUrl, {params: JSON.parse(params.providerFilter)});
     }
 
     getDetail(id: number): Observable<Provider> {

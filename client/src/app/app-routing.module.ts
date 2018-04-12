@@ -53,7 +53,6 @@ const routes: Routes = [
     {path: 'configuration/provider/add', component: AddProviderComponent},
     {path: 'configuration/provider/update/:id', component: UpdateProviderComponent},
     {path: 'registration', component: RegistrationComponent},
-    {path: 'configuration/providers/:id', component: ProviderDetailComponent},
     {path: 'profile', component: ClientProfileComponent},
     {path: 'profile/edit', component: ClientProfileEditComponent},
     {path: 'profile/edit/password', component: ClientProfileEditPasswordComponent},

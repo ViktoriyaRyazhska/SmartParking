@@ -3,6 +3,7 @@ import {Provider} from '../../../model/view/provider';
 import {ProviderService} from '../provider.service';
 import {ProviderListFilterParameters} from '../../../model/filter/provider-list-filter-parameters';
 import {FormControl, FormGroup,} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-provider-list',
@@ -18,7 +19,7 @@ export class ProviderListComponent implements OnInit {
 
     providerFilter: ProviderListFilterParameters;
 
-    constructor(private providerService: ProviderService) {
+    constructor(private providerService: ProviderService, private router: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -26,7 +27,12 @@ export class ProviderListComponent implements OnInit {
     }
 
     getProviders(): void {
-        this.providerFilter = this.providerFilterForm.value;
+        this.router.queryParams
+            .subscribe(params => {
+                this.providerFilter = new ProviderListFilterParameters();
+                this.providerFilter.active = params['active'];
+                this.providerFilter.companyName= params['companyName'];
+            });
         this.providerService.getAll(this.providerFilter)
             .subscribe(providers => this.providers = providers);
     }

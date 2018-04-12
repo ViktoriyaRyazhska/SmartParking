@@ -8,6 +8,8 @@ import 'rxjs/add/operator/catch';
 import {Parking} from '../model/view/parking';
 import {ParkingMapComponent} from './parking-map/parking-map.component';
 
+const MiToKm = 1.60934;
+
 @Component({
     selector: 'app-index',
     templateUrl: './index.component.html',
@@ -90,7 +92,12 @@ export class IndexComponent implements OnInit {
                             var destination = distances.destination_addresses[j];
                             if (distances.rows[0].elements[j].status == 'OK') {
                                 let distance = distances.rows[i].elements[j].distance.text;
-                                parking.distance = distance;
+                                console.log(distance);
+                                distance = distance.substr(0, distance.indexOf(' '));
+                                Number.parseInt(distance);
+                                distance *= MiToKm;
+                                parking.distance = Math.floor(distance * 10) / 10;
+                                console.log(parking.distance)
                             } else {
                                 console.log(destination + ' is not reachable by land from ' + origin);
                             }
@@ -105,6 +112,15 @@ export class IndexComponent implements OnInit {
         });
         this.refreshComponentView();
     }
+
+  /*  revertMileToKm(distance: any): number {
+        var distance = distance.toString();
+        distance = distance.substr(0, distance.indexOf(' '));
+        Number.parseInt(distance);
+        distance *= MiToKm;
+        console.log(Math.floor(distance * 10) / 10);
+        return Math.floor(distance * 10) / 10;
+    }*/
 
     private refreshComponentView(): void {
         this.changeDetector.detectChanges();

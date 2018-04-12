@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 
-const MiToKm = 1.60934;
-
 @Component({
     selector: 'app-parking-map',
     templateUrl: './parking-map.component.html',
@@ -40,11 +38,4 @@ export class ParkingMapComponent implements OnInit {
         return Math.floor(floatNumber) / 1000;
     }
 
-    revertMileToKm(distance: any): number {
-        var distance = distance.toString();
-        distance = distance.substr(0, distance.indexOf(' '));
-        Number.parseInt(distance);
-        distance *= MiToKm;
-        return Math.floor(distance * 10) / 10;
-    }
 }
