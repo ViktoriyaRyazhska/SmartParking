@@ -52,7 +52,7 @@
             INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.507367,
             23.982630,10.15,'pfhd','Lviv','Zamarstynivska','2',2);
             INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.207367,
-            231982630,10.15,'dxbf','Lviv','Dvirceva','1',2);
+            23.282630,10.15,'dxbf','Lviv','Dvirceva','1',2);
         </sql>
         <comment>Inserting into table parking</comment>
     </changeSet>
