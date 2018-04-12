@@ -19,7 +19,7 @@ export class ClientProfileComponent implements OnInit {
 
     client: Client;
     provider: Provider;
-    favoritesParkings: Parking[];
+    favoritesParkings: Parking[] = [];
     showProviderDetails: boolean = false;
 
 

@@ -10,7 +10,7 @@
     <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-4">
+                <div class="col-4" *ngIf="client.image">
                         <img src="data:image/JPEG;base64,{{client.image}}" style="width: 200px; height:200px;" class="rounded-circle">
                 </div>
                 <div class="col-8">
@@ -21,7 +21,7 @@
                                     <mat-card-title><span>Your name:</span> {{client.firstName}} {{client.lastName}}
                                     </mat-card-title>
                                     <mat-card-title><span>Email:</span> {{client.email}}</mat-card-title>
-                                    <mat-card-title *ngIf="client.favoritesNames.length!=0">
+                                    <mat-card-title *ngIf="favoritesParkings.length!=0">
                                         <mat-expansion-panel hideToggle="true">
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
