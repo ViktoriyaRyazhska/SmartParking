@@ -24,9 +24,6 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
     @Autowired
     ClientRepository clientRepository;
 
-    @Autowired
-    private PasswordEncoder bcryptEncoder;
-
     protected ClientServiceImpl(@Autowired ClientRepository repository) {
         super(repository);
     }

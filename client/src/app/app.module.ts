@@ -86,11 +86,11 @@ export function getAuthServiceConfigs() {
             },
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider("Your-Google-Client-Id")
+                provider: new GoogleLoginProvider("678627060844-6o8k48ni9re5u397309k27a9j35egi76.apps.googleusercontent.com")
             },
             {
                 id: LinkedinLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider("Your-Linkedin-Client-Id")
+                provider: new LinkedinLoginProvider("865znc216bg618")
             },
         ]
 );

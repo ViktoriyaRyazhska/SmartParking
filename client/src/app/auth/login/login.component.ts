@@ -12,6 +12,7 @@ import {
     GoogleLoginProvider,
     LinkedinLoginProvider
 } from 'angular5-social-auth';
+import {SocialPrincipal} from "./social-principal";
 
 
 @Component({
@@ -61,10 +62,23 @@ export class LoginComponent implements OnInit {
         this.socialAuthService.signIn(socialPlatformProvider).then(
             (userData) => {
                 console.log(socialPlatform + " sign in data : " , userData);
+                console.log(userData.email);
+                this.authService.signInWithSocial(new SocialPrincipal(
+                    userData.id,
+                    userData.email,
+                    userData.name,
+                    userData.provider))
+                    .subscribe((token: TokenPair) => {
+                        this.tokenStorage.saveToken(token);
+                        alert('You are successfully authorized');
+                        this.router.navigate(['/']);
+                    }, (error) => {
+                        if(error instanceof HttpErrorResponse)
+                            alert(error.error.response);
+                    })
             }
         );
     }
-
 
     login = () => {
         this.loginData = this.loginForm.value;
