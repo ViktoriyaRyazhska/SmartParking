@@ -111,15 +111,6 @@ export class IndexComponent implements OnInit {
         this.refreshComponentView();
     }
 
-  /*  revertMileToKm(distance: any): number {
-        var distance = distance.toString();
-        distance = distance.substr(0, distance.indexOf(' '));
-        Number.parseInt(distance);
-        distance *= MiToKm;
-        console.log(Math.floor(distance * 10) / 10);
-        return Math.floor(distance * 10) / 10;
-    }*/
-
     private refreshComponentView(): void {
         this.changeDetector.detectChanges();
         setTimeout(() => this.changeDetector.detectChanges(), 1);

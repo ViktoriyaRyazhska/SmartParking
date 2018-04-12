@@ -23,7 +23,7 @@ import {
     GoogleLoginProvider,
     FacebookLoginProvider,
     LinkedinLoginProvider
-} from "angular5-social-auth";
+} from 'angular5-social-auth';
 
 import {AppRoutingModule} from './app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
@@ -70,12 +70,12 @@ import {ParkingStatisticComponent} from './statistic/parking-statistic/parking-s
 import {SpotstatisticComponent} from './statistic/spotstatistic/spotstatistic.component';
 import {StatisticsService} from './statistic/statistics.service';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import { ClientPasswordChangeConfirmationComponent } from './client-profile/client-password-change-confirmation/client-password-change-confirmation.component';
-import { CustomAuthService} from "./auth/custom-auth.service";
-import { NonFoundComponent } from './errors/non-found/non-found.component';
-import { InternalServerErrorComponent } from './errors/internal-server-error/internal-server-error.component';
-import { ForbiddenComponent } from './errors/forbidden/forbidden.component';
-import {httpInterceptorProviders} from "./interceptors/http-interceptors";
+import {ClientPasswordChangeConfirmationComponent} from './client-profile/client-password-change-confirmation/client-password-change-confirmation.component';
+import {CustomAuthService} from './auth/custom-auth.service';
+import {NonFoundComponent} from './errors/non-found/non-found.component';
+import {InternalServerErrorComponent} from './errors/internal-server-error/internal-server-error.component';
+import {ForbiddenComponent} from './errors/forbidden/forbidden.component';
+import {httpInterceptorProviders} from './interceptors/http-interceptors';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -86,14 +86,14 @@ export function getAuthServiceConfigs() {
             },
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider("678627060844-6o8k48ni9re5u397309k27a9j35egi76.apps.googleusercontent.com")
+                provider: new GoogleLoginProvider('678627060844-6o8k48ni9re5u397309k27a9j35egi76.apps.googleusercontent.com')
             },
             {
                 id: LinkedinLoginProvider.PROVIDER_ID,
-                provider: new LinkedinLoginProvider("865znc216bg618")
+                provider: new LinkedinLoginProvider('865znc216bg618')
             },
         ]
-);
+    );
     return config;
 }
 
@@ -137,7 +137,8 @@ export function getAuthServiceConfigs() {
         InternalServerErrorComponent,
         ForbiddenComponent,
         SpotstatisticComponent,
-        ClientPasswordChangeConfirmationComponent
+        ClientPasswordChangeConfirmationComponent,
+        ParkingMapComponent
     ],
     imports: [
         AgmCoreModule.forRoot({

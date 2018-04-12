@@ -41,7 +41,8 @@ export class ParkingListFilterComponent implements OnInit {
         this.locationField.valueChanges.subscribe(location => {
             this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value);
             this.valueChangesSubject.next(this.internalValue);
-            localStorage.setItem('location', location.toLatLng().toString());
+            localStorage.setItem('locationLatitude', location.latitude.toString());
+            localStorage.setItem('locationLongtitude', location.longitude.toString());
         });
         this.priceRangeField.valueChanges.subscribe(priceRange => {
             if (this.locationField.value) {

@@ -15,13 +15,13 @@ export class LocationFieldComponent implements OnInit {
 
     public readonly control: FormControl = new FormControl();
 
-    private predictionItems: PredictionItem[] = [];
+    public predictionItems: PredictionItem[] = [];
 
-    private geolocationItem: GeolocationItem;
+    public geolocationItem: GeolocationItem;
 
-    private ipLocationItem: IpLocationItem;
+    public ipLocationItem: IpLocationItem;
 
-    private geocodeService: google.maps.Geocoder;
+    public geocodeService: google.maps.Geocoder;
 
     private autocompleteService: google.maps.places.AutocompleteService;
 
@@ -54,9 +54,7 @@ export class LocationFieldComponent implements OnInit {
         this.initMapsAPI().then(() => {
             this.requestGeolocation();
         });
-
     }
-    setValue() { this.name = 'Nancy'; }
 
     public onLocationInputBlur(): void {
         if (!this.selectedItem) {
@@ -80,7 +78,6 @@ export class LocationFieldComponent implements OnInit {
     }
 
     ngOnDestroy(): void {
-//        this.controlChangesSubscription.unsubscribe();
         window.navigator.geolocation.clearWatch(this.geolocationDescriptor);
     }
 
@@ -290,8 +287,8 @@ export class IpLocationItem extends LocationItem<IpLocation> {
 
 export class Location {
 
-    public readonly latitude: number;
-    public readonly longitude: number;
+    public latitude: number;
+    public longitude: number;
 
     constructor(latitude: number, longitude: number) {
         this.latitude = latitude;
