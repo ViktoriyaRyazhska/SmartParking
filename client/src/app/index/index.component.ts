@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ParkingListFilterComponent} from './parking-list-filter/parking-list-filter.component';
 import {ParkingService} from '../parking.service';
-import {ParkingListComponent} from './parking-list/parking-list.component';
 import {MatProgressBar} from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';

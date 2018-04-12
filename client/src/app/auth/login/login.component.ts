@@ -13,7 +13,7 @@ import {
     LinkedinLoginProvider
 } from 'angular5-social-auth';
 import {SocialPrincipal} from "./social-principal";
-import { MatSnackBar } from '@angular/material';
+import {MatSnackBar} from "@angular/material";
 
 
 @Component({
@@ -74,13 +74,13 @@ export class LoginComponent implements OnInit {
                         this.tokenStorage.saveToken(token);
                         this.snackBar.open('You are successfully authorized', null, {
                             duration: 4000
-                          });
+                        });
                         this.router.navigate(['/']);
                     }, (error) => {
                         if(error instanceof HttpErrorResponse)
-                        this.snackBar.open(error.error.response, null, {
-                            duration: 5000
-                          });
+                            this.snackBar.open(error.error.response, null, {
+                                duration: 5000
+                            });
                     })
             }
         );
@@ -90,16 +90,16 @@ export class LoginComponent implements OnInit {
         this.loginData = this.loginForm.value;
         this.authService.signIn(this.loginData)
             .subscribe((token: TokenPair)=>{
-                this.tokenStorage.saveToken(token);
-                this.snackBar.open('You are successfully authorized', null, {
-                    duration: 4000
-                  });
-                this.router.navigate(['/']);
+                    this.tokenStorage.saveToken(token);
+                    this.snackBar.open('You are successfully authorized', null, {
+                        duration: 4000
+                    });
+                    this.router.navigate(['/']);
                 }, (error) => {
-                if(error instanceof HttpErrorResponse)
-                this.snackBar.open(error.error.response, null, {
-                    duration: 5000
-                  });
+                    if(error instanceof HttpErrorResponse)
+                        this.snackBar.open(error.error.response, null, {
+                            duration: 5000
+                        });
                 }
             );
     };
