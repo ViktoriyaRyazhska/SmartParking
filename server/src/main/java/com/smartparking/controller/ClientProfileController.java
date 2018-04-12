@@ -8,9 +8,9 @@ import com.smartparking.model.response.InfoResponse;
 import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.security.exception.AuthorizationEx;
 import com.smartparking.service.ClientService;
-import com.smartparking.service.email.EmailService;
 import com.smartparking.service.FavoriteService;
 import com.smartparking.service.ParkingService;
+import com.smartparking.service.email.EmailService;
 import com.smartparking.service.impl.SpringSecurityUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 import java.util.UUID;
 
 @RestController
@@ -98,9 +97,6 @@ public class ClientProfileController {
     public ResponseEntity<?> getFavoritesParkings() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         List<ParkingDetailResponse> parkings = favoriteService.findFavoritesDetailByClientId(email);
-        for (ParkingDetailResponse parking : parkings) {
-            parking.setFavoriteName(parkingService.findFavoriteNameByEmailAndParkingId(email, parking.getId()));
-        }
         return new ResponseEntity<>(parkings, HttpStatus.OK);
     }
 }
