@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {StatisticsService} from "../statistics.service";
 import {Parking} from "../../model/view/parking";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
     selector: 'app-parking-statistic',
@@ -18,7 +20,8 @@ export class ParkingStatisticComponent implements OnInit {
     days = [7, 14, 30, 365];
     calculatedDate = new Date();
 
-    constructor(private statisticService: StatisticsService) {
+    constructor(private statisticService: StatisticsService,
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -34,7 +37,7 @@ export class ParkingStatisticComponent implements OnInit {
             this.statisticService.getBestParkingsByCityStreetDate(this.selectedCity, this.selectedStreet, this.calculatedDate.getTime())
                 .subscribe(parkings => {
                     this.parkings = parkings;
-                });
+                })
         } else {
             this.findBestParkingsInTheCity();
         }
@@ -59,13 +62,6 @@ export class ParkingStatisticComponent implements OnInit {
 
     findAllParkingsCities() {
         this.statisticService.getAllParkingsCities()
-            .subscribe(parkingsCities => {
-                this.parkingsCities = parkingsCities;
-            });
-    }
-
-    findParkingsCities(value: string) {
-        this.statisticService.getParkingsCitiesByAnyMatching(value)
             .subscribe(parkingsCities => {
                 this.parkingsCities = parkingsCities;
             });

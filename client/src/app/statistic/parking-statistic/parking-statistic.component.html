@@ -1,5 +1,6 @@
 <h3 class="text-center">The most popular parkings in <span>{{selectedCity}}</span><span
         *ngIf="selectedStreet !=''"> on the street {{selectedStreet}}</span> for the last {{this.selectedNumberOfDays}}
+    days
 </h3>
 <div class="parent row">
 
@@ -38,9 +39,11 @@
         <mat-divider style="border-color: purple;"></mat-divider>
         <mat-card class="card">
             <h6 [(ngModel)]="selectedStreet" [(ngModel)]="selectedCity" ngDefaultControl>Find the most popular parking
-                in <span matTooltip="Click to see the statistic by all streets!" id ="city" (click)="clearStreetAndFindTheBestParkingsInTheCity()">{{selectedCity}}</span> on the street: <span
+                in <span matTooltip="Click to see the statistic by all streets!" id="city"
+                         (click)="clearStreetAndFindTheBestParkingsInTheCity()">{{selectedCity}}</span> on the street:
+                <span
                         *ngIf="selectedStreet ==''">--not selected--</span><span>{{selectedStreet}}</span> for the
-                last <span>{{selectedNumberOfDays}}</span></h6>
+                last <span>{{selectedNumberOfDays}}</span> days</h6>
             <div class="row">
 
                 <mat-form-field>
