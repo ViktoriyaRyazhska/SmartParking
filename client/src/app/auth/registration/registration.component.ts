@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {InfoResponse} from "../info-response";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CustomAuthService} from "../custom-auth.service";
+import { MatSnackBar } from '@angular/material';
 
 export class PasswordValidation {
 
@@ -54,7 +55,8 @@ export class RegistrationComponent implements OnInit {
     ]);
   constructor(private formBuilder: FormBuilder,
               private authService: CustomAuthService,
-              private router: Router
+              private router: Router,
+              private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -72,11 +74,15 @@ export class RegistrationComponent implements OnInit {
   register = () => {
       this.registrationData = this.registrationForm.value;
       this.authService.register(this.registrationData).subscribe((info: InfoResponse) =>{
-          alert(info.response);
+        this.snackBar.open(info.response, null, {
+            duration: 4000
+          });
           this.router.navigate(['/']);
       }, (error) => {
           if(error instanceof HttpErrorResponse) {
-              alert(error.error.response);
+            this.snackBar.open(error.error.response, null, {
+                duration: 5000
+              });
           }
           });
   }
