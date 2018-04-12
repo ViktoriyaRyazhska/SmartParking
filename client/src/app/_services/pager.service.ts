@@ -3,7 +3,7 @@ import * as _ from 'underscore';
 
 @Injectable()
 export class PagerService {
-    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 7) {
+    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 6) {
         // calculate total pages
         let totalPages = Math.ceil(totalItems / pageSize);
 
