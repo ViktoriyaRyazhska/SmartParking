@@ -21,6 +21,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Optional;
 
 @Service
@@ -74,7 +76,14 @@ public class SpringSecurityUserService implements UserDetailsService {
     }
 
     public void saveClientFromSocialSignInRequest(SocialSignInRequest socialSignInRequest) throws EmailValidationEx, DuplicateEmailEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx {
-        String[] nameSurname = socialSignInRequest.getName().split(" ");
+        String[] nameSurname = null;
+        try {
+            nameSurname = new String(socialSignInRequest.getName().getBytes(), "UTF-8").split(" ");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        LOGGER.info("Firstname = " + nameSurname[0]);
+        LOGGER.info("Lastname = " + nameSurname[1]);
         Client client = new Client();
         client.setEmail(validator.validateEmailOnRegistration(
                 constructEmailForSocial(socialSignInRequest.getEmail(), socialSignInRequest.getProvider())));
