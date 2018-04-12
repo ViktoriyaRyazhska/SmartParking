@@ -15,6 +15,9 @@ const UUID_PASSWORD_CONFIRM = 'uuid_password_confirm';
 })
 export class ClientPasswordChangeConfirmationComponent implements OnInit {
 
+  isChanging: boolean = false;
+  isError: boolean= false;
+
   constructor(
     private clientService: ClientService,
     private route: ActivatedRoute,
@@ -36,11 +39,13 @@ export class ClientPasswordChangeConfirmationComponent implements OnInit {
         });
         window.localStorage.removeItem(UUID_PASSWORD_CONFIRM);
         window.localStorage.removeItem(NEW_PASSWORD);
+        this.isChanging = true;
       },
        error =>{
         this.snackBar.open('Password changing Error! Try again', null, {
             duration: 4000
           });
+          this.isError=true;
       });;
     }else{
       this.router.navigate(['/']);

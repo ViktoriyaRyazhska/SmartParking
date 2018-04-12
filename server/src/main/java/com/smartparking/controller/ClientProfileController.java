@@ -53,7 +53,7 @@ public class ClientProfileController {
     @GetMapping(value = "")
     public ClientDetailResponse getClientDetails() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Client client = clientService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
+        Client client = clientService.findOne(email);
         ClientDetailResponse clientDetailResponse = ClientDetailResponse.of(client);
         return clientDetailResponse;
     }

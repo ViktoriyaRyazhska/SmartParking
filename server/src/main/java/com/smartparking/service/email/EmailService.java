@@ -24,7 +24,7 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
-    public void prepareAndSendWelcomeEmail(String recipient, String message){
+    public void prepareAndSendWelcomeEmail(String recipient, String message) throws MailException{
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(emailFrom);
@@ -49,10 +49,6 @@ public class EmailService {
             String content = emailContentBuilder.buildConfirmPassHtml(userName, message);
             messageHelper.setText(content, true);
         };
-        try {
-            mailSender.send(messagePreparator);
-        }catch (MailException e){
-            LOGGER.error("Could not send email to : {} Error = {}",recipient,e.getMessage());
-        }
+        mailSender.send(messagePreparator);
     }
 }

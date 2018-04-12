@@ -70,7 +70,7 @@ export class ClientProfileEditPasswordComponent implements OnInit {
             });
           }, error =>{
             this.snackBar.open('Email sending Error!', null, {
-                duration: 4000
+                duration: 5000
               });
           });
     }
