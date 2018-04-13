@@ -108,7 +108,7 @@ public class SecurityController {
         }
         if (user != null && bcryptEncoder.matches(request.getId(), user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, request.getId())
+                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
