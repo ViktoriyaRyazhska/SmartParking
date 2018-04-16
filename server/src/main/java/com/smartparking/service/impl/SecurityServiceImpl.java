@@ -9,6 +9,7 @@ import com.smartparking.model.request.SocialSignInRequest;
 import com.smartparking.repository.ClientRepository;
 import com.smartparking.security.exception.*;
 import com.smartparking.security.utils.Validator;
+import com.smartparking.service.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.Optional;
 
 @Service
 @Qualifier("MyUserDetails")
-public class SpringSecurityUserService implements UserDetailsService {
+public class SecurityServiceImpl implements UserDetailsService, SecurityService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpringSecurityUserService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Autowired
     private Validator validator;

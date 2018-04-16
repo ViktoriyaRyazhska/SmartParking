@@ -11,7 +11,7 @@ import com.smartparking.service.ClientService;
 import com.smartparking.service.FavoriteService;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.email.EmailService;
-import com.smartparking.service.impl.SpringSecurityUserService;
+import com.smartparking.service.impl.SecurityServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class ClientProfileController {
     ParkingService parkingService;
 
     @Autowired
-    SpringSecurityUserService springSecurityUserService;
+    SecurityServiceImpl securityServiceImpl;
 
     @Autowired
     EmailService emailService;
@@ -71,7 +71,7 @@ public class ClientProfileController {
     @PostMapping(value = "/update/password")
     public ResponseEntity saveUser(@RequestBody PasswordRequest passwordRequest) {
         try {
-            springSecurityUserService.updateClientPassword(passwordRequest);
+            securityServiceImpl.updateClientPassword(passwordRequest);
         } catch (AuthorizationEx e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }

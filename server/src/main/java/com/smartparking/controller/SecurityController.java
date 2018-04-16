@@ -7,13 +7,11 @@ import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.request.LoginRequest;
 import com.smartparking.model.response.InfoResponse;
 import com.smartparking.security.tokens.TokenPair;
+import com.smartparking.service.SecurityService;
 import com.smartparking.service.email.EmailService;
-import com.smartparking.service.impl.SpringSecurityUserService;
+import com.smartparking.service.impl.SecurityServiceImpl;
 import com.smartparking.security.tokens.TokenUtil;
-import com.smartparking.entity.SpringSecurityUser;
 import com.smartparking.security.utils.Validator;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +44,9 @@ public class SecurityController {
     @Autowired
     @Qualifier("MyUserDetails")
     private UserDetailsService userService;
+
+    @Autowired
+    private SecurityService securityService;
 
     @Autowired
     private PasswordEncoder bcryptEncoder;
@@ -81,7 +81,7 @@ public class SecurityController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity saveUser(@RequestBody RegistrationRequest regReq) {
         try {
-            ((SpringSecurityUserService) userService).saveClientFromRegistrationRequest(regReq);
+            securityService.saveClientFromRegistrationRequest(regReq);
         } catch (AuthorizationEx e) {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
@@ -93,13 +93,13 @@ public class SecurityController {
     @RequestMapping(value = "/social", method = RequestMethod.POST)
     public ResponseEntity socialSignIn(@RequestBody SocialSignInRequest request) {
         UserDetails user = null;
-        String email = ((SpringSecurityUserService) userService).constructEmailForSocial(request.getEmail(), request.getProvider());
+        String email = securityService.constructEmailForSocial(request.getEmail(), request.getProvider());
         while (user == null) {
             try {
                 user = userService.loadUserByUsername(email);
             } catch (Exception e) {
                 try {
-                    ((SpringSecurityUserService) userService).saveClientFromSocialSignInRequest(request);
+                    ((SecurityServiceImpl) userService).saveClientFromSocialSignInRequest(request);
                 } catch (AuthorizationEx ex) {
                     LOGGER.warn(ex.getMessage());
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
