@@ -67,7 +67,8 @@ public class SpotController {
             @RequestParam("start_time") String startTime,
             @RequestParam("end_time") String endTime) {
 
-        List<SpotStatisticResponse> spotStatisticResponseList = spotService.getSpotStatistic(id,Long.parseLong(startTime),Long.parseLong(endTime));
+        List<SpotStatisticResponse> spotStatisticResponseList =
+                spotService.getSpotStatistic(id,Long.parseLong(startTime),Long.parseLong(endTime));
         return new ResponseEntity<>(spotStatisticResponseList, HttpStatus.OK);
     }
 

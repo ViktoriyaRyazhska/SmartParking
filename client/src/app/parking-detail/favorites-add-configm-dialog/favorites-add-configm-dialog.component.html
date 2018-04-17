@@ -5,6 +5,6 @@
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()" [mat-dialog-close]="data">Cancel</button>
     <button mat-button color="primary" (click)="onOkClick()" [mat-dialog-close]="data"
-            cdkFocusInitial>Add
+            cdkFocusInitial [disabled]="data.name.length >= 25">Add
     </button>
 </div>
