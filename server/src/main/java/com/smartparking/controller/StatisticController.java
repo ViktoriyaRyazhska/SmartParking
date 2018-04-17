@@ -45,7 +45,7 @@ public class StatisticController {
                                                                       @RequestParam("street") String street,
                                                                       @RequestParam("date") String date) {
 
-        Instant instant = getInstant(date);
+        Instant instant = LocalDateTime.now().minusDays(Integer.parseInt(date)).toInstant(ZoneOffset.UTC);
 
         List<Parking> parkings = spotService.findBestParkings(city, street, instant);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
@@ -57,7 +57,7 @@ public class StatisticController {
     public ResponseEntity<List<ParkingItemResponse>> findBestParkingsInTheCity(@RequestParam("city") String city,
                                                                                @RequestParam("date") String date) {
 
-        Instant instant = getInstant(date);
+        Instant instant = LocalDateTime.now().minusDays(Integer.parseInt(date)).toInstant(ZoneOffset.UTC);
 
         List<Parking> parkings = spotService.findBestParkingsInTheCity(city, instant);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
@@ -65,11 +65,18 @@ public class StatisticController {
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
-    private Instant getInstant(String date) {
-        LocalDateTime localDateTime =
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(date)),
-                        TimeZone.getDefault().toZoneId());
-        return localDateTime.toInstant(ZoneOffset.UTC);
+    @RequestMapping("/findbestparkingsbylocation")
+    public ResponseEntity<List<ParkingItemResponse>> findBestParkingsByLocation(@RequestParam("latitude") String latitude,
+                                                                                @RequestParam("longitude") String longitude,
+                                                                                @RequestParam("radius") String radius,
+                                                                                @RequestParam("date") String date) {
+
+        Instant instant = LocalDateTime.now().minusDays(Integer.parseInt(date)).toInstant(ZoneOffset.UTC);
+
+        List<Parking> parkings = spotService.findBestParkingsByLocation(Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(radius), instant);
+        List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
+        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
+        return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
 }

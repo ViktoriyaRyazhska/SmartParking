@@ -53,7 +53,9 @@ export class ClientEditComponent implements OnInit {
             this.client.providersId = this.selectedProvidersId;
         }
         if (this.selectedRole == 'PROVIDER_MANAGER' && this.selectedProvidersId == null) {
-            alert('pleace, select provider')
+            this.snackBar.open('Please, select some provider', null, {
+                duration: 4000
+            });
         } else {
             if (this.selectedRole == 'DRIVER' || this.selectedRole == 'SUPERUSER') {
                 this.client.providersId = 0;
@@ -63,7 +65,6 @@ export class ClientEditComponent implements OnInit {
                     this.snackBar.open('Client has been updated successfully', null, {
                         duration: 4000
                     });
-
                 });
         }
     }

@@ -1,11 +1,12 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ParkingListFilterComponent} from './parking-list-filter/parking-list-filter.component';
 import {ParkingService} from '../parking.service';
-import {MatProgressBar} from '@angular/material';
+import {MatProgressBar, MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Parking} from '../model/view/parking';
 import {ParkingMapComponent} from './parking-map/parking-map.component';
+import {StatisticsService} from "../statistic/statistics.service";
 
 const MiToKm = 1.60934;
 
@@ -23,13 +24,16 @@ export class IndexComponent implements OnInit {
     @ViewChild('progressbar') private progressBar: MatProgressBar;
 
     private parkings: Parking[] = [];
+    private bestParkiings: Parking[] = [];
 
     private progressBarVisible: boolean = false;
     private progressBarColor: string = 'primary';
     private progressBarMode: string = 'query';
 
     constructor(private parkingService: ParkingService,
-                private changeDetector: ChangeDetectorRef) {
+                private changeDetector: ChangeDetectorRef,
+                private statisticService: StatisticsService,
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -45,6 +49,10 @@ export class IndexComponent implements OnInit {
                 console.log(error);
                 this.showErrorProgressBar();
             });
+            this.findBestParkingsByLocation(
+                filter.location.latitude,
+                filter.location.longitude,
+                this.filter.radiusMax * 1000, 7);
         });
     }
 
@@ -113,6 +121,23 @@ export class IndexComponent implements OnInit {
     private refreshComponentView(): void {
         this.changeDetector.detectChanges();
         setTimeout(() => this.changeDetector.detectChanges(), 1);
+    }
+
+    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
+        this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
+            .subscribe(bestParkiings => {
+                this.bestParkiings = bestParkiings;
+                if (this.bestParkiings.length > 0) {
+                    this.snackBar.open('The best nearby parking is on: ' + this.bestParkiings[0].street + " " +
+                        this.bestParkiings[0].building, null, {
+                        duration: 4000
+                    });
+                } else {
+                    this.snackBar.open('Unfortunately, there are no popular parking lots nearby', null, {
+                        duration: 4000
+                    });
+                }
+            });
     }
 
 }

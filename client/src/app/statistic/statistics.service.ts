@@ -29,21 +29,32 @@ export class StatisticsService {
         return this.http.get<string[]>(this.statisticUrl + '/findallparkingscities');
     }
 
-    getBestParkingsByCityStreetDate(city: string, street: string, date: number): Observable<Parking[]> {
+    getBestParkingsByCityStreetDate(city: string, street: string, days: number): Observable<Parking[]> {
         return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkings', {
             params: {
                 city: city,
                 street: street,
-                date: date.toString()
+                days: days.toString()
             }
         });
     }
 
-    getBestParkingsInTheCityByDate(city: string, date: number): Observable<Parking[]> {
+    getBestParkingsInTheCityByDate(city: string, days: number): Observable<Parking[]> {
         return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsincity', {
             params: {
                 city: city,
-                date: date.toString()
+                days: days.toString()
+            }
+        });
+    }
+
+    getBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number): Observable<Parking[]> {
+        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsbylocation', {
+            params: {
+                latitude: latitude.toString(),
+                longitude: longitude.toString(),
+                radius: radius.toString(),
+                days: days.toString()
             }
         });
     }

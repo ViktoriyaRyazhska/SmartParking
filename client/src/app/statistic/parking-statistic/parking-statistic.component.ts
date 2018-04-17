@@ -18,7 +18,6 @@ export class ParkingStatisticComponent implements OnInit {
     selectedStreet: string = '';
     selectedNumberOfDays: number = 7;
     days = [7, 14, 30, 365];
-    calculatedDate = new Date();
 
     pager: any = {};
     pagedParkingItems: Parking[];
@@ -53,11 +52,9 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     findBestParkings() {
-        this.calculateDate();
-
         if (this.selectedStreet != '') {
 
-            this.statisticService.getBestParkingsByCityStreetDate(this.selectedCity, this.selectedStreet, this.calculatedDate.getTime())
+            this.statisticService.getBestParkingsByCityStreetDate(this.selectedCity, this.selectedStreet, this.selectedNumberOfDays)
                 .subscribe(parkings => {
                     this.parkings = parkings;
                     this.setPage(1);
@@ -65,17 +62,14 @@ export class ParkingStatisticComponent implements OnInit {
         } else {
             this.findBestParkingsInTheCity();
         }
-        this.refreshDate();
     }
 
     findBestParkingsInTheCity() {
-        this.calculateDate();
-        this.statisticService.getBestParkingsInTheCityByDate(this.selectedCity, this.calculatedDate.getTime())
+        this.statisticService.getBestParkingsInTheCityByDate(this.selectedCity, this.selectedNumberOfDays)
             .subscribe(parkings => {
                 this.parkings = parkings;
                 this.setPage(1);
             });
-        this.refreshDate();
     }
 
     findParkingsStreetsFromInput(input: string) {
@@ -105,14 +99,5 @@ export class ParkingStatisticComponent implements OnInit {
     selectStreet(street: string) {
         this.selectedStreet = street;
     }
-
-    calculateDate() {
-        this.calculatedDate.setDate(new Date().getDate() - this.selectedNumberOfDays);
-    }
-
-    refreshDate() {
-        this.calculatedDate = new Date();
-    }
-
 
 }
