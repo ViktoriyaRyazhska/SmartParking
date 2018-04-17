@@ -58,13 +58,9 @@ export class ClientProfileEditPasswordComponent implements OnInit {
         });
     }
 
-    sendConfirmation = () => {
-        window.localStorage.removeItem(NEW_PASSWORD);
-        window.localStorage.removeItem(UUID_PASSWORD_CONFIRM);
+    sendConfirmation = (data: PasswordData) => {
         this.passwordData = this.passwordForm.value;
-        this.clientService.sendConfirmation().subscribe((response: InfoResponse) => {
-            window.localStorage.setItem(NEW_PASSWORD,  this.passwordData.password);
-            window.localStorage.setItem(UUID_PASSWORD_CONFIRM,  response.response);
+        this.clientService.sendConfirmation(data).subscribe((response: InfoResponse) => {
             this.snackBar.open('Email with confirmation sent successfuly. Check your email and confirm new password.', null, {
               duration: 5000
             });

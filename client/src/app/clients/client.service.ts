@@ -62,12 +62,12 @@ export class ClientService {
         return this.http.post(this.clientProfile + '/update/' + id, client);
     }
 
-    updateClientPassword(data: PasswordData): Observable<any> {
-        return this.http.post(this.clientProfile + '/update/password', data);
+    updateClientPassword(uuid: string): Observable<any> {
+        return this.http.post(this.clientProfile + '/update/password', uuid);
     }
 
-    sendConfirmation(): Observable<any>{
-        return this.http.get(this.clientProfile + '/update/password/confirm');
+    sendConfirmation(data: PasswordData): Observable<any>{
+        return this.http.post(this.clientProfile + '/update/password/confirm',data);
     }
 
     getFavoritesParkingsForClient(): Observable<Parking[]> {

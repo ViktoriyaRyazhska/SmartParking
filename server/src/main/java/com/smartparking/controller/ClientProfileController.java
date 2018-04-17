@@ -1,6 +1,7 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Client;
+import com.smartparking.entity.PasswordConfirmation;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.model.request.PasswordRequest;
 import com.smartparking.model.response.ClientDetailResponse;
@@ -10,6 +11,7 @@ import com.smartparking.security.exception.AuthorizationEx;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.FavoriteService;
 import com.smartparking.service.ParkingService;
+import com.smartparking.service.PasswordConfirmationService;
 import com.smartparking.service.email.EmailService;
 import com.smartparking.service.impl.SecurityServiceImpl;
 import org.slf4j.Logger;
@@ -20,8 +22,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,6 +51,12 @@ public class ClientProfileController {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    private PasswordConfirmationService passwordConfirmationService;
+
     @Value("${cross_origin.client}")
     String hostUrl;
 
@@ -69,28 +80,39 @@ public class ClientProfileController {
     }
 
     @PostMapping(value = "/update/password")
-    public ResponseEntity saveUser(@RequestBody PasswordRequest passwordRequest) {
-        try {
-            securityServiceImpl.updateClientPassword(passwordRequest);
-        } catch (AuthorizationEx e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
+    public ResponseEntity saveUser(@RequestBody String uuidFromUrl) {
+        PasswordConfirmation passwordConfirmation = passwordConfirmationService.findByUuid(uuidFromUrl);
+        PasswordRequest passwordRequest = new PasswordRequest();
+        passwordRequest.setPassword(passwordConfirmation.getNewPassword());
+        passwordRequest.setConfirmPassword(passwordConfirmation.getNewPassword());
+
+        if (uuidFromUrl.equals(passwordConfirmation.getUuid())) {
+            try {
+                securityServiceImpl.updateClientPassword(passwordRequest);
+            } catch (AuthorizationEx e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully updated password"));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during password changing"));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully updated password"));
     }
 
-    @GetMapping("/update/password/confirm")
-    public ResponseEntity sendConfirmation(){
+    @PostMapping("/update/password/confirm")
+    public ResponseEntity sendConfirmation(@RequestBody PasswordRequest passwordRequest) {
         final String uuid = UUID.randomUUID().toString().replace("-", "");
         final String confirmUrl = hostUrl + "/update/password/" + uuid;
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         String firstName = clientService.findOne(email).getFirstName();
+        passwordConfirmationService.save(
+                passwordConfirmationService.makePasswordConfirmationEntity(uuid, passwordRequest.getPassword()));
         try {
             emailService.prepareAndSendConfirmPassEmail(email, firstName, confirmUrl);
-        }catch (MailException e){
-            LOGGER.error("Could not send email to : {} Error = {}",email,e.getMessage());
+        } catch (MailException e) {
+            LOGGER.error("Could not send email to : {} Error = {}", email, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email sending Error!");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse(uuid));
+        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Data saved successfully"));
     }
 
     @GetMapping(value = "/favorites")
