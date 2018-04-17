@@ -39,7 +39,7 @@ export class LocationFieldComponent implements OnInit {
     public name: string;
     private internalValue: Location;
 
-    public defaultValue: Location;
+    public defaultValue: LocationItem<any>;
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ipLocationService: IpLocationService,
@@ -55,8 +55,8 @@ export class LocationFieldComponent implements OnInit {
         this.requestIpLocation();
         this.initMapsAPI().then(() => {
             this.requestGeolocation();
+            this.initDefaultLocation();
         });
-        this.initDefaultLocation();
 
     }
 
@@ -95,10 +95,26 @@ export class LocationFieldComponent implements OnInit {
 
     private initDefaultLocation() {
         if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude')) != undefined) {
-            this.defaultValue = new Location(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'));
+            let address;
+            let request = <google.maps.GeocoderRequest> {
+                location: new google.maps.LatLng(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude')),
+            };
+            this.geocodeService.geocode(request, (results, status) => {
+                if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
+                    address = (status === google.maps.GeocoderStatus.OK)
+                        ? results[0].formatted_address
+                        : localStorage.getItem('locationLatitude') + ', ' + +localStorage.getItem('locationLatitude');
+                    var location = new Location(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'));
+                    this.defaultValue = new LocationItem<Location>(location, address, location);
+                } else {
+                    console.warn('Google API Geocoder error: ' + status);
+                }
+            });
+
         } else {
-            this.defaultValue = new Location(this.geolocationItem.location.latitude, this.geolocationItem.location.longitude);
+            this.defaultValue = this.geolocationItem;
         }
+
     }
 
     private requestGeolocation(): void {

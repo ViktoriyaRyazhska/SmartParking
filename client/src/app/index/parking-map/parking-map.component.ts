@@ -15,6 +15,7 @@ export class ParkingMapComponent implements OnInit {
     parkings: Parking[];
     dir = undefined;
     distance: string;
+    radius: number;
 
     constructor(private parkingService: ParkingService) {
     }
@@ -22,10 +23,20 @@ export class ParkingMapComponent implements OnInit {
     ngOnInit() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                this.lat = position.coords.latitude;
-                this.lng = position.coords.longitude;
-
-                this.parkingService.getParkingsNearby(this.lat, this.lng, 7000).subscribe((response) => {
+                if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude') != undefined)) {
+                    console.log('SSSSSSSSSSS');
+                    this.lat = +localStorage.getItem('locationLatitude');
+                    this.lng = +localStorage.getItem('locationLongtitude');
+                } else {
+                    this.lat = position.coords.latitude;
+                    this.lng = position.coords.longitude;
+                }
+                if (localStorage.getItem('radius') != undefined) {
+                    this.radius = +localStorage.getItem('radius');
+                } else {
+                    this.radius = 5000;
+                }
+                this.parkingService.getParkingsNearby(this.lat, this.lng, this.radius).subscribe((response) => {
                     this.parkings = response.body;
                 }, error => {
                     console.log(error);

@@ -1,5 +1,5 @@
 <mat-form-field>
-    <input type="text" placeholder="Location" matInput aria-label="Number" [value]="defaultValue"
+    <input type="text" placeholder="Location" matInput aria-label="Number" [value]="defaultValue.label"
            [formControl]="control"
            [matAutocomplete]="autocomplete" (blur)="onLocationInputBlur()">
     <mat-error *ngIf="control.hasError('locationAutocompleteItemNotSelected')">
@@ -12,6 +12,10 @@
                     [value]="autocompleteItem">
             <mat-icon class="mat-18">location_on</mat-icon>
             {{autocompleteItem.label}}
+        </mat-option>
+        <mat-option *ngIf="defaultValue" [value]="defaultValue">
+            <mat-icon class="mat-18">last page</mat-icon>
+            {{defaultValue.label}}
         </mat-option>
         <mat-option *ngIf="geolocationItem" [value]="geolocationItem">
             <mat-icon class="mat-18">gps_fixed</mat-icon>
