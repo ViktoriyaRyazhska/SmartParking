@@ -5,6 +5,7 @@ import {MapsAPILoader} from '@agm/core';
 import {IpLocation, IpLocationService} from '../../../service/ip-location.service';
 import {Subject} from 'rxjs/Subject';
 import {MatAutocomplete, MatOption, MatSlider} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'app-parking-list-filter-location-field',
@@ -94,7 +95,7 @@ export class LocationFieldComponent implements OnInit {
     }
 
     private initDefaultLocation() {
-        if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude')) != undefined) {
+        if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude')) != null) {
             let address;
             let request = <google.maps.GeocoderRequest> {
                 location: new google.maps.LatLng(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude')),
@@ -112,12 +113,14 @@ export class LocationFieldComponent implements OnInit {
             });
 
         } else {
-            this.defaultValue = this.geolocationItem;
+
+            this.defaultValue = this.ipLocationItem;
+
         }
 
     }
 
-    private requestGeolocation(): void {
+    private requestGeolocation() {
         if (window.navigator && window.navigator.geolocation) {
             this.geolocationDescriptor = window.navigator.geolocation.watchPosition(
                 position => this.onGeolocationSuccess(position),
@@ -125,9 +128,9 @@ export class LocationFieldComponent implements OnInit {
                 <PositionOptions> {
                     timeout: 10000,
                     enableHighAccuracy: false
-                }
-            );
+                });
         }
+
     }
 
     private requestIpLocation(): void {
