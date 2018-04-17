@@ -55,7 +55,7 @@ public class ValidatorImpl implements Validator {
             throw new EmailValidationEx("Entered e-mail adress is not valid");
         }
         if (clientRepository.findClientByEmail(email) == null) {
-            throw new NonExistantEmailEx("User with this e-mail doesn`t exists");
+            throw new NonExistantEmailEx("User with this e-mail doesn`t exist");
         }
         return email;
     }

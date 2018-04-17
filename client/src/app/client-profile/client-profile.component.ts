@@ -52,9 +52,6 @@ export class ClientProfileComponent implements OnInit {
     }
 
     onParkingDeleteClick(id: number) {
-        // console.log(id);
-        // const id = parseInt(this.route.snapshot.paramMap.get('id'));
-
         let dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
             data: {confirmed: false}
         });
@@ -62,7 +59,7 @@ export class ClientProfileComponent implements OnInit {
         dialogRef.afterClosed().subscribe(data => {
             if (data.confirmed) {
                 this.parkingService.deleteFromFavorite(id).subscribe((response: HttpResponse<any>) => {
-                    this.snackBar.open('Parking delete from favorite sucsessfully.', null, {
+                    this.snackBar.open('Parking delete from favorite successfully.', null, {
                         duration: 2000
                     });
                 });

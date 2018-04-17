@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginData} from "./login-data";
 import {Router} from "@angular/router";
@@ -17,9 +17,9 @@ import {MatSnackBar} from "@angular/material";
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
     hide: boolean = true;
@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
                 private router: Router,
                 private tokenStorage: TokenStorage,
                 private socialAuthService: AuthService,
-                private snackBar: MatSnackBar
-    ) {}
+                private snackBar: MatSnackBar) {
+    }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -51,19 +51,19 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    public socialSignIn(socialPlatform : string) {
+    public socialSignIn(socialPlatform: string) {
         let socialPlatformProvider;
-        if(socialPlatform == "facebook"){
+        if (socialPlatform == "facebook") {
             socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-        }else if(socialPlatform == "google"){
+        } else if (socialPlatform == "google") {
             socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-        }else if(socialPlatform == "linkedin"){
+        } else if (socialPlatform == "linkedin") {
             socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
         }
 
         this.socialAuthService.signIn(socialPlatformProvider).then(
             (userData) => {
-                console.log(socialPlatform + " sign in data : " , userData);
+                console.log(socialPlatform + " sign in data : ", userData);
                 console.log(userData.email);
                 this.authService.signInWithSocial(new SocialPrincipal(
                     userData.id,
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
                         });
                         this.router.navigate(['/']);
                     }, (error) => {
-                        if(error instanceof HttpErrorResponse)
+                        if (error instanceof HttpErrorResponse)
                             this.snackBar.open(error.error.response, null, {
                                 duration: 5000
                             });
@@ -89,14 +89,14 @@ export class LoginComponent implements OnInit {
     login = () => {
         this.loginData = this.loginForm.value;
         this.authService.signIn(this.loginData)
-            .subscribe((token: TokenPair)=>{
+            .subscribe((token: TokenPair) => {
                     this.tokenStorage.saveToken(token);
                     this.snackBar.open('You are successfully authorized', null, {
                         duration: 4000
                     });
                     this.router.navigate(['/']);
                 }, (error) => {
-                    if(error instanceof HttpErrorResponse)
+                    if (error instanceof HttpErrorResponse)
                         this.snackBar.open(error.error.response, null, {
                             duration: 5000
                         });

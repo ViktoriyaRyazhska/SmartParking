@@ -31,13 +31,15 @@ export class LocationFieldComponent implements OnInit {
 
     private previousSelectedItem: AutocompleteItem<any>;
 
-    private selectedItem: AutocompleteItem<any>;
+    public selectedItem: AutocompleteItem<any>;
 
     private readonly valueChangesSubject = new Subject<Location>();
 
     public readonly valueChanges = this.valueChangesSubject.asObservable();
     public name: string;
     private internalValue: Location;
+
+    public defaultValue: Location;
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ipLocationService: IpLocationService,
@@ -54,6 +56,8 @@ export class LocationFieldComponent implements OnInit {
         this.initMapsAPI().then(() => {
             this.requestGeolocation();
         });
+        this.initDefaultLocation();
+
     }
 
     public onLocationInputBlur(): void {
@@ -87,6 +91,14 @@ export class LocationFieldComponent implements OnInit {
             this.autocompleteService = new google.maps.places.AutocompleteService();
             this.controlChangesSubscription = this.control.valueChanges.subscribe(value => this.onValueChange(value));
         });
+    }
+
+    private initDefaultLocation() {
+        if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude')) != undefined) {
+            this.defaultValue = new Location(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'));
+        } else {
+            this.defaultValue = new Location(this.geolocationItem.location.latitude, this.geolocationItem.location.longitude);
+        }
     }
 
     private requestGeolocation(): void {
@@ -226,6 +238,7 @@ export class LocationFieldComponent implements OnInit {
         this.changeDetector.detectChanges();
         setTimeout(() => this.changeDetector.detectChanges(), 1);
     }
+
 }
 
 export abstract class AutocompleteItem<T> {

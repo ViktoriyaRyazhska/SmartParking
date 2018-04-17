@@ -35,16 +35,16 @@ public class FavoriteController {
         Client client = clientService.findOne(
                 SecurityContextHolder.getContext().getAuthentication().getName());
         Boolean isFavorite = parkingService.isFavorite(client.getEmail(), id);
-        if (!isFavorite){
-        favoriteService.save(favoriteRequest.toFavorite(client, parking));
+        if (!isFavorite) {
+            favoriteService.save(favoriteRequest.toFavorite(client, parking));
             return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Parking was added to favorites"));
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Parking is already in favorites"));
         }
     }
 
     @PostMapping("parkingdetail/{id}/deletefromfavorites")
-    ResponseEntity<?> deleteFromFavorites(@PathVariable Long id){
+    ResponseEntity<?> deleteFromFavorites(@PathVariable Long id) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Favorite favorite = favoriteService.findFavoriteByClientEmailAndParkingId(email, id);
         favoriteService.delete(favorite);

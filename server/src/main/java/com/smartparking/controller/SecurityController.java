@@ -114,7 +114,7 @@ public class SecurityController {
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
             return ResponseEntity.ok(new AuthTokenResponse(tokenPair.getAccessToken(), tokenPair.getRefreshToken()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfuly authorized"));
+        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully authorized"));
     }
 
 
