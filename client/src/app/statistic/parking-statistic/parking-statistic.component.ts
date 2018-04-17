@@ -83,6 +83,11 @@ export class ParkingStatisticComponent implements OnInit {
             .subscribe(parkingsStreets => {
                 this.parkingsStreets = parkingsStreets;
             });
+        if (this.parkingsStreets.length < 1) {
+            this.snackBar.open('There is no parkings with such street', null, {
+                duration: 4000
+            });
+        }
     }
 
     findAllParkingsCities() {

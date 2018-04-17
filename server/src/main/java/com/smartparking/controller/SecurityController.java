@@ -69,7 +69,7 @@ public class SecurityController {
         LOGGER.info(email + " = " + user);
         if (user != null && bcryptEncoder.matches(password, user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
+                    new UsernamePasswordAuthenticationToken(email, password)
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
@@ -108,7 +108,7 @@ public class SecurityController {
         }
         if (user != null && bcryptEncoder.matches(request.getId(), user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
+                    new UsernamePasswordAuthenticationToken(email, request.getId())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
