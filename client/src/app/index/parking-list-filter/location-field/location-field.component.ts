@@ -105,17 +105,14 @@ export class LocationFieldComponent implements OnInit {
                     address = (status === google.maps.GeocoderStatus.OK)
                         ? results[0].formatted_address
                         : localStorage.getItem('locationLatitude') + ', ' + +localStorage.getItem('locationLatitude');
-                    var location = new Location(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'));
-                    this.defaultValue = new LocationItem<Location>(location, address, location);
                 } else {
                     console.warn('Google API Geocoder error: ' + status);
                 }
+                var location = new Location(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'));
+                this.defaultValue = new LocationItem<Location>(location, address, location);
             });
-
         } else {
-
             this.defaultValue = this.ipLocationItem;
-
         }
 
     }

@@ -24,7 +24,6 @@ export class ParkingMapComponent implements OnInit {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude') != undefined)) {
-                    console.log('SSSSSSSSSSS');
                     this.lat = +localStorage.getItem('locationLatitude');
                     this.lng = +localStorage.getItem('locationLongtitude');
                 } else {
@@ -32,7 +31,7 @@ export class ParkingMapComponent implements OnInit {
                     this.lng = position.coords.longitude;
                 }
                 if (localStorage.getItem('radius') != undefined) {
-                    this.radius = +localStorage.getItem('radius');
+                    this.radius = +localStorage.getItem('radius') * 1000;
                 } else {
                     this.radius = 5000;
                 }
