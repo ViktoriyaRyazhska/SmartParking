@@ -43,7 +43,7 @@ public class StatisticController {
     @RequestMapping("/findbestparkings")
     public ResponseEntity<List<ParkingItemResponse>> findBestParkings(@RequestParam("city") String city,
                                                                       @RequestParam("street") String street,
-                                                                      @RequestParam("date") String date) {
+                                                                      @RequestParam("days") String date) {
 
         Instant instant = LocalDateTime.now().minusDays(Integer.parseInt(date)).toInstant(ZoneOffset.UTC);
 
@@ -55,7 +55,7 @@ public class StatisticController {
 
     @RequestMapping("/findbestparkingsincity")
     public ResponseEntity<List<ParkingItemResponse>> findBestParkingsInTheCity(@RequestParam("city") String city,
-                                                                               @RequestParam("date") String date) {
+                                                                               @RequestParam("days") String date) {
 
         Instant instant = LocalDateTime.now().minusDays(Integer.parseInt(date)).toInstant(ZoneOffset.UTC);
 
@@ -69,7 +69,7 @@ public class StatisticController {
     public ResponseEntity<List<ParkingItemResponse>> findBestParkingsByLocation(@RequestParam("latitude") String latitude,
                                                                                 @RequestParam("longitude") String longitude,
                                                                                 @RequestParam("radius") String radius,
-                                                                                @RequestParam("date") String date) {
+                                                                                @RequestParam("days") String date) {
 
         Instant instant = LocalDateTime.now().minusDays(Integer.parseInt(date)).toInstant(ZoneOffset.UTC);
 
