@@ -8,17 +8,17 @@
     </h3>
     <span class="example-spacer"></span>
     <span>
-        <button [routerLink]="['/statistic']" mat-icon-button>
+        <button [routerLink]="['/statistic']" mat-icon-button matTooltip="Most popular parking lots!">
             <i class="material-icons">&#xE8E5;</i>
         </button>
     </span>
     <span *ngIf="hasToken()">
-    <button [routerLink]="['/profile']" mat-icon-button>
+    <button [routerLink]="['/profile']" mat-icon-button matTooltip="My profile">
     <mat-icon>&#xE853;</mat-icon>
     </button>
     </span>
     <span *ngIf="getRole() === 'PROVIDER_MANAGER' || getRole() === 'SUPERUSER'">
-        <button [routerLink]="['/configuration']" mat-icon-button>
+        <button [routerLink]="['/configuration']" mat-icon-button matTooltip="Admin configurations">
             <mat-icon>settings</mat-icon>
         </button>
     </span>
