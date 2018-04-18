@@ -16,6 +16,7 @@ export class ParkingMapComponent implements OnInit {
     dir = undefined;
     distance: string;
     radius: number;
+    visibility: boolean;
 
     constructor(private parkingService: ParkingService) {
     }
@@ -45,6 +46,7 @@ export class ParkingMapComponent implements OnInit {
     }
 
     getDirection(lat, lng) {
+        this.visibility = true;
         this.dir = {
             origin: {lat: this.lat, lng: this.lng},
             destination: {lat: lat, lng: lng},
@@ -54,6 +56,10 @@ export class ParkingMapComponent implements OnInit {
             },
             travelMode: 'DRIVING'
         };
+    }
+
+    clearDirection() {
+        this.visibility = false;
     }
 
 }

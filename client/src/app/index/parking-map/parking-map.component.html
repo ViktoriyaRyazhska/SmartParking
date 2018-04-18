@@ -2,7 +2,7 @@
          [longitude]="lng"
          [fullscreenControl]="true"
          [zoom]="10">
-    <agm-direction *ngIf="dir" [drivingOptions]="dir.drivingOptions" [travelMode]="dir.travelMode" [origin]="dir.origin"
+    <agm-direction *ngIf="dir" [visible]="visibility" [drivingOptions]="dir.drivingOptions" [travelMode]="dir.travelMode" [origin]="dir.origin"
                    [destination]="dir.destination">
     </agm-direction>
     <agm-marker [latitude]="lat" [longitude]="lng" [draggable]="true"></agm-marker>

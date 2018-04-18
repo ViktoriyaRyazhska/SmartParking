@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Parking} from '../model/view/parking';
 import {ParkingMapComponent} from './parking-map/parking-map.component';
-import {StatisticsService} from "../statistic/statistics.service";
+import {StatisticsService} from '../statistic/statistics.service';
 
 const MiToKm = 1.60934;
 
@@ -42,6 +42,7 @@ export class IndexComponent implements OnInit {
             this.parkingMap.lat = filter.location.latitude;
             this.parkingMap.lng = filter.location.longitude;
             this.parkingMap.radius = filter.radius * 1000;
+            this.parkingMap.clearDirection();
             this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.filter.radiusMax * 1000).subscribe((response) => {
                 this.hideProgressBar();
                 this.parkings = response.body;
@@ -50,7 +51,7 @@ export class IndexComponent implements OnInit {
                 console.log(error);
                 this.showErrorProgressBar();
             });
-           /* this.findBestParkingsByLocation(
+            /*this.findBestParkingsByLocation(
                 filter.location.latitude,
                 filter.location.longitude,
                 this.filter.radiusMax * 1000, 7);*/
@@ -129,7 +130,7 @@ export class IndexComponent implements OnInit {
             .subscribe(bestParkiings => {
                 this.bestParkiings = bestParkiings;
                 if (this.bestParkiings.length > 0) {
-                    this.snackBar.open('The best nearby parking is on: ' + this.bestParkiings[0].street + " " +
+                    this.snackBar.open('The best nearby parking is on: ' + this.bestParkiings[0].street + ' ' +
                         this.bestParkiings[0].building, null, {
                         duration: 4000
                     });
