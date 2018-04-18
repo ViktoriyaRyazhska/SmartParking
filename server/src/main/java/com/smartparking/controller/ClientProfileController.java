@@ -14,6 +14,7 @@ import com.smartparking.service.ParkingService;
 import com.smartparking.service.PasswordConfirmationService;
 import com.smartparking.service.email.EmailService;
 import com.smartparking.service.impl.SecurityServiceImpl;
+import com.smartparking.service.impl.ExpirationCheckService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,9 @@ public class ClientProfileController {
     @Autowired
     private PasswordConfirmationService passwordConfirmationService;
 
+    @Autowired
+    private ExpirationCheckService expirationCheckService;
+
     @Value("${cross_origin.client}")
     String hostUrl;
 
@@ -81,17 +85,12 @@ public class ClientProfileController {
 
     @PostMapping(value = "/update/password")
     public ResponseEntity saveUser(@RequestBody String uuidFromUrl) {
-        PasswordConfirmation passwordConfirmation = passwordConfirmationService.findByUuid(uuidFromUrl);
-        PasswordRequest passwordRequest = new PasswordRequest();
-        passwordRequest.setPassword(passwordConfirmation.getNewPassword());
-        passwordRequest.setConfirmPassword(passwordConfirmation.getNewPassword());
+        PasswordConfirmation checkedPasswordConfirmation =
+                expirationCheckService.getPasswordConfirmationWithExpirationChecking(uuidFromUrl);
 
-        if (uuidFromUrl.equals(passwordConfirmation.getUuid())) {
-            try {
-                securityServiceImpl.updateClientPassword(passwordRequest);
-            } catch (AuthorizationEx e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
-            }
+        if (uuidFromUrl.equals(checkedPasswordConfirmation.getUuid())) {
+            securityServiceImpl.updateClientEncodedPassword(checkedPasswordConfirmation.getNewPassword());
+            passwordConfirmationService.delete(checkedPasswordConfirmation);
             return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully updated password"));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during password changing"));

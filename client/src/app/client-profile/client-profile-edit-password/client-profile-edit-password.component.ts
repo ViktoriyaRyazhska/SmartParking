@@ -7,9 +7,6 @@ import {InfoResponse} from "../../auth/info-response";
 import { HttpResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 
-const NEW_PASSWORD = 'new_password';
-const UUID_PASSWORD_CONFIRM = 'uuid_password_confirm';
-
 export class PasswordValidation {
 
     static MatchPassword(AC: AbstractControl) {
@@ -58,9 +55,10 @@ export class ClientProfileEditPasswordComponent implements OnInit {
         });
     }
 
-    sendConfirmation = (data: PasswordData) => {
+    sendConfirmation = () => {
         this.passwordData = this.passwordForm.value;
-        this.clientService.sendConfirmation(data).subscribe((response: InfoResponse) => {
+        this.passwordForm.reset();
+        this.clientService.sendConfirmation(this.passwordData).subscribe((response: InfoResponse) => {
             this.snackBar.open('Email with confirmation sent successfuly. Check your email and confirm new password.', null, {
               duration: 5000
             });

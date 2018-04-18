@@ -74,6 +74,12 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
         clientRepository.save(client);
     }
 
+    public void updateClientEncodedPassword(String newEncodedPassword) {
+        Client client = clientRepository.findClientByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        client.setPassword(newEncodedPassword);
+        clientRepository.save(client);
+    }
+
     public void saveClientFromSocialSignInRequest(SocialSignInRequest socialSignInRequest) throws EmailValidationEx, DuplicateEmailEx, FirstnameValidationEx, LastnameValidationEx {
         String[] nameSurname = socialSignInRequest.getName().trim().split("\\s+");
         Client client = new Client();
