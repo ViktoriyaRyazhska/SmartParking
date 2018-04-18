@@ -54,7 +54,7 @@ public class SecurityController {
     @Autowired
     EmailService emailService;
 
-    @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
+    @PostMapping(value = "/generate-token")
     public ResponseEntity register(@RequestBody LoginRequest loginRequest) throws AuthenticationException {
         final String email;
         final String password;
@@ -78,7 +78,7 @@ public class SecurityController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Password is incorrect"));
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @PostMapping("/signup")
     public ResponseEntity saveUser(@RequestBody RegistrationRequest regReq) {
         try {
             securityService.saveClientFromRegistrationRequest(regReq);
@@ -90,32 +90,35 @@ public class SecurityController {
         return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfull registered"));
     }
 
-    @RequestMapping(value = "/social", method = RequestMethod.POST)
+    @PostMapping(value = "/social")
     public ResponseEntity socialSignIn(@RequestBody SocialSignInRequest request) {
         UserDetails user = null;
-        String email = securityService.constructEmailForSocial(request.getEmail(), request.getProvider());
-        while (user == null) {
-            try {
-                user = userService.loadUserByUsername(email);
-            } catch (Exception e) {
-                try {
-                    ((SecurityServiceImpl) userService).saveClientFromSocialSignInRequest(request);
-                } catch (AuthorizationEx ex) {
-                    LOGGER.warn(ex.getMessage());
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
-                }
-            }
+        try {
+            user = userService.loadUserByUsername(request.getEmail());
+        } catch (Exception e) {
+            e.getMessage();
         }
-        if (user != null && bcryptEncoder.matches(request.getId(), user.getPassword())) {
+        System.out.println(user);
+        if (user == null) {
+            System.out.println("Try to register");
+            try {
+                securityService.saveClientFromSocialSignInRequest(request);
+            } catch (AuthorizationEx e) {
+                LOGGER.warn(e.getMessage());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
+            }
+            user = userService.loadUserByUsername(request.getEmail());
+        }
+        if (user != null) {
+            System.out.println(user.getUsername());
+            System.out.println(user.getPassword());
             final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, request.getId())
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
             return ResponseEntity.ok(new AuthTokenResponse(tokenPair.getAccessToken(), tokenPair.getRefreshToken()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully authorized"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new InfoResponse("Sorry, can`t authorize you now."));
     }
-
-
 }
