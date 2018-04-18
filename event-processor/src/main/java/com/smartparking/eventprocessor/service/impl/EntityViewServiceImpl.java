@@ -42,6 +42,17 @@ public class EntityViewServiceImpl implements EntityViewService {
     }
 
     @Override
+    public Spot getSpotByNumberAndParkingToken(Long spotNumber, String parkingToken) {
+        Spot spot = spots.values()
+                .stream()
+                .filter(spotPredicate -> spotPredicate.getParking().getToken().equals(parkingToken))
+                .filter(spotPredicate -> spotPredicate.getSpotNumber().equals(spotNumber))
+                .findFirst().orElse(null);
+        return spot;
+    }
+
+
+    @Override
     public boolean containsSpot(Long spotId) {
         return spots.containsKey(spotId);
     }
@@ -52,7 +63,7 @@ public class EntityViewServiceImpl implements EntityViewService {
     }
 
     @Override
-    public synchronized void addSpot(Long spotId, Long parkingId) {
+    public synchronized void addSpot(Long spotId, Long parkingId, Long spotNumber) {
         if (spots.containsKey(spotId)) {
             throw new IllegalStateException("Spot with id=" + spotId + " does not exists.");
         }
@@ -60,7 +71,7 @@ public class EntityViewServiceImpl implements EntityViewService {
         if (parking == null) {
             throw new IllegalStateException("Parking with id=" + parkingId + " does not exists.");
         }
-        spots.put(spotId, new Spot(spotId, parking));
+        spots.put(spotId, new Spot(spotId, parking, spotNumber));
     }
 
     @Override

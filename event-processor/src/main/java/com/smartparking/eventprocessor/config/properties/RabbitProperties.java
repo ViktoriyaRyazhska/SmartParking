@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("eventprocessor.rabbit")
 public class RabbitProperties {
-    private String spotAddQueueName = "spot-add-queue";
-    private String spotDeleteQueueName = "spot-delete-queue";
-    private String parkingAddQueueName = "parking-add-queue";
-    private String parkingDeleteQueueName = "parking-delete-queue";
-    private String parkingTokenChangeQueueName = "parking-token-change-queue";
+    private String spotAddQueueName;
+    private String spotDeleteQueueName;
+    private String parkingAddQueueName;
+    private String parkingDeleteQueueName;
+    private String parkingTokenChangeQueueName;
 }

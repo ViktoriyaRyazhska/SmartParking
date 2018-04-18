@@ -3,12 +3,12 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Ivan" id="201803302045" dbms="MYSQL">
+    <changeSet author="Ivan" id="201804182025" dbms="MYSQL">
         <sql>
-            ALTER TABLE client
-            ADD COLUMN image LONGBLOB NULL DEFAULT NULL AFTER provider_id;
+            ALTER TABLE spot
+            ADD COLUMN spot_number bigint(20) NOT NULL AFTER parking_id;
         </sql>
-        <comment>Alter table Client</comment>
+        <comment>Alter table spot</comment>
     </changeSet>
 
 </databaseChangeLog>

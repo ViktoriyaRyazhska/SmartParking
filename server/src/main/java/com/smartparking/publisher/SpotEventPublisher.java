@@ -4,7 +4,7 @@ import com.smartparking.config.properties.RabbitProperties;
 import com.smartparking.entity.Spot;
 import com.smartparking.model.event.SpotAddEvent;
 import com.smartparking.model.event.SpotDeleteEvent;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class SpotEventPublisher {
     private RabbitProperties rabbitProperties;
 
     @Autowired
-    private AmqpTemplate amqpTemplate;
+    private RabbitTemplate amqpTemplate;
 
     public void publishSave(Spot spot) {
         if (spot.getId() == null) {

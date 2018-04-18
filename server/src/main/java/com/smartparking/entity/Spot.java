@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,10 @@ public class Spot extends AbstractIdentifiableEntity {
 
     @OneToMany(mappedBy = "spot")
     private List<Event> events;
+
+    @NotNull
+    @Column(name = "spot_number", nullable = false)
+    private Long spotNumber;
 
     public Spot(Long id) {
         super(id);

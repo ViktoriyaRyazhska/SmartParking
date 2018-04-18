@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class SpotAddEvent {
     private Long spotId;
     private Long parkingId;
+    private Long spotNumber;
 }

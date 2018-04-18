@@ -1,11 +1,7 @@
 package com.smartparking.eventprocessor.model.view;
 
 import com.smartparking.eventprocessor.model.request.UnverifiedEventRequest;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @ToString(callSuper = true)
@@ -15,9 +11,11 @@ import lombok.ToString;
 public class UnverifiedEvent extends Event {
 
     private String parkingToken;
+    private Long spotNumber;
 
     public UnverifiedEvent(UnverifiedEventRequest request) {
         super(request);
         this.parkingToken = request.getParkingToken();
+        this.spotNumber = request.getSpotNumber();
     }
 }

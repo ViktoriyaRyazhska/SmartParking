@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class Spot {
     private Long id;
     private Parking parking;
+    private Long spotNumber;
 }

@@ -17,6 +17,6 @@ public abstract class Event {
     private Instant timestamp;
 
     public Event(UnverifiedEventRequest request) {
-        this(request.getSpotId(), request.getEventType(), Instant.ofEpochMilli(request.getTimestamp()));
+        this(request.getSpotId(), request.getEventType(), request.getTimestamp());
     }
 }

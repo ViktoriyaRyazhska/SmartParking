@@ -5,8 +5,7 @@ import com.smartparking.entity.Parking;
 import com.smartparking.model.event.ParkingAddEvent;
 import com.smartparking.model.event.ParkingDeleteEvent;
 import com.smartparking.model.event.ParkingTokenChangeEvent;
-import com.smartparking.service.ParkingService;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,27 +16,14 @@ public class ParkingEventPublisher {
     private RabbitProperties rabbitProperties;
 
     @Autowired
-    private ParkingService parkingService;
+    private RabbitTemplate amqpTemplate;
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
-
-    public void publishSave(Parking parking) {
-        Long parkingId = parking.getId();
-        if (parkingId != null) {
-            if (checkTokenChanged(parking, parkingId)) {
-                publishTokenChange(parking);
-            }
+    public void publishSave(Parking parking, long parkingId) {
+        if (parkingId != 0) {
+            publishTokenChange(parking);
         } else {
             publishAdd(parking);
         }
-    }
-
-    private boolean checkTokenChanged(Parking parking, Long parkingId) {
-        return parkingService
-                .findById(parkingId)
-                .filter(p -> !p.getToken().equals(parking.getToken()))
-                .isPresent();
     }
 
     public void publishAdd(Parking parking) {

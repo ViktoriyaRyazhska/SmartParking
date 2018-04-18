@@ -10,11 +10,13 @@ public interface EntityViewService {
 
     Spot getSpot(Long spotId);
 
+    Spot getSpotByNumberAndParkingToken(Long spotNumber, String parkingToken);
+
     boolean containsSpot(Long spotId);
 
     boolean containsParking(Long parkingId);
 
-    void addSpot(Long spotId, Long parkingId);
+    void addSpot(Long spotId, Long parkingId, Long spotNumber);
 
     void deleteSpot(Long spotId);
 

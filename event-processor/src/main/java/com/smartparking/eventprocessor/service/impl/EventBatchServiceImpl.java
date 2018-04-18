@@ -71,8 +71,14 @@ public class EventBatchServiceImpl implements EventBatchService {
 
     private boolean verify(Event event) {
         if (event instanceof UnverifiedEvent) {
-            Spot spot = entityViewService.getSpot(event.getSpotId());
-            return spot != null && spot.getParking().getToken().equals(((UnverifiedEvent) event).getParkingToken());
+//            Spot spot = entityViewService.getSpot(event.getSpotId());
+            Spot spot = entityViewService.getSpotByNumberAndParkingToken(((UnverifiedEvent) event).getSpotNumber(), ((UnverifiedEvent) event).getParkingToken());
+            if (spot != null) {
+                event.setSpotId(spot.getId());
+                return spot.getParking().getToken().equals(((UnverifiedEvent) event).getParkingToken())
+                        && spot.getSpotNumber().equals(((UnverifiedEvent) event).getSpotNumber());
+            }
+            return false;
         } else {
             return true;
         }

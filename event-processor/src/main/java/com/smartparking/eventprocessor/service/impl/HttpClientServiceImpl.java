@@ -13,17 +13,26 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class HttpClientServiceImpl implements HttpClientService {
+    private SSLContext sslContext;
+    private HttpClient client;
 
-    private final HttpClient client = HttpClients.createDefault();
+    public HttpClientServiceImpl() {
+        initHttpClient();
+    }
 
     @Autowired
     private HttpClientProperties httpClientProperties;
@@ -60,7 +69,6 @@ public class HttpClientServiceImpl implements HttpClientService {
         if (token != null) {
             httpPost.setHeader("Authorization", "Bearer " + token);
         }
-
         StringEntity httpEntity = new StringEntity(objectMapper.writeValueAsString(request), Charset.forName("UTF-8"));
         httpEntity.setContentType("application/json");
         httpPost.setEntity(httpEntity);
@@ -95,6 +103,23 @@ public class HttpClientServiceImpl implements HttpClientService {
             final ErrorResponse content = objectMapper.readValue(
                     httpResponse.getEntity().getContent(), ErrorResponse.class);
             throw new HttpStatusException(httpStatus, content);
+        }
+    }
+
+    private void initHttpClient() {
+        try {
+            sslContext = new SSLContextBuilder().loadTrustMaterial(null, (certificate, authType) -> true).build();
+//            client = HttpClients.custom()
+//                    .setSSLContext(sslContext)
+//                    .setSSLHostnameVerifier(new NoopHostnameVerifier())
+//                    .build();
+            client = HttpClients.createDefault();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
         }
     }
 }

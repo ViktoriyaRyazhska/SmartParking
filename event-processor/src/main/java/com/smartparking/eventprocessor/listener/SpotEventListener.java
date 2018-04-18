@@ -18,7 +18,7 @@ public class SpotEventListener {
     @RabbitListener(queues = "${eventprocessor.rabbit.spot-add-queue-name}")
     public void consumeAdd(SpotAddEvent event) {
         try {
-            entityViewService.addSpot(event.getSpotId(), event.getParkingId());
+            entityViewService.addSpot(event.getSpotId(), event.getParkingId(), event.getSpotNumber());
             log.info("Spot added from EntityViewService: spotId={}", event.getSpotId());
         } catch (IllegalStateException ex) {
             log.error("Spot does not added from EntityViewService: spotId={}, exception={}", event.getSpotId(), ex);

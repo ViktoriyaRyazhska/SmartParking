@@ -12,6 +12,7 @@ import com.smartparking.eventprocessor.model.view.Spot;
 import com.smartparking.eventprocessor.service.HttpClientService;
 import com.smartparking.eventprocessor.service.ServerService;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ServerServiceImpl implements ServerService {
 
@@ -76,7 +78,7 @@ public class ServerServiceImpl implements ServerService {
             return response.stream().
                     flatMap(p -> {
                         Parking parking = new Parking(p.getId(), p.getToken());
-                        return p.getSpots().stream().map(s -> new Spot(s.getId(), parking));
+                        return p.getSpots().stream().map(s -> new Spot(s.getId(), parking, s.getSpotNumber()));
                     })
                     .collect(Collectors.toList());
         } catch (IOException ex) {
