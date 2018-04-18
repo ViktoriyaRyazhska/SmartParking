@@ -4,8 +4,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {MapsAPILoader} from '@agm/core';
 import {IpLocation, IpLocationService} from '../../../service/ip-location.service';
 import {Subject} from 'rxjs/Subject';
-import {MatAutocomplete, MatOption, MatSlider} from '@angular/material';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'app-parking-list-filter-location-field',
@@ -37,10 +35,10 @@ export class LocationFieldComponent implements OnInit {
     private readonly valueChangesSubject = new Subject<Location>();
 
     public readonly valueChanges = this.valueChangesSubject.asObservable();
-    public name: string;
+
     private internalValue: Location;
 
-    public defaultValue: LocationItem<any>;
+    public defaultValue = new LocationItem(null, "", null);
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ipLocationService: IpLocationService,
@@ -112,7 +110,7 @@ export class LocationFieldComponent implements OnInit {
                 this.defaultValue = new LocationItem<Location>(location, address, location);
             });
         } else {
-            this.defaultValue = this.ipLocationItem;
+            this.defaultValue = this.geolocationItem;
         }
 
     }

@@ -36,9 +36,6 @@ public class ParkingController {
     private SpotService spotService;
 
     @Autowired
-    private ParkingService addressService;
-
-    @Autowired
     private ParkingEventPublisher parkingEventPublisher;
 
     @RequestMapping("parkings-nearby")
