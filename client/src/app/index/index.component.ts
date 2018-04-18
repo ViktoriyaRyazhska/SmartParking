@@ -41,6 +41,7 @@ export class IndexComponent implements OnInit {
             this.showLoadingProgressBar();
             this.parkingMap.lat = filter.location.latitude;
             this.parkingMap.lng = filter.location.longitude;
+            this.parkingMap.radius = filter.radius * 1000;
             this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.filter.radiusMax * 1000).subscribe((response) => {
                 this.hideProgressBar();
                 this.parkings = response.body;
@@ -49,10 +50,10 @@ export class IndexComponent implements OnInit {
                 console.log(error);
                 this.showErrorProgressBar();
             });
-            this.findBestParkingsByLocation(
+           /* this.findBestParkingsByLocation(
                 filter.location.latitude,
                 filter.location.longitude,
-                this.filter.radiusMax * 1000, 7);
+                this.filter.radiusMax * 1000, 7);*/
         });
     }
 
