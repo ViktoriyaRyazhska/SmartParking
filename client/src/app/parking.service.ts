@@ -41,10 +41,8 @@ export class ParkingService {
     getAvailableSpotsByParkingId(id: number): Observable<Spot[]> {
         return this.http.get<Spot[]>(this.parkingDetailUrl + id + '/freespots');
     }
-
-  
-
-
+    
+    
     saveToFavorite(id: number, favorite: Favorite): Observable<HttpResponse<any>>{
         return this.http.post<HttpResponse<any>>(
             this.parkingDetailUrl + id + '/savetofavorites', favorite, {observe: 'response'});
@@ -55,9 +53,6 @@ export class ParkingService {
             this.parkingDetailUrl + id + '/deletefromfavorites', {observe: 'response'}
         );
     }
-
-
-
 
     getSpotStatistic(id: number, start_time:string, end_time:string): Observable<SpotStatistic[]> {
            

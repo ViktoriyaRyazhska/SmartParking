@@ -75,7 +75,7 @@ public class SecurityController {
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
             return ResponseEntity.ok(new AuthTokenResponse(tokenPair.getAccessToken(), tokenPair.getRefreshToken()));
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Password is incorrect"));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Email or password is incorrect."));
     }
 
     @PostMapping("/signup")
