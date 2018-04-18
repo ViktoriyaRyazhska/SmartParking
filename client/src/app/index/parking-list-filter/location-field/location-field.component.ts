@@ -38,7 +38,7 @@ export class LocationFieldComponent implements OnInit {
 
     private internalValue: Location;
 
-    public defaultValue = new LocationItem(null, "", null);
+    public defaultValue = new LocationItem(null, '', null);
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ipLocationService: IpLocationService,
@@ -93,7 +93,7 @@ export class LocationFieldComponent implements OnInit {
     }
 
     private initDefaultLocation() {
-        if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude')) != null) {
+        if (localStorage.getItem('locationLatitude') != null && localStorage.getItem('locationLongtitude') != null) {
             let address;
             let request = <google.maps.GeocoderRequest> {
                 location: new google.maps.LatLng(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude')),
@@ -110,7 +110,21 @@ export class LocationFieldComponent implements OnInit {
                 this.defaultValue = new LocationItem<Location>(location, address, location);
             });
         } else {
-            this.defaultValue = this.geolocationItem;
+            let address;
+            let request = <google.maps.GeocoderRequest> {
+                location: new google.maps.LatLng(49.843977, 24.026318),
+            };
+            this.geocodeService.geocode(request, (results, status) => {
+                if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
+                    address = (status === google.maps.GeocoderStatus.OK)
+                        ? results[0].formatted_address
+                        : 49.843977 + ', ' + 24.026318;
+                } else {
+                    console.warn('Google API Geocoder error: ' + status);
+                }
+                var location = new Location(49.843977, 24.026318);
+                this.defaultValue = new LocationItem<Location>(location, address, location);
+            });
         }
 
     }

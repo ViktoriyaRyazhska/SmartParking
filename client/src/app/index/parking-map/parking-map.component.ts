@@ -24,7 +24,7 @@ export class ParkingMapComponent implements OnInit {
     ngOnInit() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude') != undefined)) {
+                if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude') != null)) {
                     this.lat = +localStorage.getItem('locationLatitude');
                     this.lng = +localStorage.getItem('locationLongtitude');
                 } else {
