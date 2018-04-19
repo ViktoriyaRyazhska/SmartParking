@@ -1,8 +1,10 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Spot;
+import com.smartparking.model.request.SpotRequest;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
+import com.smartparking.publisher.SpotEventPublisher;
 import com.smartparking.service.SpotService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,20 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class SpotController {
 
     private final SpotService spotService;
     private static final Logger LOGGER = LoggerFactory.getLogger(SpotController.class);
+
+    @Autowired
+    SpotEventPublisher spotEventPublisher;
 
 
 
@@ -39,7 +39,7 @@ public class SpotController {
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
         for (Spot spot : allSpots) {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
-            spotStatusResponse.setId(spot.getId());
+            spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(freeSpots.contains(spot));
             spotStatusResponseList.add(spotStatusResponse);
         }
@@ -52,7 +52,7 @@ public class SpotController {
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
         for (Spot spot : freeSpots) {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
-            spotStatusResponse.setId(spot.getId());
+            spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(true);
             spotStatusResponseList.add(spotStatusResponse);
         }
@@ -70,6 +70,26 @@ public class SpotController {
         List<SpotStatisticResponse> spotStatisticResponseList =
                 spotService.getSpotStatistic(id,Long.parseLong(startTime),Long.parseLong(endTime));
         return new ResponseEntity<>(spotStatisticResponseList, HttpStatus.OK);
+    }
+
+    @PostMapping("/manager-configuration/spot/save")
+    public ResponseEntity<?> save(@RequestBody SpotRequest spotRequest) {
+        Spot spot = spotRequest.toSpot();
+        long spotId = 0;
+        if (spot.getId() != null) {
+            spotId = spot.getId();
+        }
+        spotService.save(spot);
+        spotEventPublisher.publishSave(spot, spotId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/manager-configuration/spot/delete")
+    public ResponseEntity<?> delete(@RequestBody SpotRequest spotRequest) {
+        Spot spot = spotRequest.toSpot();
+        spotService.delete(spot);
+        spotEventPublisher.publishDelete(spot);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

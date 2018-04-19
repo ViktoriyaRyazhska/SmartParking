@@ -20,6 +20,8 @@ public interface EntityViewService {
 
     void deleteSpot(Long spotId);
 
+    void updateSpotNumber(Long spotId, Long spotNumber);
+
     void deleteParking(Long parkingId);
 
     void addParking(Long parkingId, String token);

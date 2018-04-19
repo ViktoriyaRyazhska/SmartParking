@@ -1,8 +1,8 @@
 package com.smartparking.eventprocessor.service;
 
 import com.smartparking.eventprocessor.controller.exception.FailureException;
+import com.smartparking.eventprocessor.model.response.ParkingWithSpotsResponse;
 import com.smartparking.eventprocessor.model.view.Event;
-import com.smartparking.eventprocessor.model.view.Spot;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,7 +16,7 @@ public interface ServerService {
 
     boolean isAuthenticated();
 
-    List<Spot> getSpots() throws IOException, FailureException;
+    List<ParkingWithSpotsResponse> getParkingsWithSpots() throws IOException, FailureException;
 
     void sendEvents(Collection<? extends Event> events) throws IOException;
 

@@ -1,17 +1,16 @@
 package com.smartparking.controller;
 
-import com.smartparking.model.request.SocialSignInRequest;
-import com.smartparking.security.exception.*;
-import com.smartparking.model.request.RegistrationRequest;
-import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.request.LoginRequest;
+import com.smartparking.model.request.RegistrationRequest;
+import com.smartparking.model.request.SocialSignInRequest;
+import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.response.InfoResponse;
+import com.smartparking.security.exception.AuthorizationEx;
 import com.smartparking.security.tokens.TokenPair;
-import com.smartparking.service.SecurityService;
-import com.smartparking.service.email.EmailService;
-import com.smartparking.service.impl.SecurityServiceImpl;
 import com.smartparking.security.tokens.TokenUtil;
 import com.smartparking.security.utils.Validator;
+import com.smartparking.service.SecurityService;
+import com.smartparking.service.email.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -58,6 +60,7 @@ public class SecurityController {
     public ResponseEntity register(@RequestBody LoginRequest loginRequest) throws AuthenticationException {
         final String email;
         final String password;
+        final UserDetails user;
         try {
             email = validator.validateEmailOnLogin(loginRequest.getEmail());
             password = validator.validatePassword(loginRequest.getPassword());
@@ -65,7 +68,11 @@ public class SecurityController {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
-        final UserDetails user = userService.loadUserByUsername(email);
+        try {
+            user = userService.loadUserByUsername(email);
+        } catch (AuthenticationException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("User is blocked."));
+        }
         LOGGER.info(email + " = " + user);
         if (user != null && bcryptEncoder.matches(password, user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(

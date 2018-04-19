@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitProperties {
     private String spotAddQueueName;
     private String spotDeleteQueueName;
+    private String spotNumberChangeQueueName;
     private String parkingAddQueueName;
     private String parkingDeleteQueueName;
     private String parkingTokenChangeQueueName;

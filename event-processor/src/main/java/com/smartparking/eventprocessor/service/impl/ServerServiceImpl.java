@@ -7,8 +7,6 @@ import com.smartparking.eventprocessor.model.request.VerifiedEventRequest;
 import com.smartparking.eventprocessor.model.response.AuthTokenResponse;
 import com.smartparking.eventprocessor.model.response.ParkingWithSpotsResponse;
 import com.smartparking.eventprocessor.model.view.Event;
-import com.smartparking.eventprocessor.model.view.Parking;
-import com.smartparking.eventprocessor.model.view.Spot;
 import com.smartparking.eventprocessor.service.HttpClientService;
 import com.smartparking.eventprocessor.service.ServerService;
 import lombok.Getter;
@@ -69,18 +67,13 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public List<Spot> getSpots() throws IOException {
+    public List<ParkingWithSpotsResponse> getParkingsWithSpots() throws IOException {
         try {
             authenticateIfNeeded();
             List<ParkingWithSpotsResponse> response = httpClientService.getAndReceiveBody(
                     "/parkings-with-spots", null, token, new TypeReference<List<ParkingWithSpotsResponse>>() {});
             serverStatus = ServerStatus.AVAILABLE;
-            return response.stream().
-                    flatMap(p -> {
-                        Parking parking = new Parking(p.getId(), p.getToken());
-                        return p.getSpots().stream().map(s -> new Spot(s.getId(), parking, s.getSpotNumber()));
-                    })
-                    .collect(Collectors.toList());
+            return response;
         } catch (IOException ex) {
             serverStatus = ServerStatus.UNAVAILABLE;
             throw ex;

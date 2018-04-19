@@ -62,4 +62,9 @@ public class RabbitConfiguration {
     public Queue parkingTokenChangeQueue() {
         return new Queue(rabbitProperties.getParkingTokenChangeQueueName());
     }
+
+    @Bean
+    public Queue spotNumberChangeQueue() {
+        return new Queue(rabbitProperties.getSpotNumberChangeQueueName());
+    }
 }

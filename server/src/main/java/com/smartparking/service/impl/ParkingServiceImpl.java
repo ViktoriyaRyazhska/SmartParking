@@ -63,16 +63,18 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     @Override
     public List<ParkingWithSpotsResponse> findAllWithSpotsResponse() {
         Map<Long, ParkingWithSpotsResponse> responses = new HashMap<>();
+        ParkingWithSpotsResponse parkingResponse;
+        for (Parking parking : getRepository().findAll()) {
+            parkingResponse = new ParkingWithSpotsResponse();
+            parkingResponse.setId(parking.getId());
+            parkingResponse.setToken(parking.getToken());
+            parkingResponse.setSpots(new ArrayList<>());
+            responses.put(parking.getId(), parkingResponse);
+        }
+
         for (Spot spot : spotService.findAll()) {
             Long parkingId = spot.getParking().getId();
-            ParkingWithSpotsResponse parkingResponse = responses.get(parkingId);
-            if (parkingResponse == null) {
-                parkingResponse = new ParkingWithSpotsResponse();
-                parkingResponse.setId(parkingId);
-                parkingResponse.setToken(spot.getParking().getToken());
-                parkingResponse.setSpots(new ArrayList<>());
-                responses.put(parkingId, parkingResponse);
-            }
+            parkingResponse = responses.get(parkingId);
             parkingResponse.getSpots().add(new SpotResponse(spot.getId(), spot.getSpotNumber()));
         }
         return new ArrayList<>(responses.values());

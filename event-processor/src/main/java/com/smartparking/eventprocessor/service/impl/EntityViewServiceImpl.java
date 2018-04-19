@@ -1,5 +1,7 @@
 package com.smartparking.eventprocessor.service.impl;
 
+import com.smartparking.eventprocessor.model.response.ParkingWithSpotsResponse;
+import com.smartparking.eventprocessor.model.response.SpotResponse;
 import com.smartparking.eventprocessor.model.view.Parking;
 import com.smartparking.eventprocessor.model.view.Spot;
 import com.smartparking.eventprocessor.service.EntityViewService;
@@ -9,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class EntityViewServiceImpl implements EntityViewService {
@@ -21,18 +24,23 @@ public class EntityViewServiceImpl implements EntityViewService {
     @Autowired
     private ServerService serverService;
 
-    private Map<Long, Parking> parkings;
+    private Map<Long, Parking> parkings = new ConcurrentHashMap<>();
 
-    private Map<Long, Spot> spots;
+    private Map<Long, Spot> spots = new ConcurrentHashMap<>();
 
     @Override
     public synchronized void update() throws IOException {
-        spots = serverService.getSpots().stream()
-                .collect(Collectors.toConcurrentMap(Spot::getId, s -> s));
-        parkings = spots.values().stream()
-                .map(Spot::getParking)
-                .distinct()
-                .collect(Collectors.toConcurrentMap(Parking::getId, p -> p));
+        List<ParkingWithSpotsResponse> parkingsWithSpots = serverService.getParkingsWithSpots();
+        parkings.clear();
+        spots.clear();
+        for (ParkingWithSpotsResponse p : parkingsWithSpots) {
+            Parking parking = new Parking(p.getId(), p.getToken());
+            parkings.put(p.getId(), parking);
+            for (SpotResponse s : p.getSpots()) {
+                spots.put(s.getId(), new Spot(s.getId(), parking, s.getSpotNumber()));
+            }
+        }
+
         initialized = true;
     }
 
@@ -89,6 +97,15 @@ public class EntityViewServiceImpl implements EntityViewService {
             throw new IllegalArgumentException("Parking with id=" + parkingId + " does not exists.");
         }
         spots.values().removeIf(s -> s.getParking().getId().equals(parking.getId()));
+    }
+
+    @Override
+    public synchronized void updateSpotNumber(Long spotId, Long spotNumber) {
+        Spot spot = spots.get(spotId);
+        if (spot == null) {
+            throw new IllegalStateException("Spot with id=" + spotId + " does not exists.");
+        }
+        spot.setSpotNumber(spotNumber);
     }
 
     @Override
