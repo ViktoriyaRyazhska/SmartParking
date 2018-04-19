@@ -19,7 +19,7 @@ export class SpotstatisticComponent implements OnInit {
 
     statistic: SpotStatistic[];
 
-
+    id: number;
     thirtySecInterval: number = 30000;
     favoriteNameInputHide: boolean = true;
     minDate: Date;
@@ -27,9 +27,6 @@ export class SpotstatisticComponent implements OnInit {
     startTime: Date;
     endTime: Date;
     tempDate: Date;
-    minMonth: number;
-    maxMonth: number;
-
     start_date: string;
     end_date: string;
     hoursChart = [];
@@ -45,8 +42,7 @@ export class SpotstatisticComponent implements OnInit {
         this.minDate = new Date();
         this.minDate.setDate(this.minDate.getDate() - 7);
         this.maxDate = new Date();
-        this.minMonth = this.minDate.getMonth() + 1;
-        this.maxMonth = this.maxDate.getMonth() + 1;
+        this.id = parseInt(this.route.snapshot.paramMap.get('id'));
 
 
     }
@@ -165,19 +161,7 @@ export class SpotstatisticComponent implements OnInit {
     }
 
     getSpotStatistic(): void {
-        const id = parseInt(this.route.snapshot.paramMap.get('id'));
-        this.router.navigate(['parkingdetail/' + id + '/spotstatistic'],
-            {
-                queryParams: {
-                    start_day: this.minDate.getDate(),
-                    start_month: this.minDate.getMonth(),
-                    start_year: this.minDate.getFullYear(),
-                    end_day: this.maxDate.getDate(),
-                    end_month: this.maxDate.getMonth(),
-                    end_year: this.maxDate.getFullYear()
-                }
-            }
-        );
+        this.setData();
         this.startTime = new Date();
         this.endTime = new Date();
         this.startTime.setDate(this.route.snapshot.queryParams["start_day"]);
@@ -186,30 +170,17 @@ export class SpotstatisticComponent implements OnInit {
         this.endTime.setDate(this.route.snapshot.queryParams["end_day"]);
         this.endTime.setMonth(this.route.snapshot.queryParams["end_month"]);
         this.endTime.setFullYear(this.route.snapshot.queryParams["end_year"]);
-        console.log('this.minDate =' + this.startTime.toString());
-        console.log('this.maxDate =' + this.endTime.toString());
-        this.parkingService.getSpotStatistic(id,
-            this.minDate.getTime().toString(), this.maxDate.getTime().toString())
-            .subscribe(statistic => this.statistic = statistic);
-        /*  this.parkingService.getSpotStatistic(id,
+              this.parkingService.getSpotStatistic(this.id,
             this.startTime.getTime().toString(), this.endTime.getTime().toString())
-            .subscribe(statistic => this.statistic = statistic);*/
+            .subscribe(statistic => this.statistic = statistic);
 
     }
 
 
     addItem() {
-
-        if (this.minDate > this.maxDate) {
-            this.tempDate = this.minDate;
-            this.minDate = this.maxDate;
-            this.maxDate = this.tempDate;
-        }
-
-        this.getSpotStatistic();
-
-
+              this.getSpotStatistic();
     }
+
 
 
     showHoursGraphic() {
@@ -228,7 +199,49 @@ export class SpotstatisticComponent implements OnInit {
         this.router.navigate(['parkingdetail/' + id]);
     }
 
+setData(): void
+{
+     
+    this.router.navigate(['parkingdetail/' + this.id + '/spotstatistic'],
+    {
+        queryParams: {
+            start_day: this.minDate.getDate(),
+            start_month: this.minDate.getMonth()+1,
+            start_year: this.minDate.getFullYear(),
+            end_day: this.maxDate.getDate(),
+            end_month: this.minDate.getMonth()+1,
+            end_year: this.maxDate.getFullYear()
+        }
+    }
+);
 
 }
 
+checkData(): void {
+    if (this.minDate > this.maxDate) {
+        this.tempDate = this.minDate;
+        this.minDate = this.maxDate;
+        this.maxDate = this.tempDate;
+    }
+    if (this.maxDate < this.minDate) {
+        this.tempDate = this.minDate;
+        this.minDate = this.maxDate;
+        this.maxDate = this.tempDate;
+    }
+    
+    }
 
+    setMinData(): void {
+      this.setData();
+      this.checkData();
+    
+    }
+
+    setMaxData(): void {
+        this.setData();
+        this.checkData();
+    }
+       
+
+
+}
