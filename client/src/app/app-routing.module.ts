@@ -27,6 +27,7 @@ import {NonFoundComponent} from "./errors/non-found/non-found.component";
 import {InternalServerErrorComponent} from "./errors/internal-server-error/internal-server-error.component";
 import {ForbiddenComponent} from "./errors/forbidden/forbidden.component";
 import { ClientPasswordChangeConfirmationComponent } from './client-profile/client-password-change-confirmation/client-password-change-confirmation.component';
+import { RegistarationConfirmationComponent } from './auth/registration/registaration-confirmation/registaration-confirmation.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -62,6 +63,7 @@ const routes: Routes = [
     {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
      {path: 'parkingdetail/:id/spotstatistic', component: SpotstatisticComponent},
     {path: 'update/password/:uuid', component: ClientPasswordChangeConfirmationComponent},
+    {path: 'activate/:uuid', component: RegistarationConfirmationComponent},
    
     {path: 'non-found', component: NonFoundComponent},
     {path: 'server-error', component: InternalServerErrorComponent},

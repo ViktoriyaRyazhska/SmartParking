@@ -76,6 +76,7 @@ import {NonFoundComponent} from './errors/non-found/non-found.component';
 import {InternalServerErrorComponent} from './errors/internal-server-error/internal-server-error.component';
 import {ForbiddenComponent} from './errors/forbidden/forbidden.component';
 import {httpInterceptorProviders} from './interceptors/http-interceptors';
+import { RegistarationConfirmationComponent } from '../app/auth/registration/registaration-confirmation/registaration-confirmation.component';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -138,7 +139,8 @@ export function getAuthServiceConfigs() {
         ForbiddenComponent,
         SpotstatisticComponent,
         ClientPasswordChangeConfirmationComponent,
-        ParkingMapComponent
+        ParkingMapComponent,
+        RegistarationConfirmationComponent
     ],
     imports: [
         AgmCoreModule.forRoot({

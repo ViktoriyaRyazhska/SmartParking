@@ -14,6 +14,7 @@ export class ClientService {
 
     private clientsUrl = environment.apiUrl + '/clients';
     private clientProfile = environment.apiUrl + '/profile';
+    private clientActivateUrl = environment.apiUrl + '/auth';
 
     constructor(private http: HttpClient) {
     }
@@ -68,6 +69,10 @@ export class ClientService {
 
     sendConfirmation(data: PasswordData): Observable<any>{
         return this.http.post(this.clientProfile + '/update/password/confirm',data);
+    }
+
+    activateUser(uuid: string): Observable<any>{
+        return this.http.post(this.clientActivateUrl + '/activate', uuid);
     }
 
     getFavoritesParkingsForClient(): Observable<Parking[]> {

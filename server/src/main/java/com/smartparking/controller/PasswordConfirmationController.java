@@ -1,10 +1,10 @@
 package com.smartparking.controller;
 
-import com.smartparking.entity.PasswordConfirmation;
+import com.smartparking.entity.TemporaryDataConfirmation;
 import com.smartparking.model.request.PasswordRequest;
 import com.smartparking.model.response.InfoResponse;
 import com.smartparking.service.ClientService;
-import com.smartparking.service.PasswordConfirmationService;
+import com.smartparking.service.TemporaryDataConfirmationService;
 import com.smartparking.service.email.EmailService;
 import com.smartparking.service.impl.ExpirationCheckService;
 import com.smartparking.service.impl.SecurityServiceImpl;
@@ -28,7 +28,7 @@ public class PasswordConfirmationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PasswordConfirmationController.class);
 
     @Autowired
-    private PasswordConfirmationService passwordConfirmationService;
+    private TemporaryDataConfirmationService temporaryDataConfirmationService;
 
     @Autowired
     private ExpirationCheckService expirationCheckService;
@@ -45,28 +45,28 @@ public class PasswordConfirmationController {
     @Value("${cross_origin.client}")
     String hostUrl;
 
-    @PostMapping(value = "/update/password")
-    public ResponseEntity saveUser(@RequestBody String uuidFromUrl) {
-        PasswordConfirmation checkedPasswordConfirmation =
-                expirationCheckService.getPasswordConfirmationWithExpirationChecking(uuidFromUrl);
+    @PostMapping(value = "/profile/update/password")
+    public ResponseEntity saveUserPassword(@RequestBody String uuidFromUrl) {
+        TemporaryDataConfirmation checkedTemporaryDataConfirmation =
+                expirationCheckService.getTemporaryDataConfirmationWithExpirationChecking(uuidFromUrl);
 
-        if (uuidFromUrl.equals(checkedPasswordConfirmation.getUuid())) {
-            securityServiceImpl.updateClientEncodedPassword(checkedPasswordConfirmation.getNewPassword());
-            passwordConfirmationService.delete(checkedPasswordConfirmation);
+        if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.getUuid())) {
+            securityServiceImpl.updateClientEncodedPassword(checkedTemporaryDataConfirmation.getNewPassword());
+            temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation);
             return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully updated password"));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during password changing"));
         }
     }
 
-    @PostMapping("/update/password/confirm")
+    @PostMapping("/profile/update/password/confirm")
     public ResponseEntity sendConfirmation(@RequestBody PasswordRequest passwordRequest) {
         final String uuid = UUID.randomUUID().toString().replace("-", "");
         final String confirmUrl = hostUrl + "/update/password/" + uuid;
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         String firstName = clientService.findOne(email).getFirstName();
-        passwordConfirmationService.save(
-                passwordConfirmationService.makePasswordConfirmationEntity(uuid, passwordRequest.getPassword()));
+        temporaryDataConfirmationService.save(
+                temporaryDataConfirmationService.makePasswordConfirmationEntity(uuid, passwordRequest.getPassword()));
         try {
             emailService.prepareAndSendConfirmPassEmail(email, firstName, confirmUrl);
         } catch (MailException e) {

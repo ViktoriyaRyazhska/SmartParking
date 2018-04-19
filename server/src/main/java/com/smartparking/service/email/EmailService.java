@@ -24,7 +24,7 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
-    public void prepareAndSendWelcomeEmail(String recipient, String message) throws MailException{
+    public void prepareAndSendWelcomeEmail(String recipient, String message) throws MailException {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(emailFrom);
@@ -35,18 +35,30 @@ public class EmailService {
         };
         try {
             mailSender.send(messagePreparator);
-        }catch (MailException e){
-            LOGGER.error("Could not send email to : {} Error = {}",recipient,e.getMessage());
+        } catch (MailException e) {
+            LOGGER.error("Could not send email to : {} Error = {}", recipient, e.getMessage());
         }
     }
 
-    public void prepareAndSendConfirmPassEmail(String recipient, String userName, String message){
+    public void prepareAndSendConfirmPassEmail(String recipient, String userName, String message) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(emailFrom);
             messageHelper.setTo(recipient);
             messageHelper.setSubject("Change password confirmation.");
             String content = emailContentBuilder.buildConfirmPassHtml(userName, message);
+            messageHelper.setText(content, true);
+        };
+        mailSender.send(messagePreparator);
+    }
+
+    public void prepareAndSendConfirmRegistrationEmail(String recipient, String userName, String message) {
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setFrom(emailFrom);
+            messageHelper.setTo(recipient);
+            messageHelper.setSubject("Account activation.");
+            String content = emailContentBuilder.buildConfirmRegistrationHtml(userName, message);
             messageHelper.setText(content, true);
         };
         mailSender.send(messagePreparator);
