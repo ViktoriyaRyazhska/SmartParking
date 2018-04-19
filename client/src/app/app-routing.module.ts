@@ -33,44 +33,112 @@ import {ManagerSpotListComponent} from "./manager/manager-spot-list/manager-spot
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
     {path: 'index', component: IndexComponent},
-    {path: 'configuration', component: SuperuserConfigurationComponent},
-    {path: 'parkingdetail/:id', component: ParkingDetailComponent},
-    {path: 'configuration', component: SuperuserConfigurationComponent,},
-    {path: 'configuration/clients', component: ClientsComponent},
-    {path: 'configuration/clients/:id', component: ClientDetailComponent},
-    {path: 'configuration/clients/:id/edit/:id', component: ClientDetailComponent},
-    {path: 'configuration/clients/edit/:id', component: ClientEditComponent},
-    {path: 'configuration/providers', component: ProviderListComponent},
-    {path: 'manager-configuration/parkings', component: ManagerParkingListComponent},
     {
-        path: 'manager-configuration/parkings/add', component: ManagerParkingConfigureComponent,
-        data: {configureType: ManagerParkingConfigureType.ADD}
+        path: 'auth',
+        children: [
+            {path: 'login', component: LoginComponent},
+            {path: 'registration', component: RegistrationComponent},
+        ]
     },
     {
-        path: 'manager-configuration/parkings/edit/:id', component: ManagerParkingConfigureComponent,
-        data: {configureType: ManagerParkingConfigureType.EDIT}
+        path: 'configuration',
+        children: [
+            {path: '', component: SuperuserConfigurationComponent},
+            {
+                path: 'clients',
+                children: [
+                    {path: '', component: ClientsComponent},
+                    {path: ':id', component: ClientDetailComponent},
+                    {path: ':id/edit/:id', component: ClientDetailComponent},
+                    {path: 'edit/:id', component: ClientEditComponent},
+                ]
+            },
+            {
+                path: 'providers',
+                children: [
+                    {path: '', component: ProviderListComponent},
+                    {path: ':id', component: ProviderDetailComponent}
+                ]
+            },
+            {
+                path: 'provider',
+                children: [
+                    {path: '', component: ProviderListComponent},
+                    {path: 'add', component: AddProviderComponent},
+                    {path: 'update/:id', component: UpdateProviderComponent}
+                ]
+            }
+        ]
     },
-    {path: 'login', component: LoginComponent},
-    {path: 'configuration/providers/:id', component: ProviderDetailComponent},
-    {path: 'configuration/provider/add', component: AddProviderComponent},
-    {path: 'configuration/provider/update/:id', component: UpdateProviderComponent},
-    {path: 'registration', component: RegistrationComponent},
-    {path: 'profile', component: ClientProfileComponent},
-    {path: 'profile/edit', component: ClientProfileEditComponent},
-    {path: 'profile/edit/password', component: ClientProfileEditPasswordComponent},
-    {path: 'profile', component: ClientProfileComponent},
-    {path: 'statistic', component: StatisticComponent},
-    {path: 'statistic/parkingstatistic/parkingdetail/:id', component: ParkingDetailComponent},
-    {path: 'statistic/parkingstatistic', component: ParkingStatisticComponent},
-     {path: 'parkingdetail/:id/spotstatistic', component: SpotstatisticComponent},
-    {path: 'update/password/:uuid', component: ClientPasswordChangeConfirmationComponent},
-    {path: 'activate/:uuid', component: RegistarationConfirmationComponent},
-    {path: 'manager-configuration/:id/spots', component: ManagerSpotListComponent},
-   
-    {path: 'non-found', component: NonFoundComponent},
-    {path: 'server-error', component: InternalServerErrorComponent},
-    {path: 'forbidden', component: ForbiddenComponent}
+    {
+        path: 'profile',
+        children: [
+            {path: '', component: ClientProfileComponent},
+            {path: 'edit', component: ClientProfileEditComponent},
+            {path: 'edit/password', component: ClientProfileEditPasswordComponent}
 
+        ]
+    },
+    {
+        path: 'statistic',
+        children: [
+            {path: '', component: StatisticComponent},
+            {
+                path: 'parkingstatistic',
+                children: [
+                    {path: '', component: ParkingStatisticComponent},
+                    {path: 'parkingdetail/:id', component: ParkingDetailComponent},
+
+                ]
+            }
+        ]
+    },
+    {
+        path: 'manager-configuration',
+        children: [
+            {
+                path: ':id/spots',
+                children: [
+                    {
+                        path: '', component: ManagerSpotListComponent
+                    }
+                ]
+            },
+            {
+                path: 'parkings',
+                children: [
+                    {path: '', component: ManagerParkingListComponent},
+                    {
+                        path: 'add',
+                        component: ManagerParkingConfigureComponent,
+                        data: {configureType: ManagerParkingConfigureType.ADD}
+                    },
+                    {
+                        path: 'edit/:id',
+                        component: ManagerParkingConfigureComponent,
+                        data: {configureType: ManagerParkingConfigureType.EDIT}
+                    }
+                ]
+            },
+        ]
+    },
+    {
+        path: 'parkingdetail',
+        children: [
+            {path: ':id', component: ParkingDetailComponent},
+            {path: ':id/spotstatistic', component: SpotstatisticComponent}
+        ]
+    },
+    {
+        path: 'error',
+        children: [
+            {path: 'non-found', component: NonFoundComponent},
+            {path: 'server-error', component: InternalServerErrorComponent},
+            {path: 'forbidden', component: ForbiddenComponent}
+        ]
+    },
+    {path: 'update/password/:uuid', component: ClientPasswordChangeConfirmationComponent},
+    {path: 'activate/:uuid', component: RegistarationConfirmationComponent}
 ];
 
 @NgModule({

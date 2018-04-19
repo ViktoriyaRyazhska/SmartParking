@@ -23,7 +23,7 @@
         </button>
     </span>
     <span *ngIf="!hasToken()">
-    <button mat-raised-button class="ml-3" color="primary" [routerLink]="['/login']" style="font-size:18px;">
+    <button mat-raised-button class="ml-3" color="primary" [routerLink]="['auth/login']" style="font-size:18px;">
         SignIn/SignUp
         <i class="material-icons">&#xE853;</i>
     </button>

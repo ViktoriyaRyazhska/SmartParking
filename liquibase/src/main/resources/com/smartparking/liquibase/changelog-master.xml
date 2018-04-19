@@ -19,4 +19,4 @@
     <include file="com/smartparking/liquibase/function/create_function_location_distance.xml"/>
     <include file="com/smartparking/liquibase/table-client/alter_table_client_added_column_image.xml"/>
     <include file="com/smartparking/liquibase/stored-procedures/create_stored_procedure_spotstatistic.xml"/>
-   </databaseChangeLog>
+</databaseChangeLog>
