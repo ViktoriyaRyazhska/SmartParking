@@ -20,7 +20,6 @@ import java.util.List;
 public class SpotController {
 
     private final SpotService spotService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpotController.class);
 
     @Autowired
     SpotEventPublisher spotEventPublisher;
@@ -67,8 +66,7 @@ public class SpotController {
             @RequestParam("start_time") String startTime,
             @RequestParam("end_time") String endTime) {
 
-        LOGGER.info("===========startTime=============="+startTime);
-        LOGGER.info("===========endTime=============="+endTime);
+
         List<SpotStatisticResponse> spotStatisticResponseList =
                 spotService.getSpotStatistic(id,Long.parseLong(startTime),Long.parseLong(endTime));
         return new ResponseEntity<>(spotStatisticResponseList, HttpStatus.OK);
