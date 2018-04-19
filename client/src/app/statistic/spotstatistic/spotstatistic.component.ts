@@ -209,7 +209,7 @@ setData(): void
             start_month: this.minDate.getMonth(),
             start_year: this.minDate.getFullYear(),
             end_day: this.maxDate.getDate(),
-            end_month: this.minDate.getMonth(),
+            end_month: this.maxDate.getMonth(),
             end_year: this.maxDate.getFullYear()
         }
     }

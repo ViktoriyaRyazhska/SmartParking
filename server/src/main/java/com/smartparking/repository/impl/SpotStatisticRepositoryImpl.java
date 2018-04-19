@@ -1,6 +1,7 @@
 package com.smartparking.repository.impl;
 
 
+import com.smartparking.controller.SpotController;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Spot;
 import com.smartparking.model.response.SpotStatisticResponse;
@@ -23,12 +24,14 @@ public class SpotStatisticRepositoryImpl implements SpotStatisticRepository {
      @Autowired
     JdbcTemplate jdbcTemplate;
 
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpotController.class);
 
     @Override
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
          Date startTime = new Date(startDate);
          Date endTime = new Date(endDate);
+        LOGGER.info("===========startTime=============="+startTime.toString());
+        LOGGER.info("===========endTime=============="+endTime.toString());
         String sql = "SELECT  spot.id  \n" +
                 ",(sum(CASE WHEN event_marker = 1 THEN timestamp ELSE 0 END) \n" +
                 "-\n" +
