@@ -10,5 +10,12 @@
         </sql>
         <comment>Alter table Client</comment>
     </changeSet>
+    <changeSet author="Ostap" id="201803302046" dbms="MYSQL">
+        <sql>
+            ALTER TABLE client
+            ADD COLUMN activated BOOLEAN NOT NULL DEFAULT TRUE AFTER image;
+        </sql>
+        <comment>Creating table Client</comment>
+    </changeSet>
 
 </databaseChangeLog>

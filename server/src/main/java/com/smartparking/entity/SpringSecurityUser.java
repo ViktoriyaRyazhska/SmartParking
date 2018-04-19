@@ -16,18 +16,20 @@ public class SpringSecurityUser implements UserDetails {
     private String firstname;
     private String lastname;
     private Role role;
+    private boolean enabled;
 
     public SpringSecurityUser() {
 
     }
 
-    public SpringSecurityUser(Long id, String username, String password, String firstname, String lastname, Role role) {
+    public SpringSecurityUser(Long id, String username, String password, String firstname, String lastname, Role role, boolean enabled) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.role = role;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -78,6 +80,10 @@ public class SpringSecurityUser implements UserDetails {
         this.role = role;
     }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -102,6 +108,6 @@ public class SpringSecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

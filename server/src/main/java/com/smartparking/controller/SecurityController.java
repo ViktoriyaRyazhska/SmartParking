@@ -87,7 +87,13 @@ public class SecurityController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
         new Thread(() -> emailService.prepareAndSendWelcomeEmail(regReq.getEmail(), regReq.getFirstname())).start();
-        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfull registered"));
+        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Please check your email"));
+    }
+
+    @PostMapping("/activate")
+    public ResponseEntity activateUser(@RequestBody String email) {
+        securityService.activateUserByEmail(email);
+        return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Your account has been successfully activated"));
     }
 
     @PostMapping(value = "/social")
@@ -98,9 +104,7 @@ public class SecurityController {
         } catch (Exception e) {
             e.getMessage();
         }
-        System.out.println(user);
         if (user == null) {
-            System.out.println("Try to register");
             try {
                 securityService.saveClientFromSocialSignInRequest(request);
             } catch (AuthorizationEx e) {
@@ -110,12 +114,6 @@ public class SecurityController {
             user = userService.loadUserByUsername(request.getEmail());
         }
         if (user != null) {
-            System.out.println(user.getUsername());
-            System.out.println(user.getPassword());
-            final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
             return ResponseEntity.ok(new AuthTokenResponse(tokenPair.getAccessToken(), tokenPair.getRefreshToken()));
         }

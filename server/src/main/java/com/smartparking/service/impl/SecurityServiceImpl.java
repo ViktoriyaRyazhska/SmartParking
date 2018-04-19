@@ -55,7 +55,15 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
         springSecurityUser.setFirstname(client.getFirstName());
         springSecurityUser.setLastname(client.getLastName());
         springSecurityUser.setRole(client.getRole());
+        springSecurityUser.setEnabled(client.isActivated());
         return Optional.of(springSecurityUser);
+    }
+
+    @Override
+    public void activateUserByEmail(String email) {
+        Client client = clientRepository.findClientByEmail(email);
+        client.setActivated(true);
+        clientRepository.save(client);
     }
 
     public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, NonMatchingPasswordsEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx, DuplicateEmailEx {
@@ -65,6 +73,7 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
         client.setFirstName(validator.validateFirstname(registrationRequest.getFirstname()));
         client.setLastName(validator.validateLastname(registrationRequest.getLastname()));
         client.setRole(Role.DRIVER);
+        client.setActivated(false);
         clientRepository.save(client);
     }
 
@@ -88,6 +97,7 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
         client.setFirstName(validator.validateFirstname(nameSurname[0]));
         client.setLastName(validator.validateLastname(nameSurname[1]));
         client.setRole(Role.DRIVER);
+        client.setActivated(true);
         clientRepository.save(client);
     }
 }

@@ -36,6 +36,10 @@ public class Client extends AbstractIdentifiableEntity {
     @Column(name = "image")
     private byte[] image;
 
+    @NotNull
+    @Column(name = "activated", nullable = false)
+    private boolean activated;
+
     @OneToMany(mappedBy = "client")
     private List<Favorite> favorites;
 
