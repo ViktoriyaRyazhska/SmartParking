@@ -31,13 +31,13 @@ public class SpotEventListener {
         try {
             entityViewService.deleteSpot(event.getSpotId());
             log.info("Spot deleted from EntityViewService: spotId={}", event.getSpotId());
-        } catch (IllegalStateException ex) {
+        } catch (IllegalArgumentException ex) {
             log.error("Spot does not deleted from EntityViewService: spotId={}, exception={}", event.getSpotId(), ex);
         }
     }
 
     @RabbitListener(queues = "${eventprocessor.rabbit.spot-number-change-queue-name}")
-    public void consumeTokenChange(SpotNumberChangeEvent event) {
+    public void consumeSpotNumberChange(SpotNumberChangeEvent event) {
         log.info("Spot number changed: " + event.getSpotId());
         try {
             entityViewService.updateSpotNumber(event.getSpotId(), event.getSpotNumber());

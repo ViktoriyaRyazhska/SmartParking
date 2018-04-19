@@ -21,7 +21,7 @@ public class ParkingEventListener {
         try {
             entityViewService.deleteParking(event.getParkingId());
             log.info("Parking deleted from EntityViewService: parkingId={}", event.getParkingId());
-        } catch (IllegalStateException ex) {
+        } catch (IllegalArgumentException ex) {
             log.error("Parking does not deleted from EntityViewService: parkingId={}, exception={}",
                     event.getParkingId(), ex);
         }
