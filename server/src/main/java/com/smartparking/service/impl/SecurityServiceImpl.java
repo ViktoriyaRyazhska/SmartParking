@@ -55,7 +55,7 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
         springSecurityUser.setFirstname(client.getFirstName());
         springSecurityUser.setLastname(client.getLastName());
         springSecurityUser.setRole(client.getRole());
-        springSecurityUser.setEnabled(client.isActivated());
+        springSecurityUser.setEnabled(client.getActivated());
         return Optional.of(springSecurityUser);
     }
 

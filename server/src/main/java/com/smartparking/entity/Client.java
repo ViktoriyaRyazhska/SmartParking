@@ -38,7 +38,7 @@ public class Client extends AbstractIdentifiableEntity {
 
     @NotNull
     @Column(name = "activated", nullable = false)
-    private boolean activated;
+    private Boolean activated;
 
     @OneToMany(mappedBy = "client")
     private List<Favorite> favorites;
