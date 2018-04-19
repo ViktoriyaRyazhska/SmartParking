@@ -206,10 +206,10 @@ setData(): void
     {
         queryParams: {
             start_day: this.minDate.getDate(),
-            start_month: this.minDate.getMonth()+1,
+            start_month: this.minDate.getMonth(),
             start_year: this.minDate.getFullYear(),
             end_day: this.maxDate.getDate(),
-            end_month: this.minDate.getMonth()+1,
+            end_month: this.minDate.getMonth(),
             end_year: this.maxDate.getFullYear()
         }
     }
