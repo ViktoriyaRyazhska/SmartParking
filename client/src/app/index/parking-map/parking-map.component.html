@@ -2,15 +2,17 @@
          [longitude]="lng"
          [fullscreenControl]="true"
          [zoom]="10">
-    <agm-direction *ngIf="dir" [visible]="visibility" [drivingOptions]="dir.drivingOptions" [travelMode]="dir.travelMode" [origin]="dir.origin"
+    <agm-direction *ngIf="dir" [visible]="visibility" [drivingOptions]="dir.drivingOptions"
+                   [travelMode]="dir.travelMode" [origin]="dir.origin"
                    [destination]="dir.destination">
     </agm-direction>
     <agm-marker [latitude]="lat" [longitude]="lng" [draggable]="true"></agm-marker>
     <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="'green'"></agm-circle>
     <div *ngFor="let parking of parkings">
         <agm-marker [latitude]="parking.latitude" [longitude]="parking.longitude"
-                    [iconUrl]="'/assets/images/icon_parking_info_40x38.png'">
-            <agm-info-window [disableAutoPan]="true">
+                    [iconUrl]="'/assets/images/icon_parking_info_40x38.png'"
+                    (markerClick)="showInfoWindow(infoWindow)">
+            <agm-info-window #infoWindow [disableAutoPan]="true">
                 <ul>
                     <li><b>Address:</b> {{parking.city}} / {{parking.street}} / {{parking.building}}</li>
                     <li><b>Distance:</b> {{parking.distance}} km</li>

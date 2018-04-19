@@ -135,7 +135,7 @@ export class LocationFieldComponent implements OnInit {
                 position => this.onGeolocationSuccess(position),
                 error => this.onGeolocationError(error),
                 <PositionOptions> {
-                    timeout: 10000,
+                    timeout: 100000,
                     enableHighAccuracy: false
                 });
         }

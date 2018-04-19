@@ -17,6 +17,8 @@ export class ParkingMapComponent implements OnInit {
     distance: string;
     radius: number;
     visibility: boolean;
+    infoWindowOpened = null;
+    count = 0;
 
     constructor(private parkingService: ParkingService) {
     }
@@ -60,6 +62,18 @@ export class ParkingMapComponent implements OnInit {
 
     clearDirection() {
         this.visibility = false;
+    }
+
+    showInfoWindow(infoWindow) {
+        if (this.infoWindowOpened === infoWindow) {
+            return;
+        }
+
+        if (this.infoWindowOpened !== null) {
+            this.infoWindowOpened.close();
+        }
+
+        this.infoWindowOpened = infoWindow;
     }
 
 }
