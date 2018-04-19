@@ -100,4 +100,13 @@ export class ParkingStatisticComponent implements OnInit {
         this.selectedStreet = street;
     }
 
+    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
+        this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
+            .subscribe(parkings => {
+                this.parkings = parkings;
+                this.setPage(1);
+            });
+    }
+
+
 }

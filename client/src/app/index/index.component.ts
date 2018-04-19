@@ -51,10 +51,10 @@ export class IndexComponent implements OnInit {
                 console.log(error);
                 this.showErrorProgressBar();
             });
-            /*this.findBestParkingsByLocation(
-                filter.location.latitude,
-                filter.location.longitude,
-                this.filter.radiusMax * 1000, 7);*/
+            this.findBestParkingsByLocation(
+                this.parkingMap.lat,
+                this.parkingMap.lng,
+                this.parkingMap.radius, 30);
         });
     }
 
@@ -135,7 +135,7 @@ export class IndexComponent implements OnInit {
                         duration: 4000
                     });
                 } else {
-                    this.snackBar.open('Unfortunately, there are no popular parking lots nearby', null, {
+                    this.snackBar.open('Unfortunately, there are no popular parking lots in selected radius', null, {
                         duration: 4000
                     });
                 }
