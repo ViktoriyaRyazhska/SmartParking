@@ -1,9 +1,9 @@
 package com.smartparking.controller;
 
-import com.smartparking.model.request.LoginRequest;
-import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.TemporaryDataConfirmation;
+import com.smartparking.model.request.LoginRequest;
+import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.model.request.SocialSignInRequest;
 import com.smartparking.model.response.AuthTokenResponse;
 import com.smartparking.model.response.InfoResponse;
@@ -16,9 +16,6 @@ import com.smartparking.service.SecurityService;
 import com.smartparking.service.TemporaryDataConfirmationService;
 import com.smartparking.service.email.EmailService;
 import com.smartparking.service.impl.ExpirationCheckService;
-import com.smartparking.service.impl.SecurityServiceImpl;
-import com.smartparking.security.tokens.TokenUtil;
-import com.smartparking.security.utils.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -130,18 +128,20 @@ public class SecurityController {
 
     @PostMapping("/activate")
     public ResponseEntity activateUser(@RequestBody String uuidFromUrl) {
-        TemporaryDataConfirmation checkedTemporaryDataConfirmation =
+        Optional<TemporaryDataConfirmation> checkedTemporaryDataConfirmation =
                 expirationCheckService.getTemporaryDataConfirmationWithExpirationChecking(uuidFromUrl);
-        Client client = clientService.findOne(checkedTemporaryDataConfirmation.getUserEmail());
-
-        if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.getUuid())) {
-            securityService.activateUserByEmail(checkedTemporaryDataConfirmation.getUserEmail());
-            temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation);
-            new Thread(() -> emailService.prepareAndSendWelcomeEmail(client.getEmail(), client.getFirstName())).start();
-            return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Your account has been successfully activated"));
+        if (checkedTemporaryDataConfirmation.isPresent()) {
+            Client client = clientService.findOne(checkedTemporaryDataConfirmation.get().getUserEmail());
+            if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid())) {
+                securityService.activateUserByEmail(checkedTemporaryDataConfirmation.get().getUserEmail());
+                temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation.get());
+                new Thread(() -> emailService.prepareAndSendWelcomeEmail(client.getEmail(), client.getFirstName())).start();
+                return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Your account has been successfully activated"));
+            }
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during account activation"));
         }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during account activation"));
     }
 
     @PostMapping(value = "/social")

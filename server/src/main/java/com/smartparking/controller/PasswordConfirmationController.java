@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -47,16 +48,18 @@ public class PasswordConfirmationController {
 
     @PostMapping(value = "/profile/update/password")
     public ResponseEntity saveUserPassword(@RequestBody String uuidFromUrl) {
-        TemporaryDataConfirmation checkedTemporaryDataConfirmation =
+        Optional<TemporaryDataConfirmation> checkedTemporaryDataConfirmation =
                 expirationCheckService.getTemporaryDataConfirmationWithExpirationChecking(uuidFromUrl);
-
-        if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.getUuid())) {
-            securityServiceImpl.updateClientEncodedPassword(checkedTemporaryDataConfirmation.getNewPassword());
-            temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation);
-            return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully updated password"));
+        if (checkedTemporaryDataConfirmation.isPresent()) {
+            if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid())) {
+                securityServiceImpl.updateClientEncodedPassword(checkedTemporaryDataConfirmation.get().getNewPassword());
+                temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation.get());
+                return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully updated password"));
+            }
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during password changing"));
         }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during password changing"));
     }
 
     @PostMapping("/profile/update/password/confirm")

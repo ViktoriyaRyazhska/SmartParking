@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Optional;
 
 @Service
 public class ExpirationCheckService {
@@ -18,12 +19,13 @@ public class ExpirationCheckService {
     @Autowired
     private TemporaryDataConfirmationService temporaryDataConfirmationService;
 
-    public TemporaryDataConfirmation getTemporaryDataConfirmationWithExpirationChecking(String uuidFromUrl) {
-        TemporaryDataConfirmation uncheckedTemporaryDataConfirmation = temporaryDataConfirmationService.findByUuid(uuidFromUrl);
+    public Optional<TemporaryDataConfirmation> getTemporaryDataConfirmationWithExpirationChecking(String uuidFromUrl) {
+        Optional<TemporaryDataConfirmation> uncheckedTemporaryDataConfirmation =
+                Optional.of(temporaryDataConfirmationService.findByUuid(uuidFromUrl));
         if (LocalDateTime.now().toInstant(ZoneOffset.UTC).isAfter(
-                uncheckedTemporaryDataConfirmation.getTimeStamp().plusSeconds(passwordChangeExpiredTime))) {
-            temporaryDataConfirmationService.delete(uncheckedTemporaryDataConfirmation);
-            return null;
+                uncheckedTemporaryDataConfirmation.get().getTimeStamp().plusSeconds(passwordChangeExpiredTime))) {
+            temporaryDataConfirmationService.delete(uncheckedTemporaryDataConfirmation.get());
+            return Optional.empty();
         }
         return uncheckedTemporaryDataConfirmation;
     }
