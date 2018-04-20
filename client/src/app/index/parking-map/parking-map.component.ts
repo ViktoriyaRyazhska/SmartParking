@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {ParkingService} from '../../parking.service';
+import {MatSnackBar} from "@angular/material";
 
 @Component({
     selector: 'app-parking-map',
@@ -12,7 +13,7 @@ import {ParkingService} from '../../parking.service';
 export class ParkingMapComponent implements OnInit {
     lat = 49.843977;
     lng = 24.026318;
-    parkings: Parking[];
+    parkings: Parking[] = [];
     dir = undefined;
     distance: string;
     radius: number;
@@ -20,7 +21,8 @@ export class ParkingMapComponent implements OnInit {
     infoWindowOpened = null;
     count = 0;
 
-    constructor(private parkingService: ParkingService) {
+    constructor(private parkingService: ParkingService,
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -40,11 +42,14 @@ export class ParkingMapComponent implements OnInit {
                 }
                 this.parkingService.getParkingsNearby(this.lat, this.lng, this.radius).subscribe((response) => {
                     this.parkings = response.body;
+                    this.checkingForParkingAvailability(this.parkings.length, this.radius);
                 }, error => {
                     console.log(error);
                 });
-            });
+
+            })
         }
+
     }
 
     getDirection(lat, lng) {
@@ -74,6 +79,18 @@ export class ParkingMapComponent implements OnInit {
         }
 
         this.infoWindowOpened = infoWindow;
+    }
+
+    checkingForParkingAvailability(numberOfParkings: number, radius: number) {
+        if (numberOfParkings < 1) {
+            this.snackBar.open('Unfortunately, there are no parking in radius of ' + radius / 1000 + " km", null, {
+                duration: 4000
+            });
+        } else {
+            this.snackBar.open('Was found ' + numberOfParkings + " parkings in radius " + radius / 1000 + " km", null, {
+                duration: 4000
+            });
+        }
     }
 
 }

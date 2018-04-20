@@ -130,7 +130,7 @@ export class IndexComponent implements OnInit {
             .subscribe(bestParkiings => {
                 this.bestParkiings = bestParkiings;
                 if (this.bestParkiings.length > 0) {
-                    this.snackBar.open('The best nearby parking is on: ' + this.bestParkiings[0].street + ' ' +
+                    this.snackBar.open('The most popular parking in selected radius is on: ' + this.bestParkiings[0].street + ' ' +
                         this.bestParkiings[0].building, null, {
                         duration: 4000
                     });
