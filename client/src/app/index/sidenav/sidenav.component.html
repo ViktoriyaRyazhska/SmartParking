@@ -1,0 +1,22 @@
+<!--<i class="material-icons" (click)="snav.toggle()">&#xE8D4;</i>-->
+<mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="true"
+             [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+
+    <input class="input-filter" type="text" [(ngModel)]="streetFilter" placeholder="search">
+
+    <mat-nav-list class="nav-list" *ngFor="let item of parkings">
+        <ng-container>
+            <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
+                <div>
+                    <img src="https://st.depositphotos.com/1005920/3456/i/950/depositphotos_34563705-stock-photo-parking-icon.jpg"
+                         class="photo-thumbnail"
+                         onError="this.src='assets/images/no-photo.gif'">
+                    <span>{{item.street}} {{item.building}}</span>
+                </div>
+            </a>
+        </ng-container>
+    </mat-nav-list>
+</mat-sidenav>
+
+
+

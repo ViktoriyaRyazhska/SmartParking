@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import {Parking} from '../model/view/parking';
 import {ParkingMapComponent} from './parking-map/parking-map.component';
 import {StatisticsService} from '../statistic/statistics.service';
+import {DataserviceService} from "./dataservice.service";
 
 const MiToKm = 1.60934;
 
@@ -23,8 +24,8 @@ export class IndexComponent implements OnInit {
 
     @ViewChild('progressbar') private progressBar: MatProgressBar;
 
-    private parkings: Parking[] = [];
-    private bestParkiings: Parking[] = [];
+    parkings: Parking[] = [];
+    bestParkiings: Parking[] = [];
 
     private progressBarVisible: boolean = false;
     private progressBarColor: string = 'primary';
@@ -33,6 +34,7 @@ export class IndexComponent implements OnInit {
     constructor(private parkingService: ParkingService,
                 private changeDetector: ChangeDetectorRef,
                 private statisticService: StatisticsService,
+                private dataService: DataserviceService,
                 private snackBar: MatSnackBar) {
     }
 
@@ -129,6 +131,8 @@ export class IndexComponent implements OnInit {
         this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
             .subscribe(bestParkiings => {
                 this.bestParkiings = bestParkiings;
+                this.dataService.pushParkingsToDataService(this.bestParkiings);
+                this.dataService.currentParkings.subscribe(bestParkiings => this.bestParkiings = bestParkiings);
                 if (this.bestParkiings.length > 0) {
                     this.snackBar.open('The most popular parking in selected radius is on: ' + this.bestParkiings[0].street + ' ' +
                         this.bestParkiings[0].building, null, {

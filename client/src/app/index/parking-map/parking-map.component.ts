@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {ParkingService} from '../../parking.service';
 import {MatSnackBar} from "@angular/material";
+import {DataserviceService} from "../dataservice.service";
 
 @Component({
     selector: 'app-parking-map',
@@ -22,11 +23,13 @@ export class ParkingMapComponent implements OnInit {
     count = 0;
 
     constructor(private parkingService: ParkingService,
+                private dataService: DataserviceService,
                 private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
         if (navigator.geolocation) {
+
             navigator.geolocation.getCurrentPosition(position => {
                 if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude') != null)) {
                     this.lat = +localStorage.getItem('locationLatitude');
@@ -42,14 +45,14 @@ export class ParkingMapComponent implements OnInit {
                 }
                 this.parkingService.getParkingsNearby(this.lat, this.lng, this.radius).subscribe((response) => {
                     this.parkings = response.body;
+                    this.dataService.pushParkingsToDataService(this.parkings);
+                    this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
                     this.checkingForParkingAvailability(this.parkings.length, this.radius);
                 }, error => {
                     console.log(error);
                 });
-
-            })
+            });
         }
-
     }
 
     getDirection(lat, lng) {

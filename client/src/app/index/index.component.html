@@ -1,4 +1,6 @@
+
 <div class="parent">
+    <app-sidenav #sideNav></app-sidenav>
     <app-parking-map #parkingMap></app-parking-map>
     <div class="filter offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
         <mat-progress-bar #progressbar *ngIf="progressBarVisible" [color]="progressBarColor" [mode]="progressBarMode"

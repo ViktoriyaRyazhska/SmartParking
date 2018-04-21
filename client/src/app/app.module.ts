@@ -9,7 +9,12 @@ import {
     MatDividerModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule,
+    MatIconModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatSidenavModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -24,7 +29,7 @@ import {
     FacebookLoginProvider,
     LinkedinLoginProvider
 } from 'angular5-social-auth';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
 import {SuperuserConfigurationComponent} from './superuser-configuration/superuser-configuration.component';
 import {ParkingDetailComponent} from './parking-detail/parking-detail.component';
@@ -76,7 +81,9 @@ import {NonFoundComponent} from './errors/non-found/non-found.component';
 import {InternalServerErrorComponent} from './errors/internal-server-error/internal-server-error.component';
 import {ForbiddenComponent} from './errors/forbidden/forbidden.component';
 import {httpInterceptorProviders} from './interceptors/http-interceptors';
-import { RegistarationConfirmationComponent } from '../app/auth/registration/registaration-confirmation/registaration-confirmation.component';
+import {RegistarationConfirmationComponent} from '../app/auth/registration/registaration-confirmation/registaration-confirmation.component';
+import {SidenavComponent} from './index/sidenav/sidenav.component';
+import { DataserviceService } from './index/dataservice.service';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -140,7 +147,8 @@ export function getAuthServiceConfigs() {
         SpotstatisticComponent,
         ClientPasswordChangeConfirmationComponent,
         ParkingMapComponent,
-        RegistarationConfirmationComponent
+        RegistarationConfirmationComponent,
+        SidenavComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -167,7 +175,13 @@ export function getAuthServiceConfigs() {
         MatProgressSpinnerModule,
         MatRadioModule,
         BsDatepickerModule.forRoot(),
-        SocialLoginModule
+        SocialLoginModule,
+        MatSidenavModule,
+        MatMenuModule,
+        MatIconModule,
+        MatCardModule,
+        MatToolbarModule,
+        BrowserAnimationsModule
     ],
     entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent],
     providers: [
@@ -185,7 +199,8 @@ export function getAuthServiceConfigs() {
         TokenStorage,
         PagerService,
         StatisticsService,
-        CustomAuthService
+        CustomAuthService,
+        DataserviceService
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
