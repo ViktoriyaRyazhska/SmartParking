@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
@@ -109,11 +110,11 @@ public class HttpClientServiceImpl implements HttpClientService {
     private void initHttpClient() {
         try {
             sslContext = new SSLContextBuilder().loadTrustMaterial(null, (certificate, authType) -> true).build();
-//            client = HttpClients.custom()
-//                    .setSSLContext(sslContext)
-//                    .setSSLHostnameVerifier(new NoopHostnameVerifier())
-//                    .build();
-            client = HttpClients.createDefault();
+            client = HttpClients.custom()
+                    .setSSLContext(sslContext)
+                    .setSSLHostnameVerifier(new NoopHostnameVerifier())
+                    .build();
+//            client = HttpClients.createDefault();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (KeyManagementException e) {

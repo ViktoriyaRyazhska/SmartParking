@@ -13,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
@@ -66,13 +67,16 @@ public class EventBatchServiceImpl implements EventBatchService {
         } catch (DataAccessException ex) {
             this.events.addAll(events);
             log.error("Events does not sent: " + ex.toString());
+        } catch (SQLException e) {
+            this.events.addAll(events);
+            log.error("Events does not sent: " + e.toString());
         }
     }
 
     private boolean verify(Event event) {
         if (event instanceof UnverifiedEvent) {
-//            Spot spot = entityViewService.getSpot(event.getSpotId());
-            Spot spot = entityViewService.getSpotByNumberAndParkingToken(((UnverifiedEvent) event).getSpotNumber(), ((UnverifiedEvent) event).getParkingToken());
+            Spot spot = entityViewService.getSpotByNumberAndParkingToken(((UnverifiedEvent) event).getSpotNumber(),
+                    ((UnverifiedEvent) event).getParkingToken());
             if (spot != null) {
                 event.setSpotId(spot.getId());
                 return spot.getParking().getToken().equals(((UnverifiedEvent) event).getParkingToken())

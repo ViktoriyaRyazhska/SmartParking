@@ -40,8 +40,8 @@ public class SpotStatisticRepositoryImpl implements SpotStatisticRepository {
                 "COUNT(case event_marker when '0' then 1 else null end) \n" +
                 "as NumberOfEvent\n" +
                 "  FROM spot \n" +
-                "INNER JOIN event ON\n" +
-                " event.spot_id=spot.id and parking_id = ? \n" +
+                "INNER JOIN event e ON\n" +
+                " e.spot_id=spot.id and parking_id = ? \n" +
                 " AND timestamp BETWEEN ? AND ? \n" +
                 " GROUP BY spot.id ORDER BY NumberOfEvent DESC\n";
 
