@@ -38,6 +38,14 @@ export class ManagerParkingListComponent implements OnInit {
                     ${latitude},${longitude}`);
     }
 
+    showStatistic(id: number): void {
+        this.router.navigate(['parkingdetail/' + id + '/spotstatistic']);
+    }
+
+    showSpots(id: number): void {
+        this.router.navigate(['manager-configuration/' + id + '/spots']);
+    }
+
     onParkingEditClick(id: number): void {
         this.router.navigateByUrl('/manager-configuration/parkings/edit/' + id);
     }

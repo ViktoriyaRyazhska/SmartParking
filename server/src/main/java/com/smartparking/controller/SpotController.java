@@ -6,8 +6,6 @@ import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
 import com.smartparking.publisher.SpotEventPublisher;
 import com.smartparking.service.SpotService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,6 +88,11 @@ public class SpotController {
         spotService.delete(spot);
         spotEventPublisher.publishDelete(spot);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/manager-configuration/spotsforparking/{parkingId}")
+    public ResponseEntity<List<SpotStatusResponse>> spots(@PathVariable Long parkingId) {
+        return new ResponseEntity<>(spotService.findAllSpotsByParkingIdResponse(parkingId), HttpStatus.OK);
     }
 
 

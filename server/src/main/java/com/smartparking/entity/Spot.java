@@ -18,7 +18,7 @@ public class Spot extends AbstractIdentifiableEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Parking parking;
 
-    @OneToMany(mappedBy = "spot")
+    @OneToMany(mappedBy = "spot", cascade = CascadeType.REMOVE)
     private List<Event> events;
 
     @NotNull

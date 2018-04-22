@@ -9,6 +9,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {HttpResponse} from '@angular/common/http';
 import {DeleteConfirmationDialogComponent} from "../manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component";
 import {ParkingService} from "../parking.service";
+import * as HttpStatus from 'http-status-codes';
 
 @Component({
     selector: 'app-client-profile',
@@ -51,20 +52,26 @@ export class ClientProfileComponent implements OnInit {
         this.router.navigate(['profile/edit']);
     }
 
-    onParkingDeleteClick(id: number) {
+    onParkingDeleteClick(parking: Parking) {
         let dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
             data: {confirmed: false}
         });
 
         dialogRef.afterClosed().subscribe(data => {
             if (data.confirmed) {
-                this.parkingService.deleteFromFavorite(id).subscribe((response: HttpResponse<any>) => {
-                    this.snackBar.open('Parking delete from favorite successfully.', null, {
-                        duration: 2000
-                    });
-                });
+                this.parkingService.deleteFromFavorite(parking.id).subscribe(response => this.onDeleteResponse(parking, response));
             }
-            this.getFavoriteParkings();
+            // this.getFavoriteParkings();
         });
+    }
+
+    private onDeleteResponse(parking: Parking, response: HttpResponse<any>): void {
+        if (response.status === HttpStatus.OK) {
+            this.snackBar.open('Parking deleted from favorites.', null, {
+                duration: 2000
+            });
+            let index = this.favoritesParkings.indexOf(parking);
+            this.favoritesParkings.splice(index, 1);
+        }
     }
 }

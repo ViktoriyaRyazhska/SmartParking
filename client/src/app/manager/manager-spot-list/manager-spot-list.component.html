@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div *ngFor="let spot of spots">
+        <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
+
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <mat-icon color="primary">local_parking</mat-icon>
+                        <span *ngIf="!spot.isFree"> Spot Number {{spot.spotNumber}}</span>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+            <mat-card-actions align="right">
+                <button mat-button color="primary" (click)="onSpotEditClick(spot)">Edit</button>
+                <button mat-button color="warn" (click)="onSpotDeleteClick(spot)">Delete</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    <button mat-icon-button (click)="onSpotAddClick()">
+        <mat-icon color="primary">add</mat-icon>
+    </button>
+</div>

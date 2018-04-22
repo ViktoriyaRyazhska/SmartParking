@@ -2,6 +2,7 @@ package com.smartparking.controller;
 
 
 import com.smartparking.controller.exception.BadRequestException;
+import com.smartparking.entity.Client;
 import com.smartparking.entity.Parking;
 import com.smartparking.model.request.ParkingNearbyRequest;
 import com.smartparking.model.request.ParkingRequest;
@@ -9,6 +10,7 @@ import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.model.response.ParkingResponse;
 import com.smartparking.model.response.ParkingWithSpotsResponse;
 import com.smartparking.publisher.ParkingEventPublisher;
+import com.smartparking.service.ClientService;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ import java.util.List;
 
 @RestController
 public class ParkingController {
+
+    @Autowired
+    ClientService clientService;
 
     @Autowired
     private ParkingService parkingService;
@@ -75,7 +80,9 @@ public class ParkingController {
 
     @GetMapping("manager-configuration/parkings")
     public ResponseEntity<List<ParkingResponse>> parkings() {
-        return new ResponseEntity<>(parkingService.findAllByProviderIdResponse(1L), HttpStatus.OK);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Client client = clientService.findOne(email);
+        return new ResponseEntity<>(parkingService.findAllByProviderIdResponse(client.getId()), HttpStatus.OK);
     }
 
     @PostMapping("/manager-configuration/parking/save")

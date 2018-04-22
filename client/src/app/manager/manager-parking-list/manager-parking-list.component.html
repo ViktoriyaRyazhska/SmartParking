@@ -37,11 +37,27 @@
                         <span> {{parking.favoritesCount}} drivers added to favorite</span>
                     </mat-list-item>
                     <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <mat-icon color="primary" style="margin-right: 15px"
+                                  matTooltip="Show statistic"
+                                  (click)="showStatistic(parking.id)">&#xE8E5;
+                        </mat-icon>
+                        <span> Parking statistic</span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <mat-icon color="primary" style="margin-right: 15px"
+                                  matTooltip="Show statistic"
+                                  (click)="showSpots(parking.id)">local_parking
+                        </mat-icon>
+                        <span> Parking spots</span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
                 </mat-list>
             </mat-card-content>
             <mat-card-actions align="right">
-                <button mat-button color="warn" (click)="onParkingDeleteClick(parking)">DELETE</button>
-                <button mat-button color="primary" (click)="onParkingEditClick(parking.id)">EDIT</button>
+                <button mat-button color="primary" (click)="onParkingEditClick(parking.id)">Edit</button>
+                <button mat-button color="warn" (click)="onParkingDeleteClick(parking)">Delete</button>
             </mat-card-actions>
         </mat-card>
     </div>

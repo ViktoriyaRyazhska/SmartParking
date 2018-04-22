@@ -84,6 +84,9 @@ import {httpInterceptorProviders} from './interceptors/http-interceptors';
 import {RegistarationConfirmationComponent} from '../app/auth/registration/registaration-confirmation/registaration-confirmation.component';
 import {SidenavComponent} from './index/sidenav/sidenav.component';
 import { DataserviceService } from './index/dataservice.service';
+import {ManagerSpotListComponent} from './manager/manager-spot-list/manager-spot-list.component';
+import {ManagerSpotService} from './manager/manager-spot.service';
+import {SpotAddDialogComponent} from './manager/manager-spot-list/spot-add-dialog/spot-add-dialog.component';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -148,7 +151,9 @@ export function getAuthServiceConfigs() {
         ClientPasswordChangeConfirmationComponent,
         ParkingMapComponent,
         RegistarationConfirmationComponent,
-        SidenavComponent
+        SidenavComponent,
+        ManagerSpotListComponent,
+        SpotAddDialogComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -183,7 +188,7 @@ export function getAuthServiceConfigs() {
         MatToolbarModule,
         BrowserAnimationsModule
     ],
-    entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent],
+    entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent, SpotAddDialogComponent],
     providers: [
         {
             provide: AuthServiceConfig,
@@ -200,7 +205,8 @@ export function getAuthServiceConfigs() {
         PagerService,
         StatisticsService,
         CustomAuthService,
-        DataserviceService
+        DataserviceService,
+        ManagerSpotService
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
