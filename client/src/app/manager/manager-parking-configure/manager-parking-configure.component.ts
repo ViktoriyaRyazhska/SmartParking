@@ -65,12 +65,19 @@ export class ManagerParkingConfigureComponent implements OnInit {
     }
 
     saveParking(): void {
-        if (this.configureType.type === ManagerParkingConfigureType.ADD) {
-            this.parking.providerId = 1;
-        }
         this.managerParkingService.saveParking(this.parking)
             .subscribe((response: HttpResponse<any>) => {
-                this.snackBar.open('Parking updated sucsessfully.', null, {
+                if (this.configureType.type === ManagerParkingConfigureType.ADD) {
+                    this.snackBar.open('Parking created sucsessfully.', null, {
+                        duration: 2000
+                    });
+                } else {
+                    this.snackBar.open('Parking updated sucsessfully.', null, {
+                        duration: 2000
+                    });
+                }
+            }, error => {
+                this.snackBar.open('Cannot save parking.', null, {
                     duration: 2000
                 });
             });

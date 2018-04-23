@@ -68,6 +68,10 @@ export class ManagerSpotListComponent implements OnInit {
                     this.snackBar.open('Spot created sucsessfully.', null, {
                         duration: 2000
                     });
+                }, error => {
+                    this.snackBar.open('Cannot save spot.', null, {
+                        duration: 2000
+                    });
                 });
                 this.loadSpots();
             }

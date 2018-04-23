@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,9 +64,11 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
 
     @Override
     public List<SpotStatusResponse> findAllSpotsByParkingIdResponse(Long parkingId) {
-        return findAllSpotsByParkingId(parkingId).stream().
+        List<SpotStatusResponse> spots = findAllSpotsByParkingId(parkingId).stream().
                 map(spot -> new SpotStatusResponse(spot.getId(), false,
                         spot.getSpotNumber(), spot.getParking().getId())).collect(Collectors.toList());
+        spots.sort((Comparator.comparing(SpotStatusResponse::getSpotNumber)));
+        return spots;
     }
 
     @Override

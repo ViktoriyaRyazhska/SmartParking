@@ -4,6 +4,7 @@ package com.smartparking.controller;
 import com.smartparking.controller.exception.BadRequestException;
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Parking;
+import com.smartparking.entity.Role;
 import com.smartparking.model.request.ParkingNearbyRequest;
 import com.smartparking.model.request.ParkingRequest;
 import com.smartparking.model.response.ParkingDetailResponse;
@@ -88,31 +89,49 @@ public class ParkingController {
     public ResponseEntity<List<ParkingResponse>> parkings() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Client client = clientService.findOne(email);
-        return new ResponseEntity<>(parkingService.findAllByProviderIdResponse(client.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(parkingService.findAllByProviderIdResponse(client.getProvider().getId()), HttpStatus.OK);
     }
 
     @PostMapping("/manager-configuration/parking/save")
     public ResponseEntity<?> save(@RequestBody ParkingRequest parkingRequest) {
-        Parking parking = parkingRequest.toParking();
-        long parkingId = 0;
-        if (parking.getId() != null) {
-            parkingId = parking.getId();
+        Client client = getCurrentUser();
+        if (parkingRequest.getProviderId() == null) {
+            parkingRequest.setProviderId(client.getProvider().getId());
         }
-        parkingService.save(parking);
-        parkingEventPublisher.publishSave(parking, parkingId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Parking parking = parkingRequest.toParking();
+        if (parking.getProvider().getEmployees().contains(client) || client.getRole() == Role.SUPERUSER) {
+            long parkingId = 0;
+            if (parking.getId() != null) {
+                parkingId = parking.getId();
+            }
+            parkingService.save(parking);
+            parkingEventPublisher.publishSave(parking, parkingId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/manager-configuration/parking/delete")
     public ResponseEntity<?> delete(@RequestBody ParkingRequest parkingRequest) {
-        final Parking parking = parkingRequest.toParking();
-        parkingService.delete(parking);
-        parkingEventPublisher.publishDelete(parking);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Client client = getCurrentUser();
+        Parking parking = parkingRequest.toParking();
+        if (client.getProvider().getParkings().contains(parking) || client.getRole() == Role.SUPERUSER) {
+            parkingService.delete(parking);
+            parkingEventPublisher.publishDelete(parking);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/parkings-with-spots")
     public List<ParkingWithSpotsResponse> parkingWithSpots() {
         return parkingService.findAllWithSpotsResponse();
+    }
+
+    private Client getCurrentUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return clientService.findOne(email);
     }
 }
