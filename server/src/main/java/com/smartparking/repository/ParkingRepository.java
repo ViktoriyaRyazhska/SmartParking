@@ -12,6 +12,7 @@ public interface ParkingRepository extends JpaRepository<Parking, Long> {
 
     List<Parking> findAllByProviderId(Long id);
 
+//    List<String> findDistinctByCity();
 
     @Query(value = "SELECT *, LOCATION_DISTANCE(:latitude, :longitude, parking.latitude, parking.longitude) AS distance " +
             "FROM parking " +
@@ -31,5 +32,4 @@ public interface ParkingRepository extends JpaRepository<Parking, Long> {
 
     @Query("SELECT distinct p.city from Parking p")
     List<String> findAllParkingCities();
-
 }

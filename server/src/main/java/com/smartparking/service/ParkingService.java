@@ -23,6 +23,8 @@ public interface ParkingService extends Service<Parking, Long, ParkingRepository
 
     String findFavoriteNameByEmailAndParkingId(String email, Long parkingId);
 
+    List<String> findDistinctParkingCity();
+
     List<Parking> findParkingsByCity(String input);
 
     List<String> findParkingStreetByAnyMatch(String city, String street);

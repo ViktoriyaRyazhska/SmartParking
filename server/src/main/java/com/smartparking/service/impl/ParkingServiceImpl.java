@@ -92,6 +92,11 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     }
 
     @Override
+    public List<String> findDistinctParkingCity() {
+        return getRepository().findAllParkingCities();
+    }
+
+    @Override
     public List<ParkingResponse> findAllByProviderIdResponse(Long providerId) {
         Objects.requireNonNull(providerId, "clientId");
         return getRepository().findAllByProviderId(providerId).stream()
