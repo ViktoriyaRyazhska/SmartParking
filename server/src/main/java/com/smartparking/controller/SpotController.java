@@ -125,7 +125,7 @@ public class SpotController {
 
     private Boolean isValidNewSpot(Spot spot, Client client) {
         return spot.getSpotNumber() != null && spot.getSpotNumber() < maxSpotNumber &&
-                !spot.getParking().getSpots().stream().filter(spot1 -> spot1.getSpotNumber().equals(spot.getSpotNumber())).findFirst().isPresent() &&
+                //!spot.getParking().getSpots().stream().filter(spot1 -> spot1.getSpotNumber().equals(spot.getSpotNumber())).findFirst().isPresent() &&
                 (client.getProvider().getParkings().contains(spot.getParking()) || client.getRole() == Role.SUPERUSER);
     }
 }
