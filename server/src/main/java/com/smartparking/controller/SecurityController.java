@@ -92,11 +92,7 @@ public class SecurityController {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
-        try {
-            user = userService.loadUserByUsername(email);
-        } catch (AuthenticationException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("User is blocked."));
-        }
+        user = userService.loadUserByUsername(email);
         LOGGER.info(email + " = " + user);
         if (user != null && bcryptEncoder.matches(password, user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(

@@ -37,7 +37,7 @@ const routes: Routes = [
         path: 'auth',
         children: [
             {path: 'login', component: LoginComponent},
-            {path: 'registration', component: RegistrationComponent},
+            {path: 'registration', component: RegistrationComponent}
         ]
     },
     {
@@ -50,7 +50,7 @@ const routes: Routes = [
                     {path: '', component: ClientsComponent},
                     {path: ':id', component: ClientDetailComponent},
                     {path: ':id/edit/:id', component: ClientDetailComponent},
-                    {path: 'edit/:id', component: ClientEditComponent},
+                    {path: 'edit/:id', component: ClientEditComponent}
                 ]
             },
             {
@@ -87,7 +87,7 @@ const routes: Routes = [
                 path: 'parkingstatistic',
                 children: [
                     {path: '', component: ParkingStatisticComponent},
-                    {path: 'parkingdetail/:id', component: ParkingDetailComponent},
+                    {path: 'parkingdetail/:id', component: ParkingDetailComponent}
 
                 ]
             }

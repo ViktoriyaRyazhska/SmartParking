@@ -28,6 +28,7 @@
     "@auth0/angular-jwt": "^1.1.0",
     "@google/maps": "^0.4.6",
     "@ng-bootstrap/ng-bootstrap": "^1.1.0",
+    "@ngx-translate/core": "^10.0.1",
     "@types/googlemaps": "^3.30.8",
     "agm-direction": "^0.4.2",
     "angular-in-memory-web-api": "^0.5.4",
