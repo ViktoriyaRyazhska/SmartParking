@@ -53,6 +53,7 @@ import {ParkingListFilterComponent} from './index/parking-list-filter/parking-li
 import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ManagerParkingListComponent} from './manager/manager-parking-list/manager-parking-list.component';
 
+import {TranslateModule} from '@ngx-translate/core';
 import {AgmCoreModule} from '@agm/core';
 import {TokenStorage} from './auth/token/token-storage';
 import {LocationFieldComponent} from './index/parking-list-filter/location-field/location-field.component';
@@ -83,7 +84,7 @@ import {ForbiddenComponent} from './errors/forbidden/forbidden.component';
 import {httpInterceptorProviders} from './interceptors/http-interceptors';
 import {RegistarationConfirmationComponent} from '../app/auth/registration/registaration-confirmation/registaration-confirmation.component';
 import {SidenavComponent} from './index/sidenav/sidenav.component';
-import { DataserviceService } from './index/dataservice.service';
+import {DataserviceService} from './index/dataservice.service';
 import {ManagerSpotListComponent} from './manager/manager-spot-list/manager-spot-list.component';
 import {ManagerSpotService} from './manager/manager-spot.service';
 import {SpotAddDialogComponent} from './manager/manager-spot-list/spot-add-dialog/spot-add-dialog.component';
@@ -160,6 +161,7 @@ export function getAuthServiceConfigs() {
             apiKey: 'AIzaSyAufS5bcmpO5UiWxG_MpcSOrIiRNzbUJus',
             libraries: ['places']
         }),
+        TranslateModule.forRoot(),
         AgmDirectionModule,
         HttpClientModule,
         BrowserModule,

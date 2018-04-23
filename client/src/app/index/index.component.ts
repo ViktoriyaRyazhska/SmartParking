@@ -54,10 +54,10 @@ export class IndexComponent implements OnInit {
                 console.log(error);
                 this.showErrorProgressBar();
             });
-            this.findBestParkingsByLocation(
+ /*           this.findBestParkingsByLocation(
                 this.parkingMap.lat,
                 this.parkingMap.lng,
-                this.parkingMap.radius, 30);
+                this.parkingMap.radius, 30);*/
         });
     }
 

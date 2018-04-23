@@ -243,6 +243,7 @@ export class LocationFieldComponent implements OnInit {
         if (value !== null && value.length > 0) {
 
             const request = <google.maps.places.AutocompletionRequest> {
+                language: 'en',
                 componentRestrictions: {country: 'ua'},
                 input: value,
                 location: this.geolocationItem

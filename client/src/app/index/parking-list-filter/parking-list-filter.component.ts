@@ -10,6 +10,7 @@ import {Subject} from 'rxjs/Subject';
     templateUrl: './parking-list-filter.component.html',
     styleUrls: ['./parking-list-filter.component.css'],
 })
+
 export class ParkingListFilterComponent implements OnInit {
 
     @ViewChild('locationField')
@@ -29,6 +30,8 @@ export class ParkingListFilterComponent implements OnInit {
 
     private internalValue: ParkingListFilter;
 
+    private present: boolean;
+
     constructor() {
     }
 
@@ -38,10 +41,23 @@ export class ParkingListFilterComponent implements OnInit {
 
     ngOnInit() {
         this.locationField.valueChanges.subscribe(location => {
-            this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value);
-            this.valueChangesSubject.next(this.internalValue);
-            localStorage.setItem('locationLatitude', location.latitude.toString());
-            localStorage.setItem('locationLongtitude', location.longitude.toString());
+            for (let city of this.locationField.cities) {
+                if (this.locationField.selectedItem.label.includes(city.toString())) {
+                    this.present = true;
+                    break;
+                } else {
+                    this.present = false;
+                }
+            }
+
+            if (this.present) {
+                this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value);
+                this.valueChangesSubject.next(this.internalValue);
+                localStorage.setItem('locationLatitude', location.latitude.toString());
+                localStorage.setItem('locationLongtitude', location.longitude.toString());
+            } else {
+                window.alert('Our api doesn\'t support this location, unfortunately :(');
+            }
         });
         this.priceRangeField.valueChanges.subscribe(priceRange => {
             if (this.locationField.value) {
