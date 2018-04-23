@@ -42,7 +42,8 @@ public class ValidatorImpl implements Validator {
             LOGGER.warn("Invalid email " + email);
             throw new EmailValidationEx("Entered e-mail adress is not valid");
         }
-        if (clientRepository.findClientByEmail(email) != null) {
+        if (clientRepository.findClientByEmail(email) != null
+                && clientRepository.findClientByEmail(email).getActivated()) {
             throw new DuplicateEmailEx("User with this e-mail alredy exists");
         }
         return email;

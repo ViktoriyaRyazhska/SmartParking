@@ -43,7 +43,7 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Optional<UserDetails> user = clientToSpringSecurityUser(clientRepository.findClientByEmail(username));
         final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
-        user.ifPresent(detailsChecker :: check);
+        user.ifPresent(detailsChecker::check);
         return user.orElseThrow(() -> new UsernameNotFoundException("user not found."));
     }
 
@@ -68,6 +68,10 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
 
     public void saveClientFromRegistrationRequest(RegistrationRequest registrationRequest) throws EmailValidationEx, NonMatchingPasswordsEx, PasswordValidationEx, FirstnameValidationEx, LastnameValidationEx, DuplicateEmailEx {
         Client client = new Client();
+        if ((clientRepository.findClientByEmail(registrationRequest.getEmail()) != null
+                && !clientRepository.findClientByEmail(registrationRequest.getEmail()).getActivated())) {
+            client = clientRepository.findClientByEmail(registrationRequest.getEmail());
+        }
         client.setEmail(validator.validateEmailOnRegistration(registrationRequest.getEmail()));
         client.setPassword(bcryptEncoder.encode(validator.checkPasswords(registrationRequest.getPassword(), registrationRequest.getConfirmPassword())));
         client.setFirstName(validator.validateFirstname(registrationRequest.getFirstname()));
