@@ -27,6 +27,7 @@ export class PasswordValidation {
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+    isSent: boolean = false;
     hide: boolean = true;
     registrationForm: FormGroup;
     registrationData: RegistrationData;
@@ -77,7 +78,7 @@ export class RegistrationComponent implements OnInit {
         this.snackBar.open(info.response, null, {
             duration: 4000
           });
-          this.router.navigate(['/']);
+          this.isSent = true;
       }, (error) => {
           if(error instanceof HttpErrorResponse) {
             this.snackBar.open(error.error.response, null, {

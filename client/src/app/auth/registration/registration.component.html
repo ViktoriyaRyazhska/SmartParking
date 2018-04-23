@@ -1,6 +1,6 @@
 <div class = "container-fluid container-style">
 
-  <form [formGroup]="registrationForm" (ngSubmit)="register()" class = "formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+  <form [formGroup]="registrationForm" (ngSubmit)="register()" class = "formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6" *ngIf="!isSent">
       <h3 class="heading row offset-4">Registration</h3>
       <div class = "row">
           <mat-form-field class = "customwidth">
@@ -71,4 +71,10 @@
           <button mat-button class="btn btn-success" [disabled]="!registrationForm.valid">Submit</button>
       </div>
   </form>
+  <div class="row" *ngIf="isSent">
+      <div class="col-12 text-center">
+            <h4 style="color:grey">Check your email and confirm registration</h4>
+          <h5 style="color:grey">If you did not get email. Fill and send confirmation form one more time</h5>
+      </div>
+  </div>
 </div>
