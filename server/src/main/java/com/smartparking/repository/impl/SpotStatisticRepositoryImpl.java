@@ -32,19 +32,10 @@ public class SpotStatisticRepositoryImpl implements SpotStatisticRepository {
          Date endTime = new Date(endDate);
         LOGGER.info("===========startTime=============="+startTime.toString());
         LOGGER.info("===========endTime=============="+endTime.toString());
-        String sql = "SELECT  spot.id  \n" +
-                ",(sum(CASE WHEN event_marker = 1 THEN timestamp ELSE 0 END) \n" +
-                "-\n" +
-                "sum(CASE WHEN event_marker = 0 THEN timestamp ELSE 0 END))/10000\n" +
-                "AS NumberOfhours, \n" +
-                "COUNT(case event_marker when '0' then 1 else null end) \n" +
-                "as NumberOfEvent\n" +
-                "  FROM spot \n" +
-                "INNER JOIN event e ON\n" +
-                " e.spot_id=spot.id and parking_id = ? \n" +
-                " AND timestamp BETWEEN ? AND ? \n" +
-                " GROUP BY spot.id ORDER BY NumberOfEvent DESC\n";
 
+        //CALL spotStatistic(1,'2012-09-08 17:51:04.777','2018-09-08 17:51:04.777');
+
+        String sql = "CALL spotStatistic(?,?,?)";
         List<SpotStatisticResponse> result = new ArrayList<>();
         jdbcTemplate.query(sql,new Object[] { id, startTime, endTime },(rs, rowNum) ->
                 new SpotStatisticResponse(rs.getLong("id"), rs.getDouble("NumberOfhours"),
