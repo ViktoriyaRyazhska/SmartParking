@@ -3,6 +3,7 @@ import {Parking} from '../../model/view/parking';
 import {ParkingService} from '../../parking.service';
 import {MatSnackBar} from "@angular/material";
 import {DataserviceService} from "../dataservice.service";
+import {StatisticsService} from "../../statistic/statistics.service";
 
 @Component({
     selector: 'app-parking-map',
@@ -15,6 +16,7 @@ export class ParkingMapComponent implements OnInit {
     lat = 49.843977;
     lng = 24.026318;
     parkings: Parking[] = [];
+    bestParkiings: Parking[] = [];
     dir = undefined;
     distance: string;
     radius: number;
@@ -24,6 +26,7 @@ export class ParkingMapComponent implements OnInit {
 
     constructor(private parkingService: ParkingService,
                 private dataService: DataserviceService,
+                private statisticService: StatisticsService,
                 private snackBar: MatSnackBar) {
     }
 
@@ -47,10 +50,13 @@ export class ParkingMapComponent implements OnInit {
                     this.parkings = response.body;
                     this.dataService.pushParkingsToDataService(this.parkings);
                     this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
-                    this.checkingForParkingAvailability(this.parkings.length, this.radius);
                 }, error => {
                     console.log(error);
                 });
+                this.findBestParkingsByLocation(
+                    this.lat,
+                    this.lng,
+                    this.radius, 30);
             });
         }
     }
@@ -86,14 +92,23 @@ export class ParkingMapComponent implements OnInit {
 
     checkingForParkingAvailability(numberOfParkings: number, radius: number) {
         if (numberOfParkings < 1) {
-            this.snackBar.open('Unfortunately, there are no parking in radius of ' + radius / 1000 + " km", null, {
+            this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + " km", null, {
                 duration: 4000
             });
         } else {
-            this.snackBar.open('Was found ' + numberOfParkings + " parkings in radius " + radius / 1000 + " km", null, {
+            this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkiings[0].street + ' ' +
+                this.bestParkiings[0].building, null, {
                 duration: 4000
             });
         }
+    }
+
+    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
+        this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
+            .subscribe(bestParkiings => {
+                this.bestParkiings = bestParkiings;
+                this.checkingForParkingAvailability(this.bestParkiings.length, radius);
+            });
     }
 
 }

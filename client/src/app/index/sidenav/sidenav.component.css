@@ -36,6 +36,7 @@ h1.app-name {
 
 .nav-list a {
     padding: 5px 0;
+    color: darkred;
 }
 
 .content {

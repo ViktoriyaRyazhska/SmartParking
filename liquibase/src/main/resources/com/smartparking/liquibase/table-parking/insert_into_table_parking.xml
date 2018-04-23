@@ -47,12 +47,12 @@
             31.082630,30.25,'jioere','Kyiv','Khreschatyk','23',3);
             INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(59.807367,
             31.382630,30.25,'ccj4','Kyiv','Vokzalna','7',4);
-            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.807367,
-            23.982630,10.15,'gfbf','Lviv','I.Franka','2',2);
-            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.507367,
-            23.982630,10.15,'pfhd','Lviv','Zamarstynivska','2',2);
-            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.207367,
-            23.282630,10.15,'dxbf','Lviv','Dvirceva','1',2);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.837985,
+            24.034793,10.15,'gfbf','Lviv','I.Franka','2',2);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.847863,
+            24.028072,10.15,'pfhd','Lviv','Zamarstynivska','2',2);
+            INSERT INTO parking (latitude ,longitude ,price ,token,city,street,building,provider_id) values(49.838372,
+            23.993986,10.15,'dxbf','Lviv','Dvirceva','1',2);
         </sql>
         <comment>Inserting into table parking</comment>
     </changeSet>

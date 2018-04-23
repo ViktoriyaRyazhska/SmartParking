@@ -127,22 +127,26 @@ export class IndexComponent implements OnInit {
         setTimeout(() => this.changeDetector.detectChanges(), 1);
     }
 
+    checkingForParkingAvailability(numberOfParkings: number, radius: number) {
+        if (numberOfParkings < 1) {
+            this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + " km", null, {
+                duration: 4000
+            });
+        } else {
+            this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkiings[0].street + ' ' +
+                this.bestParkiings[0].building, null, {
+                duration: 4000
+            });
+        }
+    }
+
     findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
         this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
             .subscribe(bestParkiings => {
                 this.bestParkiings = bestParkiings;
                 this.dataService.pushParkingsToDataService(this.bestParkiings);
-                this.dataService.currentParkings.subscribe(bestParkiings => this.bestParkiings = bestParkiings);
-                if (this.bestParkiings.length > 0) {
-                    this.snackBar.open('The most popular parking in selected radius is on: ' + this.bestParkiings[0].street + ' ' +
-                        this.bestParkiings[0].building, null, {
-                        duration: 4000
-                    });
-                } else {
-                    this.snackBar.open('Unfortunately, there are no popular parking lots in selected radius', null, {
-                        duration: 4000
-                    });
-                }
+                this.dataService.currentParkings.subscribe(parkings => this.bestParkiings = parkings);
+                this.checkingForParkingAvailability(this.bestParkiings.length, radius);
             });
     }
 
