@@ -59,7 +59,7 @@ h1.app-name {
 }
 
 .input-filter {
-    border: 0;
+    border: 1px solid #4267b2;
     margin-top: 10px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     font-size: 1rem;
@@ -91,5 +91,9 @@ h1.app-name {
     top: 5%;
     bottom:0;
     right: 0;
+}
+
+#parkings-count{
+    text-align: center;
 }
 

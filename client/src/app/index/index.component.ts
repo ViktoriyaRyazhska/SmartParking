@@ -25,7 +25,7 @@ export class IndexComponent implements OnInit {
     @ViewChild('progressbar') private progressBar: MatProgressBar;
 
     parkings: Parking[] = [];
-    bestParkiings: Parking[] = [];
+    bestParkings: Parking[] = [];
 
     private progressBarVisible: boolean = false;
     private progressBarColor: string = 'primary';
@@ -133,8 +133,8 @@ export class IndexComponent implements OnInit {
                 duration: 4000
             });
         } else {
-            this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkiings[0].street + ' ' +
-                this.bestParkiings[0].building, null, {
+            this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkings[0].street + ' ' +
+                this.bestParkings[0].building, null, {
                 duration: 4000
             });
         }
@@ -143,10 +143,9 @@ export class IndexComponent implements OnInit {
     findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
         this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
             .subscribe(bestParkiings => {
-                this.bestParkiings = bestParkiings;
-                this.dataService.pushParkingsToDataService(this.bestParkiings);
-                this.dataService.currentParkings.subscribe(parkings => this.bestParkiings = parkings);
-                this.checkingForParkingAvailability(this.bestParkiings.length, radius);
+                this.bestParkings = bestParkiings;
+                this.dataService.pushParkingsToDataService(this.bestParkings);
+                this.checkingForParkingAvailability(this.bestParkings.length, radius);
             });
     }
 

@@ -16,7 +16,7 @@ export class ParkingMapComponent implements OnInit {
     lat = 49.843977;
     lng = 24.026318;
     parkings: Parking[] = [];
-    bestParkiings: Parking[] = [];
+    bestParkings: Parking[] = [];
     dir = undefined;
     distance: string;
     radius: number;
@@ -48,8 +48,6 @@ export class ParkingMapComponent implements OnInit {
                 }
                 this.parkingService.getParkingsNearby(this.lat, this.lng, this.radius).subscribe((response) => {
                     this.parkings = response.body;
-                    this.dataService.pushParkingsToDataService(this.parkings);
-                    this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
                 }, error => {
                     console.log(error);
                 });
@@ -96,8 +94,8 @@ export class ParkingMapComponent implements OnInit {
                 duration: 4000
             });
         } else {
-            this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkiings[0].street + ' ' +
-                this.bestParkiings[0].building, null, {
+            this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkings[0].street + ' ' +
+                this.bestParkings[0].building, null, {
                 duration: 4000
             });
         }
@@ -106,8 +104,9 @@ export class ParkingMapComponent implements OnInit {
     findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
         this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
             .subscribe(bestParkiings => {
-                this.bestParkiings = bestParkiings;
-                this.checkingForParkingAvailability(this.bestParkiings.length, radius);
+                this.bestParkings = bestParkiings;
+                this.dataService.pushParkingsToDataService(this.bestParkings);
+                this.checkingForParkingAvailability(this.bestParkings.length, radius);
             });
     }
 

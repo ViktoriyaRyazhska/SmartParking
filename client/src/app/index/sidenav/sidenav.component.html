@@ -1,7 +1,8 @@
 <!--<i class="material-icons" (click)="snav.toggle()">&#xE8D4;</i>-->
 <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="true"
              [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-
+    <span id="parkings-count">Was found {{parkings.length}} parkings</span>
+    <!--<span>Most popular on {{parkings[0].street}} {{parkings[0].building}}</span>-->
     <input class="input-filter" type="text" [(ngModel)]="streetFilter" placeholder="search">
 
     <mat-nav-list class="nav-list" *ngFor="let item of parkings">
