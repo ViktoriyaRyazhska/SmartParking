@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {MapsAPILoader} from '@agm/core';
 import {IpLocation, IpLocationService} from '../../../service/ip-location.service';
 import {Subject} from 'rxjs/Subject';
+import {ParkingService} from '../../../parking.service';
 
 @Component({
     selector: 'app-parking-list-filter-location-field',
@@ -40,9 +41,12 @@ export class LocationFieldComponent implements OnInit {
 
     public defaultValue = new LocationItem(null, '', null);
 
+    public cities: String[];
+
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ipLocationService: IpLocationService,
-                private changeDetector: ChangeDetectorRef) {
+                private changeDetector: ChangeDetectorRef,
+                private parkingService: ParkingService) {
     }
 
     public get value(): Location {
@@ -56,7 +60,9 @@ export class LocationFieldComponent implements OnInit {
             this.requestGeolocation();
             this.initDefaultLocation();
         });
-
+        this.parkingService.getDistinctParkingCities().subscribe(
+            cities => this.cities = cities
+        );
     }
 
     public onLocationInputBlur(): void {
@@ -96,7 +102,7 @@ export class LocationFieldComponent implements OnInit {
         if (localStorage.getItem('locationLatitude') != null && localStorage.getItem('locationLongtitude') != null) {
             let address;
             let request = <google.maps.GeocoderRequest> {
-                location: new google.maps.LatLng(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude')),
+                location: new google.maps.LatLng(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'))
             };
             this.geocodeService.geocode(request, (results, status) => {
                 if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
@@ -235,14 +241,16 @@ export class LocationFieldComponent implements OnInit {
 
     private updateLocationAutocompletePredictionItems(value: string): void {
         if (value !== null && value.length > 0) {
+
             const request = <google.maps.places.AutocompletionRequest> {
+                componentRestrictions: {country: 'ua'},
                 input: value,
                 location: this.geolocationItem
                     ? this.geolocationItem.location.toLatLng()
                     : this.geolocationItem
                         ? this.ipLocationItem.location.toLatLng()
                         : undefined,
-                radius: 0
+                radius: 0,
             };
             this.autocompleteService.getPlacePredictions(request, (predictions) => {
                 if (value == this.control.value) {
