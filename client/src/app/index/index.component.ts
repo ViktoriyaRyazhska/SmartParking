@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import {Parking} from '../model/view/parking';
 import {ParkingMapComponent} from './parking-map/parking-map.component';
 import {StatisticsService} from '../statistic/statistics.service';
-import {DataserviceService} from "./dataservice.service";
+import {DataserviceService} from './dataservice.service';
 
 const MiToKm = 1.60934;
 
@@ -45,6 +45,7 @@ export class IndexComponent implements OnInit {
             this.parkingMap.lng = filter.location.longitude;
             this.parkingMap.radius = filter.radius * 1000;
             this.parkingMap.clearDirection();
+            this.parkingMap.infoWindowOpened = null;
             this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.filter.radiusMax * 1000).subscribe((response) => {
                 this.hideProgressBar();
                 this.parkings = response.body;
