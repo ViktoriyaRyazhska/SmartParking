@@ -37,7 +37,7 @@ public class ParkingController {
     @Autowired
     private ParkingEventPublisher parkingEventPublisher;
 
-    @RequestMapping("parkings-nearby")
+    @GetMapping("parkings-nearby")
     public List<ParkingResponse> parkingsNearby(@ModelAttribute ParkingNearbyRequest request) {
         if (request.getRadius() < 0) {
             throw new BadRequestException("Radius must be positive or zero.");
@@ -45,20 +45,26 @@ public class ParkingController {
         return parkingService.findAllNearbyResponse(request);
     }
 
-    @RequestMapping("parkingdetail/{id}")
+    @GetMapping("unique-cities")
+    public ResponseEntity<List<String>> findUniqueCities() {
+        List<String> cities = parkingService.findDistinctParkingCity();
+        return new ResponseEntity<>(cities, HttpStatus.OK);
+    }
+
+    @GetMapping("parkingdetail/{id}")
     public ParkingDetailResponse findParkingDetailResponseById(@PathVariable Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Parking parking = parkingService.findById(id).orElse(null);
         ParkingDetailResponse parkingDetailResponse = ParkingDetailResponse.of(parking);
-        if (auth == null){
+        if (auth == null) {
             parkingDetailResponse.setIsFavorite(false);
-        }else {
+        } else {
             String email = SecurityContextHolder.getContext().getAuthentication().getName();
             parkingDetailResponse.setIsFavorite(
                     parkingService.isFavorite(email, id));
-            if (parkingDetailResponse.getIsFavorite()){
+            if (parkingDetailResponse.getIsFavorite()) {
                 parkingDetailResponse.setFavoriteName(
-                        parkingService.findFavoriteNameByEmailAndParkingId(email,id));
+                        parkingService.findFavoriteNameByEmailAndParkingId(email, id));
             }
         }
         parkingDetailResponse.setSpotsCount(
