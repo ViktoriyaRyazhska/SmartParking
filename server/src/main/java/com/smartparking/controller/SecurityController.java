@@ -39,6 +39,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/auth")
@@ -117,12 +119,15 @@ public class SecurityController {
         String firstName = regReq.getFirstname();
         temporaryDataConfirmationService.save(
                 temporaryDataConfirmationService.makeRegistrationConfirmationEntity(uuid, email));
-        try {
-            emailService.prepareAndSendConfirmRegistrationEmail(email, firstName, confirmUrl);
-        } catch (MailException e) {
-            LOGGER.error("Could not send email to : {} Error = {}", email, e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email sending Error!");
-        }
+        ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
+        emailExecutor.execute(() -> {
+            try {
+                emailService.prepareAndSendConfirmRegistrationEmail(email, firstName, confirmUrl);
+            } catch (MailException e) {
+                LOGGER.error("Could not send email to : {} Error = {}", email, e.getMessage());
+            }
+        });
+        emailExecutor.shutdown();
         return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Please check your email, and confirm registration"));
     }
 
@@ -135,7 +140,15 @@ public class SecurityController {
             if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid())) {
                 securityService.activateUserByEmail(checkedTemporaryDataConfirmation.get().getUserEmail());
                 temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation.get());
-                new Thread(() -> emailService.prepareAndSendWelcomeEmail(client.getEmail(), client.getFirstName())).start();
+                ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
+                emailExecutor.execute(() -> {
+                    try {
+                        emailService.prepareAndSendWelcomeEmail(client.getEmail(), client.getFirstName());
+                    } catch (MailException e) {
+                        LOGGER.error("Could not send email to : {} Error = {}", client.getEmail(), e.getMessage());
+                    }
+                });
+                emailExecutor.shutdown();
                 return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Your account has been successfully activated"));
             }
         } else {

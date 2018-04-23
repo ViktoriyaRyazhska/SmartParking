@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 public class PasswordConfirmationController {
@@ -70,12 +72,15 @@ public class PasswordConfirmationController {
         String firstName = clientService.findOne(email).getFirstName();
         temporaryDataConfirmationService.save(
                 temporaryDataConfirmationService.makePasswordConfirmationEntity(uuid, passwordRequest.getPassword()));
-        try {
-            emailService.prepareAndSendConfirmPassEmail(email, firstName, confirmUrl);
-        } catch (MailException e) {
-            LOGGER.error("Could not send email to : {} Error = {}", email, e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email sending Error!");
-        }
+        ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
+        emailExecutor.execute(() -> {
+            try {
+                emailService.prepareAndSendConfirmPassEmail(email, firstName, confirmUrl);
+            } catch (MailException e) {
+                LOGGER.error("Could not send email to : {} Error = {}", email, e.getMessage());
+            }
+        });
+        emailExecutor.shutdown();
         return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Data saved successfully"));
     }
 }

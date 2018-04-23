@@ -59,7 +59,7 @@ export class ClientProfileEditPasswordComponent implements OnInit {
         this.passwordData = this.passwordForm.value;
         this.passwordForm.reset();
         this.clientService.sendConfirmation(this.passwordData).subscribe((response: InfoResponse) => {
-            this.snackBar.open('Email with confirmation sent successfuly. Check your email and confirm new password.', null, {
+            this.snackBar.open('Check your email and confirm new password.', null, {
               duration: 5000
             });
           }, error =>{
