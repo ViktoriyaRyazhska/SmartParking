@@ -12,11 +12,11 @@ public interface ParkingRepository extends JpaRepository<Parking, Long> {
 
     List<Parking> findAllByProviderId(Long id);
 
-//    List<String> findDistinctByCity();
 
-    @Query(value = "SELECT *, LOCATION_DISTANCE(:latitude, :longitude, parking.latitude, parking.longitude) AS distance " +
-            "FROM parking " +
-            "WHERE LOCATION_DISTANCE(:latitude, :longitude, parking.latitude, parking.longitude) <= :radius",
+    @Query(value = "SELECT parking.*, LOCATION_DISTANCE(:latitude, :longitude, parking.latitude, parking.longitude) AS distance " +
+            "FROM parking JOIN provider ON provider.id = parking.provider_id " +
+            "WHERE LOCATION_DISTANCE(:latitude, :longitude, parking.latitude, parking.longitude) <= :radius " +
+            "AND provider.active = TRUE",
             nativeQuery = true)
     List<Tuple> findAllNearby(@Param(value = "latitude") Double latitude,
                               @Param(value = "longitude") Double longitude,
