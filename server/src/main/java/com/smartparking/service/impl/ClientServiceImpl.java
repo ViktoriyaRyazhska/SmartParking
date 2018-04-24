@@ -41,7 +41,6 @@ public class ClientServiceImpl extends AbstractService<Client, Long, ClientRepos
         Provider provider = findProviderById(clientRequest.getProvidersId());
         client.setProvider(provider);
 
-
         client.setRole(Role.valueOf(clientRequest.getRole()));
 
         client.setFirstName(clientRequest.getFirstName());

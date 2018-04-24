@@ -4,7 +4,10 @@
     <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
         <mat-card-header>
             <div style="min-width: 70%;">
-                <div>
+                <img src="data:image/JPEG;base64,{{client.image}}"
+                     class="photo-thumbnail"
+                     onError="this.src='assets/images/no-photo.jpg'">
+                <div id="main-info">
                     <mat-card-title><span>ID:</span> {{client.id}}
                     </mat-card-title>
                     <mat-card-title id="role"><span>Role:</span> {{client.role}}
