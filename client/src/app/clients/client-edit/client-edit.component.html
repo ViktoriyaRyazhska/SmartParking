@@ -17,7 +17,8 @@
             <input type="email" name="email" [(ngModel)]="client.email" class="form-control" readonly>
         </div>
 
-        <div class="row" *ngIf="client.providerName!='no provider' && client.role!='SUPERUSER' && client.role!='DRIVER'">
+        <div class="row"
+             *ngIf="client.providerName!='no provider' && client.role!='SUPERUSER' && client.role!='DRIVER'">
             <h6>Current provider: {{client.providerName}}</h6>
         </div>
 
@@ -27,15 +28,15 @@
         </div>
 
         <mat-form-field>
-            <mat-select [(value)]="selectedRole" placeholder="select role">
+            <mat-select [(value)]="client.role" placeholder="select role">
                 <mat-option *ngFor="let role of roles" [value]="role.name">
                     {{ role.name }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="selectedRole=='PROVIDER_MANAGER'">
-            <mat-select [(value)]="selectedProvidersId" placeholder="select provider">
+        <mat-form-field *ngIf="client.role=='PROVIDER_MANAGER'">
+            <mat-select [(value)]="client.providersId" placeholder="select provider">
                 <mat-option *ngFor="let provider of providers" [value]="provider.id">
                     {{ provider.name }}
                 </mat-option>
@@ -46,7 +47,7 @@
             <button mat-button class="btn btn-outline-primary"
                     type="submit"
                     [disabled]="!clientForm.valid"
-                    (click)="udateClientById()">
+                    (click)="updateClientById()">
                 Save
             </button>
         </div>

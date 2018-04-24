@@ -18,8 +18,6 @@ export class ClientEditComponent implements OnInit {
     provider: Provider;
     providers: Provider[];
     roles: Role[];
-    selectedRole: string;
-    selectedProvidersId: number;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService,
@@ -45,19 +43,14 @@ export class ClientEditComponent implements OnInit {
             .subscribe(providers => this.providers = providers);
     }
 
-    udateClientById(): void {
-        if (this.selectedRole != null) {
-            this.client.role = this.selectedRole;
-        }
-        if (this.selectedProvidersId != null) {
-            this.client.providersId = this.selectedProvidersId;
-        }
-        if (this.selectedRole == 'PROVIDER_MANAGER' && this.selectedProvidersId == null) {
+    updateClientById(): void {
+
+        if (this.client.role == 'PROVIDER_MANAGER' && this.client.providersId == 0) {
             this.snackBar.open('Please, select some provider', null, {
                 duration: 4000
             });
         } else {
-            if (this.selectedRole == 'DRIVER' || this.selectedRole == 'SUPERUSER') {
+            if (this.client.role == 'DRIVER' || this.client.role == 'SUPERUSER') {
                 this.client.providersId = 0;
             }
             this.clientService.updateClient(this.id, this.client)

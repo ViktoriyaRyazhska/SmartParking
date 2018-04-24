@@ -50,14 +50,15 @@ export class IndexComponent implements OnInit {
                 this.hideProgressBar();
                 this.parkings = response.body;
                 this.filterParkings();
+                alert(this.parkings.length);
             }, error => {
                 console.log(error);
                 this.showErrorProgressBar();
             });
- /*           this.findBestParkingsByLocation(
+            this.findBestParkingsByLocation(
                 this.parkingMap.lat,
                 this.parkingMap.lng,
-                this.parkingMap.radius, 30);*/
+                this.parkingMap.radius, 30);
         });
     }
 
