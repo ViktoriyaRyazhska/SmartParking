@@ -16,8 +16,8 @@ export class ClientEditComponent implements OnInit {
     id: number;
     client: Client;
     provider: Provider;
-    providers: Provider[];
-    roles: Role[];
+    providers: Provider[] = [];
+    roles: Role[] = [];
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService,
@@ -69,6 +69,10 @@ export class ClientEditComponent implements OnInit {
 
     getRoles(): void {
         this.roles = this.clientService.getRoles();
+    }
+
+    updateProviderName(selectedName: string) {
+        this.client.providerName = selectedName;
     }
 
 }
