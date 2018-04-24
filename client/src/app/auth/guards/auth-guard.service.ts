@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot} from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import {TokenStorage} from "./auth/token/token-storage";
+import {TokenStorage} from "../token/token-storage";
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
@@ -20,7 +19,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     checkRights(): boolean {
         if(this.tokenStorage.hasToken()) {
-            this.router.navigate(['/index']);
+            this.router.navigate(['/error/forbidden']);
             return false;
         } else {
             return true;

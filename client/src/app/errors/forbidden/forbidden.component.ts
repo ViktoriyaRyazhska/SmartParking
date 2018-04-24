@@ -7,7 +7,7 @@ import {environment} from "../../../environments/environment";
   styleUrls: ['./forbidden.component.css']
 })
 export class ForbiddenComponent implements OnInit {
-    appUrl = environment.angularUrl;
+  appUrl = environment.angularUrl;
 
   constructor() { }
 

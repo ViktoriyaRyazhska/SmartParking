@@ -29,7 +29,9 @@ import {ForbiddenComponent} from "./errors/forbidden/forbidden.component";
 import {ClientPasswordChangeConfirmationComponent} from './client-profile/client-password-change-confirmation/client-password-change-confirmation.component';
 import {RegistarationConfirmationComponent} from './auth/registration/registaration-confirmation/registaration-confirmation.component';
 import {ManagerSpotListComponent} from "./manager/manager-spot-list/manager-spot-list.component";
-import {AuthGuard} from "./auth-guard.service";
+import {AuthGuard} from "./auth/guards/auth-guard.service";
+import {ProviderGuard} from "./auth/guards/provider-guard.service";
+import {DriverGuard} from "./auth/guards/driver-guard.service";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -44,6 +46,7 @@ const routes: Routes = [
     },
     {
         path: 'configuration',
+        canActivate: [ProviderGuard],
         children: [
             {path: '', component: SuperuserConfigurationComponent},
             {
@@ -74,6 +77,7 @@ const routes: Routes = [
     },
     {
         path: 'profile',
+        canActivate: [DriverGuard],
         children: [
             {path: '', component: ClientProfileComponent},
             {path: 'edit', component: ClientProfileEditComponent},
@@ -97,6 +101,7 @@ const routes: Routes = [
     },
     {
         path: 'manager-configuration',
+        canActivate: [ProviderGuard],
         children: [
             {
                 path: ':id/spots',
