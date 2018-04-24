@@ -1,5 +1,6 @@
 package com.smartparking.controller;
 
+import com.smartparking.entity.ConfirmationType;
 import com.smartparking.entity.TemporaryDataConfirmation;
 import com.smartparking.model.request.PasswordRequest;
 import com.smartparking.model.response.InfoResponse;
@@ -53,8 +54,11 @@ public class PasswordConfirmationController {
         Optional<TemporaryDataConfirmation> checkedTemporaryDataConfirmation =
                 expirationCheckService.getTemporaryDataConfirmationWithExpirationChecking(uuidFromUrl);
         if (checkedTemporaryDataConfirmation.isPresent()) {
-            if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid())) {
-                securityServiceImpl.updateClientEncodedPassword(checkedTemporaryDataConfirmation.get().getNewPassword());
+            if ((uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid()))
+                    && (checkedTemporaryDataConfirmation.get().getConfirmationType() == ConfirmationType.PASSWORD_CONFIRM)) {
+                String newPassword = checkedTemporaryDataConfirmation.get().getNewPassword();
+                String userEmail = checkedTemporaryDataConfirmation.get().getUserEmail();
+                securityServiceImpl.updateClientEncodedPassword(newPassword, userEmail);
                 temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation.get());
                 return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("You are successfully updated password"));
             }
@@ -71,7 +75,8 @@ public class PasswordConfirmationController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         String firstName = clientService.findOne(email).getFirstName();
         temporaryDataConfirmationService.save(
-                temporaryDataConfirmationService.makePasswordConfirmationEntity(uuid, passwordRequest.getPassword()));
+                temporaryDataConfirmationService
+                        .makePasswordConfirmationEntity(uuid, passwordRequest.getPassword(), email));
         ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
         emailExecutor.execute(() -> {
             try {

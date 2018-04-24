@@ -28,4 +28,7 @@ public class TemporaryDataConfirmation extends AbstractIdentifiableEntity{
     @Column(name = "user_email")
     private String userEmail;
 
+    @Column(name = "confirmation_type")
+    private ConfirmationType confirmationType;
+
 }

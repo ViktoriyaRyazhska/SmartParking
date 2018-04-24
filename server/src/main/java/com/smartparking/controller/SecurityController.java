@@ -1,6 +1,7 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Client;
+import com.smartparking.entity.ConfirmationType;
 import com.smartparking.entity.TemporaryDataConfirmation;
 import com.smartparking.model.request.LoginRequest;
 import com.smartparking.model.request.RegistrationRequest;
@@ -137,7 +138,8 @@ public class SecurityController {
                 expirationCheckService.getTemporaryDataConfirmationWithExpirationChecking(uuidFromUrl);
         if (checkedTemporaryDataConfirmation.isPresent()) {
             Client client = clientService.findOne(checkedTemporaryDataConfirmation.get().getUserEmail());
-            if (uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid())) {
+            if ((uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid()))
+                    && (checkedTemporaryDataConfirmation.get().getConfirmationType() == ConfirmationType.REGISTRATION_CONFIRM)) {
                 securityService.activateUserByEmail(checkedTemporaryDataConfirmation.get().getUserEmail());
                 temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation.get());
                 ExecutorService emailExecutor = Executors.newSingleThreadExecutor();

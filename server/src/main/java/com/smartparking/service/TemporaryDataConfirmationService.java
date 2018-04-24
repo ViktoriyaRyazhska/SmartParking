@@ -7,7 +7,7 @@ public interface TemporaryDataConfirmationService extends Service<TemporaryDataC
 
     TemporaryDataConfirmation findByUuid(String uuid);
 
-    TemporaryDataConfirmation makePasswordConfirmationEntity(String uuid, String newPassword);
+    TemporaryDataConfirmation makePasswordConfirmationEntity(String uuid, String newPassword, String userEmail);
 
     TemporaryDataConfirmation makeRegistrationConfirmationEntity(String uuid, String userEmail);
 }

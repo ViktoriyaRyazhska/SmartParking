@@ -1,5 +1,6 @@
 package com.smartparking.service.impl;
 
+import com.smartparking.entity.ConfirmationType;
 import com.smartparking.entity.TemporaryDataConfirmation;
 import com.smartparking.repository.TemporaryDataConfirmationRepository;
 import com.smartparking.service.AbstractService;
@@ -32,11 +33,13 @@ public class TemporaryDataConfirmationServiceImpl
     }
 
     @Override
-    public TemporaryDataConfirmation makePasswordConfirmationEntity(String uuid, String newPassword) {
+    public TemporaryDataConfirmation makePasswordConfirmationEntity(String uuid, String newPassword, String userEmail) {
         TemporaryDataConfirmation temporaryDataConfirmation = new TemporaryDataConfirmation();
         temporaryDataConfirmation.setUuid(uuid);
         temporaryDataConfirmation.setTimeStamp(LocalDateTime.now().toInstant(ZoneOffset.UTC));
         temporaryDataConfirmation.setNewPassword(bcryptEncoder.encode(newPassword));
+        temporaryDataConfirmation.setUserEmail(userEmail);
+        temporaryDataConfirmation.setConfirmationType(ConfirmationType.PASSWORD_CONFIRM);
         return temporaryDataConfirmation;
     }
 
@@ -46,6 +49,7 @@ public class TemporaryDataConfirmationServiceImpl
         temporaryDataConfirmation.setUuid(uuid);
         temporaryDataConfirmation.setUserEmail(userEmail);
         temporaryDataConfirmation.setTimeStamp(LocalDateTime.now().toInstant(ZoneOffset.UTC));
+        temporaryDataConfirmation.setConfirmationType(ConfirmationType.REGISTRATION_CONFIRM);
         return temporaryDataConfirmation;
     }
 

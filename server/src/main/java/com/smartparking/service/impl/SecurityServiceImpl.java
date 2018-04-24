@@ -87,8 +87,8 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
         clientRepository.save(client);
     }
 
-    public void updateClientEncodedPassword(String newEncodedPassword) {
-        Client client = clientRepository.findClientByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+    public void updateClientEncodedPassword(String newEncodedPassword, String userEmail) {
+        Client client = clientRepository.findClientByEmail(userEmail);
         client.setPassword(newEncodedPassword);
         clientRepository.save(client);
     }
