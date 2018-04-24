@@ -96,11 +96,17 @@ export class LoginComponent implements OnInit {
                     });
                     this.router.navigate(['/']);
                 }, (error) => {
-                    if (error instanceof HttpErrorResponse)
-                        if(error.error.description == "User is disabled")
-                        this.snackBar.open("Your account is not activated. Please confirm the registration", null, {
-                            duration: 5000
-                        });
+                    if (error instanceof HttpErrorResponse) {
+                        if(error.error.description == "User is disabled") {
+                            this.snackBar.open("Your account is not activated. Please confirm the registration", null, {
+                                duration: 5000
+                            });
+                        } else {
+                            this.snackBar.open(error.error.response, null, {
+                                duration: 5000
+                            });
+                        }
+                    }
                 }
             );
     };

@@ -88,6 +88,7 @@ import {DataserviceService} from './index/dataservice.service';
 import {ManagerSpotListComponent} from './manager/manager-spot-list/manager-spot-list.component';
 import {ManagerSpotService} from './manager/manager-spot.service';
 import {SpotAddDialogComponent} from './manager/manager-spot-list/spot-add-dialog/spot-add-dialog.component';
+import {AuthGuard} from "./auth-guard.service";
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -208,7 +209,8 @@ export function getAuthServiceConfigs() {
         StatisticsService,
         CustomAuthService,
         DataserviceService,
-        ManagerSpotService
+        ManagerSpotService,
+        AuthGuard
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

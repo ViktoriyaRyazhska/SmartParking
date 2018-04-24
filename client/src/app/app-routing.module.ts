@@ -36,6 +36,7 @@ const routes: Routes = [
     {path: 'index', component: IndexComponent},
     {
         path: 'auth',
+        canActivate: [AuthGuard],
         children: [
             {path: 'login', component: LoginComponent},
             {path: 'registration', component: RegistrationComponent}
@@ -82,7 +83,6 @@ const routes: Routes = [
     },
     {
         path: 'statistic',
-        /*canActivate: [AuthGuard],*/
         children: [
             {path: '', component: StatisticComponent},
             {
