@@ -29,6 +29,7 @@ import {ForbiddenComponent} from "./errors/forbidden/forbidden.component";
 import {ClientPasswordChangeConfirmationComponent} from './client-profile/client-password-change-confirmation/client-password-change-confirmation.component';
 import {RegistarationConfirmationComponent} from './auth/registration/registaration-confirmation/registaration-confirmation.component';
 import {ManagerSpotListComponent} from "./manager/manager-spot-list/manager-spot-list.component";
+import {AuthGuard} from "./auth-guard.service";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -81,6 +82,7 @@ const routes: Routes = [
     },
     {
         path: 'statistic',
+        /*canActivate: [AuthGuard],*/
         children: [
             {path: '', component: StatisticComponent},
             {
