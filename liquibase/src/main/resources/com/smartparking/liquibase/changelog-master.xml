@@ -8,7 +8,7 @@
     <include file="com/smartparking/liquibase/table-client/create_table_client.xml"/>
     <include file="com/smartparking/liquibase/table-client/insert_into_table_client.xml"/>
     <include file="com/smartparking/liquibase/table-parking/create_table_parking.xml"/>
-    <include file="com/smartparking/liquibase/table-spot/alter_table_parking_added_new_columns.xml"/>
+    <include file="com/smartparking/liquibase/table-parking/alter_table_parking_added_new_columns.xml"/>
     <include file="com/smartparking/liquibase/table-spot/create_table_spot.xml"/>
     <include file="com/smartparking/liquibase/table-spot/alter_table_spot_added_column_spot_number.xml"/>
     <include file="com/smartparking/liquibase/table-spot/alter_table_spot_added_new_columns.xml"/>

@@ -46,9 +46,10 @@ export class IndexComponent implements OnInit {
             this.parkingMap.radius = filter.radius * 1000;
             this.parkingMap.clearDirection();
             this.parkingMap.infoWindowOpened = null;
-            this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.filter.radiusMax * 1000).subscribe((response) => {
+            this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.parkingMap.radius).subscribe((response) => {
                 this.hideProgressBar();
                 this.parkings = response.body;
+                this.dataService.pushParkingsToDataService(this.parkings);
                 this.filterParkings();
             }, error => {
                 console.log(error);
@@ -145,7 +146,6 @@ export class IndexComponent implements OnInit {
         this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
-                this.dataService.pushParkingsToDataService(this.bestParkings);
                 this.checkingForParkingAvailability(this.bestParkings.length, radius);
             });
     }

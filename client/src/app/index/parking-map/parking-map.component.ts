@@ -48,6 +48,7 @@ export class ParkingMapComponent implements OnInit {
                 }
                 this.parkingService.getParkingsNearby(this.lat, this.lng, this.radius).subscribe((response) => {
                     this.parkings = response.body;
+                    this.dataService.pushParkingsToDataService(this.parkings);
                 }, error => {
                     console.log(error);
                 });
@@ -105,7 +106,6 @@ export class ParkingMapComponent implements OnInit {
         this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
-                this.dataService.pushParkingsToDataService(this.bestParkings);
                 this.checkingForParkingAvailability(this.bestParkings.length, radius);
             });
     }
