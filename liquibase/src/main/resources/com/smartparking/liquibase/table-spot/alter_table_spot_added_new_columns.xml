@@ -1,0 +1,20 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Ivan" id="201804241141" dbms="MYSQL">
+        <sql>
+            ALTER TABLE spot
+            ADD COLUMN has_charger TINYINT(1) NOT NULL DEFAULT '0' AFTER spot_number;
+
+            ALTER TABLE spot
+            ADD COLUMN is_blocked TINYINT(1) NOT NULL DEFAULT '0' AFTER has_charger;
+
+            ALTER TABLE spot
+            ADD COLUMN is_invalid TINYINT(1) NOT NULL DEFAULT '0' AFTER is_blocked;
+        </sql>
+        <comment>Alter table spot</comment>
+    </changeSet>
+
+</databaseChangeLog>

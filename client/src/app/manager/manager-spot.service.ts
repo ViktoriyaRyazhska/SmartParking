@@ -22,9 +22,9 @@ export class ManagerSpotService {
             this.spotConfigureUrl + '/spot/save', spot, {observe: 'response'});
     }
 
-    deleteSpot(parking: Spot): Observable<HttpResponse<any>> {
+    deleteSpot(spot: Spot): Observable<HttpResponse<any>> {
         return this.http.post<HttpResponse<any>>(
-            this.spotConfigureUrl + '/spot/delete', parking, {observe: 'response'});
+            this.spotConfigureUrl + '/spot/delete', spot, {observe: 'response'});
     }
 
 }

@@ -66,7 +66,8 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     public List<SpotStatusResponse> findAllSpotsByParkingIdResponse(Long parkingId) {
         List<SpotStatusResponse> spots = findAllSpotsByParkingId(parkingId).stream().
                 map(spot -> new SpotStatusResponse(spot.getId(), false,
-                        spot.getSpotNumber(), spot.getParking().getId())).collect(Collectors.toList());
+                        spot.getSpotNumber(), spot.getParking().getId(),
+                        spot.getHasCharger(), spot.getIsInvalid(), spot.getIsBlocked())).collect(Collectors.toList());
         spots.sort((Comparator.comparing(SpotStatusResponse::getSpotNumber)));
         return spots;
     }

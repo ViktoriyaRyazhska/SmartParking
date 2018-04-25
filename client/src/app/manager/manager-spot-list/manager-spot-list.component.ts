@@ -39,7 +39,14 @@ export class ManagerSpotListComponent implements OnInit {
     }
 
     onSpotEditClick(spot: Spot): void {
-//        this.router.navigateByUrl('/manager-configuration/parkings/edit/' + id);
+        spot.isFree = true;
+        spot.spotNumberUpdate = spot.spotNumber;
+        spot.hasChargerUpdate = spot.hasCharger;
+        spot.isInvalidUpdate = spot.isInvalid;
+    }
+
+    onSpotCancelEditClick(spot: Spot): void {
+        spot.isFree = false;
     }
 
     onSpotDeleteClick(spot: Spot): void {
@@ -56,27 +63,20 @@ export class ManagerSpotListComponent implements OnInit {
     }
 
     onSpotAddClick(): void {
-        const id = parseInt(this.route.snapshot.paramMap.get('id'));
         let dialogRef = this.dialog.open(SpotAddDialogComponent, {
             data: new Spot()
         });
 
-        dialogRef.afterClosed().subscribe((data: Spot) => {
-            if (data.isFree) {
-                data.parkingId = id;
-                this.managerSpotService.saveSpot(data).subscribe((response: HttpResponse<any>) => {
-                    this.snackBar.open('Spot created sucsessfully.', null, {
-                        duration: 2000
-                    });
-                }, error => {
-                    this.snackBar.open('Cannot save spot.', null, {
-                        duration: 2000
-                    });
-                });
-                this.loadSpots();
-            }
+        dialogRef.afterClosed().subscribe((spot: Spot) => {
+            this.spotSave(spot);
         });
+    }
 
+    onSpotUpdateClick(spot: Spot): void {
+        spot.spotNumber = spot.spotNumberUpdate;
+        spot.hasCharger = spot.hasChargerUpdate;
+        spot.isInvalid = spot.isInvalidUpdate;
+        this.spotSave(spot);
     }
 
     private onDeleteResponse(spot: Spot, response: HttpResponse<any>): void {
@@ -86,6 +86,24 @@ export class ManagerSpotListComponent implements OnInit {
             });
             let index = this.spots.indexOf(spot);
             this.spots.splice(index, 1);
+        }
+    }
+
+    spotSave(spot: Spot): void {
+        const parkingId = parseInt(this.route.snapshot.paramMap.get('id'));
+        if (spot.isFree) {
+            spot.parkingId = parkingId;
+            this.managerSpotService.saveSpot(spot).subscribe((response: HttpResponse<any>) => {
+                this.snackBar.open('Spot created sucsessfully.', null, {
+                    duration: 2000
+                });
+            }, error => {
+                this.snackBar.open(error.error, null, {
+                    duration: 2000
+                });
+            });
+            spot.isFree = false;
+            this.loadSpots();
         }
     }
 }

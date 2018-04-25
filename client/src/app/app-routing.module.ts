@@ -7,10 +7,7 @@ import {ClientsComponent} from './clients/clients.component';
 import {ProviderListComponent} from './superuser-configuration/providers/provider-list/provider-list.component';
 import {LoginComponent} from './auth/login/login.component';
 import {ProviderDetailComponent} from './superuser-configuration/providers/provider-detail/provider-detail.component';
-import {
-    ManagerParkingConfigureComponent,
-    ManagerParkingConfigureType
-} from './manager/manager-parking-configure/manager-parking-configure.component';
+import {ManagerParkingConfigureComponent} from './manager/manager-parking-configure/manager-parking-configure.component';
 import {ClientDetailComponent} from './clients/client-detail/client-detail.component';
 import {RegistrationComponent} from './auth/registration/registration.component';
 import {AddProviderComponent} from './superuser-configuration/providers/add-provider/add-provider.component';
@@ -116,14 +113,12 @@ const routes: Routes = [
                 children: [
                     {path: '', component: ManagerParkingListComponent},
                     {
-                        path: 'add',
-                        component: ManagerParkingConfigureComponent,
-                        data: {configureType: ManagerParkingConfigureType.ADD}
+                        path: ':configureType',
+                        component: ManagerParkingConfigureComponent
                     },
                     {
-                        path: 'edit/:id',
-                        component: ManagerParkingConfigureComponent,
-                        data: {configureType: ManagerParkingConfigureType.EDIT}
+                        path: ':configureType/:id',
+                        component: ManagerParkingConfigureComponent
                     }
                 ]
             },

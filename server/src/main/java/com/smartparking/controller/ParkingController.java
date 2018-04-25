@@ -13,6 +13,7 @@ import com.smartparking.model.response.ParkingWithSpotsResponse;
 import com.smartparking.publisher.ParkingEventPublisher;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.ParkingService;
+import com.smartparking.service.ProviderService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,9 @@ public class ParkingController {
 
     @Autowired
     private SpotService spotService;
+
+    @Autowired
+    private ProviderService providerService;
 
     @Autowired
     private ParkingEventPublisher parkingEventPublisher;
@@ -99,6 +103,10 @@ public class ParkingController {
             parkingRequest.setProviderId(client.getProvider().getId());
         }
         Parking parking = parkingRequest.toParking();
+        parking.setHasCharger(false);
+        parking.setHasInvalid(false);
+        parking.setIsCovered(false);
+        parking.setProvider(providerService.getOne(parkingRequest.getProviderId()));
         if (parking.getProvider().getEmployees().contains(client) || client.getRole() == Role.SUPERUSER) {
             long parkingId = 0;
             if (parking.getId() != null) {

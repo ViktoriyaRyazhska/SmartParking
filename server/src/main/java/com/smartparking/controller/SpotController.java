@@ -8,6 +8,7 @@ import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
 import com.smartparking.publisher.SpotEventPublisher;
 import com.smartparking.service.ClientService;
+import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SpotController {
@@ -25,6 +27,9 @@ public class SpotController {
     private final SpotService spotService;
     @Autowired
     ClientService clientService;
+
+    @Autowired
+    ParkingService parkingService;
 
     @Autowired
     SpotEventPublisher spotEventPublisher;
@@ -80,16 +85,27 @@ public class SpotController {
     public ResponseEntity<?> save(@RequestBody SpotRequest spotRequest) {
         Client client = getCurrentUser();
         Spot spot = spotRequest.toSpot();
+        spot.setParking(parkingService.getOne(spotRequest.getParkingId()));
         if (isValidNewSpot(spot, client)) {
+            Optional<Spot> optional = spot.getParking().getSpots().stream().filter(spot1 -> spot1.getSpotNumber().equals(spot.getSpotNumber())).findFirst();
             long spotId = 0;
             if (spot.getId() != null) {
                 spotId = spot.getId();
+                if (optional.isPresent()) {
+                    if (optional.get().getId() != spotId) {
+                        return new ResponseEntity<>("This spot number is exist", HttpStatus.BAD_REQUEST);
+                    }
+                }
+            } else {
+                if (optional.isPresent()) {
+                    return new ResponseEntity<>("This spot number is exist", HttpStatus.BAD_REQUEST);
+                }
             }
             spotService.save(spot);
             spotEventPublisher.publishSave(spot, spotId);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Cannot save spot", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -125,7 +141,6 @@ public class SpotController {
 
     private Boolean isValidNewSpot(Spot spot, Client client) {
         return spot.getSpotNumber() != null && spot.getSpotNumber() < maxSpotNumber &&
-                //!spot.getParking().getSpots().stream().filter(spot1 -> spot1.getSpotNumber().equals(spot.getSpotNumber())).findFirst().isPresent() &&
                 (client.getProvider().getParkings().contains(spot.getParking()) || client.getRole() == Role.SUPERUSER);
     }
 }

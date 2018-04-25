@@ -4,4 +4,9 @@ export class Spot{
     spotNumber: number;
     parkingId: number;
     spotNumberUpdate: number;
+    hasCharger: boolean;
+    isInvalid: boolean;
+    isBlocked: boolean;
+    hasChargerUpdate: boolean;
+    isInvalidUpdate: boolean;
 }

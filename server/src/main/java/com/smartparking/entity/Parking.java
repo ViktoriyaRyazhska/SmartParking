@@ -51,4 +51,17 @@ public class Parking extends AbstractIdentifiableEntity {
 
     @Column(name = "building")
     private String building;
+
+    @NotNull
+    @Column(name = "has_charger", nullable = false, columnDefinition = "boolean default false")
+    private Boolean hasCharger;
+
+    @NotNull
+    @Column(name = "has_invalid", nullable = false, columnDefinition = "boolean default false")
+    private Boolean hasInvalid;
+
+    @NotNull
+    @Column(name = "is_covered", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isCovered;
+
 }

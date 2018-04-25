@@ -25,6 +25,18 @@ public class Spot extends AbstractIdentifiableEntity {
     @Column(name = "spot_number", nullable = false)
     private Long spotNumber;
 
+    @NotNull
+    @Column(name = "has_charger", nullable = false, columnDefinition = "boolean default false")
+    private Boolean hasCharger;
+
+    @NotNull
+    @Column(name = "is_invalid", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isInvalid;
+
+    @NotNull
+    @Column(name = "is_blocked", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isBlocked;
+
     public Spot(Long id) {
         super(id);
     }

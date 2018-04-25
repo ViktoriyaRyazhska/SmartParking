@@ -44,8 +44,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.route.root.firstChild.snapshot.data['configureType'] ===
-            ManagerParkingConfigureType.EDIT) {
+        if (this.route.snapshot.paramMap.get('configureType') === 'edit') {
             this.configureType = new ConfigureType('edit', ManagerParkingConfigureType.EDIT);
             this.loadParking();
         } else {

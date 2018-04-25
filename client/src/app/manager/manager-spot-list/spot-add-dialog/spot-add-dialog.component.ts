@@ -16,6 +16,9 @@ export class SpotAddDialogComponent implements OnInit {
     ngOnInit() {
         this.data.isFree = false;
         this.data.spotNumber = 1;
+        this.data.hasCharger = false;
+        this.data.isInvalid = false;
+        this.data.isBlocked = false;
     }
 
     onNoClick(): void {

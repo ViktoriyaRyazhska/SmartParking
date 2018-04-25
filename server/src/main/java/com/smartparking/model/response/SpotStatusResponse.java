@@ -12,4 +12,7 @@ public class SpotStatusResponse {
     private Boolean isFree;
     private Long spotNumber;
     private Long parkingId;
+    private Boolean hasCharger;
+    private Boolean isInvalid;
+    private Boolean isBlocked;
 }
