@@ -8,12 +8,18 @@
     <mat-nav-list class="nav-list" *ngFor="let item of parkings">
         <ng-container>
             <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
-                <div>
-                    <img src="https://st.depositphotos.com/1005920/3456/i/950/depositphotos_34563705-stock-photo-parking-icon.jpg"
-                         class="photo-thumbnail"
-                         onError="this.src='assets/images/no-photo.gif'">
-                    <span>{{item.street}} {{item.building}}</span>
-                </div>
+
+                <tr>
+                    <th rowspan="2"><img
+                            src="https://st.depositphotos.com/1005920/3456/i/950/depositphotos_34563705-stock-photo-parking-icon.jpg"
+                            class="photo-thumbnail"
+                            onError="this.src='assets/images/no-photo.gif'"></th>
+                    <td>{{item.street}} {{item.building}}</td>
+                </tr>
+                <tr>
+                    <td><sup>{{item.availableSpotsCount}} free spots</sup></td>
+                </tr>
+
             </a>
         </ng-container>
     </mat-nav-list>

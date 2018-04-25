@@ -36,7 +36,7 @@ h1.app-name {
 
 .nav-list a {
     padding: 5px 0;
-    color: darkred;
+    /*color: darkred;*/
 }
 
 .content {
@@ -52,7 +52,7 @@ h1.app-name {
     border-radius: 30px;
     border: 1px solid #ddd;
     display: inline-block;
-    margin: 3px 0px;
+    margin: 1px 1px;
     vertical-align: middle;
     width: 48px;
     height: 48px;
@@ -97,3 +97,6 @@ h1.app-name {
     text-align: center;
 }
 
+sup {
+    color: darkred;
+}
