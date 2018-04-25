@@ -37,7 +37,7 @@ export class LocationFieldComponent implements OnInit {
 
     public readonly valueChanges = this.valueChangesSubject.asObservable();
 
-    private internalValue: Location;
+    public internalValue: Location;
 
     public defaultValue = new LocationItem(null, '', null);
 
@@ -117,6 +117,7 @@ export class LocationFieldComponent implements OnInit {
             });
         } else {
             let address;
+
             let request = <google.maps.GeocoderRequest> {
                 location: new google.maps.LatLng(49.843977, 24.026318),
             };
@@ -243,7 +244,6 @@ export class LocationFieldComponent implements OnInit {
         if (value !== null && value.length > 0) {
 
             const request = <google.maps.places.AutocompletionRequest> {
-                language: 'en',
                 componentRestrictions: {country: 'ua'},
                 input: value,
                 location: this.geolocationItem

@@ -131,7 +131,7 @@ export class IndexComponent implements OnInit {
 
     checkingForParkingAvailability(numberOfParkings: number, radius: number) {
         if (numberOfParkings < 1) {
-            this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + " km", null, {
+            this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + ' km', null, {
                 duration: 4000
             });
         } else {

@@ -5,6 +5,8 @@ import {RadiusFieldComponent} from './radius-field/radius-field.component';
 import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
 import {Subject} from 'rxjs/Subject';
 
+const earthRadius = 6371e3;
+
 @Component({
     selector: 'app-parking-list-filter',
     templateUrl: './parking-list-filter.component.html',
@@ -32,6 +34,8 @@ export class ParkingListFilterComponent implements OnInit {
 
     private present: boolean;
 
+    private distance: number;
+
     constructor() {
     }
 
@@ -42,7 +46,21 @@ export class ParkingListFilterComponent implements OnInit {
     ngOnInit() {
         this.locationField.valueChanges.subscribe(location => {
             for (let city of this.locationField.cities) {
-                if (this.locationField.selectedItem.label.includes(city.toString())) {
+                let cityLat;
+                let cityLng;
+                let geocoder = new google.maps.Geocoder();
+                geocoder.geocode({'address': city + ', Ukraine'}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        cityLat = results[0].geometry.location.lat();
+                        cityLng = results[0].geometry.location.lng();
+                    } else {
+                        alert('Something got wrong ' + status);
+                    }
+                });
+
+                this.distance = this.getDistanceBetweenPoint(cityLat, location.latitude, cityLng, location.longitude);
+
+                if (this.distance <= 10) {
                     this.present = true;
                     break;
                 } else {
@@ -76,6 +94,25 @@ export class ParkingListFilterComponent implements OnInit {
             }
             localStorage.setItem('radius', radius.toString());
         });
+    }
+
+    public getDistanceBetweenPoint(lat1, lat2, lon1, lon2): number {
+        let f1 = this.toRadians(lat1);
+        let f2 = this.toRadians(lat2);
+        let l1 = this.toRadians((lat2 - lat1));
+        let l2 = this.toRadians((lon2 - lon1));
+
+        var a = Math.sin(l1 / 2) * Math.sin(l1 / 2) +
+            Math.cos(f1) * Math.cos(f2) *
+            Math.sin(l2 / 2) * Math.sin(l2 / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        var d = earthRadius * c;
+        return d;
+    }
+
+    private toRadians(number): number {
+        return number * Math.PI / 180;
     }
 
     public get radiusMax(): number {
