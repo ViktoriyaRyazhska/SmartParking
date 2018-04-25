@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {TokenPair} from "./token-pair";
+import {determineRole, Role} from "../roles";
 
 const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
@@ -12,7 +13,7 @@ export class TokenStorage {
 
     private accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
     private refreshToken = window.localStorage.getItem(REFRESH_TOKEN_KEY);
-    private decodedToken;
+    private decodedToken = this.decodeToken();
 
     constructor() {
     }
@@ -50,15 +51,11 @@ export class TokenStorage {
         return helper.isTokenExpired(this.accessToken);
     }
 
-    public getRole(): string {
+    public getRole(): Role {
         if(!this.hasToken()) {
-            return '';
+            return Role.Unauthorized;
         }
-        return this.decodeToken().authorities[0].authority;
-    }
-
-    public getUsername(): string {
-        return this.decodeToken().username;
+        return determineRole(this.decodedToken.authorities[0].authority);
     }
 
     private decodeToken(): any {

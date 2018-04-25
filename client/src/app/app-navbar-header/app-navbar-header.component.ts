@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TokenStorage} from '../auth/token/token-storage';
+import {Role} from "../auth/roles";
 
 @Component({
     selector: 'app-navbar-header',
@@ -7,6 +8,7 @@ import {TokenStorage} from '../auth/token/token-storage';
     styleUrls: ['./app-navbar-header.component.css']
 })
 export class AppNavbarHeaderComponent implements OnInit {
+    role: any = Role;
 
   navTitle = 'SmartParking';
 
@@ -15,7 +17,7 @@ export class AppNavbarHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  getRole(): string {
+  getRole(): Role {
     return this.tokenStorage.getRole();
   }
 

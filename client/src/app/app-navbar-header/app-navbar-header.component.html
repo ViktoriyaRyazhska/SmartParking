@@ -17,7 +17,7 @@
     <mat-icon>&#xE853;</mat-icon>
     </button>
     </span>
-    <span *ngIf="getRole() === 'PROVIDER_MANAGER' || getRole() === 'SUPERUSER'">
+    <span *ngIf="getRole() === role.Manager || getRole() === role.Admin">
         <button [routerLink]="['/configuration']" mat-icon-button matTooltip="Admin configurations">
             <mat-icon>settings</mat-icon>
         </button>

@@ -15,7 +15,8 @@ import {
 } from './favorites-add-configm-dialog/favorites-add-configm-dialog.component';
 import { Favorite } from '../model/view/favorite';
 import { DeleteConfirmationDialogComponent } from '../manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
+import {Role} from "../auth/roles";
 
 @Component({
   selector: 'app-parking-detail',
@@ -147,7 +148,7 @@ export class ParkingDetailComponent implements OnInit, OnDestroy {
   }
 
 
-  getRole(): string {
+  getRole(): Role {
     return this.tokenStorage.getRole();
   }
 

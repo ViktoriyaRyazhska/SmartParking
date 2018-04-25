@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+
     @Autowired
     @Qualifier("MyUserDetails")
     private UserDetailsService userDetailsService;
@@ -45,41 +47,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String refreshToken = request.getHeader(refreshTokenHeader);
 
         String username = null;
-        if (accessToken != null) {
-            try {
+        try {
+            if (accessToken != null) {
                 username = tokenUtil.getUsernameFromToken(accessToken);
-            } catch (IllegalArgumentException e) {
-                LOGGER.warn("Claims jws string is or empty or only whitespace");
-            } catch (ExpiredJwtException e) {
-                LOGGER.warn("The token is expired and not valid anymore");
-            } catch (SignatureException e) {
-                LOGGER.warn("JWS signature validation fails");
             }
-        }
-        if (refreshToken != null) {
-            try {
+            if (refreshToken != null) {
                 username = tokenUtil.getUsernameFromToken(refreshToken);
                 TokenPair tokenPair = tokenUtil.generateTokenPair(userDetailsService.loadUserByUsername(username));
                 response.addHeader("access-control-expose-headers", accessTokenHeader + ", " + refreshTokenHeader);
                 response.setHeader(accessTokenHeader, tokenPair.getAccessToken());
                 response.setHeader(refreshTokenHeader, tokenPair.getRefreshToken());
-            } catch (IllegalArgumentException e) {
-                LOGGER.warn("Claims jws string is or empty or only whitespace");
-            } catch (ExpiredJwtException e) {
-                LOGGER.warn("The token is expired and not valid anymore");
-                response.sendError(401, "Refresh token expired");
-            } catch (SignatureException e) {
-                LOGGER.warn("JWS signature validation fails");
             }
+        } catch (IllegalArgumentException e) {
+            LOGGER.warn("Claims jws string is or empty or only whitespace");
+        } catch (ExpiredJwtException e) {
+            LOGGER.warn("The token is expired and not valid anymore");
+            response.sendError(401, "Refresh token expired");
+        } catch (SignatureException e) {
+            LOGGER.warn("JWS signature validation fails");
         }
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            System.out.println(username);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             LOGGER.info("Authenticated user " + username + ", setting security context");
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
         if (!response.isCommitted()) {
             filterChain.doFilter(request, response);
         }
