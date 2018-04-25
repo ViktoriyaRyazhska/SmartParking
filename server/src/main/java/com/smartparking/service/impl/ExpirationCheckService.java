@@ -31,7 +31,7 @@ public class ExpirationCheckService {
         return uncheckedTemporaryDataConfirmation;
     }
 
-    @Scheduled(cron = "${temporaty-data-confirmation-clear-schedule}")
+    @Scheduled(cron = "${temporary-data-confirmation-clear-schedule}")
     public void scheduleCleanTaskByExpirationTime() {
         List<TemporaryDataConfirmation> listUntilCleaning = temporaryDataConfirmationService.findAll();
         listUntilCleaning.stream().forEach(temporaryDataConfirmation -> {
