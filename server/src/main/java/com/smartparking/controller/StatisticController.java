@@ -49,7 +49,7 @@ public class StatisticController {
 
         List<Parking> parkings = spotService.findBestParkings(city, street, instant);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
-        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
+        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
@@ -61,7 +61,7 @@ public class StatisticController {
 
         List<Parking> parkings = spotService.findBestParkingsInTheCity(city, instant);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
-        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
+        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
@@ -75,7 +75,7 @@ public class StatisticController {
 
         List<Parking> parkings = spotService.findBestParkingsByLocation(Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(radius), instant);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
-        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking)));
+        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 

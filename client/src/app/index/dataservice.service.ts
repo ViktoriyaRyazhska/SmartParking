@@ -7,13 +7,20 @@ import {Observable} from "rxjs/Observable";
 export class DataserviceService {
 
     private parkings: BehaviorSubject<Parking[]> = new BehaviorSubject([]);
-    currentParkings : Observable<Parking[]> = this.parkings.asObservable();
+    currentParkings: Observable<Parking[]> = this.parkings.asObservable();
+
+    private bestParkings: BehaviorSubject<Parking[]> = new BehaviorSubject([]);
+    currentBestParkings: Observable<Parking[]> = this.bestParkings.asObservable();
 
     constructor() {
     }
 
     pushParkingsToDataService(parkings: Parking[]) {
         this.parkings.next(parkings);
+    }
+
+    pushBestParkingsToDataService(bestParkings: Parking[]) {
+        this.bestParkings.next(bestParkings);
     }
 
 }

@@ -17,6 +17,8 @@ export class SidenavComponent implements OnInit {
     parkings: Parking[];
     public streetFilter = '';
 
+    textShowMostPopular: boolean = true;
+
     constructor(changeDetectorRef: ChangeDetectorRef,
                 media: MediaMatcher,
                 private statisticService: StatisticsService,
@@ -31,7 +33,19 @@ export class SidenavComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.textShowMostPopular = true;
         this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
     }
+
+    showMostPopularParkings() {
+        this.dataService.currentBestParkings.subscribe(parkings => this.parkings = parkings);
+        this.textShowMostPopular = false;
+    }
+
+    showAllParkings() {
+        this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
+        this.textShowMostPopular = true;
+    }
+
 
 }

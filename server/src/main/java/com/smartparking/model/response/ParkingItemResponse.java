@@ -14,8 +14,9 @@ public class ParkingItemResponse {
     private BigDecimal price;
     private String providerName;
     private String building;
+    private Long availableSpotsCount;
 
-    public static ParkingItemResponse of(Parking parking){
+    public static ParkingItemResponse of(Parking parking, Long availableSpots) {
         ParkingItemResponse parkingItemResponse = new ParkingItemResponse();
         parkingItemResponse.setId(parking.getId());
         parkingItemResponse.setCity(parking.getCity());
@@ -23,6 +24,7 @@ public class ParkingItemResponse {
         parkingItemResponse.setBuilding(parking.getBuilding());
         parkingItemResponse.setPrice(parking.getPrice());
         parkingItemResponse.setProviderName(parking.getProvider().getName());
+        parkingItemResponse.setAvailableSpotsCount(availableSpots);
         return parkingItemResponse;
     }
 }

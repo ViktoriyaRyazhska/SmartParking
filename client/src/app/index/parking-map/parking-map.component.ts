@@ -92,12 +92,12 @@ export class ParkingMapComponent implements OnInit {
     checkingForParkingAvailability(numberOfParkings: number, radius: number) {
         if (numberOfParkings < 1) {
             this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + " km", null, {
-                duration: 4000
+                duration: 9000
             });
         } else {
             this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkings[0].street + ' ' +
                 this.bestParkings[0].building, null, {
-                duration: 4000
+                duration: 9000
             });
         }
     }
@@ -106,6 +106,7 @@ export class ParkingMapComponent implements OnInit {
         this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
+                this.dataService.pushBestParkingsToDataService(this.bestParkings);
                 this.checkingForParkingAvailability(this.bestParkings.length, radius);
             });
     }
