@@ -37,7 +37,7 @@ export class LocationFieldComponent implements OnInit {
 
     public readonly valueChanges = this.valueChangesSubject.asObservable();
 
-    public internalValue: Location;
+    private internalValue: Location;
 
     public defaultValue = new LocationItem(null, '', null);
 
@@ -142,7 +142,7 @@ export class LocationFieldComponent implements OnInit {
                 position => this.onGeolocationSuccess(position),
                 error => this.onGeolocationError(error),
                 <PositionOptions> {
-                    timeout: 100000,
+                    timeout: 10000,
                     enableHighAccuracy: false
                 });
         }

@@ -1,9 +1,10 @@
 <div class="parent">
     <app-sidenav #sideNav></app-sidenav>
     <app-parking-map #parkingMap></app-parking-map>
-    <div class="filter offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
+    <div class="filter col-sm-12 col-md-12 col-lg-12">
         <mat-progress-bar #progressbar *ngIf="progressBarVisible" [color]="progressBarColor" [mode]="progressBarMode"
                           class="progress-bar" mode="query" [value]="100"></mat-progress-bar>
         <app-parking-list-filter #filter></app-parking-list-filter>
     </div>
+
 </div>
