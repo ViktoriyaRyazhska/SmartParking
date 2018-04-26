@@ -11,7 +11,7 @@ import com.smartparking.model.response.InfoResponse;
 import com.smartparking.security.exception.AuthorizationEx;
 import com.smartparking.security.tokens.TokenPair;
 import com.smartparking.security.tokens.TokenUtil;
-import com.smartparking.security.utils.Validator;
+import com.smartparking.security.utils.validation.ValidationUtil;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.SecurityService;
 import com.smartparking.service.TemporaryDataConfirmationService;
@@ -48,7 +48,7 @@ import java.util.concurrent.Executors;
 public class SecurityController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityController.class);
     @Autowired
-    private Validator validator;
+    private ValidationUtil validationUtil;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -87,8 +87,8 @@ public class SecurityController {
         final String password;
         final UserDetails user;
         try {
-            email = validator.validateEmailOnLogin(loginRequest.getEmail());
-            password = validator.validatePassword(loginRequest.getPassword());
+            email = validationUtil.validateEmailOnLogin(loginRequest.getEmail());
+            password = validationUtil.validatePassword(loginRequest.getPassword());
         } catch (AuthorizationEx e) {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));

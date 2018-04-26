@@ -1,5 +1,6 @@
 <div class="container-fluid container-style">
-    <form [formGroup]="loginForm" (ngSubmit)="login()" class="formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+    <form [formGroup]="loginForm" (ngSubmit)="login()"
+          class="formstyle offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
         <h3 class="heading row offset-4">Authorization</h3>
         <div class="row">
             <mat-form-field class="customwidth">
@@ -15,8 +16,10 @@
         </div>
         <div class="row">
             <mat-form-field class="customwidth">
-                <input matInput placeholder="Enter your password" formControlName="password" [type]="hide ? 'password' : 'text'">
-                <mat-icon matSuffix (click)="hide = !hide" class="cursor">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <input matInput placeholder="Enter your password" formControlName="password"
+                       [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide" class="cursor">{{hide ? 'visibility' : 'visibility_off'}}
+                </mat-icon>
                 <mat-error *ngIf="passwordControl.hasError('minlength') && !passwordControl.hasError('required')">
                     Password must contain more than 6 characters
                 </mat-error>

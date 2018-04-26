@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import {
-    HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
-} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import {TokenStorage} from '../auth/token/token-storage';
@@ -13,7 +11,8 @@ export class InterceptorService implements HttpInterceptor {
     private accessTokenHeader = environment.accessTokenHeader;
     private apiUrl = environment.apiUrl;
 
-    constructor(private tokenStorage: TokenStorage) {}
+    constructor(private tokenStorage: TokenStorage) {
+    }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.url.startsWith(this.apiUrl) && this.tokenStorage.getAccessToken() && !this.tokenStorage.isExpired()) {

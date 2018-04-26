@@ -9,5 +9,6 @@ export class SocialPrincipal {
         this.email = email;
         this.name = name;
         this.provider = provider;
-    }}
+    }
+}
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {TokenStorage} from "../token/token-storage";
 import {Role} from "../roles";
@@ -19,7 +19,7 @@ export class AdminGuard {
     }
 
     checkRights(): boolean {
-        if(this.tokenStorage.getRole() === Role.Admin) {
+        if (this.tokenStorage.getRole() === Role.Admin) {
             return true;
         } else {
             this.router.navigate(['/error/forbidden']);

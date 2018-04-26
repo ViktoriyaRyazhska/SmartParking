@@ -1,10 +1,10 @@
-package com.smartparking.security.utils;
+package com.smartparking.security.utils.validation;
 
 import com.smartparking.security.exception.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface Validator {
+public interface ValidationUtil {
     String validateEmailOnRegistration(String email) throws EmailValidationEx, DuplicateEmailEx;
 
     String validateEmailOnLogin(String email) throws EmailValidationEx, NonExistantEmailEx;

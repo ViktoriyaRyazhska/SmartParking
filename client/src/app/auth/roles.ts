@@ -6,7 +6,7 @@ export enum Role {
 }
 
 export function determineRole(input: string): Role {
-    if(input == 'DRIVER') {
+    if (input == 'DRIVER') {
         return Role.Driver;
     } else if (input == 'PROVIDER_MANAGER') {
         return Role.Manager;

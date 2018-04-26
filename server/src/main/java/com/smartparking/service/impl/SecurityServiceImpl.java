@@ -2,13 +2,12 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
-import com.smartparking.entity.SpringSecurityUser;
 import com.smartparking.model.request.PasswordRequest;
 import com.smartparking.model.request.RegistrationRequest;
 import com.smartparking.model.request.SocialSignInRequest;
 import com.smartparking.repository.ClientRepository;
 import com.smartparking.security.exception.*;
-import com.smartparking.security.utils.Validator;
+import com.smartparking.security.utils.validation.ValidationUtil;
 import com.smartparking.service.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Autowired
-    private Validator validator;
+    private ValidationUtil validationUtil;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -41,22 +40,10 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Optional<UserDetails> user = clientToSpringSecurityUser(clientRepository.findClientByEmail(username));
+        final Optional<UserDetails> user = Optional.of(clientRepository.findClientByEmail(username));
         final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
         user.ifPresent(detailsChecker::check);
         return user.orElseThrow(() -> new UsernameNotFoundException("user not found."));
-    }
-
-    private Optional<UserDetails> clientToSpringSecurityUser(Client client) {
-        SpringSecurityUser springSecurityUser = new SpringSecurityUser();
-        springSecurityUser.setId(client.getId());
-        springSecurityUser.setUsername(client.getEmail());
-        springSecurityUser.setPassword(client.getPassword());
-        springSecurityUser.setFirstname(client.getFirstName());
-        springSecurityUser.setLastname(client.getLastName());
-        springSecurityUser.setRole(client.getRole());
-        springSecurityUser.setEnabled(client.getActivated());
-        return Optional.of(springSecurityUser);
     }
 
     @Override
@@ -72,10 +59,10 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
                 && !clientRepository.findClientByEmail(registrationRequest.getEmail()).getActivated())) {
             client = clientRepository.findClientByEmail(registrationRequest.getEmail());
         }
-        client.setEmail(validator.validateEmailOnRegistration(registrationRequest.getEmail()));
-        client.setPassword(bcryptEncoder.encode(validator.checkPasswords(registrationRequest.getPassword(), registrationRequest.getConfirmPassword())));
-        client.setFirstName(validator.validateFirstname(registrationRequest.getFirstname()));
-        client.setLastName(validator.validateLastname(registrationRequest.getLastname()));
+        client.setEmail(validationUtil.validateEmailOnRegistration(registrationRequest.getEmail()));
+        client.setPassword(bcryptEncoder.encode(validationUtil.checkPasswords(registrationRequest.getPassword(), registrationRequest.getConfirmPassword())));
+        client.setFirstName(validationUtil.validateFirstname(registrationRequest.getFirstname()));
+        client.setLastName(validationUtil.validateLastname(registrationRequest.getLastname()));
         client.setRole(Role.DRIVER);
         client.setActivated(false);
         clientRepository.save(client);
@@ -83,7 +70,7 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
 
     public void updateClientPassword(PasswordRequest passwordRequest) throws NonMatchingPasswordsEx, PasswordValidationEx {
         Client client = clientRepository.findClientByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        client.setPassword(bcryptEncoder.encode(validator.checkPasswords(passwordRequest.getPassword(), passwordRequest.getConfirmPassword())));
+        client.setPassword(bcryptEncoder.encode(validationUtil.checkPasswords(passwordRequest.getPassword(), passwordRequest.getConfirmPassword())));
         clientRepository.save(client);
     }
 
@@ -96,10 +83,10 @@ public class SecurityServiceImpl implements UserDetailsService, SecurityService 
     public void saveClientFromSocialSignInRequest(SocialSignInRequest socialSignInRequest) throws EmailValidationEx, DuplicateEmailEx, FirstnameValidationEx, LastnameValidationEx {
         String[] nameSurname = socialSignInRequest.getName().trim().split("\\s+");
         Client client = new Client();
-        client.setEmail(validator.validateEmailOnRegistration(socialSignInRequest.getEmail()));
+        client.setEmail(validationUtil.validateEmailOnRegistration(socialSignInRequest.getEmail()));
         client.setPassword(bcryptEncoder.encode("1234567"));
-        client.setFirstName(validator.validateFirstname(nameSurname[0]));
-        client.setLastName(validator.validateLastname(nameSurname[1]));
+        client.setFirstName(validationUtil.validateFirstname(nameSurname[0]));
+        client.setLastName(validationUtil.validateLastname(nameSurname[1]));
         client.setRole(Role.DRIVER);
         client.setActivated(true);
         clientRepository.save(client);

@@ -45,14 +45,14 @@ export class TokenStorage {
     }
 
     public isExpired(): boolean {
-        if(this.accessToken == null) {
+        if (this.accessToken == null) {
             return false;
         }
         return helper.isTokenExpired(this.accessToken);
     }
 
     public getRole(): Role {
-        if(!this.hasToken()) {
+        if (!this.hasToken()) {
             return Role.Unauthorized;
         }
         return determineRole(this.decodedToken.authorities[0].authority);
