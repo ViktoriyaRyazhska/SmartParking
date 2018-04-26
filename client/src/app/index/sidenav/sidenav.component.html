@@ -3,33 +3,59 @@
              [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
 
     <span class="parkings-count">Was found {{parkings.length}} parkings</span>
+    <span id="withoutOrders" *ngIf="showMostPopular && (parkings.length - mostPopularParkings.length)!=0">
+        {{parkings.length - mostPopularParkings.length}} parkings without orders</span>
 
-    <span class="show" *ngIf="textShowMostPopular;else showParkings"
+    <span class="show" *ngIf="!showMostPopular;else showParkings"
           (click)="showMostPopularParkings()">Show most popular</span>
     <ng-template #showParkings>
         <span class="show" (click)="showAllParkings()">Show all parkings</span>
     </ng-template>
 
     <input class="input-filter" type="text" [(ngModel)]="streetFilter" placeholder="search">
-    <span id="mostPopular" *ngIf="!textShowMostPopular">Most popular</span>
-    <mat-nav-list class="nav-list" *ngFor="let item of parkings">
-        <ng-container>
-            <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
+    <span id="mostPopular" *ngIf="showMostPopular">Most popular</span>
 
-                <tr>
-                    <th rowspan="2"><img
-                            src="https://st.depositphotos.com/1005920/3456/i/950/depositphotos_34563705-stock-photo-parking-icon.jpg"
-                            class="photo-thumbnail"
-                            onError="this.src='assets/images/no-photo.gif'"></th>
-                    <td>{{item.street}} {{item.building}}</td>
-                </tr>
-                <tr>
-                    <td><sup>{{item.availableSpotsCount}} free spots</sup></td>
-                </tr>
+    <div *ngIf="!showMostPopular">
+        <mat-nav-list class="nav-list" *ngFor="let item of parkings">
+            <ng-container>
+                <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
 
-            </a>
-        </ng-container>
-    </mat-nav-list>
+                    <tr>
+                        <th rowspan="2"><img
+                                src="https://st.depositphotos.com/1005920/3456/i/950/depositphotos_34563705-stock-photo-parking-icon.jpg"
+                                class="photo-thumbnail"
+                                onError="this.src='assets/images/no-photo.gif'"></th>
+                        <td>{{item.street}} {{item.building}}</td>
+                    </tr>
+                    <tr>
+                        <td><sup>{{item.availableSpotsCount}} free spots</sup></td>
+                    </tr>
+
+                </a>
+            </ng-container>
+        </mat-nav-list>
+    </div>
+
+    <div *ngIf="showMostPopular">
+        <mat-nav-list class="nav-list" *ngFor="let item of mostPopularParkings">
+            <ng-container>
+                <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
+
+                    <tr>
+                        <th rowspan="2"><img
+                                src="https://st.depositphotos.com/1005920/3456/i/950/depositphotos_34563705-stock-photo-parking-icon.jpg"
+                                class="photo-thumbnail"
+                                onError="this.src='assets/images/no-photo.gif'"></th>
+                        <td>{{item.street}} {{item.building}}</td>
+                    </tr>
+                    <tr>
+                        <td><sup>{{item.availableSpotsCount}} free spots</sup></td>
+                    </tr>
+
+                </a>
+            </ng-container>
+        </mat-nav-list>
+    </div>
 </mat-sidenav>
 
 

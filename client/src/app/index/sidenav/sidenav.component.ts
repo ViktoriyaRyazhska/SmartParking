@@ -15,9 +15,10 @@ export class SidenavComponent implements OnInit {
     private _mobileQueryListener: () => void;
 
     parkings: Parking[];
+    mostPopularParkings: Parking[];
     public streetFilter = '';
 
-    textShowMostPopular: boolean = true;
+    showMostPopular: boolean = false;
 
     constructor(changeDetectorRef: ChangeDetectorRef,
                 media: MediaMatcher,
@@ -33,18 +34,17 @@ export class SidenavComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.textShowMostPopular = true;
         this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
     }
 
     showMostPopularParkings() {
-        this.dataService.currentBestParkings.subscribe(parkings => this.parkings = parkings);
-        this.textShowMostPopular = false;
+        this.showMostPopular = true;
+        this.dataService.currentBestParkings.subscribe(parkings => this.mostPopularParkings = parkings);
     }
 
     showAllParkings() {
+        this.showMostPopular = false;
         this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
-        this.textShowMostPopular = true;
     }
 
 

@@ -59,7 +59,7 @@ export class ParkingListFilterComponent implements OnInit {
                 });
 
                 this.distance = this.getDistanceBetweenPoint(cityLat, location.latitude, cityLng, location.longitude);
-
+                this.distance = 9;
                 if (this.distance <= 10) {
                     this.present = true;
                     break;
