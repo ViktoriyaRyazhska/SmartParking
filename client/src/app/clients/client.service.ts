@@ -71,6 +71,10 @@ export class ClientService {
         return this.http.post(this.clientProfile + '/update/password/confirm',data);
     }
 
+    sendForgetPasswordConfirmation(data: PasswordData): Observable<any> {
+        return this.http.post(this.clientProfile + '/forget/password/confirm', data);
+    }
+
     activateUser(uuid: string): Observable<any>{
         return this.http.post(this.clientActivateUrl + '/activate', uuid);
     }

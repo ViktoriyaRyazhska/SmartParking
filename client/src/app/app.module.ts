@@ -1,20 +1,20 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {AgmDirectionModule} from 'agm-direction';
 import {
     MatAutocompleteModule,
     MatButtonModule,
+    MatCardModule,
     MatDividerModule,
     MatExpansionModule,
+    MatIconModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatMenuModule,
-    MatIconModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -23,11 +23,11 @@ import {ParkingListComponent} from './index/parking-list/parking-list.component'
 import {ParkingService} from './parking.service';
 import {ManagerParkingService} from './manager/manager-parking.service';
 import {
-    SocialLoginModule,
     AuthServiceConfig,
-    GoogleLoginProvider,
     FacebookLoginProvider,
-    LinkedinLoginProvider
+    GoogleLoginProvider,
+    LinkedinLoginProvider,
+    SocialLoginModule
 } from 'angular5-social-auth';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
@@ -92,6 +92,7 @@ import {AuthGuard} from "./auth/guards/auth-guard.service";
 import {AdminGuard} from "./auth/guards/admin-guard.service";
 import {ProviderGuard} from "./auth/guards/provider-guard.service";
 import {DriverGuard} from "./auth/guards/driver-guard.service";
+import {ForgetPasswordComponent} from './auth/forget-password/forget-password.component';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -158,7 +159,8 @@ export function getAuthServiceConfigs() {
         RegistarationConfirmationComponent,
         SidenavComponent,
         ManagerSpotListComponent,
-        SpotAddDialogComponent
+        SpotAddDialogComponent,
+        ForgetPasswordComponent
     ],
     imports: [
         AgmCoreModule.forRoot({

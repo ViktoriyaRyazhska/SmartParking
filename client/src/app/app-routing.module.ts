@@ -29,6 +29,7 @@ import {ManagerSpotListComponent} from "./manager/manager-spot-list/manager-spot
 import {AuthGuard} from "./auth/guards/auth-guard.service";
 import {ProviderGuard} from "./auth/guards/provider-guard.service";
 import {DriverGuard} from "./auth/guards/driver-guard.service";
+import {ForgetPasswordComponent} from './auth/forget-password/forget-password.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -37,6 +38,7 @@ const routes: Routes = [
         path: 'auth',
         canActivate: [AuthGuard],
         children: [
+            {path: 'forget/password', component: ForgetPasswordComponent},
             {path: 'login', component: LoginComponent},
             {path: 'registration', component: RegistrationComponent}
         ]
