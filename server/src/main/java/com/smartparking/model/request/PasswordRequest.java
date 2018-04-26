@@ -1,6 +1,12 @@
 package com.smartparking.model.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PasswordRequest {
+    private String email;
     private String password;
     private String confirmPassword;
 
@@ -12,19 +18,10 @@ public class PasswordRequest {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    public PasswordRequest (String password, String confirmPassword, String email){
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+        this.email = email;
     }
+
 }
