@@ -14,15 +14,37 @@
             </div>
             <div *ngIf="configureType.text === 'add'">
                 <legend>Add parking</legend>
+              
             </div>
+          
+            
         </mat-card-header>
+        <div class="btn-group">
+                <label class="btn btn-primary" role="button" (click)="addressClick()">
+                        <div *ngIf="configureType.text === 'edit'">
+                                <legend>Edit parking address</legend>
+                            </div>
+                            <div *ngIf="configureType.text === 'add'">
+                                    <legend>Add parking using address</legend>
+                                                                 </div>   
+                                                                </label>                                             
+                <label class="btn btn-primary" role="button" (click)="locationClick()">
+                        <div *ngIf="configureType.text === 'edit'">
+                                <legend>Edit parking location</legend>
+                            </div>
+                            <div *ngIf="configureType.text === 'add'">
+                                    <legend>Add parking using location</legend>
+                                                                 </div> 
+                </label> 
+                       
+        </div>
         <mat-card-content>
 
             <form class="formstyle"
                   [formGroup]="parkingConfigureForm" (ngSubmit)="saveParking()">
-
+                  <div *ngIf="switch.text === 'on'">
                 <mat-accordion class="parking-configure-headers-align">
-
+                  <div *ngIf="geoType.text === 'address'">
                     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -62,14 +84,15 @@
                             <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                         </mat-action-row>
                     </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+                     </div>
+                     <div *ngIf="geoType.text === 'location'">
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 Location
                             </mat-panel-title>
                             <mat-panel-description>
-                        <span *ngIf="!parking.latitude && !parking.longitude">
+                        <span *ngIf="!parking.latitude || !parking.longitude">
                             Type latitude and longitude
                         </span>
                                 <span *ngIf="parking.latitude || parking.longitude">
@@ -101,8 +124,8 @@
                             <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
                         </mat-action-row>
                     </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+                   </div>
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 Price
@@ -131,7 +154,7 @@
                         </mat-action-row>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 Token
@@ -165,7 +188,7 @@
                     </mat-expansion-panel>
 
                     <div *ngIf="configureType.text === 'edit'">
-                        <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle="true">
+                        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     Other
@@ -200,16 +223,26 @@
                         </mat-expansion-panel>
                     </div>
                 </mat-accordion>
-
+         </div>
                 <!--<div class="row submit">-->
+                        <div *ngIf="(geoType.text === 'address' &&(parking.city && parking.street && parking.building)) || (geoType.text === 'location' && (parking.latitude && parking.longitude))">
                 <button class="submit-button" mat-raised-button type="submit" color="accent"
-                        [disabled]="!parkingConfigureForm.valid">
+                [disabled]="!parking.token || !parking.price"  >
+               
                     Submit
                     <mat-icon aria-label="Send and save changes">send</mat-icon>
                 </button>
+            </div>
                 <!--</div>-->
             </form>
 
+
+
         </mat-card-content>
+        
     </mat-card>
+    <agm-map [latitude]="lat" [longitude]="lng">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
+   
 </div>
