@@ -170,6 +170,8 @@ export class SpotstatisticComponent implements OnInit {
         this.endTime.setDate(this.route.snapshot.queryParams["end_day"]);
         this.endTime.setMonth(this.route.snapshot.queryParams["end_month"]);
         this.endTime.setFullYear(this.route.snapshot.queryParams["end_year"]);
+        this.startTime.setHours(0);
+        this.startTime.setMinutes(0);
               this.parkingService.getSpotStatistic(this.id,
             this.startTime.getTime().toString(), this.endTime.getTime().toString())
             .subscribe(statistic => this.statistic = statistic);
