@@ -142,12 +142,12 @@ export class ManagerParkingConfigureComponent implements OnInit {
                 var longitude = results[0].geometry.location.lng();
                  console.log("lat: " + latitude + ", long: " + longitude);
               });
-          
-          
-              
+
+
+
 
     }
- 
+
     locationClick(): void {
         this.geoType = new GeoType('location', ManagerParkingGeoType.LOCATION);
         this.switch  = new  Switch('on', SwitchType.ON);
@@ -157,7 +157,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
         geocoder.geocode({'location': latlng},(results, status) => {
             var address:string[] = results[0].formatted_address.split(" ");
           console.log(address);
-           });  
+           });
  }
 
 setParkingLocation() : void {
@@ -170,7 +170,7 @@ setParkingLocation() : void {
                 this.parking.latitude = latitude;
                 this.parking.longitude = longitude;
                  console.log("lat: " + latitude + ", long: " + longitude);
-              }); 
+              });
 }
 
 
@@ -183,7 +183,7 @@ setParkingAddress() : void {
                   this.parking.building = address[2];
                   this.parking.street = address[1];
                   this.parking.city = address[3];
-                   });  
+                   });
 }
 
 
