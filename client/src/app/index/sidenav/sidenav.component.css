@@ -9,7 +9,7 @@
     z-index: 2000;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .mat-sidenav {
         display: none;
         /*max-height: 1px;*/

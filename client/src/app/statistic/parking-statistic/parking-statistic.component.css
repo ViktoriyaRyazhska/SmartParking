@@ -31,6 +31,25 @@ mat-select {
     margin-right: auto;
 }
 
-#spots{
+#spots {
     color: darkred;
 }
+
+.filter {
+    margin-bottom: 1em;
+    background-color: #4267b2;
+}
+
+.col-md-11 {
+    margin-left: 1.5em;
+}
+
+
+
+
+
+
+
+
+
+

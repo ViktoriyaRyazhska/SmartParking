@@ -14,7 +14,8 @@ import {
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatChipsModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -194,7 +195,8 @@ export function getAuthServiceConfigs() {
         MatIconModule,
         MatCardModule,
         MatToolbarModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatChipsModule
     ],
     entryComponents: [DeleteConfirmationDialogComponent, FavoritesAddConfigmDialogComponent, SpotAddDialogComponent],
     providers: [
