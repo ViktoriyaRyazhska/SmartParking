@@ -54,23 +54,24 @@
         </div>
     </div>
     <div class="col-xs-12 col-12 col-md-4 form-group">
-        <button class="btn btn-success" (click)="showHoursGraphic()">Display statistic hour graphic</button>
+        <button class="btn btn-success" (click)="showHoursGraphic()"
+        [disabled]="statistic.length === 0">Display statistic hour graphic</button>
     </div>
 
     <div class="col-xs-12 col-12 col-md-4 form-group">
-        <button class="btn btn-success" (click)="showEventsGraphic()">Display graphic of popularity spots</button>
+        <button class="btn btn-success" (click)="showEventsGraphic()"
+         [disabled]="statistic.length === 0">Display graphic of popularity spots</button>
     </div>
 
 
 </div>
 
-
 <div>
-    <canvas id="canvas">{{ hoursChart }}</canvas>
+   <canvas id="canvas">{{ hoursChart }}</canvas>
 </div>
 
 
-<div>
+<div >
     <canvas id="canvas">{{ eventsChart }}</canvas>
 </div>
 </div>

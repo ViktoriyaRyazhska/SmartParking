@@ -34,6 +34,9 @@ export class SpotstatisticComponent implements OnInit {
     numbers: number[];
     hours: number[];
     events: number[];
+  /*  displayHourGraphik:boolean;
+    displayEventGraphik:boolean;*/
+    
 
 
     constructor(private route: ActivatedRoute,
@@ -43,6 +46,8 @@ export class SpotstatisticComponent implements OnInit {
         this.minDate.setDate(this.minDate.getDate() - 7);
         this.maxDate = new Date();
         this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+       /* this.displayHourGraphik = false;
+        this.displayEventGraphik = false;*/
 
 
     }
@@ -68,6 +73,7 @@ export class SpotstatisticComponent implements OnInit {
             this.numbers.push(element.id);
         });
         this.hours = []
+        
         this.statistic.forEach((element) => {
             this.hours.push(element.numberOfHours);
         });
@@ -77,6 +83,7 @@ export class SpotstatisticComponent implements OnInit {
             this.events.push(element.numberOfEvents);
         });
         this.events.push(0);
+        
 
 
     }
@@ -162,17 +169,13 @@ export class SpotstatisticComponent implements OnInit {
 
     getSpotStatistic(): void {
         this.setData();
-        this.startTime = new Date();
-        this.endTime = new Date();
-        this.startTime.setDate(this.route.snapshot.queryParams["start_day"]);
-        this.startTime.setMonth(this.route.snapshot.queryParams["start_month"]);
-        this.startTime.setFullYear(this.route.snapshot.queryParams["start_year"]);
-        this.endTime.setDate(this.route.snapshot.queryParams["end_day"]);
-        this.endTime.setMonth(this.route.snapshot.queryParams["end_month"]);
-        this.endTime.setFullYear(this.route.snapshot.queryParams["end_year"]);
-        this.startTime.setHours(0);
-        this.startTime.setMinutes(0);
-              this.parkingService.getSpotStatistic(this.id,
+        this.startTime = new Date(this.route.snapshot.queryParams["start_year"],
+        this.route.snapshot.queryParams["start_month"],
+        this.route.snapshot.queryParams["start_day"],0,0,0);
+        this.endTime = new Date(this.route.snapshot.queryParams["end_year"],
+        this.route.snapshot.queryParams["end_month"],
+        this.route.snapshot.queryParams["end_day"],23,59,59);
+                  this.parkingService.getSpotStatistic(this.id,
             this.startTime.getTime().toString(), this.endTime.getTime().toString())
             .subscribe(statistic => this.statistic = statistic);
 
@@ -180,20 +183,27 @@ export class SpotstatisticComponent implements OnInit {
 
 
     addItem() {
+        /*this.displayHourGraphik = true;
+        this.displayEventGraphik = true;*/
               this.getSpotStatistic();
     }
 
 
 
     showHoursGraphic() {
+       
         this.fillArraysToGraphic();
         this.drawHourGraphic();
+       /* this.displayHourGraphik = false;
+        this.displayEventGraphik = true;*/
     }
 
 
     showEventsGraphic() {
         this.fillArraysToGraphic();
         this.drawEventGraphic();
+        /*this.displayHourGraphik = true;
+        this.displayEventGraphik = false;*/
     }
 
     returnToParkingDetail() {
