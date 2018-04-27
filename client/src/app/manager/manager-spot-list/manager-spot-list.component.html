@@ -1,10 +1,11 @@
-<div class="container-fluid">
-    <div *ngFor="let spot of spots">
-        <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
+<div class="container">
+    <div class="container-fluid">
+        <div *ngFor="let spot of spots">
+            <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
 
-            <mat-card-content>
-                <mat-list>
-                    <mat-list-item class="row">
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item class="row">
                         <span class="col-5"> Spot Number
                             <span *ngIf="!spot.isFree;else notFree">{{spot.spotNumber}}</span>
                             <ng-template #notFree>
@@ -17,33 +18,35 @@
                                 </form>
                             </ng-template>
                         </span>
-                        <div class="col-2">
-                            <span *ngIf="(spot.hasCharger || spot.isInvalid) && !spot.isFree"> Type </span>
-                            <input *ngIf="spot.isFree" type="checkbox" [(ngModel)]="spot.hasChargerUpdate">
-                            <mat-icon *ngIf="spot.hasCharger || spot.isFree" color="primary">ev_station</mat-icon>
-                            <input *ngIf="spot.isFree" type="checkbox" [(ngModel)]="spot.isInvalidUpdate">
-                            <mat-icon *ngIf="spot.isInvalid || spot.isFree" color="primary">accessible</mat-icon>
-                        </div>
-                        <div class="full-width"></div>
-                        <div class="col-5" align="right">
-                            <button *ngIf="spot.isBlocked" mat-button color="primary">
-                                <mat-icon color="primary">lock_outline</mat-icon>
-                            </button>
-                            <div *ngIf="!spot.isFree;else editButtons">
-                                <button mat-button color="primary" (click)="onSpotEditClick(spot)">Edit</button>
-                                <button mat-button color="warn" (click)="onSpotDeleteClick(spot)">Delete</button>
+                            <div class="col-2">
+                                <span *ngIf="(spot.hasCharger || spot.isInvalid) && !spot.isFree"> Type </span>
+                                <input *ngIf="spot.isFree" type="checkbox" [(ngModel)]="spot.hasChargerUpdate">
+                                <mat-icon *ngIf="spot.hasCharger || spot.isFree" color="primary">ev_station</mat-icon>
+                                <input *ngIf="spot.isFree" type="checkbox" [(ngModel)]="spot.isInvalidUpdate">
+                                <mat-icon *ngIf="spot.isInvalid || spot.isFree" color="primary">accessible</mat-icon>
                             </div>
-                            <ng-template #editButtons>
-                                <button mat-button color="primary" (click)="onSpotCancelEditClick(spot)">Cancel</button>
-                                <button mat-button color="primary" (click)="onSpotUpdateClick(spot)">Update</button>
-                            </ng-template>
-                        </div>
-                    </mat-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
+                            <div class="full-width"></div>
+                            <div class="col-5" align="right">
+                                <button *ngIf="spot.isBlocked" mat-button color="primary">
+                                    <mat-icon color="primary">lock_outline</mat-icon>
+                                </button>
+                                <div *ngIf="!spot.isFree;else editButtons">
+                                    <button mat-button color="primary" (click)="onSpotEditClick(spot)">Edit</button>
+                                    <button mat-button color="warn" (click)="onSpotDeleteClick(spot)">Delete</button>
+                                </div>
+                                <ng-template #editButtons>
+                                    <button mat-button color="primary" (click)="onSpotCancelEditClick(spot)">Cancel
+                                    </button>
+                                    <button mat-button color="primary" (click)="onSpotUpdateClick(spot)">Update</button>
+                                </ng-template>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <button mat-icon-button (click)="onSpotAddClick()" class="float" mat-fab>
+            <mat-icon color="primary">add</mat-icon>
+        </button>
     </div>
-    <button mat-icon-button (click)="onSpotAddClick()" class="float" mat-fab>
-        <mat-icon color="primary">add</mat-icon>
-    </button>
 </div>

@@ -3,9 +3,13 @@
         <mat-card-header>
             <div style="min-width: 70%;">
                 <div>
-                    <img src="data:image/JPEG;base64,{{client.image}}"
-                         class="photo-thumbnail"
-                         onError="this.src='assets/images/no-photo-list-icon.jpg'">
+                    <img *ngIf="client.image; else noPhoto" src="data:image/JPEG;base64,{{client.image}}"
+                         class="photo-thumbnail">
+
+                    <ng-template #noPhoto>
+                        <img class="photo-thumbnail"
+                             src='assets/images/no-photo-list-icon.jpg'>
+                    </ng-template>
                     <mat-card-title>{{client.firstName}} {{client.lastName}}
                     </mat-card-title>
                     <mat-card-subtitle
