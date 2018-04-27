@@ -183,8 +183,7 @@ export class SpotstatisticComponent implements OnInit {
 
 
     addItem() {
-        /*this.displayHourGraphik = true;
-        this.displayEventGraphik = true;*/
+   
               this.getSpotStatistic();
     }
 
