@@ -38,4 +38,12 @@ public class Provider extends AbstractIdentifiableEntity {
 
     @Column(name = "building")
     private String building;
+
+    public List<Client> getEmployees() {
+        return employees;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

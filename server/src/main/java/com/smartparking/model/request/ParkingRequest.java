@@ -34,4 +34,19 @@ public class ParkingRequest {
         parking.setProvider(provider);
         return parking;
     }
+
+    @Override
+    public String toString() {
+        return "ParkingRequest{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", building='" + building + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", price=" + price +
+                ", token='" + token + '\'' +
+                ", providerId=" + providerId +
+                '}';
+    }
 }

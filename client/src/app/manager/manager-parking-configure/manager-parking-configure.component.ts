@@ -67,32 +67,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
     }
 
     saveParking(): void {
-        if(this.geoType.text == 'address' )
-        {
-      var geocoder =  new google.maps.Geocoder();
-      var  address = ""+this.parking.building+" "+this.parking.street+" "+this.parking.city;
-                                       var result = "";
-                 geocoder.geocode({ 'address': address }, (results, status) => {
-                 var latitude = results[0].geometry.location.lat();
-                var longitude = results[0].geometry.location.lng();
-                this.parking.latitude = latitude;
-                this.parking.longitude = longitude;
-                 console.log("lat: " + latitude + ", long: " + longitude);
-              }); 
-            }else
-            {
-                var latlng = new google.maps.LatLng(this.parking.latitude, this.parking.longitude);
-                var geocoder =  new google.maps.Geocoder();
-                geocoder.geocode({'location': latlng},(results, status) => {
-                    var address:string[] = results[0].formatted_address.split(" ");
-                  console.log(address);
-                  this.parking.building = address[2];
-                  this.parking.street = address[1];
-                  this.parking.city = address[3];
-                   });  
-            }
-
-        this.managerParkingService.saveParking(this.parking)
+            this.managerParkingService.saveParking(this.parking)
                 .subscribe((response: HttpResponse<any>) => {
                 if (this.configureType.type === ManagerParkingConfigureType.ADD) {
                     this.snackBar.open('Parking created sucsessfully.', null, {
@@ -184,6 +159,37 @@ export class ManagerParkingConfigureComponent implements OnInit {
           console.log(address);
            });  
  }
+
+setParkingLocation() : void {
+    var geocoder =  new google.maps.Geocoder();
+      var  address = ""+this.parking.building+" "+this.parking.street+" "+this.parking.city;
+                                       var result = "";
+                 geocoder.geocode({ 'address': address }, (results, status) => {
+                 var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+                this.parking.latitude = latitude;
+                this.parking.longitude = longitude;
+                 console.log("lat: " + latitude + ", long: " + longitude);
+              }); 
+}
+
+
+setParkingAddress() : void {
+    var latlng = new google.maps.LatLng(this.parking.latitude, this.parking.longitude);
+                var geocoder =  new google.maps.Geocoder();
+                geocoder.geocode({'location': latlng},(results, status) => {
+                    var address:string[] = results[0].formatted_address.split(" ");
+                  console.log(address);
+                  this.parking.building = address[2];
+                  this.parking.street = address[1];
+                  this.parking.city = address[3];
+                   });  
+}
+
+
+
+
+
 }
 
 export enum ManagerParkingConfigureType {
