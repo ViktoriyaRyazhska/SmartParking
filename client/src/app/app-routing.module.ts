@@ -112,6 +112,7 @@ const routes: Routes = [
             },
             {
                 path: 'parkings',
+                canActivate: [ProviderGuard],
                 children: [
                     {path: '', component: ManagerParkingListComponent},
                     {

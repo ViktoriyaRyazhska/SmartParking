@@ -11,8 +11,8 @@
 
 @media (max-width: 768px) {
     .mat-sidenav {
-        /*display: none;*/
-        max-height: 1px;
+        display: none;
+        /*max-height: 1px;*/
     }
 }
 

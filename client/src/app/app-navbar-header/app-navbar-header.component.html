@@ -1,37 +1,46 @@
-<mat-toolbar style="background-color: rgb(250, 250, 250)">
-    <h3>
-        <a routerLink="/" style="color:black; font-size: 25px">
-            <img src="http://www.changiairport.com/content/dam/cag/3-transports/x3.0_transport-icon-big-7.png.pagespeed.ic.ypgOjLWv_Q.png"
-                 width="110px" height="70px">
-            SmartParking
-        </a>
-    </h3>
-    <span class="example-spacer"></span>
-    <span>
-        <button [routerLink]="['/statistic']" mat-icon-button matTooltip="View statistic">
-            <i class="material-icons">&#xE8E5;</i>
-        </button>
-    </span>
-    <span *ngIf="hasToken()">
-    <button [routerLink]="['/profile']" mat-icon-button matTooltip="My profile">
-    <mat-icon>&#xE853;</mat-icon>
-    </button>
-    </span>
-    <span *ngIf="getRole() === role.Manager || getRole() === role.Admin">
-        <button [routerLink]="['/configuration']" mat-icon-button matTooltip="Admin configurations">
-            <mat-icon>settings</mat-icon>
-        </button>
-    </span>
-    <span *ngIf="!hasToken()">
-    <button mat-raised-button class="ml-3" color="primary" [routerLink]="['auth/login']" style="font-size:18px;">
-        SignIn/SignUp
-        <i class="material-icons">&#xE853;</i>
-    </button>
-    </span>
-    <span *ngIf="hasToken()">
-        <button mat-raised-button class="ml-3" color="primary" (click)="logOut()">
-        Sign out
-        <i class="material-icons">&#xE853;</i>
-    </button>
-    </span>
-</mat-toolbar>
+<div class="container-fluid" style="background-color: rgb(250, 250, 250)">
+    <div class="row">
+            <div class="col-sm-3 col-lg-1 text-center">
+                <a routerLink="/" >
+                    <img src="http://www.changiairport.com/content/dam/cag/3-transports/x3.0_transport-icon-big-7.png.pagespeed.ic.ypgOjLWv_Q.png"
+                         width="100em" height="50em">
+                </a>
+            </div>
+            <h3 class="col-sm-4 col-lg-8 text-center" style="color:black; font-size:2em;">Smartparking</h3>
+            <mat-toolbar class="col-sm-4 col-lg-3" style="background-color: rgb(250, 250, 250)">
+                <div class="container">
+                    <div class="row">
+                        <span class="col-2">
+                            <button [routerLink]="['/statistic']" mat-icon-button matTooltip="View statistic">
+                                <i class="material-icons">&#xE8E5;</i>
+                            </button>
+                        </span>
+                    <span class="col-2" *ngIf="hasToken()">
+                        <button [routerLink]="['/profile']" mat-icon-button matTooltip="My profile">
+                            <mat-icon>&#xE853;</mat-icon>
+                        </button>
+                    </span>
+                    <span class="col-2" *ngIf="getRole() === role.Manager || getRole() === role.Admin">
+                        <button [routerLink]="['/configuration']" mat-icon-button matTooltip="Admin configurations">
+                            <mat-icon>settings</mat-icon>
+                        </button>
+                    </span>
+                    <span class="col-3" *ngIf="!hasToken()">
+                        <button mat-raised-button class="ml-3" color="primary" [routerLink]="['auth/login']"
+                            style="font-size:18px;">
+                            SignIn/SignUp
+                        <i class="material-icons">&#xE853;</i>
+                        </button>
+                    </span>
+                    <span class="col-3" *ngIf="hasToken()">
+                        <button mat-raised-button class="ml-3" color="primary" (click)="logOut()">
+                            Sign out
+                            <i class="material-icons">&#xE853;</i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </mat-toolbar>
+    </div>
+</div>
+
