@@ -21,4 +21,7 @@ public class ParkingResponse {
     private Long providerId;
     private String providerName;
     private Long favoritesCount;
+    private Boolean hasCharger;
+    private Boolean hasInvalid;
+    private Boolean isCovered;
 }

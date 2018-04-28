@@ -194,8 +194,35 @@
                         </mat-action-row>
                     </mat-expansion-panel>
 
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Type
+                            </mat-panel-title>
+                            <mat-panel-description align="left">
+                                <span *ngIf="parking.isCovered">Covered</span>
+                                <span *ngIf="!parking.isCovered">Discovered</span>
+                                <span class="full-width" *ngIf="parking.hasCharger">, Has charger</span>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <span>Is covered</span>
+                        <mat-checkbox>
+                            <input type="checkbox" [(ngModel)]="parking.isCovered" formControlName="isCovered">
+                        </mat-checkbox>
+                        <span>Has charger</span>
+                        <mat-checkbox>
+                            <input type="checkbox" [(ngModel)]="parking.hasCharger" formControlName="hasCharger">
+                        </mat-checkbox>
+                        <mat-action-row>
+                            <button mat-button type="button" color="warn" (click)="resetType()">Reset</button>
+                            <div class="full-width"></div>
+                            <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
                     <div *ngIf="configureType.text === 'edit'">
-                        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
+                        <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     Other

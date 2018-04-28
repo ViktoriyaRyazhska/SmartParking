@@ -1,4 +1,3 @@
-
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
@@ -36,7 +35,9 @@ export class ManagerParkingConfigureComponent implements OnInit {
         token: new FormControl('', [Validators.required,]),
         providerName: new FormControl('', []),
         favoritesCount: new FormControl('', []),
-        spotsCount: new FormControl('', [])
+        spotsCount: new FormControl('', []),
+        isCovered: new FormControl('', []),
+        hasCharger: new FormControl('', [])
     });
 
     constructor(private route: ActivatedRoute,
@@ -67,6 +68,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
     }
 
     saveParking(): void {
+        this.parking.hasInvalid = true;
             this.managerParkingService.saveParking(this.parking)
                 .subscribe((response: HttpResponse<any>) => {
                 if (this.configureType.type === ManagerParkingConfigureType.ADD) {
@@ -123,6 +125,11 @@ export class ManagerParkingConfigureComponent implements OnInit {
 
     resetToken() {
         this.parking.token = this.loadedParking.token;
+    }
+
+    resetType() {
+        this.parking.isCovered = this.loadedParking.isCovered;
+        this.parking.hasCharger = this.loadedParking.hasCharger;
     }
 
     addressClick(): void {

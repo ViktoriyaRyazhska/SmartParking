@@ -18,6 +18,9 @@ public class ParkingRequest {
     private BigDecimal price;
     private String token;
     private Long providerId;
+    private Boolean hasCharger;
+    private Boolean hasInvalid;
+    private Boolean isCovered;
 
     public Parking toParking() {
         Parking parking = new Parking();
@@ -32,6 +35,9 @@ public class ParkingRequest {
         Provider provider = new Provider();
         provider.setId(providerId);
         parking.setProvider(provider);
+        parking.setIsCovered(isCovered);
+        parking.setHasInvalid(hasInvalid);
+        parking.setHasCharger(hasCharger);
         return parking;
     }
 

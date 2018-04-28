@@ -103,9 +103,6 @@ public class ParkingController {
             parkingRequest.setProviderId(client.getProvider().getId());
         }
         Parking parking = parkingRequest.toParking();
-        parking.setHasCharger(false);
-        parking.setHasInvalid(false);
-        parking.setIsCovered(false);
         parking.setProvider(providerService.getOne(parkingRequest.getProviderId()));
         if (parking.getProvider().getEmployees().contains(client) || client.getRole() == Role.SUPERUSER) {
             long parkingId = 0;

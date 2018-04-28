@@ -17,6 +17,9 @@ export class Parking {
     distance: number;
     isFavorite: Boolean;
     favoriteName: string;
+    hasCharger: boolean;
+    hasInvalid: boolean;
+    isCovered: boolean;
 
     public static copyOf(parking: Parking): Parking {
         return Object.assign(new Parking(), parking);

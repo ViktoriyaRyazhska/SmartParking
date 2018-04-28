@@ -124,6 +124,9 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
         response.setFavoritesCount((long) parking.getFavorites().size());
         response.setSpotsCount((long) parking.getSpots().size());
         response.setAvailableSpotsCount(spotService.countAvailableSpotsByParkingId(parking.getId()));
+        response.setHasCharger(parking.getHasCharger());
+        response.setHasInvalid(parking.getHasInvalid());
+        response.setIsCovered(parking.getIsCovered());
         return response;
     }
 

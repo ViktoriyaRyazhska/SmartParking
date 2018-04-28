@@ -9,4 +9,5 @@ export class Spot{
     isBlocked: boolean;
     hasChargerUpdate: boolean;
     isInvalidUpdate: boolean;
+    isBlockedUpdate: boolean;
 }

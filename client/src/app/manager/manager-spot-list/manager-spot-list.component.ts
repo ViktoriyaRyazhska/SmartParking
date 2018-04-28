@@ -45,6 +45,7 @@ export class ManagerSpotListComponent implements OnInit {
         spot.spotNumberUpdate = spot.spotNumber;
         spot.hasChargerUpdate = spot.hasCharger;
         spot.isInvalidUpdate = spot.isInvalid;
+        spot.isBlockedUpdate = spot.isBlocked;
     }
 
     onSpotCancelEditClick(spot: Spot): void {
@@ -78,6 +79,7 @@ export class ManagerSpotListComponent implements OnInit {
         spot.spotNumber = spot.spotNumberUpdate;
         spot.hasCharger = spot.hasChargerUpdate;
         spot.isInvalid = spot.isInvalidUpdate;
+        spot.isBlocked = spot.isBlockedUpdate;
         this.spotSave(spot);
     }
 
