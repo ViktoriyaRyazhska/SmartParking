@@ -35,6 +35,8 @@ export class ManagerSpotListComponent implements OnInit {
         this.managerSpotService.getSpots(parkingId)
             .subscribe(spots => {
                 this.spots = spots.body;
+            }, error => {
+                this.router.navigate(['error/forbidden']);
             });
     }
 
@@ -94,16 +96,22 @@ export class ManagerSpotListComponent implements OnInit {
         if (spot.isFree) {
             spot.parkingId = parkingId;
             this.managerSpotService.saveSpot(spot).subscribe((response: HttpResponse<any>) => {
-                this.snackBar.open('Spot created sucsessfully.', null, {
-                    duration: 2000
-                });
+                if (spot.id != 0) {
+                    this.snackBar.open('Spot edited sucsessfully', null, {
+                        duration: 2000
+                    });
+                } else {
+                    this.snackBar.open('Spot created sucsessfully', null, {
+                        duration: 2000
+                    });
+                }
             }, error => {
                 this.snackBar.open(error.error, null, {
                     duration: 2000
                 });
             });
             spot.isFree = false;
-            this.loadSpots();
+            this.ngOnInit();
         }
     }
 }

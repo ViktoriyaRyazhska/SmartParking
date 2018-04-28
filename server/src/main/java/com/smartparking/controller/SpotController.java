@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 public class SpotController {
@@ -82,64 +84,58 @@ public class SpotController {
     }
 
     @PostMapping("/manager-configuration/spot/save")
-    public ResponseEntity<?> save(@RequestBody SpotRequest spotRequest) {
-        Client client = getCurrentUser();
-        Spot spot = spotRequest.toSpot();
-        spot.setParking(parkingService.getOne(spotRequest.getParkingId()));
-        if (isValidNewSpot(spot, client)) {
-            Optional<Spot> optional = spot.getParking().getSpots().stream().filter(spot1 -> spot1.getSpotNumber().equals(spot.getSpotNumber())).findFirst();
-            long spotId = 0;
-            if (spot.getId() != null) {
-                spotId = spot.getId();
-                if (optional.isPresent()) {
-                    if (optional.get().getId() != spotId) {
-                        return new ResponseEntity<>("This spot number is exist", HttpStatus.BAD_REQUEST);
-                    }
-                }
-            } else {
-                if (optional.isPresent()) {
-                    return new ResponseEntity<>("This spot number is exist", HttpStatus.BAD_REQUEST);
-                }
-            }
-            spotService.save(spot);
-            spotEventPublisher.publishSave(spot, spotId);
-            return new ResponseEntity<>(HttpStatus.OK);
+    @PreAuthorize("@spotController.isValidNewSpot(#spotRequest.toSpot())")
+    public ResponseEntity<?> save(@P("spotRequest") @RequestBody SpotRequest spotRequest) {
+        if (spotRequest.getId() == null) {
+            return createNewSpot(spotRequest.toSpot());
         } else {
-            return new ResponseEntity<>("Cannot save spot", HttpStatus.BAD_REQUEST);
+            return editSpot(spotRequest.toSpot());
         }
     }
 
     @PostMapping("/manager-configuration/spot/delete")
-    public ResponseEntity<?> delete(@RequestBody SpotRequest spotRequest) {
-        Client client = getCurrentUser();
+    @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(#spotRequest.toSpot().parking) or hasAuthority('SUPERUSER')")
+    public ResponseEntity<?> delete(@P("spotRequest") @RequestBody SpotRequest spotRequest) {
         Spot spot = spotRequest.toSpot();
-        if (client.getProvider().getParkings().stream().filter(parking -> parking.getId().equals(spotRequest.getParkingId())).findFirst().isPresent() ||
-                client.getRole() == Role.SUPERUSER) {
             spotService.delete(spot);
             spotEventPublisher.publishDelete(spot);
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
     }
 
     @GetMapping("/manager-configuration/spotsforparking/{parkingId}")
-    public ResponseEntity<List<SpotStatusResponse>> spots(@PathVariable Long parkingId) {
-        Client client = getCurrentUser();
-        if (client.getProvider().getParkings().stream().filter(parking -> parking.getId().equals(parkingId)).findFirst().isPresent() ||
-                client.getRole() == Role.SUPERUSER) {
-            return new ResponseEntity<>(spotService.findAllSpotsByParkingIdResponse(parkingId), HttpStatus.OK);
+    @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get()) or hasAuthority('SUPERUSER')")
+    public ResponseEntity<List<SpotStatusResponse>> spots(@P("parkingId") @PathVariable Long parkingId) {
+        return new ResponseEntity<>(spotService.findAllSpotsByParkingIdResponse(parkingId), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> createNewSpot(Spot spot) {
+        if (spotService.findFirstBySpotNumberAndParking(spot.getSpotNumber(), spot.getParking()) == null) {
+            spotService.save(spot);
+            spotEventPublisher.publishSave(spot, 0);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Such number already exists", HttpStatus.BAD_REQUEST);
         }
     }
 
-    private Client getCurrentUser() {
+    private ResponseEntity<?> editSpot(Spot spot) {
+        if (spotService.findFirstBySpotNumberAndParking(spot.getSpotNumber(), spot.getParking()) == null ||
+                spotService.findFirstBySpotNumberAndParking(spot.getSpotNumber(), spot.getParking()).getId() == spot.getId()) {
+            spotService.save(spot);
+            spotEventPublisher.publishSave(spot, spot.getId());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Such number already exists", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public Client getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return clientService.findOne(email);
     }
 
-    private Boolean isValidNewSpot(Spot spot, Client client) {
+    public Boolean isValidNewSpot(Spot spot) {
+        Client client = getCurrentUser();
         return spot.getSpotNumber() != null && spot.getSpotNumber() < maxSpotNumber &&
                 (client.getProvider().getParkings().contains(spot.getParking()) || client.getRole() == Role.SUPERUSER);
     }

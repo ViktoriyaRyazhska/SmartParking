@@ -35,4 +35,5 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
             + " group by p order by count(s.id) desc")
     List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date);
 
+    Spot findFirstBySpotNumberAndParking(Long spotNumber, Parking parking);
 }

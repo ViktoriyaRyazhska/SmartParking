@@ -28,4 +28,6 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
     List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date);
 
     List<SpotStatusResponse> findAllSpotsByParkingIdResponse(Long parkingId);
+
+    Spot findFirstBySpotNumberAndParking(Long spotNumber, Parking parking);
 }

@@ -73,6 +73,11 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
+    public Spot findFirstBySpotNumberAndParking(Long spotNumber, Parking parking) {
+        return repository.findFirstBySpotNumberAndParking(spotNumber, parking);
+    }
+
+    @Override
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
         return spotStatisticRepository.getSpotStatistic(id, startDate, endDate);
     }
