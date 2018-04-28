@@ -21,5 +21,8 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     Favorite findFavoriteByClientEmailAndParkingId(String email, Long parkingId);
 
     @Query("SELECT p FROM Favorite f JOIN f.client c JOIN f.parking p WHERE c.email =?1")
-    List<Parking> findFavoritesDetailByClientId(String clientEmail);
+    List<Parking> findFavoritesDetailByClientEmail(String clientEmail);
+
+    @Query("SELECT p FROM Favorite f JOIN f.client c JOIN f.parking p WHERE c.id =?1")
+    List<Parking> findFavoritesDetailByClientId(Long clientId);
 }

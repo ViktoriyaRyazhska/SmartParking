@@ -34,8 +34,8 @@ public class FavoriteServiceImpl extends AbstractService<Favorite, Long, Favorit
     }
 
     @Override
-    public List<ParkingDetailResponse> findFavoritesDetailByClientId(String clientEmail) {
-        List<Parking> parkings = getRepository().findFavoritesDetailByClientId(clientEmail);
+    public List<ParkingDetailResponse> findFavoritesDetailByClientEmail(String clientEmail) {
+        List<Parking> parkings = getRepository().findFavoritesDetailByClientEmail(clientEmail);
         List<ParkingDetailResponse> parkingDetailResponses = new ArrayList<>();
         parkings.forEach(parking -> {
             ParkingDetailResponse p = ParkingDetailResponse.of(parking);
@@ -44,5 +44,10 @@ public class FavoriteServiceImpl extends AbstractService<Favorite, Long, Favorit
             parkingDetailResponses.add(p);
         });
         return parkingDetailResponses;
+    }
+
+    @Override
+    public List<Parking> findFavoritesDetailByClientId(Long clientId) {
+        return getRepository().findFavoritesDetailByClientId(clientId);
     }
 }

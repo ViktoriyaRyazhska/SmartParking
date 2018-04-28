@@ -3,6 +3,7 @@ import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {Router, ActivatedRoute} from '@angular/router';
 import {Provider} from "../../model/view/provider";
+import {Parking} from "../../model/view/parking";
 
 @Component({
     selector: 'app-client-detail',
@@ -13,7 +14,7 @@ export class ClientDetailComponent implements OnInit {
 
     client: Client;
     provider: Provider;
-    showProviderDetails: boolean = false;
+    favoritesParkings: Parking[] = [];
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService,
@@ -22,6 +23,7 @@ export class ClientDetailComponent implements OnInit {
 
     ngOnInit() {
         this.getClientById();
+        this.getClientsFavoriteParkings();
     }
 
     getClientById(): void {
@@ -30,8 +32,10 @@ export class ClientDetailComponent implements OnInit {
             .subscribe(client => this.client = client);
     }
 
-    seeProviderDetails() {
-        this.showProviderDetails = !this.showProviderDetails;
+    getClientsFavoriteParkings(): void {
+        const id = +parseInt(this.route.snapshot.paramMap.get('id'));
+        this.clientService.getClientsFavoritesParkingsById(id)
+            .subscribe(favoritesParkings => this.favoritesParkings = favoritesParkings);
     }
 
     goToClientsList() {
@@ -41,10 +45,5 @@ export class ClientDetailComponent implements OnInit {
     goToClientEditForm() {
         this.router.navigate(['configuration/clients/edit/', this.client.id]);
     }
-
-    goToProvidersDetails() {
-        this.router.navigate(['configuration/providers/', this.client.providersId]);
-    }
-
 
 }

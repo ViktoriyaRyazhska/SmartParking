@@ -5,25 +5,40 @@
         <mat-card class="card offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
             <mat-card-header>
                 <div style="min-width: 70%;">
-                    <img src="data:image/JPEG;base64,{{client.image}}"
-                         class="photo-thumbnail"
-                         onError="this.src='assets/images/no-photo.jpg'">
+                    <img *ngIf="client.image; else noPhoto" src="data:image/JPEG;base64,{{client.image}}"
+                         class="photo-thumbnail">
+
+                    <ng-template #noPhoto>
+                        <img class="photo-thumbnail"
+                             src='assets/images/no-photo-icon.png'>
+                    </ng-template>
                     <div id="main-info">
                         <mat-card-title><span>ID:</span> {{client.id}}
+                        </mat-card-title>
+                        <mat-card-title [ngStyle]="{color: client.activated == false ? 'red' : 'green'}"><span>Activated:</span> {{client.activated}}
                         </mat-card-title>
                         <mat-card-title id="role"><span>Role:</span> {{client.role}}
                         </mat-card-title>
                         <mat-card-title><span>Client name:</span> {{client.firstName}} {{client.lastName}}
                         </mat-card-title>
                         <mat-card-title><span>Email:</span> {{client.email}}</mat-card-title>
-                        <mat-card-title *ngIf="client.providerName!='no provider'" (click)="goToProvidersDetails()"
-                        >
-                            <span>Provider:</span> <span id="prov" matTooltip="Go to the provider details form">{{client.providerName}}, <span
-                                id="details">(details)</span></span>
+                        <mat-card-title *ngIf="client.providerName!='no provider'">
+                            <span>Provider:</span> <a matTooltip="Go to the provider details"
+                                                      [routerLink]="['/configuration/providers/'+this.client.providersId]">
+                            {{client.providerName}}</a>
                         </mat-card-title>
-                        <mat-card-title *ngIf="client.favoritesNames.length>0"><span>Favorites parkings: </span><span
-                                *ngFor="let name of client.favoritesNames">{{name}}, </span>
+                        <mat-card-title *ngIf="favoritesParkings.length>0; else noFavoritesParkings"><span>Favorites parkings: </span><a
+                                matTooltip="Go to the parkings details"
+                                [routerLink]="['/parkingdetail/'+parking.id]"
+                                *ngFor="let parking of favoritesParkings">{{parking.address}}, </a>
                         </mat-card-title>
+
+                        <ng-template #noFavoritesParkings>
+                            <mat-card-title>
+                                <span>Favorites parkings: </span>
+                                <span style="color: darkred">this client don't have any favorites parkings</span>
+                            </mat-card-title>
+                        </ng-template>
                     </div>
                 </div>
                 <div style="width: 100%"></div>

@@ -50,7 +50,7 @@ public class ClientProfileController {
     @GetMapping(value = "/favorites")
     public ResponseEntity<?> getFavoritesParkings() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<ParkingDetailResponse> parkings = favoriteService.findFavoritesDetailByClientId(email);
+        List<ParkingDetailResponse> parkings = favoriteService.findFavoritesDetailByClientEmail(email);
         return new ResponseEntity<>(parkings, HttpStatus.OK);
     }
 }

@@ -1,11 +1,15 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Client;
+import com.smartparking.entity.Parking;
 import com.smartparking.entity.Provider;
 import com.smartparking.model.request.ClientRequest;
 import com.smartparking.model.response.ClientItemResponse;
+import com.smartparking.model.response.ParkingDetailResponse;
+import com.smartparking.model.response.ParkingItemResponse;
 import com.smartparking.model.response.ProviderItemResponse;
 import com.smartparking.service.ClientService;
+import com.smartparking.service.FavoriteService;
 import com.smartparking.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +38,9 @@ public class ClientController {
 
     @Autowired
     ProviderService providerService;
+
+    @Autowired
+    FavoriteService favoriteService;
 
     @GetMapping("")
     ResponseEntity<?> getAllClients() {
@@ -99,5 +106,13 @@ public class ClientController {
         List<ProviderItemResponse> providerItemResponses = new ArrayList<>();
         providers.forEach(provider -> providerItemResponses.add(ProviderItemResponse.of(provider)));
         return new ResponseEntity<>(providerItemResponses, HttpStatus.OK);
+    }
+
+    @GetMapping("/clientsfavorites/{id}")
+    ResponseEntity<?> getClientsFavoriteParkings(@PathVariable Long id) {
+        List<Parking> parkings = favoriteService.findFavoritesDetailByClientId(id);
+        List<ParkingDetailResponse> parkingDetailResponses = new ArrayList<>();
+        parkings.forEach(parking -> parkingDetailResponses.add(ParkingDetailResponse.of(parking)));
+        return new ResponseEntity<>(parkingDetailResponses, HttpStatus.OK);
     }
 }

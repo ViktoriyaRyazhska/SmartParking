@@ -67,20 +67,24 @@ export class ClientService {
         return this.http.post(this.clientProfile + '/update/password', uuid);
     }
 
-    sendConfirmation(data: PasswordData): Observable<any>{
-        return this.http.post(this.clientProfile + '/update/password/confirm',data);
+    sendConfirmation(data: PasswordData): Observable<any> {
+        return this.http.post(this.clientProfile + '/update/password/confirm', data);
     }
 
     sendForgetPasswordConfirmation(data: PasswordData): Observable<any> {
         return this.http.post(this.clientProfile + '/forget/password/confirm', data);
     }
 
-    activateUser(uuid: string): Observable<any>{
+    activateUser(uuid: string): Observable<any> {
         return this.http.post(this.clientActivateUrl + '/activate', uuid);
     }
 
     getFavoritesParkingsForClient(): Observable<Parking[]> {
         return this.http.get<Parking[]>(this.clientProfile + '/favorites');
+    }
+
+    getClientsFavoritesParkingsById(id: number): Observable<Parking[]> {
+        return this.http.get<Parking[]>(this.clientsUrl + '/clientsfavorites/' + id);
     }
 
 }

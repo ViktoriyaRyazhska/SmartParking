@@ -1,6 +1,7 @@
 package com.smartparking.service;
 
 import com.smartparking.entity.Favorite;
+import com.smartparking.entity.Parking;
 import com.smartparking.model.response.ParkingDetailResponse;
 import com.smartparking.repository.FavoriteRepository;
 
@@ -12,5 +13,7 @@ public interface FavoriteService extends Service<Favorite, Long, FavoriteReposit
 
     Favorite findFavoriteByClientEmailAndParkingId(String email, Long parkingId);
 
-    List<ParkingDetailResponse> findFavoritesDetailByClientId(String clientEmail);
+    List<ParkingDetailResponse> findFavoritesDetailByClientEmail(String clientEmail);
+
+    List<Parking> findFavoritesDetailByClientId(Long clientId);
 }

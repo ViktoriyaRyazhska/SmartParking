@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class ClientDetailResponse {
 
     private Long id;
+    private Boolean activated;
     private Long providersId;
     private String firstName;
     private String lastName;
@@ -25,6 +26,7 @@ public class ClientDetailResponse {
     public static ClientDetailResponse of(Client client) {
         ClientDetailResponse response = new ClientDetailResponse();
         response.setId(client.getId());
+        response.setActivated(client.getActivated());
 
         if (client.getProvider() == null) {
             response.setProvidersId(0L);
