@@ -22,6 +22,7 @@ export class ParkingStatisticComponent implements OnInit {
     pager: any = {};
     pagedParkingItems: Parking[];
     allParkings: number;
+    werePopularParkingsFound: boolean;
 
     constructor(private statisticService: StatisticsService,
                 private snackBar: MatSnackBar,
@@ -59,6 +60,7 @@ export class ParkingStatisticComponent implements OnInit {
                 .subscribe(parkings => {
                     this.parkings = parkings;
                     this.setPage(1);
+                    this.werePopularParkingsFound = this.parkings.length > 0;
                 })
         } else {
             this.findBestParkingsInTheCity();
@@ -70,6 +72,7 @@ export class ParkingStatisticComponent implements OnInit {
             .subscribe(parkings => {
                 this.parkings = parkings;
                 this.setPage(1);
+                this.werePopularParkingsFound = this.parkings.length > 0;
             });
     }
 

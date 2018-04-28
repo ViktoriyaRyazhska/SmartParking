@@ -1,9 +1,19 @@
 <div class="container">
-    <h3 class="text-center">The most popular parkings in <span>{{selectedCity}}</span><span
-            *ngIf="selectedStreet !=''"> on the street {{selectedStreet}}</span> for the last
+
+    <h3 class="text-center" *ngIf="werePopularParkingsFound; else noPopularParkings">The most popular parkings in
+        <span>{{selectedCity}}</span><span
+                *ngIf="selectedStreet !=''"> on the street {{selectedStreet}}</span> for the last
         {{this.selectedNumberOfDays}}
         days
     </h3>
+
+    <ng-template #noPopularParkings>
+        <h3 class="text-center">None of the parkings in <span>{{selectedCity}}</span><span
+                *ngIf="selectedStreet !=''"> on the street {{selectedStreet}}</span> had no
+            any orders for the last
+            {{this.selectedNumberOfDays}}
+            days</h3>
+    </ng-template>
 
     <div class="row">
         <div class="filter offset-1 col-md-10">
