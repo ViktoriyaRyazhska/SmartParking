@@ -34,6 +34,8 @@ export class SpotstatisticComponent implements OnInit {
     numbers: number[];
     hours: number[];
     events: number[];
+    setIntervalNumber: any;
+    lengthOfStatistic:number;
   /*  displayHourGraphik:boolean;
     displayEventGraphik:boolean;*/
     
@@ -46,6 +48,9 @@ export class SpotstatisticComponent implements OnInit {
         this.minDate.setDate(this.minDate.getDate() - 7);
         this.maxDate = new Date();
         this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+        this.lengthOfStatistic = 0;
+        
+        
        /* this.displayHourGraphik = false;
         this.displayEventGraphik = false;*/
 
@@ -56,19 +61,23 @@ export class SpotstatisticComponent implements OnInit {
     ngOnInit() {
 
 
-        this.getSpotStatistic();
+        
         this.fillArraysToGraphic();
         setInterval(this.refresh(), this.thirtySecInterval);
+        this.setIntervalNumber = setInterval(() => this.refresh(), this.thirtySecInterval);
+       
 
     }
 
     refresh(): void {
-        this.getSpotStatistic();
+    
     }
 
 
     fillArraysToGraphic(): void {
         this.numbers = []
+        if(this.statistic != undefined)
+        {
         this.statistic.forEach((element) => {
             this.numbers.push(element.id);
         });
@@ -83,6 +92,7 @@ export class SpotstatisticComponent implements OnInit {
             this.events.push(element.numberOfEvents);
         });
         this.events.push(0);
+    }
         
 
 
@@ -178,7 +188,7 @@ export class SpotstatisticComponent implements OnInit {
                   this.parkingService.getSpotStatistic(this.id,
             this.startTime.getTime().toString(), this.endTime.getTime().toString())
             .subscribe(statistic => this.statistic = statistic);
-
+         
     }
 
 
@@ -252,6 +262,13 @@ checkData(): void {
         this.setData();
         this.checkData();
     }
+
+    setLengthOfStatistic(): void {
+        if(this.statistic != null )
+        this.lengthOfStatistic = this.statistic.length
+       
+    }
+
        
 
 
