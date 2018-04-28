@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {ParkingService} from "../../parking.service";
 import {SpotStatistic} from '../../model/view/spotstatistic';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpErrorResponse, HttpResponse, HttpParams} from '@angular/common/http';
 import {Chart} from 'chart.js';
@@ -35,9 +36,9 @@ export class SpotstatisticComponent implements OnInit {
     hours: number[];
     events: number[];
     setIntervalNumber: any;
-    lengthOfStatistic:number;
-  /*  displayHourGraphik:boolean;
-    displayEventGraphik:boolean;*/
+     show :boolean;
+     context:string;
+   /* displayEventGraphik:boolean;*/
     
 
 
@@ -48,13 +49,9 @@ export class SpotstatisticComponent implements OnInit {
         this.minDate.setDate(this.minDate.getDate() - 7);
         this.maxDate = new Date();
         this.id = parseInt(this.route.snapshot.paramMap.get('id'));
-        this.lengthOfStatistic = 0;
+        this.show = true;
         
-        
-       /* this.displayHourGraphik = false;
-        this.displayEventGraphik = false;*/
-
-
+  
     }
 
 
@@ -133,7 +130,7 @@ export class SpotstatisticComponent implements OnInit {
         this.numbers = null;
         this.hours = null;
         this.events = null;
-
+       
     }
 
 
@@ -174,7 +171,7 @@ export class SpotstatisticComponent implements OnInit {
         this.numbers = null;
         this.hours = null;
         this.events = null;
-
+       
     }
 
     getSpotStatistic(): void {
@@ -188,32 +185,29 @@ export class SpotstatisticComponent implements OnInit {
                   this.parkingService.getSpotStatistic(this.id,
             this.startTime.getTime().toString(), this.endTime.getTime().toString())
             .subscribe(statistic => this.statistic = statistic);
-         
+                
     }
 
 
     addItem() {
-   
+        this.show = true;
               this.getSpotStatistic();
     }
 
 
 
     showHoursGraphic() {
-       
+        this.show = true;
         this.fillArraysToGraphic();
         this.drawHourGraphic();
-       /* this.displayHourGraphik = false;
-        this.displayEventGraphik = true;*/
     }
 
 
     showEventsGraphic() {
+        this.show = true;
         this.fillArraysToGraphic();
         this.drawEventGraphic();
-        /*this.displayHourGraphik = true;
-        this.displayEventGraphik = false;*/
-    }
+      }
 
     returnToParkingDetail() {
         const id = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -253,22 +247,32 @@ checkData(): void {
     }
 
     setMinData(): void {
+     this.show = true;
       this.setData();
       this.checkData();
     
     }
 
     setMaxData(): void {
+        this.show = true; 
         this.setData();
         this.checkData();
     }
 
-    setLengthOfStatistic(): void {
-        if(this.statistic != null )
-        this.lengthOfStatistic = this.statistic.length
+   
+
+    clear(): void {
+        this.show = false;          
        
     }
 
+
+    setTrue():void {
+        this.addItem();
+    }
+
+
+    
        
 
 
