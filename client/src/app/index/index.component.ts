@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {ParkingListFilterComponent} from './parking-list-filter/parking-list-filter.component';
 import {ParkingService} from '../parking.service';
-import {MatProgressBar, MatSnackBar} from '@angular/material';
+import {MatDrawer, MatProgressBar, MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Parking} from '../model/view/parking';
@@ -24,6 +24,8 @@ export class IndexComponent implements OnInit {
 
     @ViewChild('progressbar') private progressBar: MatProgressBar;
 
+    @ViewChild('drawer') sideBar: MatDrawer;
+
     parkings: Parking[] = [];
     bestParkings: Parking[] = [];
 
@@ -36,6 +38,16 @@ export class IndexComponent implements OnInit {
                 private statisticService: StatisticsService,
                 private dataService: DataserviceService,
                 private snackBar: MatSnackBar) {
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (event.target.innerWidth < 800) {
+            this.sideBar.close();
+        }
+        if (event.target.innerWidth > 800) {
+            this.sideBar.open();
+        }
     }
 
     ngOnInit() {

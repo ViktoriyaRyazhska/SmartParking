@@ -1,9 +1,17 @@
 <div class="parent">
-    <app-sidenav #sideNav></app-sidenav>
-    <app-parking-map #parkingMap></app-parking-map>
-    <div class="filter col-sm-12 col-md-12 col-lg-12">
-        <mat-progress-bar #progressbar *ngIf="progressBarVisible" [color]="progressBarColor" [mode]="progressBarMode"
-                          class="progress-bar" mode="query" [value]="100"></mat-progress-bar>
-        <app-parking-list-filter #filter></app-parking-list-filter>
-    </div>
+    <i class="material-icons" (click)="drawer.toggle()">&#xE896;</i>
+    <mat-drawer-container>
+        <mat-drawer #drawer mode="side" [opened]="true">
+            <app-sidenav></app-sidenav>
+        </mat-drawer>
+        <mat-drawer-content>
+            <app-parking-map #parkingMap></app-parking-map>
+            <div class="filter col-sm-12 col-md-12 col-lg-12">
+                <mat-progress-bar #progressbar *ngIf="progressBarVisible" [color]="progressBarColor"
+                                  [mode]="progressBarMode"
+                                  class="progress-bar" mode="query" [value]="100"></mat-progress-bar>
+                <app-parking-list-filter #filter></app-parking-list-filter>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
 </div>

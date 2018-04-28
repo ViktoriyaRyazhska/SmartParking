@@ -21,15 +21,13 @@ app-parking-list {
     height: 100%;
 }
 
-app-sidenav {
-    display: flex;
-    flex-direction: column;
+.material-icons {
     position: absolute;
-    top: 0;
+    color: darkred;
+    top: 3.5%;
     bottom: 0;
-    left: 0;
-    right: 0;
-    width: 15em;
+    left: 0.3%;
+    cursor: pointer;
 }
 
 

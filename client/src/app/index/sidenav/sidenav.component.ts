@@ -1,5 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {MediaMatcher} from "@angular/cdk/layout";
+import {Component, OnInit} from '@angular/core';
 import {Parking} from "../../model/view/parking";
 import {StatisticsService} from "../../statistic/statistics.service";
 import {DataserviceService} from "../dataservice.service";
@@ -11,26 +10,14 @@ import {DataserviceService} from "../dataservice.service";
 })
 export class SidenavComponent implements OnInit {
 
-    mobileQuery: MediaQueryList;
-    private _mobileQueryListener: () => void;
-
     parkings: Parking[];
     mostPopularParkings: Parking[];
     public streetFilter = '';
 
     showMostPopular: boolean = false;
 
-    constructor(changeDetectorRef: ChangeDetectorRef,
-                media: MediaMatcher,
-                private statisticService: StatisticsService,
+    constructor(private statisticService: StatisticsService,
                 private dataService: DataserviceService) {
-        this.mobileQuery = media.matchMedia('(max-width: 600px)');
-        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-        this.mobileQuery.addListener(this._mobileQueryListener);
-    }
-
-    ngOnDestroy(): void {
-        this.mobileQuery.removeListener(this._mobileQueryListener);
     }
 
     ngOnInit() {

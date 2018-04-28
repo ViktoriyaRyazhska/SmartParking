@@ -1,7 +1,4 @@
-<!--<i class="material-icons" (click)="snav.toggle()">&#xE8D4;</i>-->
-<mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="true"
-             [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-
+<div>
     <span class="parkings-count">Was found {{parkings.length}} parkings</span>
     <span id="withoutOrders" *ngIf="showMostPopular && (parkings.length - mostPopularParkings.length)!=0">
         {{parkings.length - mostPopularParkings.length}} parkings without orders</span>
@@ -41,10 +38,9 @@
                 <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
 
                     <tr>
-                        <th rowspan="2"><img
-                                src="https://st.depositphotos.com/1005920/3456/i/950/depositphotos_34563705-stock-photo-parking-icon.jpg"
-                                class="photo-thumbnail"
-                                onError="this.src='assets/images/no-photo.gif'"></th>
+                        <th rowspan="2"><img class="photo-thumbnail"
+                                             src='assets/images/parking-list-icon.jpg'>
+                        </th>
                         <td>{{item.street}} {{item.building}}</td>
                     </tr>
                     <tr>
@@ -55,7 +51,4 @@
             </ng-container>
         </mat-nav-list>
     </div>
-</mat-sidenav>
-
-
-
+</div>
