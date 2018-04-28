@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {ParkingService} from '../../parking.service';
-import {MatSnackBar} from "@angular/material";
-import {DataserviceService} from "../dataservice.service";
-import {StatisticsService} from "../../statistic/statistics.service";
+import {MatSnackBar} from '@angular/material';
+import {DataserviceService} from '../dataservice.service';
+import {StatisticsService} from '../../statistic/statistics.service';
 
 @Component({
     selector: 'app-parking-map',
@@ -91,7 +91,7 @@ export class ParkingMapComponent implements OnInit {
 
     checkingForParkingAvailability(numberOfParkings: number, radius: number) {
         if (numberOfParkings < 1) {
-            this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + " km", null, {
+            this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + ' km', null, {
                 duration: 9000
             });
         } else {

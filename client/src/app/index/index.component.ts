@@ -49,8 +49,8 @@ export class IndexComponent implements OnInit {
             this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.parkingMap.radius).subscribe((response) => {
                 this.hideProgressBar();
                 this.parkings = response.body;
-                this.dataService.pushParkingsToDataService(this.parkings);
                 this.filterParkings();
+                this.dataService.pushParkingsToDataService(this.parkings);
             }, error => {
                 console.log(error);
                 this.showErrorProgressBar();

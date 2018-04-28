@@ -5,6 +5,7 @@ import {MapsAPILoader} from '@agm/core';
 import {IpLocation, IpLocationService} from '../../../service/ip-location.service';
 import {Subject} from 'rxjs/Subject';
 import {ParkingService} from '../../../parking.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'app-parking-list-filter-location-field',
@@ -39,6 +40,8 @@ export class LocationFieldComponent implements OnInit {
 
     private internalValue: Location;
 
+    public cityLatLng: Location[];
+
     public defaultValue = new LocationItem(null, '', null);
 
     public cities: String[];
@@ -59,10 +62,37 @@ export class LocationFieldComponent implements OnInit {
         this.initMapsAPI().then(() => {
             this.requestGeolocation();
             this.initDefaultLocation();
+            this.parkingService.getDistinctParkingCities().subscribe(
+                cities => {
+                    this.cityLatLng = [];
+                    let i = 0;
+                    for (let city of cities) {
+                        this.getLatLng(city).subscribe(result => {
+                            this.cityLatLng[i] = new Location(result.lat(), result.lng());
+                            i++;
+                        });
+                    }
+                }
+            );
         });
-        this.parkingService.getDistinctParkingCities().subscribe(
-            cities => this.cities = cities
-        );
+
+    }
+
+    getLatLng(address: String) {
+        console.log(address);
+        let geocoder = new google.maps.Geocoder();
+        return Observable.create(observer => {
+            geocoder.geocode({'address': address + ', Ukraine'}, function (results, status) {
+                if (status = google.maps.GeocoderStatus.OK) {
+                    observer.next(results[0].geometry.location);
+                    observer.complete();
+                } else {
+                    console.log('Error - ', results, ' & Status - ', status);
+                    observer.next({});
+                    observer.complete();
+                }
+            });
+        });
     }
 
     public onLocationInputBlur(): void {
