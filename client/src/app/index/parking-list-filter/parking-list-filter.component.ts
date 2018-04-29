@@ -1,11 +1,9 @@
-///<reference path="../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Location, LocationFieldComponent} from './location-field/location-field.component';
 import {FormGroup} from '@angular/forms';
 import {RadiusFieldComponent} from './radius-field/radius-field.component';
 import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
 import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
 
 const earthRadius = 6371;
 
@@ -48,7 +46,7 @@ export class ParkingListFilterComponent implements OnInit {
     ngOnInit() {
         this.locationField.valueChanges.subscribe(location => {
             for (let city of this.locationField.cityLatLng) {
-                this.distance = this.getDistanceBetweenPoint(city.latitude, city.longitude, location.latitude, location.longitude);
+                this.distance = ParkingListFilterComponent.getDistanceBetweenPoint(city.latitude, city.longitude, location.latitude, location.longitude);
                 if (this.distance <= 20) {
                     this.present = true;
                     break;
@@ -62,7 +60,6 @@ export class ParkingListFilterComponent implements OnInit {
                 this.valueChangesSubject.next(this.internalValue);
                 localStorage.setItem('locationLatitude', location.latitude.toString());
                 localStorage.setItem('locationLongtitude', location.longitude.toString());
-
             } else {
                 window.alert('Our api doesn\'t support this location, unfortunately :(');
             }
@@ -88,48 +85,29 @@ export class ParkingListFilterComponent implements OnInit {
         });
     }
 
-    private getDistanceBetweenPoint(startLat, startLong, endLat, endLong): number {
-        let dLat = this.toRadians((endLat - startLat));
-        let dLong = this.toRadians((endLong - startLong));
+    private static getDistanceBetweenPoint(startLat, startLong, endLat, endLong): number {
+        let dLat = ParkingListFilterComponent.toRadians((endLat - startLat));
+        let dLong = ParkingListFilterComponent.toRadians((endLong - startLong));
 
-        startLat = this.toRadians(startLat);
-        endLat = this.toRadians(endLat);
+        startLat = ParkingListFilterComponent.toRadians(startLat);
+        endLat = ParkingListFilterComponent.toRadians(endLat);
 
-        var a = this.haversin(dLat) + Math.cos(startLat) * Math.cos(endLat) * this.haversin(dLong);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        let a = ParkingListFilterComponent.haversin(dLat) + Math.cos(startLat) * Math.cos(endLat) * ParkingListFilterComponent.haversin(dLong);
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        var d = earthRadius * c;
-        console.log(d);
-        return d;
+        return earthRadius * c;
     };
 
-    private haversin(val) {
+    private static haversin(val) {
         return Math.pow(Math.sin(val / 2), 2);
     }
 
-    private toRadians(number): number {
+    private static toRadians(number): number {
         return number * Math.PI / 180;
     }
 
     public get radiusMax(): number {
         return this.radiusField.max;
-    }
-
-    getLatLng(address: String) {
-        console.log(address);
-        let geocoder = new google.maps.Geocoder();
-        return Observable.create(observer => {
-            geocoder.geocode({'address': address + ', Ukraine'}, function (results, status) {
-                if (status = google.maps.GeocoderStatus.OK) {
-                    observer.next(results[0].geometry.location);
-                    observer.complete();
-                } else {
-                    console.log('Error - ', results, ' & Status - ', status);
-                    observer.next({});
-                    observer.complete();
-                }
-            });
-        });
     }
 
 }

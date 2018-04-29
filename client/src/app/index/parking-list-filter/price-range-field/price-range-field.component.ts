@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {Subject} from 'rxjs/Subject';
 
 @Component({
@@ -13,9 +13,9 @@ export class PriceRangeFieldComponent implements OnInit {
 
     @ViewChild('maxInput') maxInput: HTMLInputElement;
 
-    private readonly minControl: FormControl = new FormControl();
+    readonly minControl: FormControl = new FormControl();
 
-    private readonly maxControl: FormControl = new FormControl();
+    readonly maxControl: FormControl = new FormControl();
 
     private readonly valueChangesSubject = new Subject<PriceRange>();
 
@@ -42,8 +42,12 @@ export class PriceRangeFieldComponent implements OnInit {
                 this.valueChangesSubject.next(new PriceRange(this.minControl.value, max));
             }
         });
-        this.minControl.setValue(localStorage.getItem("minValue"));
-        this.maxControl.setValue(localStorage.getItem("maxValue"));
+        if (this.validateMin(+localStorage.getItem('minValue'))) {
+            this.minControl.setValue(localStorage.getItem('minValue'));
+        }
+        if (this.validateMax(+localStorage.getItem('maxValue'))) {
+            this.maxControl.setValue(localStorage.getItem('maxValue'));
+        }
         this.minControl.markAsTouched();
         this.maxControl.markAsTouched();
     }
@@ -59,6 +63,11 @@ export class PriceRangeFieldComponent implements OnInit {
                 this.maxControl.setErrors(null);
                 return false;
             }
+            if (min > 1000) {
+                this.minControl.setErrors({'greaterThan1000': min});
+                return false;
+            }
+            
         }
         return this.maxControl.errors === null;
     }
@@ -73,6 +82,10 @@ export class PriceRangeFieldComponent implements OnInit {
             if (min && max < min) {
                 this.maxControl.setErrors({'lessThanMin': max});
                 this.minControl.setErrors(null);
+                return false;
+            }
+            if (max > 1000) {
+                this.maxControl.setErrors({'greaterThan1000': max});
                 return false;
             }
         }

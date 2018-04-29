@@ -4,6 +4,7 @@ import {ProviderService} from '../provider.service';
 import {ProviderListFilterParameters} from '../../../model/filter/provider-list-filter-parameters';
 import {FormControl, FormGroup,} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-provider-list',
@@ -19,7 +20,9 @@ export class ProviderListComponent implements OnInit {
 
     providerFilter: ProviderListFilterParameters;
 
-    constructor(private providerService: ProviderService, private router: ActivatedRoute) {
+    constructor(private providerService: ProviderService,
+                private router: ActivatedRoute,
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -28,7 +31,6 @@ export class ProviderListComponent implements OnInit {
 
     getProviders(): void {
         if (this.router.queryParams) {
-            console.log("SSSSSSSSSSSSs")
             this.router.queryParams
                 .subscribe(params => {
                     this.providerFilter = new ProviderListFilterParameters();
@@ -37,7 +39,12 @@ export class ProviderListComponent implements OnInit {
                 });
         }
         this.providerService.getAllByFilter(this.providerFilter)
-            .subscribe(providers => this.providers = providers);
+            .subscribe(providers => {
+                this.providers = providers;
+                this.snackBar.open(providers.length + ' matches was found.', null, {
+                    duration: 2000
+                });
+            });
     }
 
 }

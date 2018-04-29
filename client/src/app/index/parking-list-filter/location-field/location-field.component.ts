@@ -44,8 +44,6 @@ export class LocationFieldComponent implements OnInit {
 
     public defaultValue = new LocationItem(null, '', null);
 
-    public cities: String[];
-
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ipLocationService: IpLocationService,
                 private changeDetector: ChangeDetectorRef,
@@ -79,7 +77,6 @@ export class LocationFieldComponent implements OnInit {
     }
 
     getLatLng(address: String) {
-        console.log(address);
         let geocoder = new google.maps.Geocoder();
         return Observable.create(observer => {
             geocoder.geocode({'address': address + ', Ukraine'}, function (results, status) {
@@ -130,22 +127,21 @@ export class LocationFieldComponent implements OnInit {
 
     private initDefaultLocation() {
 
-       
+
         if (localStorage.getItem('locationLatitude') != null && localStorage.getItem('locationLongtitude') != null) {
             let address;
-           
+
             let request = <google.maps.GeocoderRequest> {
                 location: new google.maps.LatLng(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'))
             };
 
-           
-             
+
             this.geocodeService.geocode(request, (results, status) => {
                 if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
                     address = (status === google.maps.GeocoderStatus.OK)
                         ? results[0].formatted_address
                         : localStorage.getItem('locationLatitude') + ', ' + +localStorage.getItem('locationLatitude');
-                      
+
                 } else {
                     console.warn('Google API Geocoder error: ' + status);
                 }
@@ -157,9 +153,9 @@ export class LocationFieldComponent implements OnInit {
 
             let request = <google.maps.GeocoderRequest> {
                 location: new google.maps.LatLng(49.843977, 24.026318),
-                
+
             };
-             
+
             this.geocodeService.geocode(request, (results, status) => {
                 if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
                     address = (status === google.maps.GeocoderStatus.OK)
