@@ -1,21 +1,28 @@
-<div>
-    <span class="parkings-count">Was found {{parkings.length}} parkings</span>
-    <span id="withoutOrders" *ngIf="showMostPopular && (parkings.length - mostPopularParkings.length)!=0">
+<div *ngIf="parkings">
+
+    <span class="parkings-count"
+          *ngIf="parkings.length>0;else noParkings">Was found {{parkings.length}} parkings</span>
+    <ng-template #noParkings>
+        <span class="text-center" style="color: red">No parkings were found!</span>
+    </ng-template>
+
+    <span id="withoutOrders" *ngIf="showMostPopular && (parkings.length - mostPopularParkings.length)>0">
         {{parkings.length - mostPopularParkings.length}} parkings without orders</span>
 
-    <span class="show" *ngIf="!showMostPopular;else showParkings"
+    <span class="show" *ngIf="!showMostPopular && parkings.length>0;else showParkings"
           (click)="showMostPopularParkings()">Show most popular</span>
     <ng-template #showParkings>
-        <span class="show" (click)="showAllParkings()">Show all parkings</span>
+        <span class="show" *ngIf="parkings.length>0" (click)="showAllParkings()">Show all parkings</span>
     </ng-template>
 
     <input class="input-filter" type="text" [(ngModel)]="streetFilter" placeholder="search">
     <span id="mostPopular" *ngIf="showMostPopular">Most popular</span>
 
-    <div *ngIf="!showMostPopular">
+    <div *ngIf="!showMostPopular; else showMostPopularParkingsInSideBar">
         <mat-nav-list class="nav-list" *ngFor="let item of parkings">
             <ng-container>
-                <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
+                <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())"
+                   [routerLink]="['/parkingdetail/'+item.id]">
 
                     <tr>
                         <th rowspan="2"><img class="photo-thumbnail"
@@ -32,10 +39,11 @@
         </mat-nav-list>
     </div>
 
-    <div *ngIf="showMostPopular">
+    <ng-template #showMostPopularParkingsInSideBar>
         <mat-nav-list class="nav-list" *ngFor="let item of mostPopularParkings">
             <ng-container>
-                <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())">
+                <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())"
+                   [routerLink]="['/parkingdetail/'+item.id]">
 
                     <tr>
                         <th rowspan="2"><img class="photo-thumbnail"
@@ -50,5 +58,5 @@
                 </a>
             </ng-container>
         </mat-nav-list>
-    </div>
+    </ng-template>
 </div>

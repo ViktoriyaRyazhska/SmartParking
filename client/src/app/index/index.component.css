@@ -30,4 +30,7 @@ app-parking-list {
     cursor: pointer;
 }
 
+.mat-drawer {
+    width: 16em;
+}
 

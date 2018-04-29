@@ -33,11 +33,14 @@ export class IndexComponent implements OnInit {
     private progressBarColor: string = 'primary';
     private progressBarMode: string = 'query';
 
+    screenWidth: number;
+
     constructor(private parkingService: ParkingService,
                 private changeDetector: ChangeDetectorRef,
                 private statisticService: StatisticsService,
                 private dataService: DataserviceService,
                 private snackBar: MatSnackBar) {
+        this.screenWidth = window.innerWidth;
     }
 
     @HostListener('window:resize', ['$event'])
@@ -62,15 +65,14 @@ export class IndexComponent implements OnInit {
                 this.hideProgressBar();
                 this.parkings = response.body;
                 this.filterParkings();
-                this.dataService.pushParkingsToDataService(this.parkings);
             }, error => {
                 console.log(error);
                 this.showErrorProgressBar();
             });
-            this.findBestParkingsByLocation(
+            setTimeout(() => this.findBestParkingsByLocation(
                 this.parkingMap.lat,
                 this.parkingMap.lng,
-                this.parkingMap.radius, 30);
+                this.parkingMap.radius, 30), 700);
         });
     }
 
@@ -134,6 +136,7 @@ export class IndexComponent implements OnInit {
                 && ((filter.priceRange.max) ? parking.price <= filter.priceRange.max : true)
                 && ((filter.hasCharger) ? parking.hasCharger == filter.hasCharger : true);
         });
+        this.dataService.pushParkingsToDataService(this.parkingMap.parkings);
         this.refreshComponentView();
     }
 
@@ -145,12 +148,12 @@ export class IndexComponent implements OnInit {
     checkingForParkingAvailability(numberOfParkings: number, radius: number) {
         if (numberOfParkings < 1) {
             this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + " km", null, {
-                duration: 9000
+                duration: 1000
             });
         } else {
             this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkings[0].street + ' ' +
                 this.bestParkings[0].building, null, {
-                duration: 9000
+                duration: 1000
             });
         }
     }

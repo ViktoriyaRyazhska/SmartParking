@@ -40,7 +40,8 @@
 
                     <mat-form-field class="col-md-3">
                         <input matInput placeholder="find street" #streetSearchBox
-                               id="street-box" [matAutocomplete]="auto2">
+                               id="street-box" [matAutocomplete]="auto2"
+                               (keyup)=findParkingsStreets(streetSearchBox.value)>
                         <mat-autocomplete #auto2="matAutocomplete">
                             <mat-option *ngFor="let parkingsStreet of parkingsStreets"
                                         (click)="selectStreet(parkingsStreet)"

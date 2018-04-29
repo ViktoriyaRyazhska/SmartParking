@@ -52,10 +52,10 @@ export class ParkingMapComponent implements OnInit {
                 }, error => {
                     console.log(error);
                 });
-                this.findBestParkingsByLocation(
+                setTimeout(() => this.findBestParkingsByLocation(
                     this.lat,
                     this.lng,
-                    this.radius, 30);
+                    this.radius, 30), 2000);
             });
         }
     }
@@ -92,12 +92,12 @@ export class ParkingMapComponent implements OnInit {
     checkingForParkingAvailability(numberOfParkings: number, radius: number) {
         if (numberOfParkings < 1) {
             this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + ' km', null, {
-                duration: 9000
+                duration: 3000
             });
         } else {
             this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkings[0].street + ' ' +
                 this.bestParkings[0].building, null, {
-                duration: 9000
+                duration: 3000
             });
         }
     }
