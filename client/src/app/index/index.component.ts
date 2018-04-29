@@ -157,28 +157,11 @@ export class IndexComponent implements OnInit {
         setTimeout(() => this.changeDetector.detectChanges(), 1);
     }
 
-    checkingForParkingAvailability(numberOfParkings: number, radius: number) {
-        if (numberOfParkings < 1) {
-            this.snackBar.open('Unfortunately, there are no parkings in radius of ' + radius / 1000 + " km", null, {
-                duration: 1000
-            });
-        } else {
-            this.snackBar.open('The most popular parking in radius ' + radius / 1000 + ' km is on ' + this.bestParkings[0].street + ' ' +
-                this.bestParkings[0].building, null, {
-                duration: 1000
-            });
-        }
-    }
-
     findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number, minPrice: number, maxPrice: number, hasCharger: boolean) {
-        this.snackBar.open(minPrice + " " + " " + maxPrice + " " + hasCharger, null, {
-            duration: 1000
-        });
         this.statisticService.getBestParkingsByLocationPriceAndFunctional(latitude, longitude, radius, days, minPrice, maxPrice, hasCharger, false, false)
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
                 this.dataService.pushBestParkingsToDataService(this.bestParkings);
-                // this.checkingForParkingAvailability(this.bestParkings.length, radius);
             });
     }
 
