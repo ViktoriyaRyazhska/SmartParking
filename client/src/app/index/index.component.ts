@@ -10,6 +10,7 @@ import {StatisticsService} from '../statistic/statistics.service';
 import {DataserviceService} from './dataservice.service';
 
 const MiToKm = 1.60934;
+const numberOfDaysByDefault = 30;
 
 @Component({
     selector: 'app-index',
@@ -35,6 +36,10 @@ export class IndexComponent implements OnInit {
 
     screenWidth: number;
 
+    minPrice: number = 0;
+    maxPrice: number = 0;
+    hasCharger: boolean = false;
+
     constructor(private parkingService: ParkingService,
                 private changeDetector: ChangeDetectorRef,
                 private statisticService: StatisticsService,
@@ -54,6 +59,7 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.subscribeDataServiceValues();
         this.filter.valueChanges.subscribe(filter => {
             this.showLoadingProgressBar();
             this.parkingMap.lat = filter.location.latitude;
@@ -65,6 +71,7 @@ export class IndexComponent implements OnInit {
                 this.hideProgressBar();
                 this.parkings = response.body;
                 this.filterParkings();
+                this.pushValuesFromFilterToDataService(filter.priceRange.min, filter.priceRange.max, filter.hasCharger);
             }, error => {
                 console.log(error);
                 this.showErrorProgressBar();
@@ -72,7 +79,11 @@ export class IndexComponent implements OnInit {
             setTimeout(() => this.findBestParkingsByLocation(
                 this.parkingMap.lat,
                 this.parkingMap.lng,
-                this.parkingMap.radius, 30), 700);
+                this.parkingMap.radius,
+                numberOfDaysByDefault,
+                this.minPrice,
+                this.maxPrice,
+                this.hasCharger), 100);
         });
     }
 
@@ -136,6 +147,7 @@ export class IndexComponent implements OnInit {
                 && ((filter.priceRange.max) ? parking.price <= filter.priceRange.max : true)
                 && ((filter.hasCharger) ? parking.hasCharger == filter.hasCharger : true);
         });
+
         this.dataService.pushParkingsToDataService(this.parkingMap.parkings);
         this.refreshComponentView();
     }
@@ -158,13 +170,34 @@ export class IndexComponent implements OnInit {
         }
     }
 
-    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
-        this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
+    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number, minPrice: number, maxPrice: number, hasCharger: boolean) {
+        this.snackBar.open(minPrice + " " + " " + maxPrice + " " + hasCharger, null, {
+            duration: 1000
+        });
+        this.statisticService.getBestParkingsByLocationPriceAndFunctional(latitude, longitude, radius, days, minPrice, maxPrice, hasCharger, false, false)
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
                 this.dataService.pushBestParkingsToDataService(this.bestParkings);
-                this.checkingForParkingAvailability(this.bestParkings.length, radius);
+                // this.checkingForParkingAvailability(this.bestParkings.length, radius);
             });
+    }
+
+    subscribeDataServiceValues() {
+        this.dataService.currentMinPrice.subscribe(minPrice => this.minPrice = minPrice);
+        this.dataService.currentMaxPrice.subscribe(maxPrice => this.maxPrice = maxPrice);
+        this.dataService.currentHasCharger.subscribe(hasCharger => this.hasCharger = hasCharger);
+    }
+
+    pushValuesFromFilterToDataService(minPrice: number, maxPrice: number, hasCharger: boolean) {
+        if (minPrice == null) {
+            minPrice = 0;
+        }
+        if (maxPrice == null) {
+            maxPrice = 1000;
+        }
+        this.dataService.setMinPrice(minPrice);
+        this.dataService.setMaxPrice(maxPrice);
+        this.dataService.setHasCharger(hasCharger);
     }
 
 }

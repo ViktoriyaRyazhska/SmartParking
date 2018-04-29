@@ -5,12 +5,13 @@ import {MatSnackBar} from '@angular/material';
 import {DataserviceService} from '../dataservice.service';
 import {StatisticsService} from '../../statistic/statistics.service';
 
+const numberOfDaysByDefault = 30;
+
 @Component({
     selector: 'app-parking-map',
     templateUrl: './parking-map.component.html',
     styleUrls: ['./parking-map.component.css']
 })
-
 
 export class ParkingMapComponent implements OnInit {
     lat = 49.843977;
@@ -55,7 +56,8 @@ export class ParkingMapComponent implements OnInit {
                 setTimeout(() => this.findBestParkingsByLocation(
                     this.lat,
                     this.lng,
-                    this.radius, 30), 2000);
+                    this.radius,
+                    numberOfDaysByDefault), 2000);
             });
         }
     }

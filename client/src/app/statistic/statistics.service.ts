@@ -59,4 +59,22 @@ export class StatisticsService {
         });
     }
 
+    getBestParkingsByLocationPriceAndFunctional(latitude: number, longitude: number, radius: number, days: number,
+                                                minPrice: number, maxPrice: number, hasCharger: boolean, hasInvalid: boolean,
+                                                isCovered: boolean): Observable<Parking[]> {
+        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsbylocationpricefunctional', {
+            params: {
+                latitude: latitude.toString(),
+                longitude: longitude.toString(),
+                radius: radius.toString(),
+                days: days.toString(),
+                minPrice: minPrice.toString(),
+                maxPrice: maxPrice.toString(),
+                hasCharger: hasCharger.toString(),
+                hasInvalid: hasInvalid.toString(),
+                isCovered: isCovered.toString()
+            }
+        });
+    }
+
 }

@@ -6,6 +6,7 @@ import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
 import com.smartparking.repository.SpotRepository;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -26,6 +27,10 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
     List<Parking> findBestParkingsInTheCity(String city, Instant date);
 
     List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date);
+
+    List<Parking> findBestParkingsByLocationPriceAndFunctional(Double latitude, Double longitude, Double radius,
+                                                               Instant date, BigDecimal minPrice, BigDecimal maxPrice,
+                                                               Boolean hasCharger, Boolean hasInvalid, Boolean isCovered);
 
     List<SpotStatusResponse> findAllSpotsByParkingIdResponse(Long parkingId);
 

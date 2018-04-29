@@ -12,6 +12,15 @@ export class DataserviceService {
     private bestParkings: BehaviorSubject<Parking[]> = new BehaviorSubject([]);
     currentBestParkings: Observable<Parking[]> = this.bestParkings.asObservable();
 
+    private minPrice = new BehaviorSubject<number>(0);
+    currentMinPrice = this.minPrice.asObservable();
+
+    private maxPrice = new BehaviorSubject<number>(0);
+    currentMaxPrice = this.maxPrice.asObservable();
+
+    private hasCharger = new BehaviorSubject<boolean>(false);
+    currentHasCharger = this.hasCharger.asObservable();
+
     constructor() {
     }
 
@@ -21,6 +30,18 @@ export class DataserviceService {
 
     pushBestParkingsToDataService(bestParkings: Parking[]) {
         this.bestParkings.next(bestParkings);
+    }
+
+    setMinPrice(minPrice: number) {
+        this.minPrice.next(minPrice);
+    }
+
+    setMaxPrice(maxPrice: number) {
+        this.maxPrice.next(maxPrice);
+    }
+
+    setHasCharger(hasCharger: boolean) {
+        this.hasCharger.next(hasCharger);
     }
 
 }

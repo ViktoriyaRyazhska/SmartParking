@@ -5,6 +5,7 @@ import com.smartparking.entity.Spot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -34,6 +35,15 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
     @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where function('LOCATION_DISTANCE',?1, ?2,p.latitude, p.longitude) <= ?3 and e.timestamp > ?4"
             + " group by p order by count(s.id) desc")
     List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date);
+
+    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e " +
+            "where function('LOCATION_DISTANCE',?1, ?2,p.latitude, p.longitude) <= ?3 and e.timestamp > ?4"
+            + " and p.price between ?5 and ?6 and p.hasCharger = ?7 and p.hasInvalid = ?8 and p.isCovered = ?9 " +
+            "group by p order by count(s.id) desc")
+    List<Parking> findBestParkingsByLocationPriceAndFunctional(
+            Double latitude, Double longitude, Double radius,
+            Instant date, BigDecimal minPrice, BigDecimal maxPrice,
+            Boolean hasCharger, Boolean hasInvalid, Boolean isCovered);
 
     Spot findFirstBySpotNumberAndParking(Long spotNumber, Parking parking);
 }

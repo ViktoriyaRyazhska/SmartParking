@@ -11,6 +11,7 @@ import com.smartparking.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
@@ -60,6 +61,16 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     @Override
     public List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date) {
         return repository.findBestParkingsByLocation(latitude, longitude, radius, date);
+    }
+
+    @Override
+    public List<Parking> findBestParkingsByLocationPriceAndFunctional(Double latitude, Double longitude, Double radius,
+                                                                      Instant date, BigDecimal minPrice, BigDecimal maxPrice,
+                                                                      Boolean hasCharger, Boolean hasInvalid, Boolean isCovered) {
+        return repository.findBestParkingsByLocationPriceAndFunctional(
+                latitude, longitude, radius,
+                date, minPrice, maxPrice,
+                hasCharger, hasInvalid, isCovered);
     }
 
     @Override
