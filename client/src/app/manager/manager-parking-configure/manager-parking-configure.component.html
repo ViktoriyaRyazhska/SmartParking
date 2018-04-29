@@ -38,7 +38,7 @@
                                 <span *ngIf="parking.city || parking.street || parking.building">
                                     {{parking.city}}, {{parking.street}} street, {{parking.building}}
                                 </span>
-                                <span *ngIf="parking.city && parking.street && parking.building && setLocation === false ">
+                                <span *ngIf="parking.city && parking.street && parking.building ">
                                    {{setParkingLocation()}}
                                 </span>
                             </mat-panel-description>

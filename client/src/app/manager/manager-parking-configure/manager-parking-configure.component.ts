@@ -19,8 +19,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
     step = -1;
     loadedParking: Parking;
     parking: Parking;
-    setLocation: boolean;
-
+  
 
     parkingConfigureForm = new FormGroup({
         city: new FormControl('', [
@@ -43,7 +42,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
                 public snackBar: MatSnackBar,
                 private formBuilder: FormBuilder,
                 private managerParkingService: ManagerParkingService) {
-                    this.setLocation = false;
+                    
     }
 
     ngOnInit() {
@@ -148,7 +147,7 @@ setParkingLocation() : void {
                  console.log("this.parking.latitude: " + this.parking.latitude + ", this.parking.longitude: " + this.parking.longitude);
                 }
               });
-              this.setLocation=true;
+            
 }
 
 
