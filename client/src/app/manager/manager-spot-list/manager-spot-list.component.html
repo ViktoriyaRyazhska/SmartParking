@@ -26,7 +26,7 @@
                             </ng-template>
                         </span>
                             <div class="col-4">
-                                <span *ngIf="(spot.hasCharger || spot.isInvalid) && !spot.isFree"> Type </span>
+                                <span *ngIf="(spot.isBlocked || spot.hasCharger || spot.isInvalid) && !spot.isFree"> Type </span>
                                 <input *ngIf="spot.isFree" type="checkbox" [(ngModel)]="spot.hasChargerUpdate">
                                 <mat-icon *ngIf="spot.hasCharger || spot.isFree" color="primary">ev_station</mat-icon>
                                 <input *ngIf="spot.isFree" type="checkbox" [(ngModel)]="spot.isInvalidUpdate">
