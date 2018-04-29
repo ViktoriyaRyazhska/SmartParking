@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import * as HttpStatus from 'http-status-codes';
 import {Spot} from "../../model/view/spot";
 import {ManagerSpotService} from "../manager-spot.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog, MatSelect, MatSnackBar} from "@angular/material";
 import {DeleteConfirmationDialogComponent} from "../manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component";
 import {HttpResponse} from "@angular/common/http";
 import {SpotAddDialogComponent} from "./spot-add-dialog/spot-add-dialog.component";
@@ -17,6 +17,9 @@ export class ManagerSpotListComponent implements OnInit {
 
     spots: Spot[] = [];
     spot: Spot;
+
+    @ViewChild('category')
+    private category: MatSelect;
 
     constructor(private route: ActivatedRoute,
                 private managerSpotService: ManagerSpotService,
@@ -116,4 +119,43 @@ export class ManagerSpotListComponent implements OnInit {
             this.ngOnInit();
         }
     }
+
+    findSpots(search: string): void {
+        var criterias;
+        if (!this.category.value)
+            criterias = new SerchCriterias(search, true, false, false, false);
+        if (this.category.value == 1)
+            criterias = new SerchCriterias(search, true, false, false, false);
+        if (this.category.value == 2)
+            criterias = new SerchCriterias(search, false, true, false, false);
+        if (this.category.value == 3)
+            criterias = new SerchCriterias(search, false, false, true, false);
+        if (this.category.value == 4)
+            criterias = new SerchCriterias(search, false, false, false, true);
+        const parkingId = parseInt(this.route.snapshot.paramMap.get('id'));
+        this.managerSpotService.findSpots(parkingId, criterias)
+            .subscribe(spots => {
+                this.spots = spots.body;
+            }, error => {
+                this.router.navigate(['error/forbidden']);
+            });
+    }
+}
+
+export class SerchCriterias {
+    public readonly search: string;
+    public readonly all: boolean;
+    public readonly hasCharger: boolean;
+    public readonly isInvalid: boolean;
+    public readonly isBlocked: boolean;
+
+    constructor(search: string, all: boolean, hasCharger: boolean, isInvalid: boolean, isBlocked: boolean) {
+        this.search = "";
+        this.search = search;
+        this.all = all;
+        this.hasCharger = hasCharger;
+        this.isInvalid = isInvalid;
+        this.isBlocked = isBlocked;
+    }
+
 }

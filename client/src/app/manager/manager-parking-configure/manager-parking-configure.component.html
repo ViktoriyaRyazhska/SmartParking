@@ -142,13 +142,11 @@
                                 <span class="full-width" *ngIf="parking.hasCharger">, Has charger</span>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <span>Is covered</span>
-                        <mat-checkbox>
-                            <input type="checkbox" [(ngModel)]="parking.isCovered" formControlName="isCovered">
+                        <mat-checkbox [(ngModel)]="parking.isCovered" formControlName="isCovered" color="primary">
+                            Is covered
                         </mat-checkbox>
-                        <span>Has charger</span>
-                        <mat-checkbox>
-                            <input type="checkbox" [(ngModel)]="parking.hasCharger" formControlName="hasCharger">
+                        <mat-checkbox [(ngModel)]="parking.hasCharger" formControlName="hasCharger" color="primary">
+                            Has charger
                         </mat-checkbox>
                         <mat-action-row>
                             <button mat-button type="button" color="warn" (click)="resetType()">Reset</button>

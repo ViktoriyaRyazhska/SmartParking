@@ -4,6 +4,7 @@ import com.smartparking.entity.Client;
 import com.smartparking.entity.Role;
 import com.smartparking.entity.Spot;
 import com.smartparking.model.request.SpotRequest;
+import com.smartparking.model.request.SpotSearchCriterias;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
 import com.smartparking.publisher.SpotEventPublisher;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -106,6 +108,29 @@ public class SpotController {
     @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get()) or hasAuthority('SUPERUSER')")
     public ResponseEntity<List<SpotStatusResponse>> spots(@P("parkingId") @PathVariable Long parkingId) {
         return new ResponseEntity<>(spotService.findAllSpotsByParkingIdResponse(parkingId), HttpStatus.OK);
+    }
+
+    @PostMapping("/manager-configuration/spotsforparking/{parkingId}/criterias")
+    @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get()) or hasAuthority('SUPERUSER')")
+    public ResponseEntity<List<SpotStatusResponse>> findSpots(@PathVariable Long parkingId, @RequestBody SpotSearchCriterias spotSearchCriterias) {
+        List<SpotStatusResponse> filteredSpots = spotService.findAllSpotsByParkingIdResponse(parkingId).stream().filter(spotStatusResponse -> {
+            if (spotStatusResponse.getSpotNumber().toString().contains(spotSearchCriterias.getSearch())) {
+                if (spotSearchCriterias.getAll()) {
+                    return true;
+                }
+                if (spotStatusResponse.getHasCharger() == spotSearchCriterias.getHasCharger() && spotSearchCriterias.getHasCharger()) {
+                    return true;
+                }
+                if (spotStatusResponse.getIsInvalid() == spotSearchCriterias.getIsInvalid() && spotSearchCriterias.getIsInvalid()) {
+                    return true;
+                }
+                if (spotStatusResponse.getIsBlocked() == spotSearchCriterias.getIsBlocked() && spotSearchCriterias.getIsBlocked()) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(filteredSpots, HttpStatus.OK);
     }
 
     public ResponseEntity<?> createNewSpot(Spot spot) {
