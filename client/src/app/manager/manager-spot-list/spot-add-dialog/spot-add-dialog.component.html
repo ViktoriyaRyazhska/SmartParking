@@ -4,24 +4,18 @@
         <input matInput [(ngModel)]="data.spotNumber" maxlength="5" pattern="\d[0-9]{0,4}"
                placeholder="Enter spot number" required name="spotNumber">
     </mat-form-field>
-    <mat-checkbox>
-        <div>
-            <input type="checkbox" [(ngModel)]="data.hasCharger" name="hasCharger">
-            <span> Has charger</span>
-        </div>
-    </mat-checkbox>
-    <mat-checkbox>
-        <div>
-            <input type="checkbox" [(ngModel)]="data.isInvalid" name="isInvalid">
-            <span> For invalid</span>
-        </div>
-    </mat-checkbox>
-    <mat-checkbox>
-        <div>
-            <input type="checkbox" [(ngModel)]="data.isBlocked" name="isBlocked">
-            <span> Is blocked</span>
-        </div>
-    </mat-checkbox>
+    <div>
+        <input type="checkbox" [(ngModel)]="data.hasCharger" name="hasCharger">
+        <span> Has charger</span>
+    </div>
+    <div>
+        <input type="checkbox" [(ngModel)]="data.isInvalid" name="isInvalid">
+        <span> For invalid</span>
+    </div>
+    <div>
+        <input type="checkbox" [(ngModel)]="data.isBlocked" name="isBlocked">
+        <span> Is blocked</span>
+    </div>
 </form>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()" [mat-dialog-close]="data">Cancel</button>

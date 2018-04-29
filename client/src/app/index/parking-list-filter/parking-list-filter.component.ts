@@ -4,6 +4,7 @@ import {FormGroup} from '@angular/forms';
 import {RadiusFieldComponent} from './radius-field/radius-field.component';
 import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
 import {Subject} from 'rxjs/Subject';
+import {ChargerCheckboxComponent} from "./charger-checkbox/charger-checkbox.component";
 
 const earthRadius = 6371;
 
@@ -23,6 +24,9 @@ export class ParkingListFilterComponent implements OnInit {
 
     @ViewChild('priceRangeField')
     private priceRangeField: PriceRangeFieldComponent;
+
+    @ViewChild('chargerField')
+    private chargerField: ChargerCheckboxComponent;
 
     private readonly formGroup = new FormGroup({});
 
@@ -56,7 +60,7 @@ export class ParkingListFilterComponent implements OnInit {
             }
 
             if (this.present) {
-                this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value);
+                this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value, this.chargerField.value);
                 this.valueChangesSubject.next(this.internalValue);
                 localStorage.setItem('locationLatitude', location.latitude.toString());
                 localStorage.setItem('locationLongtitude', location.longitude.toString());
@@ -68,7 +72,7 @@ export class ParkingListFilterComponent implements OnInit {
         });
         this.priceRangeField.valueChanges.subscribe(priceRange => {
             if (this.locationField.value) {
-                this.internalValue = new ParkingListFilter(this.locationField.value, priceRange, this.radiusField.value);
+                this.internalValue = new ParkingListFilter(this.locationField.value, priceRange, this.radiusField.value, this.chargerField.value);
                 this.valueChangesSubject.next(this.internalValue);
                 if (priceRange.min != undefined)
                     localStorage.setItem('minValue', priceRange.min.toString());
@@ -78,10 +82,17 @@ export class ParkingListFilterComponent implements OnInit {
         });
         this.radiusField.valueChanges.subscribe(radius => {
             if (this.locationField.value) {
-                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, radius);
+                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, radius, this.chargerField.value);
                 this.valueChangesSubject.next(this.internalValue);
             }
             localStorage.setItem('radius', radius.toString());
+        });
+        this.chargerField.valueChanges.subscribe(hasCharger => {
+            if (this.locationField.value) {
+                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, this.radiusField.value, hasCharger);
+                this.valueChangesSubject.next(this.internalValue);
+            }
+            localStorage.setItem('hasCharger', hasCharger.toString());
         });
     }
 
@@ -117,11 +128,13 @@ export class ParkingListFilter {
     public readonly location: Location;
     public readonly priceRange: PriceRange;
     public readonly radius: number;
+    public readonly hasCharger: boolean;
 
-    public constructor(location: Location, priceRange: PriceRange, radius: number) {
+    public constructor(location: Location, priceRange: PriceRange, radius: number, hasCharger: boolean) {
         this.location = location;
         this.priceRange = priceRange;
         this.radius = radius;
+        this.hasCharger = hasCharger;
     }
 
 }

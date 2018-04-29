@@ -148,6 +148,9 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
         response.setLatitude(tuple.get("latitude", Double.class));
         response.setLongitude(tuple.get("longitude", Double.class));
         response.setDistance(tuple.get("distance", Double.class));
+        response.setHasCharger(tuple.get("has_charger", Boolean.class));
+        response.setHasInvalid(tuple.get("has_invalid", Boolean.class));
+        response.setIsCovered(tuple.get("is_covered", Boolean.class));
         return response;
     }
 

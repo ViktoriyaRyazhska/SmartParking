@@ -7,6 +7,7 @@ import {
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
+    MatChipsModule,
     MatDividerModule,
     MatExpansionModule,
     MatIconModule,
@@ -14,8 +15,7 @@ import {
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
-    MatToolbarModule,
-    MatChipsModule
+    MatToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -94,6 +94,7 @@ import {AdminGuard} from './auth/guards/admin-guard.service';
 import {ProviderGuard} from './auth/guards/provider-guard.service';
 import {DriverGuard} from './auth/guards/driver-guard.service';
 import {ForgetPasswordComponent} from './auth/forget-password/forget-password.component';
+import {ChargerCheckboxComponent} from './index/parking-list-filter/charger-checkbox/charger-checkbox.component';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -161,7 +162,8 @@ export function getAuthServiceConfigs() {
         SidenavComponent,
         ManagerSpotListComponent,
         SpotAddDialogComponent,
-        ForgetPasswordComponent
+        ForgetPasswordComponent,
+        ChargerCheckboxComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
