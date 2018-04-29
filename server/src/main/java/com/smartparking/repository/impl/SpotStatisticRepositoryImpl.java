@@ -38,7 +38,7 @@ public class SpotStatisticRepositoryImpl implements SpotStatisticRepository {
         String sql = "CALL spotStatistic(?,?,?)";
         List<SpotStatisticResponse> result = new ArrayList<>();
         jdbcTemplate.query(sql,new Object[] { id, startTime, endTime },(rs, rowNum) ->
-                new SpotStatisticResponse(rs.getLong("id"), rs.getDouble("NumberOfhours"),
+                new SpotStatisticResponse(rs.getLong("spot_number"), rs.getDouble("NumberOfhours"),
                         rs.getLong("NumberOfEvent"))
         ).forEach(response->result.add(response));
 

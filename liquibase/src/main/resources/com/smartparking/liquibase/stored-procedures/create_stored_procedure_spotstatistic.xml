@@ -11,7 +11,7 @@
 startime DATETIME(6),endtime DATETIME(6))
 BEGIN
 SELECT
-smartparking.spot.id ,
+smartparking.spot.spot_number ,
 (sum(CASE WHEN smartparking.event.event_marker = 1
 THEN timestamp ELSE 0 END)
 
