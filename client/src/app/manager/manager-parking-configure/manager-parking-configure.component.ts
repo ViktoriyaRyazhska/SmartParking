@@ -16,12 +16,11 @@ import {HttpResponse} from '@angular/common/http';
 export class ManagerParkingConfigureComponent implements OnInit {
 
     configureType: ConfigureType;
-    geoType: GeoType;
-    switch: Switch;
     step = -1;
-
     loadedParking: Parking;
     parking: Parking;
+    setLocation: boolean;
+
 
     parkingConfigureForm = new FormGroup({
         city: new FormControl('', [
@@ -44,11 +43,11 @@ export class ManagerParkingConfigureComponent implements OnInit {
                 public snackBar: MatSnackBar,
                 private formBuilder: FormBuilder,
                 private managerParkingService: ManagerParkingService) {
+                    this.setLocation = false;
     }
 
     ngOnInit() {
-        this.switch  = new  Switch('off', SwitchType.OFF);
-        if (this.route.snapshot.paramMap.get('configureType') === 'edit') {
+            if (this.route.snapshot.paramMap.get('configureType') === 'edit') {
             this.configureType = new ConfigureType('edit', ManagerParkingConfigureType.EDIT);
             this.loadParking();
         } else {
@@ -132,66 +131,28 @@ export class ManagerParkingConfigureComponent implements OnInit {
         this.parking.hasCharger = this.loadedParking.hasCharger;
     }
 
-    addressClick(): void {
-          this.geoType = new GeoType('address', ManagerParkingGeoType.ADDRESS);
-          this.switch  = new  Switch('on', SwitchType.ON);
-          console.log(this.geoType.text);
-          var geocoder =  new google.maps.Geocoder();
-          var address = "1045 mission street san francisco";
-              var address2 = "132 Городоцька Львів";
-              
-                
-          
-               var result = "";
-          
-               geocoder.geocode({ 'address': address2 }, (results, status) => {
-                 var latitude = results[0].geometry.location.lat();
-                var longitude = results[0].geometry.location.lng();
-                 console.log("lat: " + latitude + ", long: " + longitude);
-              });
-
-
-
-
-    }
-
-    locationClick(): void {
-        this.geoType = new GeoType('location', ManagerParkingGeoType.LOCATION);
-        this.switch  = new  Switch('on', SwitchType.ON);
-        console.log(this.geoType.text);
-        var latlng = new google.maps.LatLng(49.843489, 24.032726);
-        var geocoder =  new google.maps.Geocoder();
-        geocoder.geocode({'location': latlng},(results, status) => {
-            var address:string[] = results[0].formatted_address.split(" ");
-          console.log(address);
-           });
- }
+  
 
 setParkingLocation() : void {
+    console.log("method setParkingLocation() ");
     var geocoder =  new google.maps.Geocoder();
       var  address = ""+this.parking.building+" "+this.parking.street+" "+this.parking.city;
                                        var result = "";
                  geocoder.geocode({ 'address': address }, (results, status) => {
-                 var latitude = results[0].geometry.location.lat();
+                if(results != undefined)
+                {
+                    var latitude = results[0].geometry.location.lat();
                 var longitude = results[0].geometry.location.lng();
                 this.parking.latitude = latitude;
                 this.parking.longitude = longitude;
-                 console.log("lat: " + latitude + ", long: " + longitude);
+                 console.log("this.parking.latitude: " + this.parking.latitude + ", this.parking.longitude: " + this.parking.longitude);
+                }
               });
+              this.setLocation=true;
 }
 
 
-setParkingAddress() : void {
-    var latlng = new google.maps.LatLng(this.parking.latitude, this.parking.longitude);
-                var geocoder =  new google.maps.Geocoder();
-                geocoder.geocode({'location': latlng},(results, status) => {
-                    var address:string[] = results[0].formatted_address.split(" ");
-                  console.log(address);
-                  this.parking.building = address[2];
-                  this.parking.street = address[1];
-                  this.parking.city = address[3];
-                   });
-}
+
 
 
 
@@ -209,24 +170,6 @@ class ConfigureType {
 }
 
 
-export enum ManagerParkingGeoType {
-    ADDRESS, LOCATION
-}
-
-class GeoType {
-    constructor(public text: string, public type: ManagerParkingGeoType) {
-    }
-}
-
-
-export enum SwitchType {
-    OFF, ON
-}
-
-class Switch {
-    constructor(public text: string, public type: SwitchType) {
-    }
-}
 
 
 
