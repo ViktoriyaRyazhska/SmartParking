@@ -35,3 +35,38 @@ app-parking-list {
     width: 16em;
 }
 
+.sl_tp{
+    position: fixed;
+    bottom:0;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    background: #673ab7;
+    width:100%;
+    height:40px;
+    box-shadow:0 0 5px #777;
+    text-align:center;
+    color:#fff;
+}
+
+.sl_in {
+    position: fixed;
+    min-height:200px;
+    bottom:-200px;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    background: #E6E6FA;
+    width:100%;
+    padding:10px;
+    box-sizing:padding-box;
+}
+.sl_tp:hover {
+    bottom: 200px;
+}
+.sl_tp:hover .sl_in {
+    bottom: 0px;
+}
+
