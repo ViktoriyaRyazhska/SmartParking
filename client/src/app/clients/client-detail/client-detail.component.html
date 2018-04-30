@@ -15,14 +15,15 @@
                     <div id="main-info">
                         <mat-card-title><span>ID:</span> {{client.id}}
                         </mat-card-title>
-                        <mat-card-title [ngStyle]="{color: client.activated == false ? 'red' : 'green'}"><span>Activated:</span> {{client.activated}}
+                        <mat-card-title [ngStyle]="{color: client.activated == false ? 'red' : 'green'}"><span>Activated:</span>
+                            {{client.activated}}
                         </mat-card-title>
                         <mat-card-title id="role"><span>Role:</span> {{client.role}}
                         </mat-card-title>
                         <mat-card-title><span>Client name:</span> {{client.firstName}} {{client.lastName}}
                         </mat-card-title>
                         <mat-card-title><span>Email:</span> {{client.email}}</mat-card-title>
-                        <mat-card-title *ngIf="client.providerName!='no provider'">
+                        <mat-card-title *ngIf="client.providerName!=null">
                             <span>Provider:</span> <a matTooltip="Go to the provider details"
                                                       [routerLink]="['/configuration/providers/'+this.client.providersId]">
                             {{client.providerName}}</a>

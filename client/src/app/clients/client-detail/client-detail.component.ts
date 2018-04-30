@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {Router, ActivatedRoute} from '@angular/router';
-import {Provider} from "../../model/view/provider";
 import {Parking} from "../../model/view/parking";
 
 @Component({
@@ -13,7 +12,6 @@ import {Parking} from "../../model/view/parking";
 export class ClientDetailComponent implements OnInit {
 
     client: Client;
-    provider: Provider;
     favoritesParkings: Parking[] = [];
 
     constructor(private route: ActivatedRoute,

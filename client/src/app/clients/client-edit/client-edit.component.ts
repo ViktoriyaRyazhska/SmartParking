@@ -45,14 +45,14 @@ export class ClientEditComponent implements OnInit {
 
     updateClientById(): void {
 
-        if (this.client.role == 'PROVIDER_MANAGER' && this.client.providersId == 0) {
+        if (this.client.role == 'PROVIDER_MANAGER' && this.client.providersId == null) {
             this.snackBar.open('Please, select some provider', null, {
                 duration: 4000
             });
         } else {
             if (this.client.role == 'DRIVER' || this.client.role == 'SUPERUSER') {
-                this.client.providersId = 0;
-                this.client.providerName = 'no provider';
+                this.client.providersId = null;
+                this.client.providerName = null;
             }
             this.clientService.updateClient(this.id, this.client)
                 .subscribe(data => {

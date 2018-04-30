@@ -27,8 +27,8 @@ public class ClientDetailResponse {
         response.setActivated(client.getActivated());
 
         if (client.getProvider() == null) {
-            response.setProvidersId(0L);
-            response.setProviderName("no provider");
+            response.setProvidersId(null);
+            response.setProviderName(null);
         } else {
             response.setProvidersId(client.getProvider().getId());
             response.setProviderName(client.getProvider().getName());

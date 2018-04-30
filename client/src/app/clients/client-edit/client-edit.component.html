@@ -19,7 +19,7 @@
             </div>
 
             <div class="row"
-                 *ngIf="client.providerName!='no provider' && client.role!='SUPERUSER' && client.role!='DRIVER'">
+                 *ngIf="client.providerName!=null && client.role!='SUPERUSER' && client.role!='DRIVER'">
                 <h6>Current provider: {{client.providerName}}</h6>
             </div>
 
