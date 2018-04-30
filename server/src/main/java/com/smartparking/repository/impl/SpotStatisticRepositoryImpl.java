@@ -33,8 +33,6 @@ public class SpotStatisticRepositoryImpl implements SpotStatisticRepository {
         LOGGER.info("===========startTime=============="+startTime.toString());
         LOGGER.info("===========endTime=============="+endTime.toString());
 
-        //CALL spotStatistic(1,'2012-09-08 17:51:04.777','2018-09-08 17:51:04.777');
-
         String sql = "CALL spotStatistic(?,?,?)";
         List<SpotStatisticResponse> result = new ArrayList<>();
         jdbcTemplate.query(sql,new Object[] { id, startTime, endTime },(rs, rowNum) ->

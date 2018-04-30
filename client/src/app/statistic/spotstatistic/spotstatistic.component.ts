@@ -38,6 +38,8 @@ export class SpotstatisticComponent implements OnInit {
     setIntervalNumber: any;
      show :boolean;
      context:string;
+     error: boolean;
+    
    /* displayEventGraphik:boolean;*/
     
 
@@ -50,9 +52,13 @@ export class SpotstatisticComponent implements OnInit {
         this.maxDate = new Date();
         this.id = parseInt(this.route.snapshot.paramMap.get('id'));
         this.show = true;
+        this.error = false;
+      
         
   
     }
+
+
 
 
     ngOnInit() {
@@ -68,6 +74,12 @@ export class SpotstatisticComponent implements OnInit {
 
     refresh(): void {
     
+    }
+
+
+    setError() : void {
+        this.error = true;
+        console.log("there is some error happened");
     }
 
 
@@ -192,6 +204,7 @@ export class SpotstatisticComponent implements OnInit {
     addItem() {
         this.show = true;
               this.getSpotStatistic();
+         // this.statistic.length
     }
 
 
@@ -268,7 +281,7 @@ checkData(): void {
 
 
     setTrue():void {
-        this.addItem();
+        this.setMaxData();
     }
 
 
