@@ -20,8 +20,6 @@ public class ClientDetailResponse {
     private String providerName;
     private String role;
     private String image;
-    private List<Long> favoritesId;
-    private List<String> favoritesNames;
 
     public static ClientDetailResponse of(Client client) {
         ClientDetailResponse response = new ClientDetailResponse();
@@ -41,16 +39,9 @@ public class ClientDetailResponse {
         response.setEmail(client.getEmail());
         response.setRole(client.getRole().toString());
 
-        response.setFavoritesId(client.getFavorites()
-                .stream().map(Favorite::getId)
-                .collect(Collectors.toList()));
-        response.setFavoritesNames(client.getFavorites()
-                .stream().map(Favorite::getName)
-                .collect(Collectors.toList()));
         if (client.getImage() != null) {
             response.setImage(Base64.getEncoder().encodeToString(client.getImage()));
         }
-
         return response;
     }
 }
