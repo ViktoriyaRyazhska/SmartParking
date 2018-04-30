@@ -55,11 +55,14 @@ export class LocationFieldComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.valueChanges.subscribe(value => this.internalValue = value);
+        this.valueChanges.subscribe(value => {
+            this.internalValue = value;
+        });
         this.requestIpLocation();
         this.initMapsAPI().then(() => {
             this.requestGeolocation();
             this.initDefaultLocation();
+            this.onLocationInputBlur();
             this.parkingService.getDistinctParkingCities().subscribe(
                 cities => {
                     this.cityLatLng = [];
@@ -93,7 +96,8 @@ export class LocationFieldComponent implements OnInit {
     }
 
     public onLocationInputBlur(): void {
-        if (!this.selectedItem) {
+        console.log(this.value === undefined);
+        if (!this.selectedItem || this.value === undefined) {
             this.control.setErrors(
                 {'locationAutocompleteItemNotSelected': {value: this.control.value}});
         } else {
@@ -126,16 +130,11 @@ export class LocationFieldComponent implements OnInit {
     }
 
     private initDefaultLocation() {
-
-
         if (localStorage.getItem('locationLatitude') != null && localStorage.getItem('locationLongtitude') != null) {
             let address;
-
             let request = <google.maps.GeocoderRequest> {
                 location: new google.maps.LatLng(+localStorage.getItem('locationLatitude'), +localStorage.getItem('locationLongtitude'))
             };
-
-
             this.geocodeService.geocode(request, (results, status) => {
                 if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
                     address = (status === google.maps.GeocoderStatus.OK)
@@ -150,12 +149,10 @@ export class LocationFieldComponent implements OnInit {
             });
         } else {
             let address;
-
             let request = <google.maps.GeocoderRequest> {
                 location: new google.maps.LatLng(49.843977, 24.026318),
 
             };
-
             this.geocodeService.geocode(request, (results, status) => {
                 if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
                     address = (status === google.maps.GeocoderStatus.OK)

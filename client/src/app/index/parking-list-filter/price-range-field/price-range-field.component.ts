@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {Subject} from 'rxjs/Subject';
+import {isValid} from 'ngx-bootstrap/chronos/create/valid';
 
 @Component({
     selector: 'app-parking-list-filter-price-range-field',
@@ -23,6 +24,9 @@ export class PriceRangeFieldComponent implements OnInit {
 
     private internalValue: PriceRange;
 
+    public minIsValid = true;
+    public maxIsValid = true;
+
     constructor() {
     }
 
@@ -31,22 +35,27 @@ export class PriceRangeFieldComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.valueChanges.subscribe(value => this.internalValue = value);
         this.minControl.valueChanges.subscribe(min => {
             if (this.validateMin(min)) {
                 this.valueChangesSubject.next(new PriceRange(min, this.maxControl.value));
+                this.minIsValid = true;
             }
         });
         this.maxControl.valueChanges.subscribe(max => {
             if (this.validateMax(max)) {
                 this.valueChangesSubject.next(new PriceRange(this.minControl.value, max));
+                this.maxIsValid = true;
             }
         });
         if (this.validateMin(+localStorage.getItem('minValue'))) {
             this.minControl.setValue(localStorage.getItem('minValue'));
+            this.minIsValid = true;
         }
         if (this.validateMax(+localStorage.getItem('maxValue'))) {
             this.maxControl.setValue(localStorage.getItem('maxValue'));
+            this.maxIsValid = true;
         }
         this.minControl.markAsTouched();
         this.maxControl.markAsTouched();
@@ -57,17 +66,21 @@ export class PriceRangeFieldComponent implements OnInit {
         if (min) {
             if (min < 0) {
                 this.minControl.setErrors({'lessThanZero': min});
+                this.minIsValid = false;
                 return false;
             } else if (max && min > max) {
                 this.minControl.setErrors({'greaterThanMax': min});
                 this.maxControl.setErrors(null);
+                this.minIsValid = false;
                 return false;
             }
             if (min > 1000) {
                 this.minControl.setErrors({'greaterThan1000': min});
+                this.minIsValid = false;
                 return false;
             }
-            
+            this.minIsValid = true;
+
         }
         return this.maxControl.errors === null;
     }
@@ -77,15 +90,18 @@ export class PriceRangeFieldComponent implements OnInit {
         if (max) {
             if (max < 0) {
                 this.maxControl.setErrors({'lessThanZero': max});
+                this.maxIsValid = false;
                 return false;
             }
             if (min && max < min) {
                 this.maxControl.setErrors({'lessThanMin': max});
                 this.minControl.setErrors(null);
+                this.maxIsValid = false;
                 return false;
             }
             if (max > 1000) {
                 this.maxControl.setErrors({'greaterThan1000': max});
+                this.maxIsValid = false;
                 return false;
             }
         }

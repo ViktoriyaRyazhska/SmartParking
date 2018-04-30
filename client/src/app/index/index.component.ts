@@ -158,8 +158,10 @@ export class IndexComponent implements OnInit {
         setTimeout(() => this.changeDetector.detectChanges(), 1);
     }
 
-    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number, minPrice: number, maxPrice: number, hasCharger: boolean) {
-        this.statisticService.getBestParkingsByLocationPriceAndFunctional(latitude, longitude, radius, days, minPrice, maxPrice, hasCharger, false, false)
+    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number, minPrice: number, maxPrice: number,
+                               hasCharger: boolean) {
+        this.statisticService.getBestParkingsByLocationPriceAndFunctional(latitude, longitude, radius, days, minPrice, maxPrice, hasCharger,
+            false, false)
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
                 this.dataService.pushBestParkingsToDataService(this.bestParkings);
@@ -185,7 +187,8 @@ export class IndexComponent implements OnInit {
     }
 
     public isDisabled(): Boolean {
-        if (this.filter.locationField.value === undefined || !this.filter.priceRangeField.isValid) {
+        if (this.filter.locationField.value === undefined || !this.filter.priceRangeField.minIsValid ||
+            !this.filter.priceRangeField.maxIsValid) {
             return true;
         } else {
             return false;

@@ -5,7 +5,7 @@
     <input type="text" placeholder="Location" matInput aria-label="Number"
            [value]="defaultValue.label"
            [formControl]="control"
-           [matAutocomplete]="autocomplete" (blur)="onLocationInputBlur()">
+           [matAutocomplete]="autocomplete">
     <mat-error *ngIf="control.hasError('locationAutocompleteItemNotSelected')">
         Location must be selected from <strong>autocomplete</strong>
     </mat-error>
