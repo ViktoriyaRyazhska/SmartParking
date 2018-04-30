@@ -123,15 +123,15 @@ export class ManagerSpotListComponent implements OnInit {
     findSpots(search: string): void {
         var criterias;
         if (!this.category.value)
-            criterias = new SerchCriterias(search, true, false, false, false);
+            criterias = new SpotSerchCriterias(search, true, false, false, false);
         if (this.category.value == 1)
-            criterias = new SerchCriterias(search, true, false, false, false);
+            criterias = new SpotSerchCriterias(search, true, false, false, false);
         if (this.category.value == 2)
-            criterias = new SerchCriterias(search, false, true, false, false);
+            criterias = new SpotSerchCriterias(search, false, true, false, false);
         if (this.category.value == 3)
-            criterias = new SerchCriterias(search, false, false, true, false);
+            criterias = new SpotSerchCriterias(search, false, false, true, false);
         if (this.category.value == 4)
-            criterias = new SerchCriterias(search, false, false, false, true);
+            criterias = new SpotSerchCriterias(search, false, false, false, true);
         const parkingId = parseInt(this.route.snapshot.paramMap.get('id'));
         this.managerSpotService.findSpots(parkingId, criterias)
             .subscribe(spots => {
@@ -142,7 +142,7 @@ export class ManagerSpotListComponent implements OnInit {
     }
 }
 
-export class SerchCriterias {
+export class SpotSerchCriterias {
     public readonly search: string;
     public readonly all: boolean;
     public readonly hasCharger: boolean;
@@ -157,5 +157,4 @@ export class SerchCriterias {
         this.isInvalid = isInvalid;
         this.isBlocked = isBlocked;
     }
-
 }

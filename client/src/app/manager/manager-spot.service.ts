@@ -3,7 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Spot} from "../model/view/spot";
-import {SerchCriterias} from "./manager-spot-list/manager-spot-list.component";
+import {SpotSerchCriterias} from "./manager-spot-list/manager-spot-list.component";
 
 @Injectable()
 export class ManagerSpotService {
@@ -28,7 +28,7 @@ export class ManagerSpotService {
             this.spotConfigureUrl + '/spot/delete', spot, {observe: 'response'});
     }
 
-    findSpots(parkingId: number, criterias: SerchCriterias): Observable<HttpResponse<Spot[] | any>> {
+    findSpots(parkingId: number, criterias: SpotSerchCriterias): Observable<HttpResponse<Spot[] | any>> {
         return this.http.post<HttpResponse<Spot[] | any>>(
             this.spotConfigureUrl + '/spotsforparking/' + parkingId + '/criterias', criterias, {observe: 'response'});
     }

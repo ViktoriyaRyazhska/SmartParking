@@ -3,6 +3,7 @@ package com.smartparking.service.impl;
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
 import com.smartparking.model.request.ParkingNearbyRequest;
+import com.smartparking.model.request.ParkingSearchCriterias;
 import com.smartparking.model.response.ParkingResponse;
 import com.smartparking.model.response.ParkingWithSpotsResponse;
 import com.smartparking.model.response.SpotResponse;
@@ -172,5 +173,26 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     @Override
     public List<String> findAllParkingCities() {
         return getRepository().findAllParkingCities();
+    }
+
+    @Override
+    public List<ParkingResponse> findParkingsByCriterias(Long providerId, ParkingSearchCriterias criterias) {
+        List<ParkingResponse> filteredParkings = findAllByProviderIdResponse(providerId)
+                .stream().filter(parkingResponse -> {
+                    if ((parkingResponse.getCity() + " " + parkingResponse.getStreet() + " " + parkingResponse.getBuilding()).
+                            toLowerCase().contains(criterias.getSearch().toLowerCase())) {
+                        if (criterias.getAll()) {
+                            return true;
+                        }
+                        if (parkingResponse.getHasCharger() == criterias.getHasCharger() && criterias.getHasCharger()) {
+                            return true;
+                        }
+                        if (parkingResponse.getIsCovered() == criterias.getIsCovered() && criterias.getIsCovered()) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }).collect(Collectors.toList());
+        return filteredParkings;
     }
 }

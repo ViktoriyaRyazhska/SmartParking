@@ -1,4 +1,24 @@
 <div class="container">
+    <h3 class="text-center">Parkings</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input type="text" #searchBox class="form-control" placeholder="search"
+                       maxlength="20" name="searchBox">
+                <button mat-raised-button color="primary" (click)="findParkings(searchBox.value)">
+                    search
+                </button>
+            </div>
+            <mat-form-field>
+                <mat-select #category placeholder="Categories" disableRipple>
+                    <mat-option value="1" (click)="findParkings(searchBox.value)">All parkings</mat-option>
+                    <mat-option value="2" (click)="findParkings(searchBox.value)">Parkings whith charger</mat-option>
+                    <mat-option value="3" (click)="findParkings(searchBox.value)">Covered parkings</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </div>
     <div class="container-fluid" *ngIf="!parkings" class="text-center">
         <div class="row mx-auto mt-3 center-block">
             <div class="col-6 mx-auto my-auto text-center">

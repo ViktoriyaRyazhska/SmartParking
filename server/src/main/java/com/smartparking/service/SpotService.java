@@ -2,6 +2,7 @@ package com.smartparking.service;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.model.request.SpotSearchCriterias;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
 import com.smartparking.repository.SpotRepository;
@@ -35,4 +36,6 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
     List<SpotStatusResponse> findAllSpotsByParkingIdResponse(Long parkingId);
 
     Spot findFirstBySpotNumberAndParking(Long spotNumber, Parking parking);
+
+    List<SpotStatusResponse> findSpotsByCriterias(Long parkingId, SpotSearchCriterias criterias);
 }

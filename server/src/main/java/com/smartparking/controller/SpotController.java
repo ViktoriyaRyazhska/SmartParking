@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -113,24 +112,7 @@ public class SpotController {
     @PostMapping("/manager-configuration/spotsforparking/{parkingId}/criterias")
     @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get()) or hasAuthority('SUPERUSER')")
     public ResponseEntity<List<SpotStatusResponse>> findSpots(@PathVariable Long parkingId, @RequestBody SpotSearchCriterias spotSearchCriterias) {
-        List<SpotStatusResponse> filteredSpots = spotService.findAllSpotsByParkingIdResponse(parkingId).stream().filter(spotStatusResponse -> {
-            if (spotStatusResponse.getSpotNumber().toString().contains(spotSearchCriterias.getSearch())) {
-                if (spotSearchCriterias.getAll()) {
-                    return true;
-                }
-                if (spotStatusResponse.getHasCharger() == spotSearchCriterias.getHasCharger() && spotSearchCriterias.getHasCharger()) {
-                    return true;
-                }
-                if (spotStatusResponse.getIsInvalid() == spotSearchCriterias.getIsInvalid() && spotSearchCriterias.getIsInvalid()) {
-                    return true;
-                }
-                if (spotStatusResponse.getIsBlocked() == spotSearchCriterias.getIsBlocked() && spotSearchCriterias.getIsBlocked()) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
-        return new ResponseEntity<>(filteredSpots, HttpStatus.OK);
+        return new ResponseEntity<>(spotService.findSpotsByCriterias(parkingId, spotSearchCriterias), HttpStatus.OK);
     }
 
     public ResponseEntity<?> createNewSpot(Spot spot) {

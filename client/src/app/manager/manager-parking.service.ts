@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {environment} from '../../environments/environment';
 import {Parking} from '../model/view/parking';
+import {ParkingSerchCriterias} from "./manager-parking-list/manager-parking-list.component";
 
 @Injectable()
 export class ManagerParkingService {
@@ -33,5 +34,10 @@ export class ManagerParkingService {
     deleteParking(parking: Parking): Observable<HttpResponse<any>> {
         return this.http.post<HttpResponse<any>>(
             this.parkingConfigureUrl + '/parking/delete', parking, {observe: 'response'});
+    }
+
+    findParkings(criterias: ParkingSerchCriterias): Observable<HttpResponse<Parking[] | any>> {
+        return this.http.post<HttpResponse<Parking[] | any>>(
+            this.parkingConfigureUrl + '/parkings/criterias', criterias, {observe: 'response'});
     }
 }

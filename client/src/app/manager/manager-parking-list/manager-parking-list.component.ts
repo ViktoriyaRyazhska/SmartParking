@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {ManagerParkingService} from '../manager-parking.service';
 import {Router} from '@angular/router';
 import {HttpResponse} from '@angular/common/http';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatSelect, MatSnackBar} from '@angular/material';
 import * as HttpStatus from 'http-status-codes';
 import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 
@@ -15,6 +15,9 @@ import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/de
 export class ManagerParkingListComponent implements OnInit {
 
     parkings: Parking[] = [];
+
+    @ViewChild('category')
+    private category: MatSelect;
 
     constructor(private managerParkingService: ManagerParkingService,
                 private router: Router,
@@ -72,6 +75,24 @@ export class ManagerParkingListComponent implements OnInit {
             this.parkings.splice(index, 1);
         }
     }
+
+    findParkings(search: string): void {
+        var criterias;
+        if (!this.category.value)
+            criterias = new ParkingSerchCriterias(search, true, false, false);
+        if (this.category.value == 1)
+            criterias = new ParkingSerchCriterias(search, true, false, false);
+        if (this.category.value == 2)
+            criterias = new ParkingSerchCriterias(search, false, true, false);
+        if (this.category.value == 3)
+            criterias = new ParkingSerchCriterias(search, false, false, true);
+        this.managerParkingService.findParkings(criterias)
+            .subscribe(parkings => {
+                this.parkings = parkings.body;
+            }, error => {
+                this.router.navigate(['error/forbidden']);
+            });
+    }
 }
 
 export class ConfirmationDialog {
@@ -89,5 +110,20 @@ export class ConfirmationDialog {
         dialogRef.afterClosed().subscribe(result => {
             this.result = result;
         });
+    }
+}
+
+export class ParkingSerchCriterias {
+    public readonly search: string;
+    public readonly all: boolean;
+    public readonly hasCharger: boolean;
+    public readonly isCovered: boolean;
+
+    constructor(search: string, all: boolean, hasCharger: boolean, isCovered: boolean) {
+        this.search = "";
+        this.search = search;
+        this.all = all;
+        this.hasCharger = hasCharger;
+        this.isCovered = isCovered;
     }
 }

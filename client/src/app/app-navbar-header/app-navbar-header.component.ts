@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenStorage} from '../auth/token/token-storage';
 import {Role} from "../auth/roles";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-navbar-header',
@@ -12,7 +13,9 @@ export class AppNavbarHeaderComponent implements OnInit {
 
   navTitle = 'SmartParking';
 
-  constructor(private tokenStorage: TokenStorage) { }
+    constructor(private router: Router,
+                private tokenStorage: TokenStorage) {
+    }
 
   ngOnInit() {
   }
@@ -27,6 +30,7 @@ export class AppNavbarHeaderComponent implements OnInit {
 
   logOut() {
       this.tokenStorage.signOut();
+      this.router.navigate(['index']);
   }
 
 

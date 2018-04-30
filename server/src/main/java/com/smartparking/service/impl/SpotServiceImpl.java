@@ -2,6 +2,7 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.model.request.SpotSearchCriterias;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
 import com.smartparking.repository.SpotRepository;
@@ -91,5 +92,27 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     @Override
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
         return spotStatisticRepository.getSpotStatistic(id, startDate, endDate);
+    }
+
+    @Override
+    public List<SpotStatusResponse> findSpotsByCriterias(Long parkingId, SpotSearchCriterias criterias) {
+        List<SpotStatusResponse> filteredSpots = findAllSpotsByParkingIdResponse(parkingId).stream().filter(spotStatusResponse -> {
+            if (spotStatusResponse.getSpotNumber().toString().contains(criterias.getSearch())) {
+                if (criterias.getAll()) {
+                    return true;
+                }
+                if (spotStatusResponse.getHasCharger() == criterias.getHasCharger() && criterias.getHasCharger()) {
+                    return true;
+                }
+                if (spotStatusResponse.getIsInvalid() == criterias.getIsInvalid() && criterias.getIsInvalid()) {
+                    return true;
+                }
+                if (spotStatusResponse.getIsBlocked() == criterias.getIsBlocked() && criterias.getIsBlocked()) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
+        return filteredSpots;
     }
 }
