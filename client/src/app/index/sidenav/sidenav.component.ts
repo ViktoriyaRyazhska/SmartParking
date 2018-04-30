@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Parking} from "../../model/view/parking";
-import {StatisticsService} from "../../statistic/statistics.service";
-import {DataserviceService} from "../dataservice.service";
+import {Parking} from '../../model/view/parking';
+import {StatisticsService} from '../../statistic/statistics.service';
+import {DataserviceService} from '../dataservice.service';
+import {ParkingMapComponent} from '../parking-map/parking-map.component';
+import {SharedServiceService} from '../shared-service.service';
 
 @Component({
     selector: 'app-sidenav',
@@ -17,7 +19,8 @@ export class SidenavComponent implements OnInit {
     showMostPopular: boolean = false;
 
     constructor(private statisticService: StatisticsService,
-                private dataService: DataserviceService) {
+                private dataService: DataserviceService,
+                private sharedService: SharedServiceService) {
     }
 
     ngOnInit() {
@@ -35,4 +38,11 @@ export class SidenavComponent implements OnInit {
     }
 
 
+    highlightOnMap(id) {
+        this.sharedService.highLightOnMap(id);
+    }
+
+    closeInfoWondow() {
+
+    }
 }

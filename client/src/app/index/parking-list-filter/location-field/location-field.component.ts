@@ -96,7 +96,6 @@ export class LocationFieldComponent implements OnInit {
     }
 
     public onLocationInputBlur(): void {
-        console.log(this.value === undefined);
         if (!this.selectedItem || this.value === undefined) {
             this.control.setErrors(
                 {'locationAutocompleteItemNotSelected': {value: this.control.value}});

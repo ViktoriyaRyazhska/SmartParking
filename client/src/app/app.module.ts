@@ -95,6 +95,7 @@ import {ProviderGuard} from './auth/guards/provider-guard.service';
 import {DriverGuard} from './auth/guards/driver-guard.service';
 import {ForgetPasswordComponent} from './auth/forget-password/forget-password.component';
 import {ChargerCheckboxComponent} from './index/parking-list-filter/charger-checkbox/charger-checkbox.component';
+import {SharedServiceService} from './index/shared-service.service';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -222,7 +223,8 @@ export function getAuthServiceConfigs() {
         AuthGuard,
         AdminGuard,
         ProviderGuard,
-        DriverGuard
+        DriverGuard,
+        SharedServiceService
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

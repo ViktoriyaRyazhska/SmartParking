@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {ParkingService} from '../../parking.service';
 import {MatSnackBar} from '@angular/material';
 import {DataserviceService} from '../dataservice.service';
 import {StatisticsService} from '../../statistic/statistics.service';
+import {SharedServiceService} from '../shared-service.service';
+import {InfoWindow} from '@agm/core/services/google-maps-types';
 
 const numberOfDaysByDefault = 30;
 
@@ -23,17 +25,17 @@ export class ParkingMapComponent implements OnInit {
     radius: number;
     visibility: boolean;
     infoWindowOpened = null;
-    count = 0;
+
 
     constructor(private parkingService: ParkingService,
                 private dataService: DataserviceService,
                 private statisticService: StatisticsService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private sharedService: SharedServiceService) {
     }
 
     ngOnInit() {
         if (navigator.geolocation) {
-
             navigator.geolocation.getCurrentPosition(position => {
                 if ((localStorage.getItem('locationLatitude') && localStorage.getItem('locationLongtitude') != null)) {
                     this.lat = +localStorage.getItem('locationLatitude');
@@ -58,6 +60,16 @@ export class ParkingMapComponent implements OnInit {
                     this.lng,
                     this.radius,
                     numberOfDaysByDefault), 2000);
+            });
+            this.sharedService.myMethod$.subscribe(id => {
+                for (let parking of this.parkings) {
+                    if (parking.id == id) {
+                        parking.infoWindowOpen = true;
+                    } else {
+                        parking.infoWindowOpen = false;
+                    }
+
+                }
             });
         }
     }

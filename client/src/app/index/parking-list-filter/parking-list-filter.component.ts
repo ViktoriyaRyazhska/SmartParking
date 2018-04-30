@@ -32,11 +32,9 @@ export class ParkingListFilterComponent implements OnInit {
 
     private readonly valueChangesSubject = new Subject<ParkingListFilter>();
 
-    public readonly valueChanges = this.valueChangesSubject.asObservable();
-
     private internalValue: ParkingListFilter;
 
-    private present: Boolean;
+    public present: Boolean;
 
     private distance: number;
 
@@ -57,6 +55,7 @@ export class ParkingListFilterComponent implements OnInit {
                     break;
                 } else {
                     this.present = false;
+
                 }
             }
 

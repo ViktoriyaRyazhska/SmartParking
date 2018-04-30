@@ -7,12 +7,12 @@
                    [destination]="dir.destination">
     </agm-direction>
     <agm-marker [latitude]="lat" [longitude]="lng" [draggable]="true"></agm-marker>
-    <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="'green'"></agm-circle>
+    <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="'#673ab7'"></agm-circle>
     <div *ngFor="let parking of parkings">
         <agm-marker [latitude]="parking.latitude" [longitude]="parking.longitude"
                     [iconUrl]="'/assets/images/icon_parking_info_40x38.png'"
                     (markerClick)="showInfoWindow(infoWindow)">
-            <agm-info-window #infoWindow [disableAutoPan]="true">
+            <agm-info-window #infoWindow [disableAutoPan]="true" [isOpen]="parking.infoWindowOpen">
                 <ul>
                     <li><b>Address:</b> {{parking.city}} / {{parking.street}} / {{parking.building}}</li>
                     <li><b>Distance:</b> {{parking.distance}} km</li>

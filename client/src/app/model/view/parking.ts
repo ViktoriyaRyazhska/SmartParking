@@ -17,6 +17,7 @@ export class Parking {
     distance: number;
     isFavorite: Boolean;
     favoriteName: string;
+    infoWindowOpen: boolean;
     hasCharger: boolean;
     hasInvalid: boolean;
     isCovered: boolean;

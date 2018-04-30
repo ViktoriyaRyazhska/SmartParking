@@ -190,7 +190,7 @@ export class IndexComponent implements OnInit {
 
     public isDisabled(): Boolean {
         if (this.filter.locationField.value === undefined || !this.filter.priceRangeField.minIsValid ||
-            !this.filter.priceRangeField.maxIsValid) {
+            !this.filter.priceRangeField.maxIsValid || !this.filter.present) {
             return true;
         } else {
             return false;
