@@ -59,32 +59,33 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.subscribeDataServiceValues();
-        this.filter.valueChanges.subscribe(filter => {
-            this.showLoadingProgressBar();
-            this.parkingMap.lat = filter.location.latitude;
-            this.parkingMap.lng = filter.location.longitude;
-            this.parkingMap.radius = filter.radius * 1000;
-            this.parkingMap.clearDirection();
-            this.parkingMap.infoWindowOpened = null;
-            this.parkingService.getParkingsNearby(filter.location.latitude, filter.location.longitude, this.parkingMap.radius).subscribe((response) => {
-                this.hideProgressBar();
-                this.parkings = response.body;
-                this.filterParkings();
-                this.pushValuesFromFilterToDataService(filter.priceRange.min, filter.priceRange.max, filter.hasCharger);
-            }, error => {
-                console.log(error);
-                this.showErrorProgressBar();
-            });
-            setTimeout(() => this.findBestParkingsByLocation(
-                this.parkingMap.lat,
-                this.parkingMap.lng,
-                this.parkingMap.radius,
-                numberOfDaysByDefault,
-                this.minPrice,
-                this.maxPrice,
-                this.hasCharger), 100);
+
+    }
+
+    public search() {
+        this.showLoadingProgressBar();
+        this.parkingMap.lat = this.filter.locationField.value.latitude;
+        this.parkingMap.lng = this.filter.locationField.value.longitude;
+        this.parkingMap.radius = this.filter.radiusField.value * 1000;
+        this.parkingMap.clearDirection();
+        this.parkingMap.infoWindowOpened = null;
+        this.parkingService.getParkingsNearby(this.parkingMap.lat, this.parkingMap.lng, this.parkingMap.radius).subscribe((response) => {
+            this.hideProgressBar();
+            this.parkings = response.body;
+            this.filterParkings();
+            this.dataService.pushParkingsToDataService(this.parkings);
+        }, error => {
+            console.log(error);
+            this.showErrorProgressBar();
         });
+        setTimeout(() => this.findBestParkingsByLocation(
+            this.parkingMap.lat,
+            this.parkingMap.lng,
+            this.parkingMap.radius,
+            numberOfDaysByDefault,
+            this.minPrice,
+            this.maxPrice,
+            this.hasCharger), 100);
     }
 
     private showLoadingProgressBar() {
@@ -181,6 +182,14 @@ export class IndexComponent implements OnInit {
         this.dataService.setMinPrice(minPrice);
         this.dataService.setMaxPrice(maxPrice);
         this.dataService.setHasCharger(hasCharger);
+    }
+
+    public isDisabled(): Boolean {
+        if (this.filter.locationField.value === undefined || !this.filter.priceRangeField.isValid) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

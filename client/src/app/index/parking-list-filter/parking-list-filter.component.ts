@@ -4,7 +4,7 @@ import {FormGroup} from '@angular/forms';
 import {RadiusFieldComponent} from './radius-field/radius-field.component';
 import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
 import {Subject} from 'rxjs/Subject';
-import {ChargerCheckboxComponent} from "./charger-checkbox/charger-checkbox.component";
+import {ChargerCheckboxComponent} from './charger-checkbox/charger-checkbox.component';
 
 const earthRadius = 6371;
 
@@ -17,13 +17,13 @@ const earthRadius = 6371;
 export class ParkingListFilterComponent implements OnInit {
 
     @ViewChild('locationField')
-    private locationField: LocationFieldComponent;
+    public locationField: LocationFieldComponent;
 
     @ViewChild('radiusField')
-    private radiusField: RadiusFieldComponent;
+    public radiusField: RadiusFieldComponent;
 
     @ViewChild('priceRangeField')
-    private priceRangeField: PriceRangeFieldComponent;
+    public priceRangeField: PriceRangeFieldComponent;
 
     @ViewChild('chargerField')
     private chargerField: ChargerCheckboxComponent;
@@ -49,6 +49,7 @@ export class ParkingListFilterComponent implements OnInit {
 
     ngOnInit() {
         this.locationField.valueChanges.subscribe(location => {
+
             for (let city of this.locationField.cityLatLng) {
                 this.distance = ParkingListFilterComponent.getDistanceBetweenPoint(city.latitude, city.longitude, location.latitude, location.longitude);
                 if (this.distance <= 20) {
@@ -115,10 +116,6 @@ export class ParkingListFilterComponent implements OnInit {
 
     private static toRadians(number): number {
         return number * Math.PI / 180;
-    }
-
-    public get radiusMax(): number {
-        return this.radiusField.max;
     }
 
 }

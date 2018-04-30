@@ -11,6 +11,7 @@
                                   [mode]="progressBarMode"
                                   class="progress-bar" mode="query" [value]="100"></mat-progress-bar>
                 <app-parking-list-filter #filter></app-parking-list-filter>
+                <button mat-raised-button (click)="search()" color="primary" [disabled]="isDisabled()" style="width: 100%;">Search!</button>
             </div>
         </mat-drawer-content>
     </mat-drawer-container>
