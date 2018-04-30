@@ -23,7 +23,7 @@
             <ng-container>
                 <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())"
                    [routerLink]="['/parkingdetail/'+item.id]" (mouseover)="highlightOnMap(item.id)"
-                   (mouseleave)="closeInfoWondow()">
+                   (mouseleave)="closeInfoWindow()">
 
                     <tr>
                         <th rowspan="2"><img class="photo-thumbnail"

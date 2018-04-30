@@ -42,7 +42,9 @@ export class SidenavComponent implements OnInit {
         this.sharedService.highLightOnMap(id);
     }
 
-    closeInfoWondow() {
-
+    closeInfoWindow() {
+        for (let parking of this.parkings) {
+            parking.infoWindowOpen = false;
+        }
     }
 }
