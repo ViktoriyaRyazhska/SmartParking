@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import * as HttpStatus from 'http-status-codes';
-import {Spot} from "../../model/view/spot";
-import {ManagerSpotService} from "../manager-spot.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MatDialog, MatSelect, MatSnackBar} from "@angular/material";
-import {DeleteConfirmationDialogComponent} from "../manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component";
-import {HttpResponse} from "@angular/common/http";
-import {SpotAddDialogComponent} from "./spot-add-dialog/spot-add-dialog.component";
+import {Spot} from '../../model/view/spot';
+import {ManagerSpotService} from '../manager-spot.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog, MatSelect, MatSnackBar} from '@angular/material';
+import {DeleteConfirmationDialogComponent} from '../manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import {HttpResponse} from '@angular/common/http';
+import {SpotAddDialogComponent} from './spot-add-dialog/spot-add-dialog.component';
 
 @Component({
     selector: 'app-manager-spot-list',
@@ -123,15 +123,15 @@ export class ManagerSpotListComponent implements OnInit {
     findSpots(search: string): void {
         var criterias;
         if (!this.category.value)
-            criterias = new SpotSerchCriterias(search, true, false, false, false);
+            criterias = new SpotSearchCriterias(search, true, false, false, false);
         if (this.category.value == 1)
-            criterias = new SpotSerchCriterias(search, true, false, false, false);
+            criterias = new SpotSearchCriterias(search, true, false, false, false);
         if (this.category.value == 2)
-            criterias = new SpotSerchCriterias(search, false, true, false, false);
+            criterias = new SpotSearchCriterias(search, false, true, false, false);
         if (this.category.value == 3)
-            criterias = new SpotSerchCriterias(search, false, false, true, false);
+            criterias = new SpotSearchCriterias(search, false, false, true, false);
         if (this.category.value == 4)
-            criterias = new SpotSerchCriterias(search, false, false, false, true);
+            criterias = new SpotSearchCriterias(search, false, false, false, true);
         const parkingId = parseInt(this.route.snapshot.paramMap.get('id'));
         this.managerSpotService.findSpots(parkingId, criterias)
             .subscribe(spots => {
@@ -142,7 +142,7 @@ export class ManagerSpotListComponent implements OnInit {
     }
 }
 
-export class SpotSerchCriterias {
+export class SpotSearchCriterias {
     public readonly search: string;
     public readonly all: boolean;
     public readonly hasCharger: boolean;
@@ -150,7 +150,7 @@ export class SpotSerchCriterias {
     public readonly isBlocked: boolean;
 
     constructor(search: string, all: boolean, hasCharger: boolean, isInvalid: boolean, isBlocked: boolean) {
-        this.search = "";
+        this.search = '';
         this.search = search;
         this.all = all;
         this.hasCharger = hasCharger;

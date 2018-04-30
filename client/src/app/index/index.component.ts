@@ -63,6 +63,7 @@ export class IndexComponent implements OnInit {
     }
 
     public search() {
+        this.subscribeDataServiceValues();
         this.showLoadingProgressBar();
         this.parkingMap.lat = this.filter.locationField.value.latitude;
         this.parkingMap.lng = this.filter.locationField.value.longitude;
@@ -73,7 +74,8 @@ export class IndexComponent implements OnInit {
             this.hideProgressBar();
             this.parkings = response.body;
             this.filterParkings();
-            this.dataService.pushParkingsToDataService(this.parkings);
+            this.pushValuesFromFilterToDataService(this.filter.priceRangeField.minControl.value,
+                this.filter.priceRangeField.maxControl.value, this.filter.chargerField.value);
         }, error => {
             console.log(error);
             this.showErrorProgressBar();
@@ -151,6 +153,7 @@ export class IndexComponent implements OnInit {
 
         this.dataService.pushParkingsToDataService(this.parkingMap.parkings);
         this.refreshComponentView();
+
     }
 
     private refreshComponentView(): void {

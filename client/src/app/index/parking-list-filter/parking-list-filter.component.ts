@@ -26,7 +26,7 @@ export class ParkingListFilterComponent implements OnInit {
     public priceRangeField: PriceRangeFieldComponent;
 
     @ViewChild('chargerField')
-    private chargerField: ChargerCheckboxComponent;
+    public chargerField: ChargerCheckboxComponent;
 
     private readonly formGroup = new FormGroup({});
 
