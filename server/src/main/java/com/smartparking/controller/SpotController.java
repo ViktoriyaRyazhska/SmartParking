@@ -21,6 +21,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -54,8 +55,14 @@ public class SpotController {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(freeSpots.contains(spot));
+            spotStatusResponse.setHasCharger(spot.getHasCharger());
+            spotStatusResponse.setSpotNumber(spot.getSpotNumber());
+            if (spot.getIsBlocked()) {
+                continue;
+            }
             spotStatusResponseList.add(spotStatusResponse);
         }
+        spotStatusResponseList.sort(Comparator.comparing(SpotStatusResponse::getSpotNumber));
         return spotStatusResponseList;
     }
 
@@ -67,8 +74,14 @@ public class SpotController {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(true);
+            spotStatusResponse.setHasCharger(spot.getHasCharger());
+            spotStatusResponse.setSpotNumber(spot.getSpotNumber());
+            if (spot.getIsBlocked()) {
+                continue;
+            }
             spotStatusResponseList.add(spotStatusResponse);
         }
+        spotStatusResponseList.sort(Comparator.comparing(SpotStatusResponse::getSpotNumber));
         return spotStatusResponseList;
     }
 

@@ -118,7 +118,7 @@
                                             </thead>
                                             <tbody>
                                             <tr *ngFor="let spot of spots" class="text-center">
-                                                <th scope="row">{{spot.id}}</th>
+                                                <th scope="row">{{spot.spotNumber}}</th>
 
                                                 <td scope="row" *ngIf="!!spot.isFree; else busy">
                                                     <button type="button" class="btn btn-sm btn-success" disabled>
@@ -154,7 +154,7 @@
                                             </thead>
                                             <tbody>
                                             <tr *ngFor="let spot of freeSpots" class="text-center">
-                                                <th scope="row">{{spot.id}}</th>
+                                                <th scope="row">{{spot.spotNumber}}</th>
 
                                                 <td scope="row">
                                                     <button type="button" class="btn btn-sm btn-success" disabled>
