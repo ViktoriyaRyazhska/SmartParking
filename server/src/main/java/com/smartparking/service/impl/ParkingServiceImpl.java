@@ -1,6 +1,8 @@
 package com.smartparking.service.impl;
 
+import com.smartparking.entity.Client;
 import com.smartparking.entity.Parking;
+import com.smartparking.entity.Role;
 import com.smartparking.entity.Spot;
 import com.smartparking.model.request.ParkingNearbyRequest;
 import com.smartparking.model.request.ParkingSearchCriterias;
@@ -176,8 +178,14 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
     }
 
     @Override
-    public List<ParkingResponse> findParkingsByCriterias(Long providerId, ParkingSearchCriterias criterias) {
-        List<ParkingResponse> filteredParkings = findAllByProviderIdResponse(providerId)
+    public List<ParkingResponse> findParkingsByCriterias(Client client, ParkingSearchCriterias criterias) {
+        List<ParkingResponse> filteredParkings;
+        if (client.getRole() == Role.PROVIDER_MANAGER) {
+            filteredParkings = findAllByProviderIdResponse(client.getProvider().getId());
+        } else {
+            filteredParkings = findAllResponse();
+        }
+        filteredParkings = filteredParkings
                 .stream().filter(parkingResponse -> {
                     if ((parkingResponse.getCity() + " " + parkingResponse.getStreet() + " " + parkingResponse.getBuilding()).
                             toLowerCase().contains(criterias.getSearch().toLowerCase())) {
@@ -194,5 +202,12 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
                     return false;
                 }).collect(Collectors.toList());
         return filteredParkings;
+    }
+
+    @Override
+    public List<ParkingResponse> findAllResponse() {
+        return getRepository().findAll().stream()
+                .map(this::parkingToParkingResponse)
+                .collect(Collectors.toList());
     }
 }

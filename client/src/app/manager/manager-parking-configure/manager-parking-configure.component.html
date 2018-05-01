@@ -191,14 +191,34 @@
                             </mat-action-row>
                         </mat-expansion-panel>
                     </div>
+
+                      <mat-expansion-panel *ngIf="getRole() === role.Admin" [expanded]="step === 5"
+                                           (opened)="setStep(5)" hideToggle="true">
+                          <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                  Provider
+                              </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <mat-select [(value)]="parking.providerId" placeholder="select provider"
+                                      formControlName="provider" required>
+                              <mat-option *ngFor="let provider of providers" [value]="provider.id">
+                                  {{ provider.name }}
+                              </mat-option>
+                          </mat-select>
+                          <mat-action-row>
+                              <button mat-button type="button" color="warn" (click)="resetProvider()">Reset</button>
+                              <div class="full-width"></div>
+                              <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
+                              <button mat-button type="button" color="primary" (click)="nextStep()">Next</button>
+                          </mat-action-row>
+                      </mat-expansion-panel>
                 </mat-accordion>
          
                 <!--<div class="row submit">-->
 
                       
                 <button class="submit-button" mat-raised-button type="submit" color="accent"
-                [disabled]="!parking.city || !parking.street || 
-                !parking.building || !parking.token || !parking.price"  >
+                        [disabled]="!parkingConfigureForm.valid">
 
                     Submit
                     <mat-icon aria-label="Send and save changes">send</mat-icon>

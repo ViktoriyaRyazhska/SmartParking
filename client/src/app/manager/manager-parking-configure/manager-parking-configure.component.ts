@@ -1,5 +1,5 @@
-import {ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 import {v4 as uuid} from 'uuid';
 import {MatSnackBar} from '@angular/material';
@@ -7,6 +7,10 @@ import {MatSnackBar} from '@angular/material';
 import {Parking} from '../../model/view/parking';
 import {ManagerParkingService} from '../manager-parking.service';
 import {HttpResponse} from '@angular/common/http';
+import {Provider} from "../../model/view/provider";
+import {ClientService} from "../../clients/client.service";
+import {Role} from "../../auth/roles";
+import {TokenStorage} from "../../auth/token/token-storage";
 
 @Component({
     selector: 'app-manager-parking-configure',
@@ -14,11 +18,12 @@ import {HttpResponse} from '@angular/common/http';
     styleUrls: ['./manager-parking-configure.component.css']
 })
 export class ManagerParkingConfigureComponent implements OnInit {
-
+    role: any = Role;
     configureType: ConfigureType;
     step = -1;
     loadedParking: Parking;
     parking: Parking;
+    providers: Provider[] = [];
   
 
     parkingConfigureForm = new FormGroup({
@@ -27,8 +32,6 @@ export class ManagerParkingConfigureComponent implements OnInit {
         ]),
         street: new FormControl('', [Validators.required,]),
         building: new FormControl('', [Validators.required,]),
-        latitude: new FormControl('', [Validators.required,]),
-        longitude: new FormControl('', [Validators.required,]),
         price: new FormControl('', [Validators.required,]),
         token: new FormControl('', [Validators.required,]),
         providerName: new FormControl('', []),
@@ -40,13 +43,19 @@ export class ManagerParkingConfigureComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 public snackBar: MatSnackBar,
-                private formBuilder: FormBuilder,
-                private managerParkingService: ManagerParkingService) {
+                private router: Router,
+                private clientService: ClientService,
+                private managerParkingService: ManagerParkingService,
+                private tokenStorage: TokenStorage) {
                     
     }
 
     ngOnInit() {
-            if (this.route.snapshot.paramMap.get('configureType') === 'edit') {
+        if (this.getRole() === Role.Admin) {
+            this.getProviders();
+            this.parkingConfigureForm.addControl('provider', new FormControl('', [Validators.required,]));
+        }
+        if (this.route.snapshot.paramMap.get('configureType') === 'edit') {
             this.configureType = new ConfigureType('edit', ManagerParkingConfigureType.EDIT);
             this.loadParking();
         } else {
@@ -54,7 +63,7 @@ export class ManagerParkingConfigureComponent implements OnInit {
             this.loadedParking = new Parking();
             this.parking = new Parking();
             this.parking.isCovered = false;
-            this.parking.hasCharger = true;
+            this.parking.hasCharger = false;
         }
     }
 
@@ -86,6 +95,16 @@ export class ManagerParkingConfigureComponent implements OnInit {
                     duration: 2000
                 });
             });
+        this.router.navigate(['manager-configuration/parkings']);
+    }
+
+    getProviders(): void {
+        this.clientService.getProviders()
+            .subscribe(providers => this.providers = providers);
+    }
+
+    getRole(): Role {
+        return this.tokenStorage.getRole();
     }
 
     setStep(index: number): void {
@@ -131,6 +150,10 @@ export class ManagerParkingConfigureComponent implements OnInit {
     resetType() {
         this.parking.isCovered = this.loadedParking.isCovered;
         this.parking.hasCharger = this.loadedParking.hasCharger;
+    }
+
+    resetProvider() {
+        this.parking.providerId = this.loadedParking.providerId;
     }
 
   

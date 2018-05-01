@@ -1,5 +1,6 @@
 package com.smartparking.service;
 
+import com.smartparking.entity.Client;
 import com.smartparking.entity.Parking;
 import com.smartparking.model.request.ParkingNearbyRequest;
 import com.smartparking.model.request.ParkingSearchCriterias;
@@ -34,6 +35,8 @@ public interface ParkingService extends Service<Parking, Long, ParkingRepository
 
     List<String> findAllParkingCities();
 
-    List<ParkingResponse> findParkingsByCriterias(Long providerId, ParkingSearchCriterias criterias);
+    List<ParkingResponse> findParkingsByCriterias(Client client, ParkingSearchCriterias criterias);
+
+    List<ParkingResponse> findAllResponse();
 
 }

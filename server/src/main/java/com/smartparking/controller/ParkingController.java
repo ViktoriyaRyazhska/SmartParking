@@ -93,13 +93,17 @@ public class ParkingController {
     @GetMapping("manager-configuration/parkings")
     public ResponseEntity<List<ParkingResponse>> parkings() {
         Client client = getCurrentUser();
-        return new ResponseEntity<>(parkingService.findAllByProviderIdResponse(client.getProvider().getId()), HttpStatus.OK);
+        if (client.getRole() == Role.PROVIDER_MANAGER) {
+            return new ResponseEntity<>(parkingService.findAllByProviderIdResponse(client.getProvider().getId()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(parkingService.findAllResponse(), HttpStatus.OK);
+        }
     }
 
     @PostMapping("/manager-configuration/parkings/criterias")
     public ResponseEntity<List<ParkingResponse>> findParkings(@RequestBody ParkingSearchCriterias parkingSearchCriterias) {
         Client client = getCurrentUser();
-        return new ResponseEntity<>(parkingService.findParkingsByCriterias(client.getProvider().getId(), parkingSearchCriterias), HttpStatus.OK);
+        return new ResponseEntity<>(parkingService.findParkingsByCriterias(client, parkingSearchCriterias), HttpStatus.OK);
     }
 
     @PostMapping("/manager-configuration/parking/save")
@@ -110,7 +114,7 @@ public class ParkingController {
         }
         Parking parking = parkingRequest.toParking();
         parking.setProvider(providerService.getOne(parkingRequest.getProviderId()));
-        if (parking.getProvider().getEmployees().contains(client) || client.getRole() == Role.SUPERUSER) {
+        if (client.getRole() == Role.SUPERUSER || parking.getProvider().getEmployees().contains(client)) {
             long parkingId = 0;
             if (parking.getId() != null) {
                 parkingId = parking.getId();
@@ -127,7 +131,7 @@ public class ParkingController {
     public ResponseEntity<?> delete(@RequestBody ParkingRequest parkingRequest) {
         Client client = getCurrentUser();
         Parking parking = parkingRequest.toParking();
-        if (client.getProvider().getParkings().contains(parking) || client.getRole() == Role.SUPERUSER) {
+        if (client.getRole() == Role.SUPERUSER || client.getProvider().getParkings().contains(parking)) {
             parkingService.delete(parking);
             parkingEventPublisher.publishDelete(parking);
             return new ResponseEntity<>(HttpStatus.OK);
