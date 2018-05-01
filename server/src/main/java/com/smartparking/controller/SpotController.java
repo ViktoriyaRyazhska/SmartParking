@@ -51,7 +51,7 @@ public class SpotController {
         List<Spot> allSpots = spotService.findAllSpotsByParkingId(id);
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
-        for (Spot spot : allSpots) {
+        allSpots.stream().forEach(spot -> {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(freeSpots.contains(spot));
@@ -59,10 +59,10 @@ public class SpotController {
             spotStatusResponse.setIsInvalid(spot.getIsInvalid());
             spotStatusResponse.setSpotNumber(spot.getSpotNumber());
             if (spot.getIsBlocked()) {
-                continue;
+                return;
             }
             spotStatusResponseList.add(spotStatusResponse);
-        }
+        });
         spotStatusResponseList.sort(Comparator.comparing(SpotStatusResponse::getSpotNumber));
         return spotStatusResponseList;
     }
@@ -71,7 +71,7 @@ public class SpotController {
     List<SpotStatusResponse> findAvailableSpotsDto(@PathVariable Long id) {
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
-        for (Spot spot : freeSpots) {
+        freeSpots.stream().forEach(spot -> {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(true);
@@ -79,10 +79,10 @@ public class SpotController {
             spotStatusResponse.setIsInvalid(spot.getIsInvalid());
             spotStatusResponse.setSpotNumber(spot.getSpotNumber());
             if (spot.getIsBlocked()) {
-                continue;
+                return;
             }
             spotStatusResponseList.add(spotStatusResponse);
-        }
+        });
         spotStatusResponseList.sort(Comparator.comparing(SpotStatusResponse::getSpotNumber));
         return spotStatusResponseList;
     }
@@ -113,9 +113,9 @@ public class SpotController {
     @PreAuthorize("hasAuthority('SUPERUSER') or @spotController.getCurrentUser().getProvider().getParkings().contains(#spotRequest.toSpot().parking)")
     public ResponseEntity<?> delete(@P("spotRequest") @RequestBody SpotRequest spotRequest) {
         Spot spot = spotRequest.toSpot();
-            spotService.delete(spot);
-            spotEventPublisher.publishDelete(spot);
-            return new ResponseEntity<>(HttpStatus.OK);
+        spotService.delete(spot);
+        spotEventPublisher.publishDelete(spot);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/manager-configuration/spotsforparking/{parkingId}")
