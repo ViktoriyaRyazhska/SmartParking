@@ -81,6 +81,7 @@
 
     <div class="col-xs-12 col-12 col-md-4 form-group">
         <button mat-raised-button color="primary" (click)="clear()"
+        [disabled]="statistic === undefined || statistic.length === 0 || error === true"
          >Clear graphic</button>
     </div>
 
