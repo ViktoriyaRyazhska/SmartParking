@@ -59,11 +59,10 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.subscribeDataServiceValues();
     }
 
     public search() {
-        this.subscribeDataServiceValues();
         this.showLoadingProgressBar();
         this.parkingMap.lat = this.filter.locationField.value.latitude;
         this.parkingMap.lng = this.filter.locationField.value.longitude;

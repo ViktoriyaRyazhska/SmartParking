@@ -1,10 +1,10 @@
 <div class="container">
-    <h3 class="text-center">Clients list</h3>
+    <h3 class="text-center">Clients</h3>
     <div class="row">
         <div class="col-lg-6">
             <div class="input-group">
                 <input type="text" #searchBox class="form-control" placeholder="search"
-                       (keyup)="findClientsFromBackEnd(searchBox.value)">
+                       maxlength="24" (keyup)="findClientsFromBackEnd(searchBox.value)">
             </div>
             <mat-form-field>
                 <mat-select placeholder="Find by roles" disableRipple>

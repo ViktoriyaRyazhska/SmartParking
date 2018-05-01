@@ -3,13 +3,6 @@
         <mat-card-header>
             <div style="min-width: 70%;">
                 <div>
-                    <img *ngIf="client.image; else noPhoto" src="data:image/JPEG;base64,{{client.image}}"
-                         class="photo-thumbnail">
-
-                    <ng-template #noPhoto>
-                        <img class="photo-thumbnail"
-                             src='assets/images/no-photo-icon.png'>
-                    </ng-template>
                     <mat-card-title>{{client.firstName}} {{client.lastName}}
                     </mat-card-title>
                     <mat-card-subtitle
