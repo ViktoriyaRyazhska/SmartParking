@@ -49,7 +49,7 @@ export class AddProviderComponent implements OnInit {
                 duration: 2000
             });
         }, error => {
-            this.snackBar.open('Provider  with the such name is already exists in database .' 
+            this.snackBar.open('Provider  with the such name is already exists in database .'  
             , null, {
                 duration: 2000
             });
@@ -60,27 +60,4 @@ export class AddProviderComponent implements OnInit {
     }
 
 
-    /*
-    saveParking(): void {
-        this.parking.hasInvalid = true;
-            this.managerParkingService.saveParking(this.parking)
-                .subscribe((response: HttpResponse<any>) => {
-                if (this.configureType.type === ManagerParkingConfigureType.ADD) {
-                    this.snackBar.open('Parking created sucsessfully.', null, {
-                        duration: 2000
-                    });
-                } else {
-                    this.snackBar.open('Parking updated sucsessfully.', null, {
-                        duration: 2000
-                    });// this.snackBar.open(error.error, null,
-                }
-            }, error => {
-                this.snackBar.open('Cannot save parking.' , null, {
-                    duration: 2000
-                });
-            });
-    }
-
-    */
-
-
+    
