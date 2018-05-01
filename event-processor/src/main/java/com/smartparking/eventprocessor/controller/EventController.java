@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Map;
 
 @Slf4j
 @RestController
 public class EventController {
-
-    private Map<Long, String> parkingTokens;
 
     @Autowired
     private ServerService serverService;
@@ -39,15 +36,12 @@ public class EventController {
         if (request != null) {
             request.setTimestamp(LocalDateTime.now().toInstant(ZoneOffset.UTC));
             if (entityViewService.isInitialized() && serverService.isServerAvailable()) {
-//                Spot spot = entityViewService.getSpot(request.getSpotId());
                 Spot spot = entityViewService.getSpotByNumberAndParkingToken(request.getSpotNumber(), request.getParkingToken());
                 if (spot == null) {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Spot with id=" + request.getSpotId() + " does not exists.");
-//                throw new BadRequestException("Spot with id=" + request.getSpotId() + " does not exists.");
                 }
                 if (!spot.getParking().getToken().equals(request.getParkingToken())) {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parking token does not valid.");
-//              throw new BadRequestException("Parking token does not valid.");
                 }
                 request.setSpotId(spot.getId());
                 eventBatchService.push(new VerifiedEvent(request));
