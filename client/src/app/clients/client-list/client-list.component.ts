@@ -3,6 +3,7 @@ import {ClientService} from "../client.service";
 import {Client} from "../../model/view/client";
 import {ActivatedRoute} from "@angular/router";
 import {PagerService} from "../../_services/pager.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
     selector: 'app-client-list',
@@ -23,6 +24,7 @@ export class ClientListComponent implements OnInit {
 
     constructor(private clientService: ClientService,
                 private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
                 private pagerService: PagerService) {
     }
 
@@ -52,6 +54,7 @@ export class ClientListComponent implements OnInit {
         this.clientService.getAllClients()
             .subscribe(clients => {
                 this.clients = clients;
+                this.messageSearchResults(this.clients.length, 'client');
                 this.setPage(1);
             });
     }
@@ -71,6 +74,7 @@ export class ClientListComponent implements OnInit {
             this.clientService.getClientsByAnyMatch(searchInput)
                 .subscribe(clients => {
                     this.clients = clients;
+                    this.messageSearchResults(this.clients.length, 'clients');
                     this.setPage(1);
                 });
         }
@@ -84,6 +88,7 @@ export class ClientListComponent implements OnInit {
         this.clientService.getClientsByRole("0")
             .subscribe(clients => {
                 this.clients = clients;
+                this.messageSearchResults(this.clients.length, 'drivers');
                 this.setPage(1);
             });
     }
@@ -92,6 +97,7 @@ export class ClientListComponent implements OnInit {
         this.clientService.getClientsByRole("1")
             .subscribe(clients => {
                 this.clients = clients;
+                this.messageSearchResults(this.clients.length, 'provider managers');
                 this.setPage(1);
             });
     }
@@ -100,8 +106,21 @@ export class ClientListComponent implements OnInit {
         this.clientService.getClientsByRole("2")
             .subscribe(clients => {
                 this.clients = clients;
+                this.messageSearchResults(this.clients.length, 'superusers');
                 this.setPage(1);
             });
+    }
+
+    messageSearchResults(numberOfClients: number, role: string) {
+        if (numberOfClients < 1) {
+            this.snackBar.open('No ' + role + ' were found', null, {
+                duration: 3000
+            });
+        } else {
+            this.snackBar.open('Was found ' + numberOfClients + ' ' + role, null, {
+                duration: 3000
+            });
+        }
     }
 
 
