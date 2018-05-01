@@ -19,6 +19,8 @@ public class ParkingDetailResponse {
     private Long availableSpotsCount;
     private Boolean isFavorite;
     private String favoriteName;
+    private Boolean hasCharger;
+    private Boolean isCovered;
 
     /**
      * This method don`t set numberSpots and numberAvailableSpots values please set its after using this method
@@ -39,6 +41,10 @@ public class ParkingDetailResponse {
         parkingDetailResponse.setLatitude(parking.getLatitude());
 
         parkingDetailResponse.setProviderName(parking.getProvider().getName());
+
+        parkingDetailResponse.setIsCovered(parking.getIsCovered());
+
+        parkingDetailResponse.setHasCharger(parking.getHasCharger());
 
         parkingDetailResponse.setProviderAddress(
                 parking.getProvider().getCity() +

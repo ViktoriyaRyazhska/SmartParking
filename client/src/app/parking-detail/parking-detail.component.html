@@ -30,26 +30,53 @@
             <mat-card-content>
                 <mat-list>
                     <mat-list-item>
-                        <mat-icon color="warn" style="margin-right: 15px"
-                                  (click)="showOnMap(parking.latitude, parking.longitude)">place
+                        <mat-icon color="warn" style="margin-right: 15px" (click)="showOnMap(parking.latitude, parking.longitude)">place
                         </mat-icon>
                         <span> {{parking.latitude}}, {{parking.longitude}}</span>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item *ngIf="hasToken()">
                         <div class="col-4" *ngIf="!parking.isFavorite">
-                            <span style="font-size:18px;"><b><i>Add to favorites</i></b></span>
+                            <span style="font-size:18px;">
+                                <b>
+                                    <i>Add to favorites</i>
+                                </b>
+                            </span>
                             <button mat-icon-button color="warn" (click)="onParkingAddToFavoritesClick()">
                                 <mat-icon>star_rate</mat-icon>
                             </button>
                         </div>
                         <div class="col-10" *ngIf="parking.isFavorite">
-                            <span style="font-size:18px;"><b>Parking is in your favorites as:</b> <b><i>{{parking.favoriteName}}</i></b></span>
+                            <span style="font-size:18px;">
+                                <b>Parking is in your favorites as:</b>
+                                <b>
+                                    <i>{{parking.favoriteName}}</i>
+                                </b>
+                            </span>
                             <button mat-icon-button color="warn" (click)="onParkingDeleteClick()">
                                 <mat-icon>delete_forever</mat-icon>
                             </button>
                         </div>
-
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item class="mt-3 mb-3">
+                            <div class="col-4">
+                                <h5>
+                                    <b>
+                                        <i>Available services:</i>
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="justify-content-center align-items-center">
+                            <div *ngIf="parking.hasCharger">
+                                    <mat-icon color="primary">ev_station</mat-icon>
+                                    <label> Has chager</label>
+                                </div>
+                                <div *ngIf="parking.isCovered">
+                                        <img src="http://www.shejiye.com/uploadfile/icon/2017/0203/shejiyeiconnjpq4vjel31.png" alt="Is covered" width="20px" height="20px">
+                                        <label> Is covered </label>
+                                    </div>
+                                </div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>
@@ -86,8 +113,7 @@
                     <mat-divider></mat-divider>
                 </mat-list>
             </mat-card-content>
-            <button mat-raised-button color="primary" (click)="sendToSpotStatistic()">Show spots statistic of this
-                parking
+            <button mat-raised-button color="primary" (click)="sendToSpotStatistic()">Show spots statistic of this parking
 
             </button>
             <mat-card-actions align="center">
@@ -111,29 +137,41 @@
                                     <ng-template ngbTabContent>
                                         <table class="table table-hover">
                                             <thead>
-                                            <tr class="text-center">
-                                                <th scope="col">Spot number #</th>
-                                                <th scope="col">Availability</th>
-                                            </tr>
+                                                <tr class="text-center">
+                                                    <th scope="col">Spot number #</th>
+                                                    <th scope="col">Availability</th>
+                                                    <th scope="col">Available services</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <tr *ngFor="let spot of spots" class="text-center">
-                                                <th scope="row">{{spot.spotNumber}}</th>
+                                                <tr *ngFor="let spot of spots" class="text-center">
+                                                    <th scope="row">{{spot.spotNumber}}</th>
 
-                                                <td scope="row" *ngIf="!!spot.isFree; else busy">
-                                                    <button type="button" class="btn btn-sm btn-success" disabled>
-                                                        Available
-                                                    </button>
-                                                </td>
-
-                                                <ng-template #busy>
-                                                    <td scope="row">
-                                                        <button type="button" class="btn btn-sm btn-secondary" disabled>
-                                                            Not Available
+                                                    <td scope="row" *ngIf="!!spot.isFree; else busy">
+                                                        <button type="button" class="btn btn-sm btn-success" disabled>
+                                                            Available
                                                         </button>
                                                     </td>
-                                                </ng-template>
-                                            </tr>
+
+                                                    <td scope="row" >
+                                                            <div *ngIf="spot.hasCharger">
+                                                                    <mat-icon color="primary">ev_station</mat-icon>
+                                                                    <label> Has chager</label>
+                                                                </div>
+                                                                <div *ngIf="spot.isInvalid">
+                                                                    <mat-icon color="primary">accessible</mat-icon>
+                                                                    <label> Is invalid</label>
+                                                                </div>
+                                                        </td>
+
+                                                    <ng-template #busy>
+                                                        <td scope="row">
+                                                            <button type="button" class="btn btn-sm btn-secondary" disabled>
+                                                                Not Available
+                                                            </button>
+                                                        </td>
+                                                    </ng-template>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </ng-template>
@@ -147,22 +185,33 @@
                                     <ng-template ngbTabContent>
                                         <table class="table table-hover">
                                             <thead>
-                                            <tr class="text-center">
-                                                <th scope="col">Spot number #</th>
-                                                <th scope="col">Availability</th>
-                                            </tr>
+                                                <tr class="text-center">
+                                                    <th scope="col">Spot number #</th>
+                                                    <th scope="col">Availability</th>
+                                                    <th scope="col">Available services</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <tr *ngFor="let spot of freeSpots" class="text-center">
-                                                <th scope="row">{{spot.spotNumber}}</th>
+                                                <tr *ngFor="let spot of freeSpots" class="text-center">
+                                                    <th scope="row">{{spot.spotNumber}}</th>
 
-                                                <td scope="row">
-                                                    <button type="button" class="btn btn-sm btn-success" disabled>
-                                                        Available
-                                                    </button>
-                                                </td>
+                                                    <td scope="row">
+                                                        <button type="button" class="btn btn-sm btn-success" disabled>
+                                                            Available
+                                                        </button>
+                                                    </td>
+                                                     <td scope="row">
+                                                            <div *ngIf="spot.hasCharger">
+                                                                    <mat-icon color="primary">ev_station</mat-icon>
+                                                                    <label> Has chager</label>
+                                                                </div>
+                                                                <div *ngIf="spot.isInvalid">
+                                                                    <mat-icon color="primary">accessible</mat-icon>
+                                                                    <label> Is invalid</label>
+                                                                </div>
+                                                        </td>
 
-                                            </tr>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </ng-template>

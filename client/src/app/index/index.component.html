@@ -1,5 +1,8 @@
 <div class="parent">
-    <i class="material-icons" (click)="drawer.toggle()">&#xE896;</i>
+        <button class="sidenav-icon" mat-icon-button (click)="drawer.toggle()">
+                <i class="material-icons" style="position: relative;">&#xE896;</i>
+        </button>
+   
     <mat-drawer-container>
         <mat-drawer #drawer mode="side" [opened]="screenWidth > 800">
             <app-sidenav></app-sidenav>

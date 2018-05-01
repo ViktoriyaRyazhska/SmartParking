@@ -56,6 +56,7 @@ public class SpotController {
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(freeSpots.contains(spot));
             spotStatusResponse.setHasCharger(spot.getHasCharger());
+            spotStatusResponse.setIsInvalid(spot.getIsInvalid());
             spotStatusResponse.setSpotNumber(spot.getSpotNumber());
             if (spot.getIsBlocked()) {
                 continue;
@@ -75,6 +76,7 @@ public class SpotController {
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(true);
             spotStatusResponse.setHasCharger(spot.getHasCharger());
+            spotStatusResponse.setIsInvalid(spot.getIsInvalid());
             spotStatusResponse.setSpotNumber(spot.getSpotNumber());
             if (spot.getIsBlocked()) {
                 continue;
