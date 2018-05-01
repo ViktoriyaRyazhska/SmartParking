@@ -11,7 +11,7 @@
             latitude double NOT NULL,
             longitude double NOT NULL,
             price decimal(19,2) NOT NULL,
-            token varchar(255) NOT NULL,
+            token varchar(255) NOT NULL UNIQUE,
             city varchar(255) NOT NULL,
             street varchar(255) NOT NULL,
             building varchar(255) NOT NULL,

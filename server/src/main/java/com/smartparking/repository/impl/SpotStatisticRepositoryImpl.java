@@ -24,7 +24,7 @@ public class SpotStatisticRepositoryImpl implements SpotStatisticRepository {
      @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpotController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpotStatisticRepositoryImpl.class);
 
     @Override
     public List<SpotStatisticResponse> getSpotStatistic(long id, long startDate, long endDate) {
