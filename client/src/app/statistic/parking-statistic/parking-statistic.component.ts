@@ -17,11 +17,15 @@ export class ParkingStatisticComponent implements OnInit {
     selectedCity: string = 'Lviv';
     selectedStreet: string = '';
     selectedNumberOfDays: number = 14;
+    confirmedNumberOfDays: number;
+    confirmedCity: string = '';
+    confirmedStreet: string = '';
+    isLookAroundTheCity = false;
     days = [7, 14, 30, 365];
 
     pager: any = {};
     pagedParkingItems: Parking[] = [];
-    allParkings: number;
+    numberOfAllParkings: number;
 
     constructor(private statisticService: StatisticsService,
                 private snackBar: MatSnackBar,
@@ -31,6 +35,7 @@ export class ParkingStatisticComponent implements OnInit {
     ngOnInit() {
         this.findAllParkingsCities();
         this.findParkingsStreets("");
+        this.findBestParkings();
     }
 
     setPage(page: number) {
@@ -48,21 +53,17 @@ export class ParkingStatisticComponent implements OnInit {
         else {
             this.pagedParkingItems = this.parkings;
         }
-        this.allParkings = this.parkings.length;
+        this.numberOfAllParkings = this.parkings.length;
     }
 
     findBestParkings() {
+        this.confirmData();
         if (this.selectedStreet != '') {
-
+            this.isLookAroundTheCity = false;
             this.statisticService.getBestParkingsByCityStreetDate(this.selectedCity, this.selectedStreet, this.selectedNumberOfDays)
                 .subscribe(parkings => {
                     this.parkings = parkings;
                     this.setPage(1);
-                    this.snackBar.open('None of the parkings in ' + this.selectedCity + ' ' +
-                        this.selectedStreet + ' had no any orders for the last ' + this.selectedNumberOfDays + ' days', null, {
-                            duration: 4000
-                        }
-                    );
                 })
         } else {
             this.findBestParkingsInTheCity();
@@ -70,17 +71,12 @@ export class ParkingStatisticComponent implements OnInit {
     }
 
     findBestParkingsInTheCity() {
+        this.isLookAroundTheCity = true;
+        this.confirmData();
         this.statisticService.getBestParkingsInTheCityByDate(this.selectedCity, this.selectedNumberOfDays)
             .subscribe(parkings => {
                     this.parkings = parkings;
                     this.setPage(1);
-                    if (this.parkings.length < 1) {
-                        this.snackBar.open('None of the parkings in ' + this.selectedCity + ' ' +
-                            this.selectedStreet + ' had no any orders for the last ' + this.selectedNumberOfDays + ' days', null, {
-                                duration: 4000
-                            }
-                        );
-                    }
                 }
             );
     }
@@ -104,13 +100,19 @@ export class ParkingStatisticComponent implements OnInit {
             });
     }
 
-    clearCurrentStreet() {
+    clearCurrentStreetAndFindAllStreets() {
         this.selectedStreet = '';
         this.findParkingsStreets("");
     }
 
-    selectStreet(street: string) {
+    selectTheStreet(street: string) {
         this.selectedStreet = street;
+    }
+
+    confirmData() {
+        this.confirmedNumberOfDays = this.selectedNumberOfDays;
+        this.confirmedCity = this.selectedCity;
+        this.confirmedStreet = this.selectedStreet;
     }
 
 }
