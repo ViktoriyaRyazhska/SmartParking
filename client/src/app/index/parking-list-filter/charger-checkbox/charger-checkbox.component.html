@@ -1,11 +1,9 @@
-<div class="parent">
-    <form>
-        <br>
-        <mat-checkbox
-                #hascharger
-                (change)="onChange()"
-                color="primary">
-            <mat-icon color="primary">ev_station</mat-icon>
-        </mat-checkbox>
-    </form>
+<div class="parent" style="padding-left: 5px; padding-right: 5px;">
+    <mat-checkbox
+            #hascharger
+            (change)="onChange()"
+            color="primary">
+        <mat-icon color="primary">ev_station</mat-icon>
+        <label> Has charger</label>
+    </mat-checkbox>
 </div>

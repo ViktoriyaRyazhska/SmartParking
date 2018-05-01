@@ -108,7 +108,7 @@ public class SpotController {
     }
 
     @PostMapping("/manager-configuration/spot/delete")
-    @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(#spotRequest.toSpot().parking) or hasAuthority('SUPERUSER')")
+    @PreAuthorize("hasAuthority('SUPERUSER') or @spotController.getCurrentUser().getProvider().getParkings().contains(#spotRequest.toSpot().parking)")
     public ResponseEntity<?> delete(@P("spotRequest") @RequestBody SpotRequest spotRequest) {
         Spot spot = spotRequest.toSpot();
             spotService.delete(spot);
@@ -117,13 +117,13 @@ public class SpotController {
     }
 
     @GetMapping("/manager-configuration/spotsforparking/{parkingId}")
-    @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get()) or hasAuthority('SUPERUSER')")
+    @PreAuthorize("hasAuthority('SUPERUSER') or @spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get())")
     public ResponseEntity<List<SpotStatusResponse>> spots(@P("parkingId") @PathVariable Long parkingId) {
         return new ResponseEntity<>(spotService.findAllSpotsByParkingIdResponse(parkingId), HttpStatus.OK);
     }
 
     @PostMapping("/manager-configuration/spotsforparking/{parkingId}/criterias")
-    @PreAuthorize("@spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get()) or hasAuthority('SUPERUSER')")
+    @PreAuthorize("hasAuthority('SUPERUSER') or @spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get())")
     public ResponseEntity<List<SpotStatusResponse>> findSpots(@PathVariable Long parkingId, @RequestBody SpotSearchCriterias spotSearchCriterias) {
         return new ResponseEntity<>(spotService.findSpotsByCriterias(parkingId, spotSearchCriterias), HttpStatus.OK);
     }
