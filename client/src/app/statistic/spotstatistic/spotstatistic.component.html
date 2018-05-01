@@ -20,13 +20,13 @@
                     <tr *ngFor="let spotstatistic of statistic" class="text-center">
                             <th scope="row">{{spotstatistic.id}}</th> 
                             <th scope="row"><ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfHours < 10000 && spotstatistic.numberOfHours > 0">{{spotstatistic.numberOfHours}}</ion-option>
-                            <ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfHours > 10000 || spotstatistic.numberOfHours < 0">The device is currently not working correctly in this 
+                            <ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfHours > 10000 || spotstatistic.numberOfHours < 0"> {{setError()}}The device is currently not working correctly in this 
                                 parking lot. Please wait until it is repaired. We apologize. Please
-                                call technical support {{setError()}}</ion-option></th>
+                                call technical support</ion-option></th>
                                 <th scope="row"><ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfEvents > 0">{{spotstatistic.numberOfHours}}</ion-option>
-                                    <ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfEvents === 0">The device is currently not working correctly in this 
+                                    <ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfEvents === 0"> {{setError()}} The device is currently not working correctly in this 
                                 parking lot. Please wait until it is repaired. We apologize. Please
-                                call technical support {{setError()}}</ion-option></th>
+                                call technical support </ion-option></th>
                        </tr>  
                                    
                                           
@@ -68,7 +68,7 @@
     <div class="col-xs-12 col-12 col-md-4 form-group">
         <button mat-raised-button color="primary" 
               (click)="showHoursGraphic()"
-        [disabled]="statistic === undefined || statistic.length === 0 || error === true"
+        [disabled]=" error === true || statistic === undefined || statistic.length === 0 "
                >Display statistic hour graphic</button>
     </div>
 
@@ -81,7 +81,7 @@
 
     <div class="col-xs-12 col-12 col-md-4 form-group">
         <button mat-raised-button color="primary" (click)="clear()"
-        [disabled]="statistic === undefined || statistic.length === 0 || error === true"
+        [disabled]="statistic === undefined || statistic.length === 0 "
          >Clear graphic</button>
     </div>
 
