@@ -12,15 +12,15 @@ import {PagerService} from "../../_services/pager.service";
 export class ParkingStatisticComponent implements OnInit {
 
     parkings: Parking[] = [];
-    parkingsStreets: string[];
-    parkingsCities: string[];
+    parkingsStreets: string[] = [];
+    parkingsCities: string[] = [];
     selectedCity: string = 'Lviv';
     selectedStreet: string = '';
-    selectedNumberOfDays: number = 7;
+    selectedNumberOfDays: number = 14;
     days = [7, 14, 30, 365];
 
     pager: any = {};
-    pagedParkingItems: Parking[];
+    pagedParkingItems: Parking[] = [];
     allParkings: number;
     werePopularParkingsFound: boolean;
 
@@ -80,12 +80,12 @@ export class ParkingStatisticComponent implements OnInit {
         this.statisticService.getParkingsStreetsByAnyMatching(this.selectedCity, input)
             .subscribe(parkingsStreets => {
                 this.parkingsStreets = parkingsStreets;
+                if (input.length > 2 && this.parkingsStreets.length < 1) {
+                    this.snackBar.open('There is no parkings with such street', null, {
+                        duration: 4000
+                    });
+                }
             });
-        if (this.parkingsStreets.length < 1) {
-            this.snackBar.open('There is no parkings with such street', null, {
-                duration: 4000
-            });
-        }
     }
 
     findAllParkingsCities() {
@@ -104,14 +104,5 @@ export class ParkingStatisticComponent implements OnInit {
     selectStreet(street: string) {
         this.selectedStreet = street;
     }
-
-    findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
-        this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
-            .subscribe(parkings => {
-                this.parkings = parkings;
-                this.setPage(1);
-            });
-    }
-
 
 }

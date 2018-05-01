@@ -1,5 +1,13 @@
 <div class="container">
 
+    <div class="container-fluid" *ngIf="!parkings" class="text-center">
+        <div class="row mx-auto mt-3 center-block">
+            <div class="col-6 mx-auto my-auto text-center">
+                <mat-spinner mode="indeterminate" style="margin-left: 35%;"></mat-spinner>
+            </div>
+        </div>
+    </div>
+
     <h3 class="text-center" *ngIf="werePopularParkingsFound; else noPopularParkings">The most popular parkings in
         <span>{{selectedCity}}</span><span
                 *ngIf="selectedStreet !=''"> on the street {{selectedStreet}}</span> for the last
