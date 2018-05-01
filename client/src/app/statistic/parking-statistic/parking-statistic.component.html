@@ -8,21 +8,6 @@
         </div>
     </div>
 
-    <h3 class="text-center" *ngIf="werePopularParkingsFound; else noPopularParkings">The most popular parkings in
-        <span>{{selectedCity}}</span><span
-                *ngIf="selectedStreet !=''"> on the street {{selectedStreet}}</span> for the last
-        {{this.selectedNumberOfDays}}
-        days
-    </h3>
-
-    <ng-template #noPopularParkings>
-        <h3 class="text-center">None of the parkings in <span>{{selectedCity}}</span><span
-                *ngIf="selectedStreet !=''"> on the street {{selectedStreet}}</span> had no
-            any orders for the last
-            {{this.selectedNumberOfDays}}
-            days</h3>
-    </ng-template>
-
     <div class="row">
         <div class="filter offset-1 col-md-10">
             <mat-divider style="border-color: purple;"></mat-divider>
@@ -30,7 +15,7 @@
                 <h6 [(ngModel)]="selectedStreet" [(ngModel)]="selectedCity" ngDefaultControl>Find the most popular
                     parking
                     in <span matTooltip="Click to see the statistic by all streets!" id="city"
-                             (click)="clearStreetAndFindTheBestParkingsInTheCity()">{{selectedCity}}</span> on the
+                             (click)="clearCurrentStreet()">{{selectedCity}}</span> on the
                     street:
                     <span
                             *ngIf="selectedStreet ==''">--not selected--</span><span>{{selectedStreet}}</span> for the
@@ -40,7 +25,7 @@
                     <mat-form-field>
                         <mat-select [(value)]="selectedCity" placeholder="change city">
                             <mat-option *ngFor="let parkingsCity of parkingsCities" [value]="parkingsCity"
-                                        (click)="clearStreetAndFindTheBestParkingsInTheCity()">
+                                        (click)="clearCurrentStreet()">
                                 {{ parkingsCity }}
                             </mat-option>
                         </mat-select>
@@ -53,7 +38,6 @@
                         <mat-autocomplete #auto2="matAutocomplete">
                             <mat-option *ngFor="let parkingsStreet of parkingsStreets"
                                         (click)="selectStreet(parkingsStreet)"
-                                        (click)="findBestParkings()"
                                         [value]="parkingsStreet">
                                 {{parkingsStreet}}
                             </mat-option>
@@ -62,15 +46,21 @@
 
                     <mat-form-field>
                         <mat-select [(value)]="selectedNumberOfDays" placeholder="for the last days">
-                            <mat-option *ngFor="let day of days" [value]="day"
-                                        (click)="findBestParkings()"
-                            >
+                            <mat-option *ngFor="let day of days" [value]="day">
                                 {{ day }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
+
+                <mat-divider></mat-divider>
+
+                <button mat-button class="btn btn-outline-primary" (click)="findBestParkings()"
+                        type="submit">
+                    Show statistics
+                </button>
             </mat-card>
+
         </div>
     </div>
 

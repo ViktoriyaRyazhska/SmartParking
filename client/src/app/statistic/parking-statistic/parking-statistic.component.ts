@@ -32,7 +32,6 @@ export class ParkingStatisticComponent implements OnInit {
     ngOnInit() {
         this.findAllParkingsCities();
         this.findParkingsStreets("");
-        this.findBestParkingsInTheCity();
     }
 
     setPage(page: number) {
@@ -95,10 +94,9 @@ export class ParkingStatisticComponent implements OnInit {
             });
     }
 
-    clearStreetAndFindTheBestParkingsInTheCity() {
+    clearCurrentStreet() {
         this.selectedStreet = '';
         this.findParkingsStreets("");
-        this.findBestParkingsInTheCity();
     }
 
     selectStreet(street: string) {

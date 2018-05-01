@@ -44,7 +44,11 @@ mat-select {
     margin-left: 1.5em;
 }
 
-
+.btn {
+    display: block;
+    margin: 10px auto 0;
+    color: blue;
+}
 
 
 
