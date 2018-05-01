@@ -53,6 +53,8 @@ export class ManagerParkingConfigureComponent implements OnInit {
             this.configureType = new ConfigureType('add', ManagerParkingConfigureType.ADD);
             this.loadedParking = new Parking();
             this.parking = new Parking();
+            this.parking.isCovered = false;
+            this.parking.hasCharger = true;
         }
     }
 
@@ -79,7 +81,8 @@ export class ManagerParkingConfigureComponent implements OnInit {
                     });
                 }
             }, error => {
-                this.snackBar.open('Cannot save parking.', null, {
+                this.snackBar.open('Cannot save parking. You have enter invalid adddress or dublicate of token. Please check your data.'
+                 , null, {
                     duration: 2000
                 });
             });
