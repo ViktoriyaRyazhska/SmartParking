@@ -19,13 +19,13 @@
             </div>
 
             <div class="row"
-                 *ngIf="client.providerName!=null && client.role!='SUPERUSER' && client.role!='DRIVER'">
-                <h6>Current provider: {{client.providerName}}</h6>
+                 *ngIf="client.providerName!=null && currentProviderManager!=null && currentClientRole!='SUPERUSER' && currentClientRole!='DRIVER'">
+                <h6>Current provider: {{currentProviderManager}}</h6>
             </div>
 
             <div class="row" id="role">
                 <h6>Current role: <span
-                        [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'Chocolate' : 'BlueViolet '}">{{client.role}}</span>
+                        [ngStyle]="{'color': client.role === 'SUPERUSER' ? 'Chocolate' : 'BlueViolet '}">{{currentClientRole}}</span>
                 </h6>
             </div>
 

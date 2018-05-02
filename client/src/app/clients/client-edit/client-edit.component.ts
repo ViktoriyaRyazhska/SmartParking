@@ -18,6 +18,8 @@ export class ClientEditComponent implements OnInit {
     provider: Provider;
     providers: Provider[] = [];
     roles: Role[] = [];
+    currentClientRole: string;
+    currentProviderManager: string;
 
     constructor(private route: ActivatedRoute,
                 private clientService: ClientService,
@@ -35,7 +37,12 @@ export class ClientEditComponent implements OnInit {
         const id = +parseInt(this.route.snapshot.paramMap.get('id'));
         this.id = id;
         this.clientService.getClientDetail(id)
-            .subscribe(client => this.client = client);
+            .subscribe(client => {
+                    this.client = client;
+                    this.currentProviderManager = this.client.providerName;
+                    this.currentClientRole = this.client.role;
+                }
+            );
     }
 
     getProviders(): void {
@@ -60,6 +67,8 @@ export class ClientEditComponent implements OnInit {
                         duration: 4000
                     });
                 });
+            this.currentProviderManager = this.client.providerName;
+            this.currentClientRole = this.client.role;
         }
     }
 
