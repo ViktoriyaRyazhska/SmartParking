@@ -31,7 +31,7 @@
                             <ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfHours > 10000 || spotstatistic.numberOfHours < 0"> {{setError()}}The device is currently not working correctly in this 
                                 parking lot. Please wait until it is repaired. We apologize. Please
                                 call technical support</ion-option></th>
-                                <th scope="row"><ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfEvents > 0">{{spotstatistic.numberOfHours}}</ion-option>
+                                <th scope="row"><ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfEvents > 0">{{spotstatistic.numberOfEvents}}</ion-option>
                                     <ion-option [value]="spotstatistic" *ngIf="spotstatistic.numberOfEvents === 0"> {{setError()}} The device is currently not working correctly in this 
                                 parking lot. Please wait until it is repaired. We apologize. Please
                                 call technical support </ion-option></th>
