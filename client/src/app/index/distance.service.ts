@@ -15,7 +15,7 @@ export class DistanceService {
     getDistanceBetweenPoint(parkings: Parking[], lat, lng) {
         for (let parking of parkings) {
             var distance = require('google-distance-matrix');
-
+            parking.markerColor = '/assets/images/icon_parking_info_40x38.png';
             var latLngOrigin = lat + ',' + lng;
             var lanLngDest = parking.latitude + ',' + parking.longitude;
             var origins = [latLngOrigin];

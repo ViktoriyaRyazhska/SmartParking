@@ -72,7 +72,9 @@ export class ParkingMapComponent implements OnInit {
                         if (this.infoWindowOpened)
                             this.infoWindowOpened.close();
                         parking.infoWindowOpen = true;
+                        parking.markerColor = '/assets/images/icon_parking_info_40x38_green.png';
                     } else {
+                        parking.markerColor = '/assets/images/icon_parking_info_40x38.png';
                         parking.infoWindowOpen = false;
                     }
 
@@ -98,19 +100,18 @@ export class ParkingMapComponent implements OnInit {
         this.visibility = false;
     }
 
-    showInfoWindow(infoWindow) {
+    showInfoWindow(id) {
         for (let parking of this.parkings) {
-            parking.infoWindowOpen = false;
-        }
-        if (this.infoWindowOpened === infoWindow) {
-            return;
+            if (parking.id === id) {
+                parking.infoWindowOpen = true;
+                parking.markerColor = '/assets/images/icon_parking_info_40x38_green.png';
+            } else {
+                parking.infoWindowOpen = false;
+                parking.markerColor = '/assets/images/icon_parking_info_40x38.png';
+            }
+
         }
 
-        if (this.infoWindowOpened !== null) {
-            this.infoWindowOpened.close();
-        }
-
-        this.infoWindowOpened = infoWindow;
     }
 
     checkingForParkingAvailability(numberOfParkings: number, radius: number) {

@@ -1,10 +1,9 @@
-
 export class Parking {
     id: number;
     city: string;
     street: string;
     building: string;
-    address:string;
+    address: string;
     latitude: number;
     longitude: number;
     token: string;
@@ -21,6 +20,7 @@ export class Parking {
     hasCharger: boolean;
     hasInvalid: boolean;
     isCovered: boolean;
+    markerColor: string;
 
     public static copyOf(parking: Parking): Parking {
         return Object.assign(new Parking(), parking);
@@ -29,4 +29,4 @@ export class Parking {
     public clone(): Parking {
         return Parking.copyOf(this);
     }
-  }
+}
