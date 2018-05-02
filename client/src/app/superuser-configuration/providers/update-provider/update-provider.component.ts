@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderService} from '../provider.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Provider} from '../../../model/view/provider';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProviderRequest} from '../add-provider/provider-request';
@@ -15,8 +15,10 @@ import {MatSnackBar} from '@angular/material';
 export class UpdateProviderComponent implements OnInit {
 
     provider: Provider;
+    loadedProvider: Provider;
     providerRequest: ProviderRequest;
     providerForm: FormGroup;
+    step = -1;
 
     nameControl: FormControl = new FormControl('', [
         Validators.required
@@ -35,7 +37,8 @@ export class UpdateProviderComponent implements OnInit {
     constructor(private providerService: ProviderService,
                 private snackBar: MatSnackBar,
                 private formBuilder: FormBuilder,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -51,7 +54,11 @@ export class UpdateProviderComponent implements OnInit {
 
     getProvider() {
         const id = parseInt(this.route.snapshot.paramMap.get('id'));
-        this.providerService.getDetail(id).subscribe(provider => this.provider = provider);
+        this.providerService.getDetail(id)
+        .subscribe(provider => {
+            this.loadedProvider = provider;
+            this.provider = provider.clone();
+        });
     }
 
     updateProvider(): void {
@@ -61,6 +68,30 @@ export class UpdateProviderComponent implements OnInit {
             this.snackBar.open('Provider updated sucsessfully.', null, {
                 duration: 2000
             });
+            this.router.navigate(['configuration/providers']);
         });
     }
+
+    setStep(index: number): void {
+        this.step = index;
+    }
+
+    nextStep(): void {
+        this.step++;
+    }
+
+    prevStep(): void {
+        this.step--;
+    }
+
+    resetAddress() {
+        this.provider.city = this.loadedProvider.city;
+        this.provider.street = this.loadedProvider.street;
+        this.provider.building = this.loadedProvider.building;
+    }
+
+    resetCompanyName() {
+        this.provider.name = this.loadedProvider.name;
+    }
+
 }
