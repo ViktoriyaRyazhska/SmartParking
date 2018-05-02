@@ -12,7 +12,7 @@
         <agm-marker [latitude]="parking.latitude" [longitude]="parking.longitude"
                     [iconUrl]="'/assets/images/icon_parking_info_40x38.png'"
                     (markerClick)="showInfoWindow(infoWindow)">
-            <agm-info-window #infoWindow [disableAutoPan]="true" [isOpen]="parking.infoWindowOpen">
+            <agm-info-window #infoWindow [disableAutoPan]="infoWindowPan()" [isOpen]="parking.infoWindowOpen">
                 <ul>
                     <li><b>Address:</b> {{parking.city}} / {{parking.street}} / {{parking.building}}</li>
                     <li><b>Distance:</b> {{parking.distance}} km</li>

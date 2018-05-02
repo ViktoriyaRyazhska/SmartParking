@@ -5,7 +5,9 @@ import {MatSnackBar} from '@angular/material';
 import {DataserviceService} from '../dataservice.service';
 import {StatisticsService} from '../../statistic/statistics.service';
 import {SharedServiceService} from '../shared-service.service';
+import {DistanceService} from '../distance.service';
 import {InfoWindow} from '@agm/core/services/google-maps-types';
+
 
 const numberOfDaysByDefault = 30;
 
@@ -25,13 +27,14 @@ export class ParkingMapComponent implements OnInit {
     radius: number;
     visibility: boolean;
     infoWindowOpened = null;
-
+    zoom = 10;
 
     constructor(private parkingService: ParkingService,
                 private dataService: DataserviceService,
                 private statisticService: StatisticsService,
                 private snackBar: MatSnackBar,
-                private sharedService: SharedServiceService) {
+                private sharedService: SharedServiceService,
+                private distanceService: DistanceService) {
     }
 
     ngOnInit() {
@@ -51,6 +54,7 @@ export class ParkingMapComponent implements OnInit {
                 }
                 this.parkingService.getParkingsNearby(this.lat, this.lng, this.radius).subscribe((response) => {
                     this.parkings = response.body;
+                    this.distanceService.getDistanceBetweenPoint(this.parkings, this.lat, this.lng);
                     this.dataService.pushParkingsToDataService(this.parkings);
                 }, error => {
                     console.log(error);
@@ -61,9 +65,12 @@ export class ParkingMapComponent implements OnInit {
                     this.radius,
                     numberOfDaysByDefault), 2000);
             });
+
             this.sharedService.myMethod$.subscribe(id => {
                 for (let parking of this.parkings) {
                     if (parking.id == id) {
+                        if (this.infoWindowOpened)
+                            this.infoWindowOpened.close();
                         parking.infoWindowOpen = true;
                     } else {
                         parking.infoWindowOpen = false;
@@ -92,6 +99,9 @@ export class ParkingMapComponent implements OnInit {
     }
 
     showInfoWindow(infoWindow) {
+        for (let parking of this.parkings) {
+            parking.infoWindowOpen = false;
+        }
         if (this.infoWindowOpened === infoWindow) {
             return;
         }
@@ -125,4 +135,8 @@ export class ParkingMapComponent implements OnInit {
             });
     }
 
+    infoWindowPan(): boolean {
+        this.zoom = 12;
+        return true;
+    }
 }

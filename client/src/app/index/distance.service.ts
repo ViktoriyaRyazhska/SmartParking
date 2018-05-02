@@ -12,7 +12,7 @@ export class DistanceService {
     constructor() {
     }
 
-    getDistanceBetweenPoint(parkings: Parking[], lat, lng): Observable<Parking[]> {
+    getDistanceBetweenPoint(parkings: Parking[], lat, lng) {
         for (let parking of parkings) {
             var distance = require('google-distance-matrix');
 
@@ -50,8 +50,6 @@ export class DistanceService {
                 }
             });
         }
-        this.obs = Observable.of(parkings);
-        return this.obs;
     }
 
 }

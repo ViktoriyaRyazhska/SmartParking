@@ -1,7 +1,7 @@
 <div class="parent">
-        <button class="sidenav-icon" mat-icon-button (click)="drawer.toggle()">
-                <i class="material-icons" style="position: relative;">&#xE896;</i>
-        </button>
+    <button class="sidenav-icon" mat-icon-button (click)="drawer.toggle()">
+        <i class="material-icons" style="position: relative;">&#xE896;</i>
+    </button>
 
     <mat-drawer-container>
         <mat-drawer #drawer mode="side" [opened]="screenWidth > 800">
@@ -13,16 +13,11 @@
                 <mat-progress-bar #progressbar *ngIf="progressBarVisible" [color]="progressBarColor"
                                   [mode]="progressBarMode"
                                   class="progress-bar" mode="query" [value]="100"></mat-progress-bar>
+                <app-parking-list-filter #filter></app-parking-list-filter>
+                <button mat-raised-button (click)="search()" color="primary" [disabled]="isDisabled()"
+                        style="width: 100%;">Search!
+                </button>
             </div>
-            <!--<div class="sl_tp">
-                <h3>Filter</h3>
-                <div class="sl_in">
-                    <app-parking-list-filter #filter></app-parking-list-filter>
-                    <button mat-raised-button (click)="search()" color="primary" [disabled]="isDisabled()" style="width: 100%;">Search!</button>
-                </div>
-            </div>-->
-            <app-parking-list-filter #filter></app-parking-list-filter>
-            <button mat-raised-button (click)="search()" color="primary" [disabled]="isDisabled()" style="width: 100%;">Search!</button>
         </mat-drawer-content>
     </mat-drawer-container>
 </div>

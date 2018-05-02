@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Parking} from '../../model/view/parking';
 import {StatisticsService} from '../../statistic/statistics.service';
 import {DataserviceService} from '../dataservice.service';
-import {ParkingMapComponent} from '../parking-map/parking-map.component';
 import {SharedServiceService} from '../shared-service.service';
 
 @Component({
@@ -37,14 +36,8 @@ export class SidenavComponent implements OnInit {
         this.dataService.currentParkings.subscribe(parkings => this.parkings = parkings);
     }
 
-
     highlightOnMap(id) {
         this.sharedService.highLightOnMap(id);
     }
-
-    closeInfoWindow() {
-        for (let parking of this.parkings) {
-            parking.infoWindowOpen = false;
-        }
-    }
+    
 }

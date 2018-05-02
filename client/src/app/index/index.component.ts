@@ -115,7 +115,7 @@ export class IndexComponent implements OnInit {
                 && ((filter.priceRange.max) ? parking.price <= filter.priceRange.max : true)
                 && ((filter.hasCharger) ? parking.hasCharger == filter.hasCharger : true);
         });
-
+        this.distanceService.getDistanceBetweenPoint(this.parkingMap.parkings, this.parkingMap.lat, this.parkingMap.lng);
         this.dataService.pushParkingsToDataService(this.parkingMap.parkings);
         this.refreshComponentView();
 
