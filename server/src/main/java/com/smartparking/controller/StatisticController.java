@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/statistic")
@@ -26,74 +25,88 @@ public class StatisticController {
     SpotService spotService;
 
     @GetMapping("/parkings-streets")
-    ResponseEntity<List<String>> findParkingsStreetsByAnyMatching(@RequestParam("city") String city,
-                                                                  @RequestParam("street") String input) {
+    ResponseEntity<List<String>> getParkingsStreetsByAnyMatching(@RequestParam("city") String city,
+                                                                 @RequestParam("street") String input) {
         return new ResponseEntity<>(parkingService.findParkingStreetByAnyMatch(city, input), HttpStatus.OK);
     }
 
     @GetMapping("/parkings-cities/{input}")
-    ResponseEntity<List<String>> findParkingsCitiesByAnyMatching(@PathVariable String input) {
+    ResponseEntity<List<String>> getParkingsCitiesByAnyMatching(@PathVariable String input) {
         return new ResponseEntity<>(parkingService.findParkingCitiesByAnyMatch(input), HttpStatus.OK);
     }
 
     @GetMapping("/all-parkings-cities")
-    ResponseEntity<List<String>> findAllParkingsCities() {
+    ResponseEntity<List<String>> getAllParkingsCities() {
         return new ResponseEntity<>(parkingService.findAllParkingCities(), HttpStatus.OK);
     }
 
     @RequestMapping("/best-parkings")
-    public ResponseEntity<List<ParkingItemResponse>> findBestParkings(@RequestParam("city") String city,
-                                                                      @RequestParam("street") String street,
-                                                                      @RequestParam("days") String days) {
+    public ResponseEntity<List<ParkingItemResponse>> getBestParkings(@RequestParam("city") String city,
+                                                                     @RequestParam("street") String street,
+                                                                     @RequestParam("days") String days) {
 
-        Instant calculatedTime = LocalDateTime.now().minusDays(Integer.parseInt(days)).toInstant(ZoneOffset.UTC);
-
+        Instant calculatedTime = getCalculatedTime(days);
         List<Parking> parkings = spotService.findBestParkings(city, street, calculatedTime);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
-        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
+
+        parkings.forEach(parking -> parkingItemResponses
+                .add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
+
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
     @RequestMapping("/best-parkings-in-city")
-    public ResponseEntity<List<ParkingItemResponse>> findBestParkingsInTheCity(@RequestParam("city") String city,
-                                                                               @RequestParam("days") String days) {
+    public ResponseEntity<List<ParkingItemResponse>> getBestParkingsInTheCity(@RequestParam("city") String city,
+                                                                              @RequestParam("days") String days) {
 
-        Instant calculatedTime = LocalDateTime.now().minusDays(Integer.parseInt(days)).toInstant(ZoneOffset.UTC);
-
+        Instant calculatedTime = getCalculatedTime(days);
         List<Parking> parkings = spotService.findBestParkingsInTheCity(city, calculatedTime);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
-        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
+
+        parkings.forEach(parking -> parkingItemResponses
+                .add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
+
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
     @RequestMapping("/best-parkings-by-location")
-    public ResponseEntity<List<ParkingItemResponse>> findBestParkingsByLocation(@RequestParam("latitude") String latitude,
-                                                                                @RequestParam("longitude") String longitude,
-                                                                                @RequestParam("radius") String radius,
-                                                                                @RequestParam("days") String days) {
+    public ResponseEntity<List<ParkingItemResponse>> getBestParkingsByLocation(@RequestParam("latitude") String latitude,
+                                                                               @RequestParam("longitude") String longitude,
+                                                                               @RequestParam("radius") String radius,
+                                                                               @RequestParam("days") String days) {
 
-        Instant calculatedTime = LocalDateTime.now().minusDays(Integer.parseInt(days)).toInstant(ZoneOffset.UTC);
+        Instant calculatedTime = getCalculatedTime(days);
 
-        List<Parking> parkings = spotService.findBestParkingsByLocation(Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(radius), calculatedTime);
+        List<Parking> parkings = spotService.
+                findBestParkingsByLocation(
+                        Double.parseDouble(latitude),
+                        Double.parseDouble(longitude),
+                        Double.parseDouble(radius),
+                        calculatedTime);
+
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
-        parkings.forEach(parking -> parkingItemResponses.add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
+
+        parkings.forEach(parking -> parkingItemResponses.
+                add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
+
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
     }
 
     @RequestMapping("/best-parkings-by-location-and-properties")
-    public ResponseEntity<List<ParkingItemResponse>> findBestParkingsByLocationPriceAndFunctional(@RequestParam("latitude") String latitude,
-                                                                                                  @RequestParam("longitude") String longitude,
-                                                                                                  @RequestParam("radius") String radius,
-                                                                                                  @RequestParam("days") String date,
-                                                                                                  @RequestParam("minPrice") String minPrice,
-                                                                                                  @RequestParam("maxPrice") String maxPrice,
-                                                                                                  @RequestParam("hasCharger") String hasCharger,
-                                                                                                  @RequestParam("hasInvalid") String hasInvalid,
-                                                                                                  @RequestParam("isCovered") String isCovered) {
+    public ResponseEntity<List<ParkingItemResponse>> getBestParkingsByLocationPriceAndProperties(
+            @RequestParam("latitude") String latitude,
+            @RequestParam("longitude") String longitude,
+            @RequestParam("radius") String radius,
+            @RequestParam("days") String days,
+            @RequestParam("minPrice") String minPrice,
+            @RequestParam("maxPrice") String maxPrice,
+            @RequestParam("hasCharger") String hasCharger,
+            @RequestParam("hasInvalid") String hasInvalid,
+            @RequestParam("isCovered") String isCovered) {
 
-        Instant calculatedTime = LocalDateTime.now().minusDays(Integer.parseInt(date)).toInstant(ZoneOffset.UTC);
+        Instant calculatedTime = getCalculatedTime(days);
 
-        List<Parking> parkings = spotService.findBestParkingsByLocationPriceAndFunctional(
+        List<Parking> parkings = spotService.findBestParkingsByLocationPriceAndProperties(
                 Double.parseDouble(latitude),
                 Double.parseDouble(longitude),
                 Double.parseDouble(radius),
@@ -102,11 +115,17 @@ public class StatisticController {
                 Boolean.parseBoolean(hasCharger),
                 Boolean.parseBoolean(hasInvalid),
                 Boolean.parseBoolean(isCovered));
+
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
 
         parkings.forEach(parking -> parkingItemResponses.
                 add(ParkingItemResponse.of(parking, spotService.countAvailableSpotsByParkingId(parking.getId()))));
+
         return new ResponseEntity<>(parkingItemResponses, HttpStatus.OK);
+    }
+
+    private Instant getCalculatedTime(String days) {
+        return LocalDateTime.now().minusDays(Integer.parseInt(days)).toInstant(ZoneOffset.UTC);
     }
 
 }

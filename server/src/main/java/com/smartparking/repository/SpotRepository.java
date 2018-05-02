@@ -24,15 +24,18 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
 
     List<Spot> findAllByParkingId(Long id);
 
-    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where p.city=?1 and p.street=?2 and e.timestamp > ?3"
+    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e " +
+            "where p.city=?1 and p.street=?2 and e.timestamp > ?3"
             + " group by p order by count(s.id) desc")
     List<Parking> findBestParkings(String city, String street, Instant date);
 
-    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where p.city=?1 and e.timestamp > ?2"
+    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e " +
+            "where p.city=?1 and e.timestamp > ?2"
             + " group by p order by count(s.id) desc")
     List<Parking> findBestParkingsInTheCity(String city, Instant date);
 
-    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e where function('LOCATION_DISTANCE',?1, ?2,p.latitude, p.longitude) <= ?3 and e.timestamp > ?4"
+    @Query("SELECT p, count(s.id) FROM Parking p JOIN p.spots s JOIN s.events e " +
+            "where function('LOCATION_DISTANCE',?1, ?2,p.latitude, p.longitude) <= ?3 and e.timestamp > ?4"
             + " group by p order by count(s.id) desc")
     List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date);
 

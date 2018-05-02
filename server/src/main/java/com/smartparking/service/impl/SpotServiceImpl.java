@@ -65,7 +65,7 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
-    public List<Parking> findBestParkingsByLocationPriceAndFunctional(Double latitude, Double longitude, Double radius,
+    public List<Parking> findBestParkingsByLocationPriceAndProperties(Double latitude, Double longitude, Double radius,
                                                                       Instant date, BigDecimal minPrice, BigDecimal maxPrice,
                                                                       Boolean hasCharger, Boolean hasInvalid, Boolean isCovered) {
         return repository.findBestParkingsByLocationPriceAndFunctional(

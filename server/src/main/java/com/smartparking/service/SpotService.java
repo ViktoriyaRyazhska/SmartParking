@@ -29,7 +29,7 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
 
     List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date);
 
-    List<Parking> findBestParkingsByLocationPriceAndFunctional(Double latitude, Double longitude, Double radius,
+    List<Parking> findBestParkingsByLocationPriceAndProperties(Double latitude, Double longitude, Double radius,
                                                                Instant date, BigDecimal minPrice, BigDecimal maxPrice,
                                                                Boolean hasCharger, Boolean hasInvalid, Boolean isCovered);
 
