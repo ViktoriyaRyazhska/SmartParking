@@ -51,7 +51,7 @@ public class SpotController {
         List<Spot> allSpots = spotService.findAllSpotsByParkingId(id);
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
-        allSpots.stream().forEach(spot -> {
+        allSpots.forEach(spot -> {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(freeSpots.contains(spot));
@@ -71,7 +71,7 @@ public class SpotController {
     List<SpotStatusResponse> findAvailableSpotsDto(@PathVariable Long id) {
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
-        freeSpots.stream().forEach(spot -> {
+        freeSpots.forEach(spot -> {
             SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
             spotStatusResponse.setId(spot.getSpotNumber());
             spotStatusResponse.setIsFree(true);

@@ -32,13 +32,13 @@
                                 Address
                             </mat-panel-title>
                             <mat-panel-description>
-                                <span *ngIf="!parking.city && !parking.street && !parking.building">
+                                <span *ngIf="!loadedParking.city && !loadedParking.street && !loadedParking.building">
                                     Type city, street and building
                                 </span>
-                                <span *ngIf="parking.city || parking.street || parking.building">
-                                    {{parking.city}}, {{parking.street}} street, {{parking.building}}
+                                <span *ngIf="loadedParking.city || loadedParking.street || loadedParking.building">
+                                    {{loadedParking.city}}, {{loadedParking.street}} street, {{loadedParking.building}}
                                 </span>
-                                <span *ngIf="parking.city && parking.street && parking.building ">
+                                <span *ngIf="loadedParking.city && loadedParking.street && loadedParking.building ">
                                    {{setParkingLocation()}}
                                 </span>
                             </mat-panel-description>
@@ -75,11 +75,11 @@
                                 Price
                             </mat-panel-title>
                             <mat-panel-description>
-                        <span *ngIf="!parking.price">
+                        <span *ngIf="!loadedParking.price">
                             Type price
                         </span>
-                                <span *ngIf="parking.price">
-                            {{parking.price}}
+                                <span *ngIf="loadedParking.price">
+                            {{loadedParking.price}}
                         </span>
                             </mat-panel-description>
                             <mat-icon>attach_money</mat-icon>
@@ -104,11 +104,11 @@
                                 Token
                             </mat-panel-title>
                             <mat-panel-description>
-                                <span *ngIf="!parking.token">
+                                <span *ngIf="!loadedParking.token">
                                     Generate token
                                 </span>
-                                <span *ngIf="parking.token">
-                                    {{parking.token}}
+                                <span *ngIf="loadedParking.token">
+                                    {{loadedParking.token}}
                                 </span>
                             </mat-panel-description>
                             <mat-icon>settings_remote</mat-icon>
@@ -137,9 +137,9 @@
                                 Available services
                             </mat-panel-title>
                             <mat-panel-description align="left">
-                                <span *ngIf="parking.isCovered">Covered</span>
-                                <span *ngIf="!parking.isCovered">Discovered</span>
-                                <span class="full-width" *ngIf="parking.hasCharger">, Has charger</span>
+                                <span *ngIf="loadedParking.isCovered">Covered</span>
+                                <span *ngIf="!loadedParking.isCovered">Discovered</span>
+                                <span class="full-width" *ngIf="loadedParking.hasCharger">, Has charger</span>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <mat-checkbox [(ngModel)]="parking.isCovered" formControlName="isCovered" color="primary">
@@ -198,13 +198,18 @@
                               <mat-panel-title>
                                   Provider
                               </mat-panel-title>
+                              <mat-panel-description>
+                                  Now provider is {{loadedParking.providerName}}
+                              </mat-panel-description>
                           </mat-expansion-panel-header>
+                          <mat-form-field>
                           <mat-select [(value)]="parking.providerId" placeholder="select provider"
                                       formControlName="provider" required>
                               <mat-option *ngFor="let provider of providers" [value]="provider.id">
                                   {{ provider.name }}
                               </mat-option>
                           </mat-select>
+                          </mat-form-field>
                           <mat-action-row>
                               <button mat-button type="button" color="warn" (click)="resetProvider()">Reset</button>
                               <div class="full-width"></div>

@@ -1,21 +1,20 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { HttpResponse } from '@angular/common/http';
-import { TokenStorage } from '../auth/token/token-storage';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {HttpResponse} from '@angular/common/http';
+import {TokenStorage} from '../auth/token/token-storage';
 
-import { Parking } from '../model/view/parking';
-import { ParkingService } from "../parking.service";
-import { Spot } from '../model/view/spot';
-import { Observable } from 'rxjs/Observable';
+import {Parking} from '../model/view/parking';
+import {ParkingService} from "../parking.service";
+import {Spot} from '../model/view/spot';
+import {Observable} from 'rxjs/Observable';
 import {
-  FavoriteAddData,
-  FavoritesAddConfigmDialogComponent
+    FavoriteAddData,
+    FavoritesAddConfigmDialogComponent
 } from './favorites-add-configm-dialog/favorites-add-configm-dialog.component';
-import { Favorite } from '../model/view/favorite';
-import { DeleteConfirmationDialogComponent } from '../manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { Router } from '@angular/router';
+import {Favorite} from '../model/view/favorite';
+import {DeleteConfirmationDialogComponent} from '../manager/manager-parking-list/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import {Role} from "../auth/roles";
 
 @Component({
@@ -49,7 +48,6 @@ export class ParkingDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getParking().subscribe(parking => {
-
       this.fullnessBarCount();
     });
     this.getSpots();
@@ -162,7 +160,7 @@ export class ParkingDetailComponent implements OnInit, OnDestroy {
 
   sendToSpotStatistic() {
     const id = parseInt(this.route.snapshot.paramMap.get('id'));
-    this.router.navigate(['parkingdetail/'+id+'/spotstatistic']);
+    this.router.navigate(['parkingdetail/' + id + '/spotstatistic']);
   }
 
 }
