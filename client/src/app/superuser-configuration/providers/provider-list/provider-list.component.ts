@@ -13,8 +13,9 @@ import {MatSnackBar} from '@angular/material';
 })
 export class ProviderListComponent implements OnInit {
     providers: Provider[];
+    active = new FormControl('');
     providerFilterForm = new FormGroup({
-        active: new FormControl('all', []),
+        active: this.active,
         companyName: new FormControl('', [])
     });
 
