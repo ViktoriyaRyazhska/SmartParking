@@ -73,11 +73,11 @@
    
 
 
-
+    <ng-container *ngIf="error === false">
     <div class="col-xs-12 col-12 col-md-4 form-group">
         <button mat-raised-button color="primary" 
               (click)="showHoursGraphic()"
-        [disabled]=" error === true || statistic === undefined || statistic.length === 0 "
+        [disabled]=" statistic === undefined || statistic.length === 0 || error === true"
                >Display statistic hour graphic</button>
     </div>
 
@@ -93,6 +93,7 @@
         [disabled]="statistic === undefined || statistic.length === 0 "
          >Clear graphic</button>
     </div>
+    </ng-container>
 
 
 </div>
