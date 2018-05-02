@@ -13,7 +13,7 @@ export class StatisticsService {
     }
 
     getParkingsStreetsByAnyMatching(city: string, street: string): Observable<string[]> {
-        return this.http.get<string[]>(this.statisticUrl + '/findparkingstreets', {
+        return this.http.get<string[]>(this.statisticUrl + '/parkings-streets', {
             params: {
                 city: city,
                 street: street
@@ -22,15 +22,15 @@ export class StatisticsService {
     }
 
     getParkingsCitiesByAnyMatching(input: string): Observable<string[]> {
-        return this.http.get<string[]>(this.statisticUrl + '/findparkingscities/' + input);
+        return this.http.get<string[]>(this.statisticUrl + '/parkings-cities/' + input);
     }
 
     getAllParkingsCities(): Observable<string[]> {
-        return this.http.get<string[]>(this.statisticUrl + '/findallparkingscities');
+        return this.http.get<string[]>(this.statisticUrl + '/all-parkings-cities');
     }
 
     getBestParkingsByCityStreetDate(city: string, street: string, days: number): Observable<Parking[]> {
-        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkings', {
+        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings', {
             params: {
                 city: city,
                 street: street,
@@ -40,7 +40,7 @@ export class StatisticsService {
     }
 
     getBestParkingsInTheCityByDate(city: string, days: number): Observable<Parking[]> {
-        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsincity', {
+        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings-in-city', {
             params: {
                 city: city,
                 days: days.toString()
@@ -49,7 +49,7 @@ export class StatisticsService {
     }
 
     getBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number): Observable<Parking[]> {
-        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsbylocation', {
+        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings-by-location', {
             params: {
                 latitude: latitude.toString(),
                 longitude: longitude.toString(),
@@ -62,7 +62,7 @@ export class StatisticsService {
     getBestParkingsByLocationPriceAndFunctional(latitude: number, longitude: number, radius: number, days: number,
                                                 minPrice: number, maxPrice: number, hasCharger: boolean, hasInvalid: boolean,
                                                 isCovered: boolean): Observable<Parking[]> {
-        return this.http.get<Parking[]>(this.statisticUrl + '/findbestparkingsbylocationpricefunctional', {
+        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings-by-location-and-properties', {
             params: {
                 latitude: latitude.toString(),
                 longitude: longitude.toString(),

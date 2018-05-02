@@ -24,15 +24,15 @@ export class ClientService {
     }
 
     getLimitNumberOfClients(): Observable<Client[]> {
-        return this.http.get<Client[]>(this.clientsUrl + '/clientslimit');
+        return this.http.get<Client[]>(this.clientsUrl + '/clients-limit');
     }
 
     getClientsByAnyMatch(input: string): Observable<Client[]> {
-        return this.http.get<Client[]>(this.clientsUrl + '/findclients/' + input);
+        return this.http.get<Client[]>(this.clientsUrl + '/find-clients/' + input);
     }
 
     getClientsByRole(input: string): Observable<Client[]> {
-        return this.http.get<Client[]>(this.clientsUrl + '/findbyrole/' + input);
+        return this.http.get<Client[]>(this.clientsUrl + '/find-by-role/' + input);
     }
 
     getClientDetail(id: number): Observable<Client> {
@@ -44,11 +44,11 @@ export class ClientService {
     }
 
     getProviders(): Observable<Provider[]> {
-        return this.http.get<Provider[]>(this.clientsUrl + '/getproviders');
+        return this.http.get<Provider[]>(this.clientsUrl + '/get-providers');
     }
 
     getProviderByClientId(id: number): Observable<Provider> {
-        return this.http.get<Provider>(this.clientsUrl + '/findprovider/' + id);
+        return this.http.get<Provider>(this.clientsUrl + '/find-provider/' + id);
     }
 
     getRoles(): Role[] {
@@ -84,7 +84,7 @@ export class ClientService {
     }
 
     getClientsFavoritesParkingsById(id: number): Observable<Parking[]> {
-        return this.http.get<Parking[]>(this.clientsUrl + '/clientsfavorites/' + id);
+        return this.http.get<Parking[]>(this.clientsUrl + '/clients-favorites/' + id);
     }
 
 }

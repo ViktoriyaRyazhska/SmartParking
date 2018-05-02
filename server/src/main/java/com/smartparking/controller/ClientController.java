@@ -50,7 +50,7 @@ public class ClientController {
         return new ResponseEntity<>(clientItemResponses, HttpStatus.OK);
     }
 
-    @GetMapping("/clientslimit")
+    @GetMapping("/clients-limit")
     ResponseEntity<?> getLimitNumberOfClients() {
         List<Client> clients = clientService.findLimitNumberOfClients(PageRequest.of(0, 50));
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
@@ -75,14 +75,14 @@ public class ClientController {
         }
     }
 
-    @GetMapping("/findprovider/{id}")
+    @GetMapping("/find-provider/{id}")
     ResponseEntity<?> getProviderByClientId(@PathVariable Long id) {
         return providerService.findProviderByClientId(id)
                 .map(providerResponse -> new ResponseEntity<Object>(providerResponse, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<Object>("Incorrect client id", HttpStatus.BAD_REQUEST));
     }
 
-    @GetMapping("/findclients/{input}")
+    @GetMapping("/find-clients/{input}")
     ResponseEntity<?> getClientsByAnyMatch(@PathVariable String input) {
         if (!input.isEmpty()) {
             List<Client> clients = clientService.findClientsByAnyMatch(input);
@@ -92,7 +92,7 @@ public class ClientController {
         } else return getLimitNumberOfClients();
     }
 
-    @GetMapping("/findbyrole/{input}")
+    @GetMapping("/find-by-role/{input}")
     ResponseEntity<?> getClientsByRole(@PathVariable String input) {
         List<Client> clients = clientService.findClientsByRole(input);
         List<ClientItemResponse> clientItemResponses = new ArrayList<>();
@@ -100,7 +100,7 @@ public class ClientController {
         return new ResponseEntity<>(clientItemResponses, HttpStatus.OK);
     }
 
-    @GetMapping("/getproviders")
+    @GetMapping("/get-providers")
     ResponseEntity<?> getAllProviders() {
         List<Provider> providers = providerService.findAll();
         List<ProviderItemResponse> providerItemResponses = new ArrayList<>();
@@ -108,7 +108,7 @@ public class ClientController {
         return new ResponseEntity<>(providerItemResponses, HttpStatus.OK);
     }
 
-    @GetMapping("/clientsfavorites/{id}")
+    @GetMapping("/clients-favorites/{id}")
     ResponseEntity<?> getClientsFavoriteParkings(@PathVariable Long id) {
         List<Parking> parkings = favoriteService.findFavoritesDetailByClientId(id);
         List<ParkingDetailResponse> parkingDetailResponses = new ArrayList<>();
