@@ -89,13 +89,13 @@ export class ManagerParkingConfigureComponent implements OnInit {
                         duration: 2000
                     });
                 }
+                    this.router.navigate(['manager-configuration/parkings']);
             }, error => {
                 this.snackBar.open('Cannot save parking. You have enter invalid adddress or dublicate of token. Please check your data.'
                  , null, {
                     duration: 2000
                 });
             });
-        this.router.navigate(['manager-configuration/parkings']);
     }
 
     getProviders(): void {

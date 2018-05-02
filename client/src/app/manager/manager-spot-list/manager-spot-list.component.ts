@@ -110,13 +110,13 @@ export class ManagerSpotListComponent implements OnInit {
                         duration: 2000
                     });
                 }
+                spot.isFree = false;
+                this.ngOnInit();
             }, error => {
                 this.snackBar.open(error.error, null, {
                     duration: 2000
                 });
             });
-            spot.isFree = false;
-            this.ngOnInit();
         }
     }
 
