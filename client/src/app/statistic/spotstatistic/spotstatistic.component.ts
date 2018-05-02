@@ -40,7 +40,6 @@ export class SpotstatisticComponent implements OnInit {
      context:string;
      error: boolean;
     
-   /* displayEventGraphik:boolean;*/
     
 
 
@@ -79,7 +78,7 @@ export class SpotstatisticComponent implements OnInit {
 
     setError() : void {
         this.error = true;
-        console.log("there is some error happened");
+         console.log("there is some error happened");
     }
 
 
