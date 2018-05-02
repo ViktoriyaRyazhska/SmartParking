@@ -52,6 +52,7 @@ export class SpotstatisticComponent implements OnInit {
         this.id = parseInt(this.route.snapshot.paramMap.get('id'));
         this.show = true;
         this.error = false;
+        this.getSpotStatistic();
       
         
   
@@ -74,6 +75,9 @@ export class SpotstatisticComponent implements OnInit {
     refresh(): void {
     
     }
+
+
+   
 
 
     setError() : void {
