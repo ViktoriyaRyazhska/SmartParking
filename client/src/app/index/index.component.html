@@ -18,11 +18,11 @@
                 <h3>Filter</h3>
                 <div class="sl_in">
                     <app-parking-list-filter #filter></app-parking-list-filter>
+                    <button mat-raised-button (click)="search()" color="primary" [disabled]="isDisabled()" style="width: 100%;">Search!</button>
                 </div>
             </div>-->
             <app-parking-list-filter #filter></app-parking-list-filter>
             <button mat-raised-button (click)="search()" color="primary" [disabled]="isDisabled()" style="width: 100%;">Search!</button>
-            </div>
         </mat-drawer-content>
     </mat-drawer-container>
 </div>

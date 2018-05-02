@@ -35,7 +35,7 @@ app-parking-list {
     width: 16em;
 }
 
-.sl_tp{
+/*.sl_tp{
     position: fixed;
     bottom:0;
     -webkit-transition-duration: 0.3s;
@@ -68,5 +68,5 @@ app-parking-list {
 }
 .sl_tp:hover .sl_in {
     bottom: 0px;
-}
+}*/
 
