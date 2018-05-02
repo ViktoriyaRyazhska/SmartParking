@@ -8,6 +8,7 @@ import {Parking} from '../model/view/parking';
 import {ParkingMapComponent} from './parking-map/parking-map.component';
 import {StatisticsService} from '../statistic/statistics.service';
 import {DataserviceService} from './dataservice.service';
+import {DistanceService} from './distance.service';
 
 const MiToKm = 1.60934;
 const numberOfDaysByDefault = 30;
@@ -44,7 +45,7 @@ export class IndexComponent implements OnInit {
                 private changeDetector: ChangeDetectorRef,
                 private statisticService: StatisticsService,
                 private dataService: DataserviceService,
-                private snackBar: MatSnackBar) {
+                private distanceService: DistanceService) {
         this.screenWidth = window.innerWidth;
     }
 
@@ -59,10 +60,11 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.subscribeDataServiceValues();
+
     }
 
     public search() {
+        this.subscribeDataServiceValues();
         this.showLoadingProgressBar();
         this.parkingMap.lat = this.filter.locationField.value.latitude;
         this.parkingMap.lng = this.filter.locationField.value.longitude;
@@ -108,42 +110,6 @@ export class IndexComponent implements OnInit {
     private filterParkings() {
         this.parkingMap.parkings = this.parkings.filter(parking => {
             let filter = this.filter.value;
-            var distance = require('google-distance-matrix');
-
-            var latLngOrigin = this.parkingMap.lat + ',' + this.parkingMap.lng;
-            var lanLngDest = parking.latitude + ',' + parking.longitude;
-            var origins = [latLngOrigin];
-            var destinations = [lanLngDest];
-
-            distance.key('AIzaSyAufS5bcmpO5UiWxG_MpcSOrIiRNzbUJus');
-            distance.units('imperial');
-
-            distance.matrix(origins, destinations, function (err, distances) {
-                if (err) {
-                    return console.log(err);
-                }
-                if (!distances) {
-                    return console.log('no distances');
-                }
-                if (distances.status == 'OK') {
-                    for (var i = 0; i < origins.length; i++) {
-                        for (var j = 0; j < destinations.length; j++) {
-                            var origin = distances.origin_addresses[i];
-                            var destination = distances.destination_addresses[j];
-                            if (distances.rows[0].elements[j].status == 'OK') {
-                                let distance = distances.rows[i].elements[j].distance.text;
-                                distance = distance.substr(0, distance.indexOf(' '));
-                                Number.parseInt(distance);
-                                distance *= MiToKm;
-                                parking.distance = Math.floor(distance * 10) / 10;
-                            } else {
-                                console.log(destination + ' is not reachable by land from ' + origin);
-                            }
-                        }
-                    }
-                }
-            });
-
             return parking.distance <= filter.radius * 1000
                 && ((filter.priceRange.min) ? parking.price >= filter.priceRange.min : true)
                 && ((filter.priceRange.max) ? parking.price <= filter.priceRange.max : true)
