@@ -158,6 +158,9 @@
                                                     </td>
 
                                                     <td scope="row" >
+                                                        <div *ngIf="!spot.hasCharger && !spot.isInvalid">
+                                                            <h5><b><i>N/A</i></b></h5>
+                                                        </div>
                                                             <div *ngIf="spot.hasCharger">
                                                                     <mat-icon color="primary">ev_station</mat-icon>
                                                                 <label> Has charger</label>
