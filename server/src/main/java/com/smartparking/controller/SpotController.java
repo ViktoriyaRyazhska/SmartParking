@@ -51,19 +51,17 @@ public class SpotController {
         List<Spot> allSpots = spotService.findAllSpotsByParkingId(id);
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
-        allSpots.forEach(spot -> {
-            SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
-            spotStatusResponse.setId(spot.getSpotNumber());
-            spotStatusResponse.setIsFree(freeSpots.contains(spot));
-            spotStatusResponse.setHasCharger(spot.getHasCharger());
-            spotStatusResponse.setIsInvalid(spot.getIsInvalid());
-            spotStatusResponse.setSpotNumber(spot.getSpotNumber());
-            if (spot.getIsBlocked()) {
-                return;
-            }
-            spotStatusResponseList.add(spotStatusResponse);
-        });
-        spotStatusResponseList.sort(Comparator.comparing(SpotStatusResponse::getSpotNumber));
+        allSpots.stream().filter(spot -> !spot.getIsBlocked())
+                .sorted(Comparator.comparing(Spot::getSpotNumber))
+                .forEach(spot -> {
+                    SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
+                    spotStatusResponse.setId(spot.getSpotNumber());
+                    spotStatusResponse.setIsFree(freeSpots.contains(spot));
+                    spotStatusResponse.setHasCharger(spot.getHasCharger());
+                    spotStatusResponse.setIsInvalid(spot.getIsInvalid());
+                    spotStatusResponse.setSpotNumber(spot.getSpotNumber());
+                    spotStatusResponseList.add(spotStatusResponse);
+                });
         return spotStatusResponseList;
     }
 
@@ -71,19 +69,17 @@ public class SpotController {
     List<SpotStatusResponse> findAvailableSpotsDto(@PathVariable Long id) {
         List<Spot> freeSpots = spotService.findAllAvailableSpotsByParkingId(id);
         List<SpotStatusResponse> spotStatusResponseList = new ArrayList<>();
-        freeSpots.forEach(spot -> {
-            SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
-            spotStatusResponse.setId(spot.getSpotNumber());
-            spotStatusResponse.setIsFree(true);
-            spotStatusResponse.setHasCharger(spot.getHasCharger());
-            spotStatusResponse.setIsInvalid(spot.getIsInvalid());
-            spotStatusResponse.setSpotNumber(spot.getSpotNumber());
-            if (spot.getIsBlocked()) {
-                return;
-            }
-            spotStatusResponseList.add(spotStatusResponse);
-        });
-        spotStatusResponseList.sort(Comparator.comparing(SpotStatusResponse::getSpotNumber));
+        freeSpots.stream().filter(spot -> !spot.getIsBlocked())
+                .sorted(Comparator.comparing(Spot::getSpotNumber))
+                .forEach(spot -> {
+                    SpotStatusResponse spotStatusResponse = new SpotStatusResponse();
+                    spotStatusResponse.setId(spot.getSpotNumber());
+                    spotStatusResponse.setIsFree(true);
+                    spotStatusResponse.setHasCharger(spot.getHasCharger());
+                    spotStatusResponse.setIsInvalid(spot.getIsInvalid());
+                    spotStatusResponse.setSpotNumber(spot.getSpotNumber());
+                    spotStatusResponseList.add(spotStatusResponse);
+                });
         return spotStatusResponseList;
     }
 

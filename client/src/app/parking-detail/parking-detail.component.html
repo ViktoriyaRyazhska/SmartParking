@@ -67,6 +67,9 @@
                                     </b>
                                 </h5>
                             </div>
+                            <div *ngIf="!parking.hasCharger && !parking.isCovered">
+                                <h5><i><b>N/A</b></i></h5> 
+                            </div>
                             <div class="justify-content-center align-items-center">
                             <div *ngIf="parking.hasCharger">
                                     <mat-icon color="primary">ev_station</mat-icon>

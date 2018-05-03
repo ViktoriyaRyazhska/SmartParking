@@ -121,14 +121,15 @@ public class SecurityController {
         temporaryDataConfirmationService.save(
                 temporaryDataConfirmationService.makeRegistrationConfirmationEntity(uuid, email));
         ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
-        emailExecutor.execute(() -> {
-            try {
+        try {
+            emailExecutor.execute(() -> {
                 emailService.prepareAndSendConfirmRegistrationEmail(email, firstName, confirmUrl);
-            } catch (MailException e) {
-                LOGGER.error("Could not send email to : {} Error = {}", email, e.getMessage());
-            }
-        });
-        emailExecutor.shutdown();
+            });
+        } catch (MailException e) {
+            LOGGER.error("Could not send email to : {} Error = {}", email, e.getMessage());
+        } finally {
+            emailExecutor.shutdown();
+        }
         return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Please check your email, and confirm registration"));
     }
 
@@ -136,27 +137,38 @@ public class SecurityController {
     public ResponseEntity activateUser(@RequestBody String uuidFromUrl) {
         Optional<TemporaryDataConfirmation> checkedTemporaryDataConfirmation =
                 expirationCheckService.getTemporaryDataConfirmationWithExpirationChecking(uuidFromUrl);
+
         if (checkedTemporaryDataConfirmation.isPresent()) {
             Client client = clientService.findOne(checkedTemporaryDataConfirmation.get().getUserEmail());
+
             if ((uuidFromUrl.equals(checkedTemporaryDataConfirmation.get().getUuid()))
-                    && (checkedTemporaryDataConfirmation.get().getConfirmationType() == ConfirmationType.REGISTRATION_CONFIRM)) {
+                    && (checkedTemporaryDataConfirmation.get()
+                    .getConfirmationType() == ConfirmationType.REGISTRATION_CONFIRM)) {
+
                 securityService.activateUserByEmail(checkedTemporaryDataConfirmation.get().getUserEmail());
                 temporaryDataConfirmationService.delete(checkedTemporaryDataConfirmation.get());
+
                 ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
-                emailExecutor.execute(() -> {
-                    try {
+                try {
+                    emailExecutor.execute(() -> {
                         emailService.prepareAndSendWelcomeEmail(client.getEmail(), client.getFirstName());
-                    } catch (MailException e) {
-                        LOGGER.error("Could not send email to : {} Error = {}", client.getEmail(), e.getMessage());
-                    }
-                });
-                emailExecutor.shutdown();
-                return ResponseEntity.status(HttpStatus.OK).body(new InfoResponse("Your account has been successfully activated"));
+                    });
+                } catch (MailException e) {
+                    LOGGER.error("Could not send email to : {} Error = {}", client.getEmail(), e.getMessage());
+                } finally {
+                    emailExecutor.shutdown();
+                }
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new InfoResponse("Your account has been successfully activated"));
             }
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during account activation"));
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new InfoResponse("Error during account activation"));
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Error during account activation"));
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new InfoResponse("Error during account activation"));
     }
 
     @PostMapping(value = "/social")

@@ -24,12 +24,21 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
+    @Value("${subject.welcome.email}")
+    private String welcomeSubject;
+
+    @Value("${subject.password.confirmation}")
+    private String changePasswordSubject;
+
+    @Value("${subject.account.activation}")
+    private String accountActivationSubject;
+
     public void prepareAndSendWelcomeEmail(String recipient, String message) throws MailException {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(emailFrom);
             messageHelper.setTo(recipient);
-            messageHelper.setSubject("Welcome!");
+            messageHelper.setSubject(welcomeSubject);
             String content = emailContentBuilder.buildWelcomeHtml(message);
             messageHelper.setText(content, true);
         };
@@ -45,7 +54,7 @@ public class EmailService {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(emailFrom);
             messageHelper.setTo(recipient);
-            messageHelper.setSubject("Change password confirmation.");
+            messageHelper.setSubject(changePasswordSubject);
             String content = emailContentBuilder.buildConfirmPassHtml(userName, message);
             messageHelper.setText(content, true);
         };
@@ -57,7 +66,7 @@ public class EmailService {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(emailFrom);
             messageHelper.setTo(recipient);
-            messageHelper.setSubject("Account activation.");
+            messageHelper.setSubject(accountActivationSubject);
             String content = emailContentBuilder.buildConfirmRegistrationHtml(userName, message);
             messageHelper.setText(content, true);
         };
