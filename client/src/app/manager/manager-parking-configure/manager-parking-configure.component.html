@@ -38,7 +38,7 @@
                                 <span *ngIf="loadedParking.city || loadedParking.street || loadedParking.building">
                                     {{loadedParking.city}}, {{loadedParking.street}} street, {{loadedParking.building}}
                                 </span>
-                                <span *ngIf="loadedParking.city && loadedParking.street && loadedParking.building ">
+                                <span *ngIf="parking.city && parking.street && parking.building ">
                                    {{setParkingLocation()}}
                                 </span>
                             </mat-panel-description>
@@ -198,7 +198,7 @@
                               <mat-panel-title>
                                   Provider
                               </mat-panel-title>
-                              <mat-panel-description>
+                              <mat-panel-description *ngIf="loadedParking.providerId">
                                   Now provider is {{loadedParking.providerName}}
                               </mat-panel-description>
                           </mat-expansion-panel-header>

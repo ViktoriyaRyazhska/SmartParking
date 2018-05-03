@@ -156,23 +156,19 @@ export class ManagerParkingConfigureComponent implements OnInit {
         this.parking.providerId = this.loadedParking.providerId;
     }
 
-  
 
-setParkingLocation() : void {
-    console.log("method setParkingLocation() ");
-    var geocoder =  new google.maps.Geocoder();
-      var  address = ""+this.parking.building+" "+this.parking.street+" "+this.parking.city;
-                                       var result = "";
-                 geocoder.geocode({ 'address': address }, (results, status) => {
-                if(results != undefined)
-                {
-                    var latitude = results[0].geometry.location.lat();
+    setParkingLocation(): void {
+        var geocoder = new google.maps.Geocoder();
+        var address = "" + this.parking.building + " " + this.parking.street + " " + this.parking.city;
+        var result = "";
+        geocoder.geocode({'address': address}, (results, status) => {
+            if (results != undefined) {
+                var latitude = results[0].geometry.location.lat();
                 var longitude = results[0].geometry.location.lng();
                 this.parking.latitude = latitude;
                 this.parking.longitude = longitude;
-                 console.log("this.parking.latitude: " + this.parking.latitude + ", this.parking.longitude: " + this.parking.longitude);
-                }
-              });
+            }
+        });
             
 }
 
