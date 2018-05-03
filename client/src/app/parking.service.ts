@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {HttpClient, HttpErrorResponse, HttpResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 
 import {Parking} from './model/view/parking';
 import {Spot} from './model/view/spot';
@@ -54,7 +54,7 @@ export class ParkingService {
     }
 
     deleteFromFavorite(id: number): Observable<HttpResponse<any>> {
-        return this.http.post<HttpResponse<any>>(
+        return this.http.delete<HttpResponse<any>>(
             this.parkingDetailUrl + id + '/deletefromfavorites', {observe: 'response'}
         );
     }
