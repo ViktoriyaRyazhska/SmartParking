@@ -11,12 +11,12 @@ import java.util.List;
 
 public interface SpotRepository extends JpaRepository<Spot, Long> {
 
-    @Query("SELECT s FROM Parking p JOIN p.spots s JOIN s.events e WHERE p.id=?1 AND e.timestamp = "
-            + "(SELECT MAX(ee.timestamp) FROM Event ee JOIN ee.spot ss JOIN ss.parking pp WHERE pp.id=?1) AND e.eventType=1")
+    @Query("SELECT s FROM Parking p JOIN p.spots s JOIN s.events e WHERE p.id=?1 AND e.timestamp IN "
+            + "(SELECT MAX(ee.timestamp) FROM Event ee JOIN ee.spot ss JOIN ss.parking pp WHERE pp.id=?1 group by ss.id ) AND e.eventType=1")
     List<Spot> findAllAvailableSpotsByParkingId(Long id);
 
-    @Query("SELECT COUNT(s) FROM Parking p JOIN p.spots s JOIN s.events e WHERE p.id=?1 AND e.timestamp = "
-            + "(SELECT MAX(ee.timestamp) FROM Event ee JOIN ee.spot ss JOIN ss.parking pp WHERE pp.id=?1) AND e.eventType=1")
+    @Query("SELECT COUNT(s) FROM Parking p JOIN p.spots s JOIN s.events e WHERE p.id=?1 AND e.timestamp IN "
+            + "(SELECT MAX(ee.timestamp) FROM Event ee JOIN ee.spot ss JOIN ss.parking pp WHERE pp.id=?1 group by ss.id ) AND e.eventType=1")
     Long countAvailableSpotsByParkingId(Long id);
 
     @Query("SELECT COUNT(s) FROM Parking p JOIN p.spots s WHERE p.id=?1")
