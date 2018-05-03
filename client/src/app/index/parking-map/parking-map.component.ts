@@ -7,7 +7,7 @@ import {StatisticsService} from '../../statistic/statistics.service';
 import {SharedServiceService} from '../shared-service.service';
 import {DistanceService} from '../distance.service';
 import {InfoWindow} from '@agm/core/services/google-maps-types';
-import {ParkingStatisticsSimpleFilter} from "../../model/filter/parking-statistics-simple-filter";
+import {ParkingStatisticsSimpleFilter} from '../../model/filter/parking-statistics-simple-filter';
 
 
 const numberOfDaysByDefault = 30;
@@ -73,6 +73,7 @@ export class ParkingMapComponent implements OnInit {
                         if (this.infoWindowOpened)
                             this.infoWindowOpened.close();
                         parking.infoWindowOpen = true;
+                        this.zoom = 12;
                         parking.markerColor = '/assets/images/icon_parking_info_40x38_green.png';
                     } else {
                         parking.markerColor = '/assets/images/icon_parking_info_40x38.png';
@@ -106,6 +107,7 @@ export class ParkingMapComponent implements OnInit {
             if (parking.id === id) {
                 parking.infoWindowOpen = true;
                 parking.markerColor = '/assets/images/icon_parking_info_40x38_green.png';
+                this.zoom = 12;
             } else {
                 parking.infoWindowOpen = false;
                 parking.markerColor = '/assets/images/icon_parking_info_40x38.png';
@@ -136,8 +138,4 @@ export class ParkingMapComponent implements OnInit {
             });
     }
 
-    infoWindowPan(): boolean {
-        this.zoom = 12;
-        return true;
-    }
 }
