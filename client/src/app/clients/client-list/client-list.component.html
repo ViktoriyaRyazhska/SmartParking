@@ -37,7 +37,7 @@
         </app-client-item>
     </div>
 
-    <div class="pagination" *ngIf="allClients>6">
+    <div class="pagination" *ngIf="allClients>=6">
         <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
             <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
                 <a class="page-link" (click)="setPage(1)">First</a>
