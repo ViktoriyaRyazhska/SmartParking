@@ -9,10 +9,8 @@ mat-form-field {
 
 .min {
     display: table-cell;
-    width: auto;
 }
 
 .max {
-    width: auto;
     display: table-cell;
 }
