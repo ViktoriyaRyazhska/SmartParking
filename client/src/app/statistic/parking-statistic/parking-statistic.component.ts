@@ -16,7 +16,7 @@ export class ParkingStatisticComponent implements OnInit {
     parkingsCities: string[] = [];
     selectedCity: string = 'Lviv';
     selectedStreet: string = '';
-    selectedNumberOfDays: number = 14;
+    selectedNumberOfDays: number = 30;
     confirmedNumberOfDays: number;
     confirmedCity: string = '';
     confirmedStreet: string = '';

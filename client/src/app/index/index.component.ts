@@ -14,6 +14,8 @@ import {ActivatedRoute} from '@angular/router';
 import {ParkingStatisticsFilter} from '../model/filter/parking-statistics-filter';
 
 const numberOfDaysByDefault = 30;
+const hasPlacesForDisabilities = false;
+const hasCoverage = false;
 
 @Component({
     selector: 'app-index',
@@ -132,7 +134,7 @@ export class IndexComponent implements OnInit {
     findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number, minPrice: number, maxPrice: number,
                                hasCharger: boolean) {
         this.statisticService.getBestParkingsByLocationPriceAndFunctional(new ParkingStatisticsFilter(latitude, longitude,
-            radius, days, minPrice, maxPrice, hasCharger, false, false))
+            radius, days, minPrice, maxPrice, hasCharger, hasPlacesForDisabilities, hasCoverage))
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
                 this.dataService.pushBestParkingsToDataService(this.bestParkings);
