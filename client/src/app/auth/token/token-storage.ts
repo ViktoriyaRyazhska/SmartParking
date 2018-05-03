@@ -28,11 +28,13 @@ export class TokenStorage {
     }
 
     public saveToken(token: TokenPair) {
+        let accessToken = token.accessToken;
+        let refreshToken = token.refreshToken;
         this.signOut();
-        window.localStorage.setItem(ACCESS_TOKEN_KEY, token.accessToken);
-        window.localStorage.setItem(REFRESH_TOKEN_KEY, token.refreshToken);
-        this.accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
-        this.refreshToken = window.localStorage.getItem(REFRESH_TOKEN_KEY);
+        window.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+        this.accessToken = accessToken;
+        window.localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+        this.refreshToken = refreshToken;
         this.decodedToken = this.decodeToken();
     }
 

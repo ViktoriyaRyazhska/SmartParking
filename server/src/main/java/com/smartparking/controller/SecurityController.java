@@ -11,7 +11,7 @@ import com.smartparking.model.response.InfoResponse;
 import com.smartparking.security.exception.AuthorizationEx;
 import com.smartparking.security.tokens.TokenPair;
 import com.smartparking.security.tokens.TokenUtil;
-import com.smartparking.security.utils.validation.ValidationUtil;
+import com.smartparking.security.utils.validation.Validator;
 import com.smartparking.service.ClientService;
 import com.smartparking.service.SecurityService;
 import com.smartparking.service.TemporaryDataConfirmationService;
@@ -48,7 +48,7 @@ import java.util.concurrent.Executors;
 public class SecurityController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityController.class);
     @Autowired
-    private ValidationUtil validationUtil;
+    private Validator validator;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -87,8 +87,8 @@ public class SecurityController {
         final String password;
         final UserDetails user;
         try {
-            email = validationUtil.validateEmailOnLogin(loginRequest.getEmail());
-            password = validationUtil.validatePassword(loginRequest.getPassword());
+            email = validator.validateEmailOnLogin(loginRequest.getEmail());
+            password = validator.validatePassword(loginRequest.getPassword());
         } catch (AuthorizationEx e) {
             LOGGER.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
@@ -103,7 +103,7 @@ public class SecurityController {
             final TokenPair tokenPair = tokenUtil.generateTokenPair(user);
             return ResponseEntity.ok(new AuthTokenResponse(tokenPair.getAccessToken(), tokenPair.getRefreshToken()));
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Email or password is incorrect."));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse("Password is incorrect."));
     }
 
     @PostMapping("/signup")
@@ -177,6 +177,7 @@ public class SecurityController {
         try {
             user = userService.loadUserByUsername(request.getEmail());
         } catch (Exception e) {
+            LOGGER.warn("The user with such an email does not exist.");
             e.getMessage();
         }
         if (user == null) {

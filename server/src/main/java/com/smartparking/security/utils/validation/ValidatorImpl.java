@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidationUtilImpl implements ValidationUtil {
+public class ValidatorImpl implements Validator {
     @Autowired
     private EmailValidator emailValidator;
 

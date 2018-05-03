@@ -4,7 +4,7 @@ import com.smartparking.security.exception.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface ValidationUtil {
+public interface Validator {
     String validateEmailOnRegistration(String email) throws EmailValidationEx, DuplicateEmailEx;
 
     String validateEmailOnLogin(String email) throws EmailValidationEx, NonExistantEmailEx;
