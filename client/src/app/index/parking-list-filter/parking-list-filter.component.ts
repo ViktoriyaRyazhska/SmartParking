@@ -6,6 +6,8 @@ import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-ra
 import {Subject} from 'rxjs/Subject';
 import {ChargerCheckboxComponent} from './charger-checkbox/charger-checkbox.component';
 import {MatSnackBar} from '@angular/material';
+import {FavoriteCheckboxComponent} from './favorite-checkbox/favorite-checkbox.component';
+import {TokenStorage} from '../../auth/token/token-storage';
 
 const earthRadius = 6371;
 
@@ -28,6 +30,9 @@ export class ParkingListFilterComponent implements OnInit {
 
     @ViewChild('chargerField')
     public chargerField: ChargerCheckboxComponent;
+
+    @ViewChild('favoriteField')
+    public favoriteField: FavoriteCheckboxComponent;
 
     private readonly formGroup = new FormGroup({});
 
@@ -61,7 +66,8 @@ export class ParkingListFilterComponent implements OnInit {
             }
 
             if (this.present) {
-                this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value, this.chargerField.value);
+                this.internalValue = new ParkingListFilter(location, this.priceRangeField.value, this.radiusField.value,
+                    this.chargerField.value, this.favoriteField.value);
                 this.valueChangesSubject.next(this.internalValue);
                 localStorage.setItem('locationLatitude', location.latitude.toString());
                 localStorage.setItem('locationLongtitude', location.longitude.toString());
@@ -71,12 +77,11 @@ export class ParkingListFilterComponent implements OnInit {
                         duration: 1000
                     });
             }
-
-
         });
         this.priceRangeField.valueChanges.subscribe(priceRange => {
             if (this.locationField.value) {
-                this.internalValue = new ParkingListFilter(this.locationField.value, priceRange, this.radiusField.value, this.chargerField.value);
+                this.internalValue = new ParkingListFilter(this.locationField.value, priceRange, this.radiusField.value,
+                    this.chargerField.value, this.favoriteField.value);
                 this.valueChangesSubject.next(this.internalValue);
                 if (priceRange.min != undefined)
                     localStorage.setItem('minValue', priceRange.min.toString());
@@ -86,17 +91,27 @@ export class ParkingListFilterComponent implements OnInit {
         });
         this.radiusField.valueChanges.subscribe(radius => {
             if (this.locationField.value) {
-                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, radius, this.chargerField.value);
+                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, radius,
+                    this.chargerField.value, this.favoriteField.value);
                 this.valueChangesSubject.next(this.internalValue);
             }
             localStorage.setItem('radius', radius.toString());
         });
         this.chargerField.valueChanges.subscribe(hasCharger => {
             if (this.locationField.value) {
-                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, this.radiusField.value, hasCharger);
+                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, this.radiusField.value,
+                    hasCharger, this.favoriteField.value);
                 this.valueChangesSubject.next(this.internalValue);
             }
             localStorage.setItem('hasCharger', hasCharger.toString());
+        });
+        this.favoriteField.valueChanges.subscribe(favorite => {
+            if (this.locationField.value) {
+                this.internalValue = new ParkingListFilter(this.locationField.value, this.priceRangeField.value, this.radiusField.value,
+                    this.chargerField.value, favorite);
+                this.valueChangesSubject.next(this.internalValue);
+            }
+            localStorage.setItem('favorite', favorite.toString());
         });
     }
 
@@ -129,12 +144,14 @@ export class ParkingListFilter {
     public readonly priceRange: PriceRange;
     public readonly radius: number;
     public readonly hasCharger: boolean;
+    public readonly favorite: boolean;
 
-    public constructor(location: Location, priceRange: PriceRange, radius: number, hasCharger: boolean) {
+    public constructor(location: Location, priceRange: PriceRange, radius: number, hasCharger: boolean, favorite: boolean) {
         this.location = location;
         this.priceRange = priceRange;
         this.radius = radius;
         this.hasCharger = hasCharger;
+        this.favorite = favorite;
     }
 
 }

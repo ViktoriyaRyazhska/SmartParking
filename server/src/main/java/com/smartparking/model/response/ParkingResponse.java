@@ -24,4 +24,5 @@ public class ParkingResponse {
     private Boolean hasCharger;
     private Boolean hasInvalid;
     private Boolean isCovered;
+    private Boolean isFavorite;
 }

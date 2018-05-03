@@ -14,6 +14,8 @@ import com.smartparking.repository.ParkingRepository;
 import com.smartparking.service.*;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
@@ -43,6 +45,8 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
 
     @Override
     public List<ParkingResponse> findAllNearbyResponse(@NonNull ParkingNearbyRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
         if (request.getRadius() < 0) {
             throw new IllegalArgumentException("Radius can`t be less then zero.");
         }
@@ -53,7 +57,7 @@ public class ParkingServiceImpl extends AbstractService<Parking, Long, ParkingRe
                     response.setFavoritesCount(favoriteService.getCountByClientId(response.getId()));
                     response.setSpotsCount(spotService.countAllSpotsByParkingId(response.getId()));
                     response.setAvailableSpotsCount(spotService.countAvailableSpotsByParkingId(response.getId()));
-
+                    response.setIsFavorite(isFavorite(email, response.getId()));
                     providerService.findByParkingId(response.getId()).ifPresent(provider -> {
                         response.setProviderId(provider.getId());
                         response.setProviderName(provider.getName());

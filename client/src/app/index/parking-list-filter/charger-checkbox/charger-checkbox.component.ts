@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MatCheckbox} from "@angular/material";
-import {Subject} from "rxjs/Subject";
+import {MatCheckbox} from '@angular/material';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
     selector: 'app-parking-list-filter-charger-field',
@@ -8,7 +8,7 @@ import {Subject} from "rxjs/Subject";
     styleUrls: ['./charger-checkbox.component.css']
 })
 export class ChargerCheckboxComponent implements OnInit {
-    
+
     @ViewChild('hascharger')
     private hasCharger: MatCheckbox;
     private readonly valueChangesSubject = new Subject<boolean>();
@@ -22,8 +22,9 @@ export class ChargerCheckboxComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('hasCharger'))
-            this.hasCharger.writeValue(localStorage.getItem('hasCharger'));
+        if (localStorage.getItem('hasCharger')) {
+            this.hasCharger.checked = (localStorage.getItem('hasCharger') === 'true');
+        }
         this.refreshComponentView();
     }
 

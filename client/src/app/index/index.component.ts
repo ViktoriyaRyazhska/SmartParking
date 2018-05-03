@@ -118,7 +118,8 @@ export class IndexComponent implements OnInit {
             return parking.distance <= filter.radius * 1000
                 && ((filter.priceRange.min) ? parking.price >= filter.priceRange.min : true)
                 && ((filter.priceRange.max) ? parking.price <= filter.priceRange.max : true)
-                && ((filter.hasCharger) ? parking.hasCharger == filter.hasCharger : true);
+                && ((filter.hasCharger) ? parking.hasCharger == filter.hasCharger : true)
+                && ((filter.favorite) ? parking.isFavorite == filter.favorite : true);
         });
         this.distanceService.getDistanceBetweenPoint(this.parkingMap.parkings, this.parkingMap.lat, this.parkingMap.lng);
         this.dataService.pushParkingsToDataService(this.parkingMap.parkings);

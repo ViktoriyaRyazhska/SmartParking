@@ -97,6 +97,7 @@ import {ForgetPasswordComponent} from './auth/forget-password/forget-password.co
 import {ChargerCheckboxComponent} from './index/parking-list-filter/charger-checkbox/charger-checkbox.component';
 import {SharedServiceService} from './index/shared-service.service';
 import {DistanceService} from './index/distance.service';
+import {FavoriteCheckboxComponent} from './index/parking-list-filter/favorite-checkbox/favorite-checkbox.component';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig(
@@ -165,7 +166,8 @@ export function getAuthServiceConfigs() {
         ManagerSpotListComponent,
         SpotAddDialogComponent,
         ForgetPasswordComponent,
-        ChargerCheckboxComponent
+        ChargerCheckboxComponent,
+        FavoriteCheckboxComponent
     ],
     imports: [
         AgmCoreModule.forRoot({
