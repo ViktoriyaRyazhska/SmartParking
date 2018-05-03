@@ -43,7 +43,7 @@
         <mat-nav-list class="nav-list" *ngFor="let item of mostPopularParkings">
             <ng-container>
                 <a mat-list-item *ngIf="item.street.toLowerCase().includes(streetFilter.toLowerCase())"
-                   [routerLink]="['/parkingdetail/'+item.id]">
+                   (click)="highlightOnMap(item.id)">
 
                     <tr>
                         <th rowspan="2"><img class="photo-thumbnail"
