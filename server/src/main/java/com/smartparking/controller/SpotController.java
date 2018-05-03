@@ -110,7 +110,8 @@ public class SpotController {
     }
 
     @PostMapping("/manager-configuration/spot/delete")
-    @PreAuthorize("hasAuthority('SUPERUSER') or @spotController.getCurrentUser().getProvider().getParkings().contains(#spotRequest.toSpot().parking)")
+    @PreAuthorize("hasAuthority('SUPERUSER')" +
+            " or @spotController.getCurrentUser().getProvider().getParkings().contains(#spotRequest.toSpot().parking)")
     public ResponseEntity<?> delete(@P("spotRequest") @RequestBody SpotRequest spotRequest) {
         Spot spot = spotRequest.toSpot();
         spotService.delete(spot);
@@ -119,7 +120,8 @@ public class SpotController {
     }
 
     @GetMapping("/manager-configuration/spotsforparking/{parkingId}")
-    @PreAuthorize("hasAuthority('SUPERUSER') or @spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get())")
+    @PreAuthorize("hasAuthority('SUPERUSER')" +
+            " or @spotController.getCurrentUser().getProvider().getParkings().contains(@parkingServiceImpl.findById(#parkingId).get())")
     public ResponseEntity<List<SpotStatusResponse>> spots(@P("parkingId") @PathVariable Long parkingId) {
         return new ResponseEntity<>(spotService.findAllSpotsByParkingIdResponse(parkingId), HttpStatus.OK);
     }
@@ -142,7 +144,7 @@ public class SpotController {
 
     private ResponseEntity<?> editSpot(Spot spot) {
         if (spotService.findFirstBySpotNumberAndParking(spot.getSpotNumber(), spot.getParking()) == null ||
-                spotService.findFirstBySpotNumberAndParking(spot.getSpotNumber(), spot.getParking()).getId() == spot.getId()) {
+                spotService.findFirstBySpotNumberAndParking(spot.getSpotNumber(), spot.getParking()).getId().equals(spot.getId())) {
             spotService.save(spot);
             spotEventPublisher.publishSave(spot, spot.getId());
             return new ResponseEntity<>(HttpStatus.OK);

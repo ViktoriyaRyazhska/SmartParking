@@ -5,6 +5,7 @@ import {RadiusFieldComponent} from './radius-field/radius-field.component';
 import {PriceRange, PriceRangeFieldComponent} from './price-range-field/price-range-field.component';
 import {Subject} from 'rxjs/Subject';
 import {ChargerCheckboxComponent} from './charger-checkbox/charger-checkbox.component';
+import {MatSnackBar} from '@angular/material';
 
 const earthRadius = 6371;
 
@@ -38,7 +39,7 @@ export class ParkingListFilterComponent implements OnInit {
 
     private distance: number;
 
-    constructor() {
+    constructor(private snackBar: MatSnackBar) {
     }
 
     public get value(): ParkingListFilter {
@@ -65,7 +66,10 @@ export class ParkingListFilterComponent implements OnInit {
                 localStorage.setItem('locationLatitude', location.latitude.toString());
                 localStorage.setItem('locationLongtitude', location.longitude.toString());
             } else {
-                window.alert('Our api doesn\'t support this location, unfortunately :(');
+                this.snackBar.open('Our api doesn\'t support this location, unfortunately. :('
+                    , null, {
+                        duration: 1000
+                    });
             }
 
 

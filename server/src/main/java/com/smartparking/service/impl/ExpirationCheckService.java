@@ -34,19 +34,13 @@ public class ExpirationCheckService {
     @Scheduled(cron = "${temporary-data-confirmation-clear-schedule}")
     public void scheduleCleanTaskByExpirationTime() {
         List<TemporaryDataConfirmation> listUntilCleaning = temporaryDataConfirmationService.findAll();
-        listUntilCleaning.stream().forEach(temporaryDataConfirmation -> {
-            if (isExpired(temporaryDataConfirmation)) {
-                temporaryDataConfirmationService.delete(temporaryDataConfirmation);
-            }
+        listUntilCleaning.stream().filter(c -> isExpired(c)).forEach(temporaryDataConfirmation -> {
+            temporaryDataConfirmationService.delete(temporaryDataConfirmation);
         });
     }
 
     private boolean isExpired(TemporaryDataConfirmation temporaryDataConfirmation) {
-        if (LocalDateTime.now().toInstant(ZoneOffset.UTC).isAfter(
-                temporaryDataConfirmation.getTimeStamp().plusSeconds(passwordChangeExpiredTime))) {
-            return true;
-        } else {
-            return false;
-        }
+        return LocalDateTime.now().toInstant(ZoneOffset.UTC).isAfter(
+                temporaryDataConfirmation.getTimeStamp().plusSeconds(passwordChangeExpiredTime));
     }
 }

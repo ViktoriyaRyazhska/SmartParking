@@ -9,11 +9,10 @@ import {ParkingMapComponent} from './parking-map/parking-map.component';
 import {StatisticsService} from '../statistic/statistics.service';
 import {DataserviceService} from './dataservice.service';
 import {DistanceService} from './distance.service';
-import {ProviderListFilterParameters} from "../model/filter/provider-list-filter-parameters";
-import {ActivatedRoute} from "@angular/router";
-import {ParkingStatisticsFilter} from "../model/filter/parking-statistics-filter";
+import {ProviderListFilterParameters} from '../model/filter/provider-list-filter-parameters';
+import {ActivatedRoute} from '@angular/router';
+import {ParkingStatisticsFilter} from '../model/filter/parking-statistics-filter';
 
-const MiToKm = 1.60934;
 const numberOfDaysByDefault = 30;
 
 @Component({

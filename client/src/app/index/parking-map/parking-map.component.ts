@@ -110,7 +110,6 @@ export class ParkingMapComponent implements OnInit {
                 parking.infoWindowOpen = false;
                 parking.markerColor = '/assets/images/icon_parking_info_40x38.png';
             }
-
         }
 
     }

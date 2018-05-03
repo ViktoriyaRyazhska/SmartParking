@@ -29,21 +29,15 @@ public class ProviderController {
     }
 
     @GetMapping("providers")
-    ResponseEntity<List<ProviderItemResponse>> findAll(@RequestParam String active,
-                                                       @RequestParam String companyName) {
-        LOGGER.debug("Filtering by " + active + " state and " + companyName +
-                " company name.");
-        ProviderFilter providerFilter = new ProviderFilter(active, companyName);
+    ResponseEntity<List<ProviderItemResponse>> findAll(@ModelAttribute ProviderFilter providerFilter) {
         List<Provider> providers = providerService.findAllByFilter(providerFilter);
         List<ProviderItemResponse> providerResponses = new ArrayList<>();
         providers.forEach(provider -> providerResponses.add(ProviderItemResponse.of(provider)));
-        LOGGER.debug("Filtered providers response - " + providerResponses);
         return new ResponseEntity<>(providerResponses, HttpStatus.OK);
     }
 
     @GetMapping("providers/{id}")
     ResponseEntity<?> find(@PathVariable Long id) {
-        LOGGER.debug("Searching the provider with id " + id);
         return providerService.findByIdResponse(id)
                 .map(provider -> new ResponseEntity<Object>(provider, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>("Such provider wasn't found!", HttpStatus.BAD_REQUEST));
@@ -51,14 +45,7 @@ public class ProviderController {
 
     @PostMapping("/providers/save")
     ResponseEntity<?> save(@RequestBody ProviderRequest providerRequest) {
-        LOGGER.debug("Received providerRequest with params: " + providerRequest.getId() + " " +
-                providerRequest.getName() + " " +
-                providerRequest.getCity() + " " +
-                providerRequest.getStreet() + " " +
-                providerRequest.getBuilding() + " " +
-                providerRequest.isActive());
         providerService.save(providerRequest.toProvider());
-        LOGGER.debug("Provider was saved.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
