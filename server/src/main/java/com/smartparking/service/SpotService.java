@@ -2,6 +2,8 @@ package com.smartparking.service;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.model.filter.ParkingStatisticsFilter;
+import com.smartparking.model.filter.ParkingsSimpleStatisticFilter;
 import com.smartparking.model.request.SpotSearchCriterias;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
@@ -27,11 +29,9 @@ public interface SpotService extends Service<Spot, Long, SpotRepository> {
 
     List<Parking> findBestParkingsInTheCity(String city, Instant date);
 
-    List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date);
+    List<Parking> findBestParkingsByLocation(ParkingsSimpleStatisticFilter parkingStatisticsFilter);
 
-    List<Parking> findBestParkingsByLocationPriceAndProperties(Double latitude, Double longitude, Double radius,
-                                                               Instant date, BigDecimal minPrice, BigDecimal maxPrice,
-                                                               Boolean hasCharger, Boolean hasInvalid, Boolean isCovered);
+    List<Parking> findBestParkingsByLocationPriceAndProperties(ParkingStatisticsFilter parkingStatisticsFilter);
 
     List<SpotStatusResponse> findAllSpotsByParkingIdResponse(Long parkingId);
 

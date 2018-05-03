@@ -7,7 +7,7 @@
     </ng-template>
 
     <span id="withoutOrders" *ngIf="showMostPopular && (parkings.length - mostPopularParkings.length)>0">
-        {{parkings.length - mostPopularParkings.length}} parkings without orders</span>
+        {{parkings.length - mostPopularParkings.length}} parkings are empty</span>
 
     <span class="show" *ngIf="!showMostPopular && parkings.length>0;else showParkings"
           (click)="showMostPopularParkings()">Show most popular</span>

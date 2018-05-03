@@ -62,7 +62,7 @@ public class ClientController {
     ResponseEntity<?> getClientDetails(@PathVariable Long id) {
         return clientService.findByIdResponse(id)
                 .map(clientDetailResponse -> new ResponseEntity<Object>(clientDetailResponse, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<Object>("Incorrect client id", HttpStatus.BAD_REQUEST));
+                .orElseGet(() -> new ResponseEntity<>("Incorrect client id", HttpStatus.BAD_REQUEST));
     }
 
     @PostMapping("/update/{id}")

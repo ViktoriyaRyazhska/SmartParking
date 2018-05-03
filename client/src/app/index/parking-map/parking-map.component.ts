@@ -7,6 +7,7 @@ import {StatisticsService} from '../../statistic/statistics.service';
 import {SharedServiceService} from '../shared-service.service';
 import {DistanceService} from '../distance.service';
 import {InfoWindow} from '@agm/core/services/google-maps-types';
+import {ParkingStatisticsSimpleFilter} from "../../model/filter/parking-statistics-simple-filter";
 
 
 const numberOfDaysByDefault = 30;
@@ -128,7 +129,7 @@ export class ParkingMapComponent implements OnInit {
     }
 
     findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number) {
-        this.statisticService.getBestParkingsByLocation(latitude, longitude, radius, days)
+        this.statisticService.getBestParkingsByLocation(new ParkingStatisticsSimpleFilter(latitude, longitude, radius, days))
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
                 this.dataService.pushBestParkingsToDataService(this.bestParkings);

@@ -3,6 +3,8 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
 import {Parking} from "../model/view/parking";
+import {ParkingStatisticsFilter} from "../model/filter/parking-statistics-filter";
+import {ParkingStatisticsSimpleFilter} from "../model/filter/parking-statistics-simple-filter";
 
 @Injectable()
 export class StatisticsService {
@@ -48,33 +50,20 @@ export class StatisticsService {
         });
     }
 
-    getBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number): Observable<Parking[]> {
-        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings-by-location', {
-            params: {
-                latitude: latitude.toString(),
-                longitude: longitude.toString(),
-                radius: radius.toString(),
-                days: days.toString()
-            }
-        });
+    getBestParkingsByLocation(parkingSimpleStatisticSimpleFilter: ParkingStatisticsSimpleFilter): Observable<Parking[]> {
+        let params = {
+            parkingSimpleStatisticFilter: JSON.stringify(parkingSimpleStatisticSimpleFilter)
+        };
+
+        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings-by-location', {params: JSON.parse(params.parkingSimpleStatisticFilter)});
     }
 
-    getBestParkingsByLocationPriceAndFunctional(latitude: number, longitude: number, radius: number, days: number,
-                                                minPrice: number, maxPrice: number, hasCharger: boolean, hasInvalid: boolean,
-                                                isCovered: boolean): Observable<Parking[]> {
-        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings-by-location-and-properties', {
-            params: {
-                latitude: latitude.toString(),
-                longitude: longitude.toString(),
-                radius: radius.toString(),
-                days: days.toString(),
-                minPrice: minPrice.toString(),
-                maxPrice: maxPrice.toString(),
-                hasCharger: hasCharger.toString(),
-                hasInvalid: hasInvalid.toString(),
-                isCovered: isCovered.toString()
-            }
-        });
+    getBestParkingsByLocationPriceAndFunctional(parkingStatisticFilter: ParkingStatisticsFilter): Observable<Parking[]> {
+        let params = {
+            parkingStatisticFilter: JSON.stringify(parkingStatisticFilter)
+        };
+
+        return this.http.get<Parking[]>(this.statisticUrl + '/best-parkings-by-location-and-properties', {params: JSON.parse(params.parkingStatisticFilter)});
     }
 
 }

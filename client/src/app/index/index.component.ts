@@ -9,6 +9,9 @@ import {ParkingMapComponent} from './parking-map/parking-map.component';
 import {StatisticsService} from '../statistic/statistics.service';
 import {DataserviceService} from './dataservice.service';
 import {DistanceService} from './distance.service';
+import {ProviderListFilterParameters} from "../model/filter/provider-list-filter-parameters";
+import {ActivatedRoute} from "@angular/router";
+import {ParkingStatisticsFilter} from "../model/filter/parking-statistics-filter";
 
 const MiToKm = 1.60934;
 const numberOfDaysByDefault = 30;
@@ -42,6 +45,7 @@ export class IndexComponent implements OnInit {
     hasCharger: boolean = false;
 
     constructor(private parkingService: ParkingService,
+                private router: ActivatedRoute,
                 private changeDetector: ChangeDetectorRef,
                 private statisticService: StatisticsService,
                 private dataService: DataserviceService,
@@ -128,8 +132,8 @@ export class IndexComponent implements OnInit {
 
     findBestParkingsByLocation(latitude: number, longitude: number, radius: number, days: number, minPrice: number, maxPrice: number,
                                hasCharger: boolean) {
-        this.statisticService.getBestParkingsByLocationPriceAndFunctional(latitude, longitude, radius, days, minPrice, maxPrice, hasCharger,
-            false, false)
+        this.statisticService.getBestParkingsByLocationPriceAndFunctional(new ParkingStatisticsFilter(latitude, longitude,
+            radius, days, minPrice, maxPrice, hasCharger, false, false))
             .subscribe(bestParkiings => {
                 this.bestParkings = bestParkiings;
                 this.dataService.pushBestParkingsToDataService(this.bestParkings);

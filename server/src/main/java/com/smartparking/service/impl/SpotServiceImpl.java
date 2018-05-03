@@ -2,6 +2,8 @@ package com.smartparking.service.impl;
 
 import com.smartparking.entity.Parking;
 import com.smartparking.entity.Spot;
+import com.smartparking.model.filter.ParkingStatisticsFilter;
+import com.smartparking.model.filter.ParkingsSimpleStatisticFilter;
 import com.smartparking.model.request.SpotSearchCriterias;
 import com.smartparking.model.response.SpotStatisticResponse;
 import com.smartparking.model.response.SpotStatusResponse;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,18 +64,26 @@ public class SpotServiceImpl extends AbstractService<Spot, Long, SpotRepository>
     }
 
     @Override
-    public List<Parking> findBestParkingsByLocation(Double latitude, Double longitude, Double radius, Instant date) {
-        return repository.findBestParkingsByLocation(latitude, longitude, radius, date);
+    public List<Parking> findBestParkingsByLocation(ParkingsSimpleStatisticFilter parkingsSimpleStatisticFilter) {
+        return repository.findBestParkingsByLocation(
+                Double.parseDouble(parkingsSimpleStatisticFilter.getLatitude()),
+                Double.parseDouble(parkingsSimpleStatisticFilter.getLongitude()),
+                Double.parseDouble(parkingsSimpleStatisticFilter.getRadius()),
+                LocalDateTime.now().minusDays(Integer.parseInt(parkingsSimpleStatisticFilter.getDays())).toInstant(ZoneOffset.UTC));
     }
 
     @Override
-    public List<Parking> findBestParkingsByLocationPriceAndProperties(Double latitude, Double longitude, Double radius,
-                                                                      Instant date, BigDecimal minPrice, BigDecimal maxPrice,
-                                                                      Boolean hasCharger, Boolean hasInvalid, Boolean isCovered) {
+    public List<Parking> findBestParkingsByLocationPriceAndProperties(ParkingStatisticsFilter parkingStatisticsFilter) {
         return repository.findBestParkingsByLocationPriceAndFunctional(
-                latitude, longitude, radius,
-                date, minPrice, maxPrice,
-                hasCharger, hasInvalid, isCovered);
+                Double.parseDouble(parkingStatisticsFilter.getLatitude()),
+                Double.parseDouble(parkingStatisticsFilter.getLongitude()),
+                Double.parseDouble(parkingStatisticsFilter.getRadius()),
+                LocalDateTime.now().minusDays(Integer.parseInt(parkingStatisticsFilter.getDays())).toInstant(ZoneOffset.UTC),
+                new BigDecimal(parkingStatisticsFilter.getMinPrice()),
+                new BigDecimal(parkingStatisticsFilter.getMaxPrice()),
+                Boolean.parseBoolean(parkingStatisticsFilter.getHasCharger()),
+                Boolean.parseBoolean(parkingStatisticsFilter.getHasInvalid()),
+                Boolean.parseBoolean(parkingStatisticsFilter.getIsCovered()));
     }
 
     @Override

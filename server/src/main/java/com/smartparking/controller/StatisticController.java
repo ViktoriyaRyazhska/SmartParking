@@ -1,6 +1,8 @@
 package com.smartparking.controller;
 
 import com.smartparking.entity.Parking;
+import com.smartparking.model.filter.ParkingStatisticsFilter;
+import com.smartparking.model.filter.ParkingsSimpleStatisticFilter;
 import com.smartparking.model.response.ParkingItemResponse;
 import com.smartparking.service.ParkingService;
 import com.smartparking.service.SpotService;
@@ -70,20 +72,11 @@ public class StatisticController {
     }
 
     @RequestMapping("/best-parkings-by-location")
-    public ResponseEntity<List<ParkingItemResponse>> getBestParkingsByLocation(@RequestParam("latitude") String latitude,
-                                                                               @RequestParam("longitude") String longitude,
-                                                                               @RequestParam("radius") String radius,
-                                                                               @RequestParam("days") String days) {
-
-        Instant calculatedTime = getCalculatedTime(days);
+    public ResponseEntity<List<ParkingItemResponse>> getBestParkingsByLocation(
+            @ModelAttribute ParkingsSimpleStatisticFilter parkingsSimpleStatisticFilter) {
 
         List<Parking> parkings = spotService.
-                findBestParkingsByLocation(
-                        Double.parseDouble(latitude),
-                        Double.parseDouble(longitude),
-                        Double.parseDouble(radius),
-                        calculatedTime);
-
+                findBestParkingsByLocation(parkingsSimpleStatisticFilter);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
 
         parkings.forEach(parking -> parkingItemResponses.
@@ -94,28 +87,10 @@ public class StatisticController {
 
     @RequestMapping("/best-parkings-by-location-and-properties")
     public ResponseEntity<List<ParkingItemResponse>> getBestParkingsByLocationPriceAndProperties(
-            @RequestParam("latitude") String latitude,
-            @RequestParam("longitude") String longitude,
-            @RequestParam("radius") String radius,
-            @RequestParam("days") String days,
-            @RequestParam("minPrice") String minPrice,
-            @RequestParam("maxPrice") String maxPrice,
-            @RequestParam("hasCharger") String hasCharger,
-            @RequestParam("hasInvalid") String hasInvalid,
-            @RequestParam("isCovered") String isCovered) {
+            @ModelAttribute ParkingStatisticsFilter parkingStatisticsFilter) {
 
-        Instant calculatedTime = getCalculatedTime(days);
-
-        List<Parking> parkings = spotService.findBestParkingsByLocationPriceAndProperties(
-                Double.parseDouble(latitude),
-                Double.parseDouble(longitude),
-                Double.parseDouble(radius),
-                calculatedTime, new BigDecimal(minPrice),
-                new BigDecimal(maxPrice),
-                Boolean.parseBoolean(hasCharger),
-                Boolean.parseBoolean(hasInvalid),
-                Boolean.parseBoolean(isCovered));
-
+        List<Parking> parkings = spotService.
+                findBestParkingsByLocationPriceAndProperties(parkingStatisticsFilter);
         List<ParkingItemResponse> parkingItemResponses = new ArrayList<>();
 
         parkings.forEach(parking -> parkingItemResponses.
