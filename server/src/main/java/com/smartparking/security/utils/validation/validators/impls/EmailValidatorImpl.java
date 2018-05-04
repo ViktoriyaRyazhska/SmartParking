@@ -1,5 +1,6 @@
 package com.smartparking.security.utils.validation.validators.impls;
 
+import com.smartparking.entity.Client;
 import com.smartparking.repository.ClientRepository;
 import com.smartparking.security.exception.DuplicateEmailEx;
 import com.smartparking.security.exception.EmailValidationEx;
@@ -31,8 +32,8 @@ public class EmailValidatorImpl implements EmailValidator {
             LOGGER.warn("Invalid email " + email);
             throw new EmailValidationEx("Entered e-mail adress is not valid");
         }
-        if (clientRepository.findClientByEmail(email) != null
-                && clientRepository.findClientByEmail(email).getActivated()) {
+        Client client = clientRepository.findClientByEmail(email);
+        if (client != null && client.getActivated()) {
             throw new DuplicateEmailEx("User with this e-mail alredy exists");
         }
         return email;

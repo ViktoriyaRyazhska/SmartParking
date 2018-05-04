@@ -94,7 +94,6 @@ public class SecurityController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InfoResponse(e.getMessage()));
         }
         user = userService.loadUserByUsername(email);
-        LOGGER.info(email + " = " + user);
         if (user != null && bcryptEncoder.matches(password, user.getPassword())) {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, password)
